@@ -1,0 +1,13 @@
+{
+  "tests": [
+    {
+      "description": "Success: Ok",
+      "values": {
+        "jsonrpc": "2.0",
+        "result": {},
+        "id": 1
+      },
+      "result": null
+    }
+  ]
+}
