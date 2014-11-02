@@ -1,5 +1,0 @@
-{
-  "schema": "Response.json",
-  "setup": {},
-  "include": ["success.json", "error.json"]
-}
