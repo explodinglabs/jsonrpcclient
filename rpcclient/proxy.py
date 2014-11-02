@@ -83,7 +83,8 @@ class Proxy:
                 try:
                     jsonschema.validate(
                         response_dict,
-                        json.loads(open(os.path.dirname(__file__)+'/jsonrpc-2.0-response-schema.json').read()))
+                        json.loads(open(os.path.dirname(__file__)+ \
+                            '/response-schema.json').read()))
 
                 except jsonschema.ValidationError:
                     raise exceptions.InvalidResponse()
