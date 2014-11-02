@@ -63,7 +63,9 @@ class Proxy:
             if 'id' in request_dict and not len(r.text):
                 raise exceptions.ReceivedNoResponse()
 
-            # A response was *not* expected, but one was given?
+            # A response was *not* expected, but one was given? It may not be
+            # necessary to raise here. If we receive a response anyway, can't we
+            # just ignore it?
             if 'id' not in request_dict and len(r.text):
                 raise exceptions.InvalidResponse()
 
