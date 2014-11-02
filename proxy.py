@@ -5,8 +5,6 @@ import json
 import logging
 import requests
 
-from standard.dictfuncs import validate_dict_against_schema_file
-from standard.dictfuncs import ValidationErrors
 from . import rpc
 from . import exceptions
 
@@ -79,11 +77,12 @@ class Proxy:
 
                 # Validate the response against the Response schema
                 try:
-                    validate_dict_against_schema_file(
+                    jsonschema.validate(
                         response_dict,
-                        os.path.dirname(__file__)+'/schemas/Response.json')
+                        json.loads(open(os.path.dirname(
+                            __file__)+'/schemas/Response.json').read()))
 
-                except ValidationErrors:
+                except jsonschema.ValidationError:
                     raise exceptions.InvalidResponse()
 
                 # Ensure the "id" in the response matches the request id
