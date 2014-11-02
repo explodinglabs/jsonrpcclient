@@ -3,7 +3,9 @@
 import os
 import json
 import logging
+
 import requests
+import jsonschema
 
 from . import rpc
 from . import exceptions
@@ -33,7 +35,7 @@ class Proxy:
             request_dict = rpc.request(name, *args, **kwargs)
 
             # Log the request
-            logging.getLogger('main').info('--> '+json.dumps(request_dict))
+            logging.info('--> '+json.dumps(request_dict))
 
             try:
                 # Send the message
@@ -47,15 +49,15 @@ class Proxy:
                     json=request_dict
                 )
 
-                logging.getLogger('main').info('<-- '+r.text.strip("\n"))
+                logging.info('<-- '+r.text.strip("\n"))
 
             except (requests.exceptions.InvalidSchema,
                     requests.exceptions.RequestException):
                 raise exceptions.ConnectionError()
 
             # Raise exception if any HTTP response other than 200
-            if r.status_code != 200:
-                raise exceptions.StatusCodeError(r.status_code)
+#            if r.status_code != 200:
+#                raise exceptions.StatusCodeError(r.status_code)
 
             # A response was expected, but none was given?
             if 'id' in request_dict and not len(r.text):
@@ -79,24 +81,20 @@ class Proxy:
                 try:
                     jsonschema.validate(
                         response_dict,
-                        json.load(os.path.dirname(__file__)+'/schemas/Response.json'))
+                        json.loads(open(os.path.dirname(__file__)+'/schemas/Response.json').read()))
 
                 except jsonschema.ValidationError:
                     raise exceptions.InvalidResponse()
 
-                # Ensure the "id" in the response matches the request id
-                # Can't - the id might be null for some errors
-                #if not response_dict['id'] == request_dict['id']:
-                #    raise exceptions.InvalidResponse()
-
                 # If the response was "error", raise it, to ensure it's handled
                 if 'error' in response_dict:
+                    print(response_dict['error']['message'])
                     raise exceptions.ReceivedErrorResponse(
                         response_dict['error']['code'],
                         response_dict['error']['message'])
 
                 # Otherwise, surely we have a result to return
-                return response_dict['result']
+                print(response_dict['result'])
 
             return None
 

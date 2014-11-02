@@ -40,4 +40,4 @@ class ReceivedErrorResponse(RPCClientException):
     """The server responded with 'error'. Raise it so it must be handled"""
 
     def __init__(self, code, message):
-        super().__init__('Server responded with %d: %s' % (code, message))
+        super().__init__(message)
