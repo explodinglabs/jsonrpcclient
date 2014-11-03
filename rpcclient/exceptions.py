@@ -39,5 +39,5 @@ class ReceivedNoResponse(RPCClientException):
 class ReceivedErrorResponse(RPCClientException):
     """The server responded with 'error'. Raise it so it must be handled"""
 
-    def __init__(self, code, message):
+    def __init__(self, code, message): #pylint:disable=unused-argument
         super().__init__(message)

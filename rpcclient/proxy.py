@@ -43,8 +43,6 @@ class Proxy:
                     self.url,
                     headers={
                         'Content-Type': 'application/json; charset=utf-8'
-#                        'Signature': 'Amtek Web Service',
-#                        'Identity': 'ED5A8F2E-4D9F-4589-B842-3C8AB2EC3F04'
                     },
                     json=request_dict
                 )
