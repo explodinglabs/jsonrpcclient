@@ -89,7 +89,6 @@ class Proxy:
 
                 # If the response was "error", raise it, to ensure it's handled
                 if 'error' in response_dict:
-                    print(response_dict['error']['message'])
                     raise exceptions.ReceivedErrorResponse(
                         response_dict['error']['code'],
                         response_dict['error']['message'])
