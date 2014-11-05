@@ -4,15 +4,15 @@
 from distutils.core import setup
 
 setup(
-    name = 'rpcclient',
-    packages = ['rpcclient'],
+    name = 'jsonrpc-client',
+    packages = ['jsonrpc-client'],
     install_requires = ['jsonschema', 'requests'],
     version = '0.01',
     description = 'JSON-RPC 2.0 client library',
     author = 'Beau Barker',
     author_email = 'beauinmelbourne@gmail.com',
-    url = 'https://bitbucket.org/beau-barker/rpcclient',
-    download_url = 'https://bitbucket.org/beau-barker/rpcclient/get/0.1.zip',
+    url = 'https://bitbucket.org/beau-barker/jsonrpcclient',
+    download_url = 'https://bitbucket.org/beau-barker/jsonrpcclient/get/0.01.zip',
     keywords = ['json-rpc', 'json', 'api'],
     classifiers = [
         'Programming Language :: Python',

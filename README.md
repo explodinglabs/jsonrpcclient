@@ -1,9 +1,9 @@
-rpcclient
-=========
+jsonrpcclient
+=============
 
 A JSON-RPC 2.0 client library for Python.
 
-    >> import rpcclient
-    >> proxy = rpcclient.Proxy('http://rpcserver/')
+    >> import jsonrpcclient
+    >> proxy = jsonrpcclient.Proxy('http://jsonrpcserver/')
     >> proxy.add(1, 2)
     3
