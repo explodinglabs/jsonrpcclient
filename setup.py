@@ -6,6 +6,7 @@ from distutils.core import setup
 setup(
     name = 'jsonrpcclient',
     packages = ['jsonrpcclient'],
+    package_data={'jsonrpcclient': ['response-schema.json']},
     install_requires = ['jsonschema', 'requests'],
     version = '0.01',
     description = 'JSON-RPC 2.0 client library',
