@@ -5,7 +5,8 @@ from distutils.core import setup
 
 setup(
     name = 'rpcclient',
-    packages = ['jsonschema', 'requests'],
+    packages = ['rpcclient'],
+    install_requires = ['jsonschema', 'requests'],
     version = '0.01',
     description = 'JSON-RPC 2.0 client library',
     author = 'Beau Barker',
