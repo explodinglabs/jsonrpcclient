@@ -8,8 +8,8 @@ A JSON-RPC 2.0 client library for Python.
     >> proxy.add(2, 3, response=True)
     5
 
-Without *response=True* it's just a *notification*, which means you're not
-expecting a response unless there's an error.
+Without ``response=True`` your message is just a notification, which means
+you're not expecting a response unless there's an error.
 
 You can also use keyword arguments:
 
