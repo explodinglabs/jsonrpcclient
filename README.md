@@ -17,10 +17,11 @@ be translated into JSON-RPC.
     >> result = proxy.get(42, name='Foo', response=True)
     --> {"jsonrpc": "2.0", "method": "find", "params": [42, {"name": "Foo"}], "id": 1}
 
-Set your log level to ``INFO`` or higher to see the messages being sent and
+Set your logging level to ``INFO`` or higher to see the messages being sent and
 received.
 
-You will want to catch ``RPCClientException`` and handle it.
+You will want to catch ``RPCClientException`` in case your request wasn't
+successful.
 
     try:
         proxy.go()
