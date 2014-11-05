@@ -21,7 +21,7 @@ Set your logging level to ``INFO`` or higher to see the messages being sent and
 received.
 
 You will want to catch ``RPCClientException`` in case there's a connection
-error or your request was unsuccessful.
+problem or your request was unsuccessful and the server responded with "error".
 
     try:
         proxy.go()
