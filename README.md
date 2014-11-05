@@ -20,8 +20,8 @@ be translated into JSON-RPC.
 Set your logging level to ``INFO`` or higher to see the messages being sent and
 received.
 
-You will want to catch ``RPCClientException`` in case your request wasn't
-successful.
+You will want to catch ``RPCClientException`` in case your request was
+unsuccessful.
 
     try:
         proxy.go()
