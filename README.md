@@ -11,7 +11,8 @@ A JSON-RPC 2.0 client library for Python.
 Without ``response=True``, your message is just a notification, which means
 you're not expecting a response.
 
-You can also use keyword arguments like any other python function:
+You can also pass keyword arguments like any other python function, and they'll
+be translated into JSON-RPC.
 
     >> result = proxy.get(42, name='Foo', response=True)
     --> {"jsonrpc": "2.0", "method": "find", "params": [42, {"name": "Foo"}], "id": 1}
