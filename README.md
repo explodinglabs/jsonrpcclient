@@ -28,3 +28,6 @@ problem or your request was unsuccessful and the server responded with "error".
 
     except jsonrpcclient.exceptions.RPCClientException as e:
         print(str(e))
+
+If you need a server library, try my
+[jsonrpcserver](https://bitbucket.org/beau-barker/jsonrpcserver).
