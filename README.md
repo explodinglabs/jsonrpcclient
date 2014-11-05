@@ -1,7 +1,7 @@
 jsonrpcclient
 =============
 
-A JSON-RPC 2.0 client library for Python.
+A [JSON-RPC 2.0](http://www.jsonrpc.org/) client library for Python.
 
     >> import jsonrpcclient
     >> proxy = jsonrpcclient.Proxy('http://jsonrpcserver/')
@@ -11,8 +11,7 @@ A JSON-RPC 2.0 client library for Python.
 Without ``response=True`` your message is just a notification, which means
 you're not expecting a response unless there's an error.
 
-You can also pass keyword arguments like any other python function, and they'll
-be translated into JSON-RPC.
+You can also pass keyword arguments, and they'll be translated into JSON-RPC.
 
     >> result = proxy.get(42, name='Foo', response=True)
     --> {"jsonrpc": "2.0", "method": "find", "params": [42, {"name": "Foo"}], "id": 1}
