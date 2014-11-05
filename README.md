@@ -9,7 +9,7 @@ A JSON-RPC 2.0 client library for Python.
     5
 
 Without ``response=True``, your message is just a notification, which means
-you're not expecting a response.
+you're not expecting a response unless there's an error.
 
 You can also pass keyword arguments like any other python function, and they'll
 be translated into JSON-RPC.
