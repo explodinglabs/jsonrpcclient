@@ -14,7 +14,7 @@ you're not expecting a response.
 You can also use keyword arguments like any other python function:
 
     >> result = proxy.get(42, name='Foo', response=True)
-    --> {"jsonrpc": "2.0", "method": "find", "params": [42, {"name": "Foo"}]}
+    --> {"jsonrpc": "2.0", "method": "find", "params": [42, {"name": "Foo"}], "id": 1}
 
 Set your log level to INFO (or higher) to see the messages being sent and
 received.
