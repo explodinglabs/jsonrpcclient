@@ -16,8 +16,7 @@ You can also pass keyword arguments, and they'll be translated into JSON-RPC.
     >> result = proxy.get(42, name='Foo', response=True)
     --> {"jsonrpc": "2.0", "method": "find", "params": [42, {"name": "Foo"}], "id": 1}
 
-Set your logging level to ``INFO`` or higher to see the messages being sent and
-received.
+Set your logging level to ``INFO`` to see the messages being sent and received.
 
 You will want to catch ``RPCClientException`` in case there's a connection
 problem or your request was unsuccessful and the server responded with "error".
