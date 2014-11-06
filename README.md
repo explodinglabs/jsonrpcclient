@@ -29,29 +29,14 @@ You can also pass keyword arguments, and they'll be translated into JSON-RPC.
 Exceptions
 ----------
 
-You should catch ``RPCClientException`` in case there's a connection problem, or
-your request was unsuccessful.
+You should catch ``RPCClientException``, in case there's a connection problem,
+or your request was unsuccessful.
 
     try:
         proxy.go()
+
     except jsonrpcclient.exceptions.RPCClientException as e:
         print(str(e))
-
-Alternate usage
----------------
-
-Alternatively, you can use the ``request()`` and ``notify()`` methods. These are
-the same:
-
-    >> proxy.request('add', 2, 3)
-    5
-    >> proxy.add(2, 3, request=True)
-    5
-
-And these are the same:
-
-    >> proxy.notify('store', foo="bar")
-    >> proxy.store(foo="bar")
 
 If you need a server library, try my
 [jsonrpcserver](https://bitbucket.org/beau-barker/jsonrpcserver).
