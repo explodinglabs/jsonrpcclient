@@ -3,6 +3,7 @@
 import os
 import json
 import logging
+import pkgutil
 
 import requests
 import jsonschema
@@ -81,8 +82,8 @@ class Proxy:
                 try:
                     jsonschema.validate(
                         response_dict,
-                        json.loads(open(os.path.dirname(__file__)+ \
-                            '/response-schema.json').read()))
+                        json.loads(pkgutil.get_data(
+                            __name__, 'response-schema.json').decode('utf-8')))
 
                 except jsonschema.ValidationError:
                     raise exceptions.InvalidResponse()
