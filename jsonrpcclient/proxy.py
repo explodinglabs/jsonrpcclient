@@ -24,6 +24,7 @@ class Proxy:
         """
 
         def attr_handler(*args, **kwargs):
+            """Call self.request from here"""
             return self.request(name, *args, **kwargs)
 
         return attr_handler
