@@ -21,11 +21,14 @@ def request(method, *args, **kwargs):
         rpc.request('find', name='Beau', age=38, response=True)
     """
 
-    # Get the request id, if present in kwargs, and pop it out of the dict
+    # Get the request id
     request_id = None
-    if kwargs.get('response', True):
-        kwargs.pop('response')
+    if kwargs.get('response', False):
         request_id = next(id_generator)
+
+    # If 'response' is present in kwargs, pop it out of the dict
+    if 'response' in kwargs:
+        kwargs.pop('response')
 
     r = OrderedDict([
         ('jsonrpc', '2.0'),
