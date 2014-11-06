@@ -23,7 +23,7 @@ def request(method, *args, **kwargs):
 
     # Get the request id, if present in kwargs, and pop it out of the dict
     request_id = None
-    if 'response' in kwargs:
+    if kwargs.get('response', True):
         kwargs.pop('response')
         request_id = next(id_generator)
 

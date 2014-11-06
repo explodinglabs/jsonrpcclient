@@ -1,29 +1,40 @@
 jsonrpcclient
 =============
 
-A [JSON-RPC 2.0](http://www.jsonrpc.org/) client library for Python.
+A [JSON-RPC 2.0](http://www.jsonrpc.org/) client library for Python 3.
 
     >> import jsonrpcclient
     >> proxy = jsonrpcclient.Proxy('http://jsonrpcserver/')
-    >> proxy.add(2, 3, response=True)
+    >> proxy.request('add', 2, 3)
     5
 
-Without ``response=True`` your message is just a notification, which means
-you're not expecting a response unless there's an error.
+The shorthand version uses Python magic:
 
-You can also pass keyword arguments, and they'll be translated into JSON-RPC.
-
-    >> result = proxy.get(42, name='Foo', response=True)
-    --> {"jsonrpc": "2.0", "method": "find", "params": [42, {"name": "Foo"}], "id": 1}
+    >> proxy.add(2, 3)
+    --> {"jsonrpc": "2.0", "method": "add", "params": [2, 3], "id": 1}
+    <-- {"jsonrpc": "2.0", "result": 5, "id": 1}
+    5
 
 Set your logging level to ``INFO`` to see the messages being sent and received.
 
+You can also pass keyword arguments, and they'll be translated into JSON-RPC.
+
+    >> result = proxy.find(42, name='Foo')
+    --> {"jsonrpc": "2.0", "method": "find", "params": [42, {"name": "Foo"}], "id": 1}
+    <-- {"jsonrpc": "2.0", "result": "Bar", "id": 1}
+    Bar
+
+To send a *notification*, use ``notify()``. This tells the server you're not
+expecting any response.
+
+    >> proxy.notify('store', firstname='Foo', lastname='Bar')
+    --> {"jsonrpc": "2.0", "method": "beep", "params": {"firstname": "Foo", "last": "Bar"]}
+
 You will want to catch ``RPCClientException`` in case there's a connection
-problem or your request was unsuccessful and the server responded with "error".
+problem, or your request was unsuccessful.
 
     try:
         proxy.go()
-
     except jsonrpcclient.exceptions.RPCClientException as e:
         print(str(e))
 
