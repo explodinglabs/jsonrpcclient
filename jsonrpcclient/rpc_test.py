@@ -1,3 +1,4 @@
+# pylint: disable=missing-docstring,line-too-long
 """rpc_test.py
 
 This should test:
@@ -18,7 +19,6 @@ Requests (requiring a response):
     rpc.request('find', name='Beau', age=38, response=True)
     rpc.request('set_age', 40, name="Beau Barker", response=True)
 """
-# pylint: disable=missing-docstring,line-too-long
 
 import unittest
 import itertools
@@ -27,6 +27,7 @@ from nose.tools import assert_equal # pylint: disable=no-name-in-module
 from . import rpc
 
 class RPCTest(unittest.TestCase):
+    # pylint: disable=too-many-public-methods,no-self-use
 
     def setUp(self):
         rpc.id_generator = itertools.count(1) # First generated is 1

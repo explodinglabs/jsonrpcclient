@@ -1,5 +1,5 @@
+# pylint: disable=missing-docstring,line-too-long,no-self-use
 """proxy_test.py"""
-# pylint: disable=missing-docstring,line-too-long
 
 import unittest
 import itertools
@@ -10,6 +10,7 @@ from . import rpc
 from . import exceptions
 
 class ProxyTest(unittest.TestCase):
+    # pylint: disable=too-many-public-methods
 
     def setUp(self):
         rpc.id_generator = itertools.count(1) # First generated is 1
@@ -31,4 +32,4 @@ class ProxyTest(unittest.TestCase):
 
     def test_handle_response_none(self):
         with assert_raises(exceptions.ParseError):
-            Proxy._handle_response('{')
+            Proxy.handle_response('{')

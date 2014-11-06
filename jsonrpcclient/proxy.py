@@ -1,6 +1,5 @@
 """proxy.py"""
 
-import os
 import json
 import logging
 import pkgutil
@@ -30,16 +29,16 @@ class Proxy:
         """Send the request and expect a response."""
 
         kwargs['response'] = True
-        return self._handle_response(
-            self._send(rpc.request(method_name, *args, **kwargs)), True)
+        return self.handle_response(
+            self.send_message(rpc.request(method_name, *args, **kwargs)), True)
 
     def notify(self, method_name, *args, **kwargs):
         """Really just an alias for _send()"""
 
-        return self._handle_response(
-            self._send(rpc.request(method_name, *args, **kwargs)), False)
+        return self.handle_response(
+            self.send_message(rpc.request(method_name, *args, **kwargs)), False)
 
-    def _send(self, request_dict):
+    def send_message(self, request_dict):
         """Send the RPC request to the proxy server.
 
         Calls a procedure on another server.
@@ -73,7 +72,7 @@ class Proxy:
         return r.text
 
     @staticmethod
-    def _handle_response(response_str, expected_response=True):
+    def handle_response(response_str, expected_response=True):
         """Processes the response from a request"""
 
         # A response was expected, but none was given?
