@@ -5,38 +5,53 @@ A [JSON-RPC 2.0](http://www.jsonrpc.org/) client library for Python 3.
 
     >> import jsonrpcclient
     >> proxy = jsonrpcclient.Proxy('http://jsonrpcserver/')
-    >> proxy.request('add', 2, 3)
+    >> proxy.add(2, 3, response=True)
     5
 
-The shorthand version uses Python magic:
+``response=True`` tells the server you're expecting a response.
 
-    >> proxy.add(2, 3)
+Set your logging level to ``INFO`` to see the messages being sent and
+received.
+
+    >> logging.basicConfig(level=logging.INFO)
+    >> proxy.add(2, 3, response=True)
     --> {"jsonrpc": "2.0", "method": "add", "params": [2, 3], "id": 1}
     <-- {"jsonrpc": "2.0", "result": 5, "id": 1}
     5
 
-Set your logging level to ``INFO`` to see the messages being sent and received.
-
 You can also pass keyword arguments, and they'll be translated into JSON-RPC.
 
-    >> result = proxy.find(42, name='Foo')
+    >> result = proxy.find(42, name='Foo', response=True)
     --> {"jsonrpc": "2.0", "method": "find", "params": [42, {"name": "Foo"}], "id": 1}
     <-- {"jsonrpc": "2.0", "result": "Bar", "id": 1}
     Bar
 
-To send a *notification*, use ``notify()``. This tells the server you're not
-expecting any response.
+Exceptions
+----------
 
-    >> proxy.notify('store', firstname='Foo', lastname='Bar')
-    --> {"jsonrpc": "2.0", "method": "beep", "params": {"firstname": "Foo", "last": "Bar"]}
-
-You will want to catch ``RPCClientException`` in case there's a connection
-problem, or your request was unsuccessful.
+You should catch ``RPCClientException`` in case there's a connection problem, or
+your request was unsuccessful.
 
     try:
         proxy.go()
     except jsonrpcclient.exceptions.RPCClientException as e:
         print(str(e))
+
+Alternate usage
+---------------
+
+Alternatively, you can use the ``request()`` and ``notify()`` methods. These are
+the same:
+
+    >> proxy.request('add', 2, 3)
+    5
+    >> proxy.add(2, 3, request=True)
+    5
+
+And these are the same:
+
+    >> proxy.notify('store', foo="bar")
+    >> proxy.store(foo="bar")
 
 If you need a server library, try my
 [jsonrpcserver](https://bitbucket.org/beau-barker/jsonrpcserver).
