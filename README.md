@@ -39,4 +39,4 @@ or your request was unsuccessful.
         print(str(e))
 
 If you need a server, try my
-[jsonrpcserver](https://bitbucket.org/beau-barker/jsonrpcserver).
+[jsonrpcserver](https://bitbucket.org/beau-barker/jsonrpcserver) library.
