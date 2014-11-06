@@ -3,9 +3,9 @@ jsonrpcclient
 
 A [JSON-RPC 2.0](http://www.jsonrpc.org/) client library for Python 3.
 
-    >> import jsonrpcclient
-    >> proxy = jsonrpcclient.Proxy('http://jsonrpcserver/')
-    >> proxy.add(2, 3, response=True)
+    >>> import jsonrpcclient
+    >>> proxy = jsonrpcclient.Proxy('http://jsonrpcserver/')
+    >>> proxy.add(2, 3, response=True)
     5
 
 The library converts the ``add()`` call into a JSON-RPC message that's sent to
@@ -13,8 +13,8 @@ the server.
 
 Set your logging level to ``INFO`` to see the messages being sent and received.
 
-    >> logging.basicConfig(level=logging.INFO)
-    >> proxy.add(2, 3, response=True)
+    >>> logging.basicConfig(level=logging.INFO)
+    >>> proxy.add(2, 3, response=True)
     --> {"jsonrpc": "2.0", "method": "add", "params": [2, 3], "id": 1}
     <-- {"jsonrpc": "2.0", "result": 5, "id": 1}
     5
@@ -24,7 +24,7 @@ Set your logging level to ``INFO`` to see the messages being sent and received.
 You can pass any number of positional or keyword arguments, and they will be
 translated into JSON-RPC.
 
-    >> result = proxy.find(42, name='Foo', response=True)
+    >>> result = proxy.find(42, name='Foo', response=True)
     --> {"jsonrpc": "2.0", "method": "find", "params": [42, {"name": "Foo"}], "id": 1}
     <-- {"jsonrpc": "2.0", "result": "Bar", "id": 1}
     Bar
