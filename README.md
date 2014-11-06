@@ -19,7 +19,7 @@ Set your logging level to ``INFO`` to see the messages being sent and received.
     <-- {"jsonrpc": "2.0", "result": 5, "id": 1}
     5
 
-The ``response=True`` tells the server you're expecting a response.
+``response=True`` tells the server you're expecting a response.
 
 You can also pass other keyword arguments, which will be translated into
 JSON-RPC.
