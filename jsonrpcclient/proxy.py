@@ -23,7 +23,10 @@ class Proxy:
         http://code.activestate.com/recipes/307618/
         """
 
-        return self.request(name)
+        def attr_handler(*args, **kwargs):
+            return self.request(name, *args, **kwargs)
+
+        return attr_handler
 
     def request(self, method_name, *args, **kwargs):
         """Send the request and expect a response."""
