@@ -8,8 +8,8 @@ A [JSON-RPC 2.0](http://www.jsonrpc.org/) client library for Python 3.
     >> proxy.add(2, 3, response=True)
     5
 
-The library converts the ``add()`` call into a JSON-RPC message, which is sent
-to the server.
+The library converts the ``add()`` call into a JSON-RPC message that's sent to
+the server.
 
 Set your logging level to ``INFO`` to see the messages being sent and received.
 
