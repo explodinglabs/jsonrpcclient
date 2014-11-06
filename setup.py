@@ -10,7 +10,7 @@ setup(
     package_data={'jsonrpcclient': ['response-schema.json']},
     install_requires=['requests', 'jsonschema'],
     version='1.0.2',
-    description='JSON-RPC 2.0 client library',
+    description='JSON-RPC 2.0 client library for Python 3',
     author='Beau Barker',
     author_email='beauinmelbourne@gmail.com',
     url='https://bitbucket.org/beau-barker/jsonrpcclient',
