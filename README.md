@@ -9,7 +9,7 @@ A [JSON-RPC 2.0](http://www.jsonrpc.org/) client library for Python 3.
     5
 
 The library uses Python magic to convert the ``add()`` call into a JSON-RPC
-message to send to the server.
+message, which it sends to the server.
 
 Set your logging level to ``INFO`` to see the messages being sent and received.
 
@@ -21,7 +21,7 @@ Set your logging level to ``INFO`` to see the messages being sent and received.
 
 ``response=True`` tells the server you're expecting a response.
 
-You can also pass other keyword arguments, which will be translated into
+You can also pass other keyword arguments which will be translated into
 JSON-RPC.
 
     >> result = proxy.find(42, name='Foo', response=True)
