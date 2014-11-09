@@ -16,7 +16,9 @@ class Proxy:
     def __init__(self, endpoint):
         self.endpoint = endpoint
 
-        logging.getLogger('jsonrpcclient').setLevel(logging.INFO)
+        self.logger = logging.getLogger('jsonrpcclient')
+        self.logger.addHandler(logging.StreamHandler())
+        self.logger.setLevel(logging.DEBUG)
 
     def __getattr__(self, name):
         """Catch undefined methods and handle them as RPC requests.
@@ -52,7 +54,7 @@ class Proxy:
         """
 
         # Log the request
-        logging.getLogger('jsonrpcclient').info('--> '+json.dumps(request_dict))
+        self.logger.debug('--> '+json.dumps(request_dict))
 
         try:
             # Send the message
@@ -64,7 +66,12 @@ class Proxy:
                 json=request_dict
             )
 
-            logging.info('<-- '+r.text.strip("\n"))
+            # Log the response
+            self.logger.debug('<-- '+r.text \
+                .replace("\n",'') \
+                .replace('  ', ' ')
+                .replace('{ ', '{')
+                )
 
         except (requests.exceptions.InvalidSchema,
                 requests.exceptions.RequestException):
