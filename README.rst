@@ -1,25 +1,19 @@
 jsonrpcclient
-=============
+-------------
 
 A [JSON-RPC 2.0](http://www.jsonrpc.org/) client library for Python 3.
 
+An example of adding two numbers:
+
     >>> import jsonrpcclient
-    >>> proxy = jsonrpcclient.Proxy('http://jsonrpcserver/')
-    >>> proxy.add(2, 3, response=True)
-    5
-
-The library converts the ``add()`` call into a JSON-RPC message that's sent to
-the server.
-
-Set your logging level to ``INFO`` to see the messages being sent and received.
-
-    >>> logging.basicConfig(level=logging.INFO)
+    >>> proxy = jsonrpcclient.Proxy('http://endpoint/')
     >>> proxy.add(2, 3, response=True)
     --> {"jsonrpc": "2.0", "method": "add", "params": [2, 3], "id": 1}
     <-- {"jsonrpc": "2.0", "result": 5, "id": 1}
     5
 
-``response=True`` tells the server you're expecting a response.
+The library catches the unknown ``add`` call, and sends it as a JSON-RPC
+message. ``response=True`` tells the server you're expecting a response.
 
 You can pass any number of positional or keyword arguments, and they will be
 translated into JSON-RPC.
@@ -30,13 +24,25 @@ translated into JSON-RPC.
     Bar
 
 You should catch ``RPCClientException``, in case there's a connection problem,
-or your request was unsuccessful.
+or your request was unsuccessful for some other reason.
 
     try:
         proxy.go()
-
     except jsonrpcclient.exceptions.RPCClientException as e:
         print(str(e))
+
+Logging
+=======
+
+The log entries are on a StreamHandler set to show DEBUG-severity log entries.
+If you don't want them, turn them off with:
+
+    logging.getLogger('jsonrpcclient').setLevel(logging.INFO)
+
+Changelog
+=========
+
+v1.0.3: Better logging.
 
 If you need a server, try my
 [jsonrpcserver](https://bitbucket.org/beau-barker/jsonrpcserver) library.
