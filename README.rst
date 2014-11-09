@@ -26,10 +26,10 @@ translated into JSON-RPC.
 You should catch ``RPCClientException``, in case there's a connection problem,
 or your request was unsuccessful for some other reason.
 
-    try:
-        proxy.go()
-    except jsonrpcclient.exceptions.RPCClientException as e:
-        print(str(e))
+    >>> try:
+    >>>     proxy.go()
+    >>> except jsonrpcclient.exceptions.RPCClientException as e:
+    >>>     print(str(e))
 
 Logging
 =======
@@ -37,7 +37,7 @@ Logging
 The log entries are on a StreamHandler set to show DEBUG-severity log entries.
 If you don't want them, turn them off with:
 
-    logging.getLogger('jsonrpcclient').setLevel(logging.INFO)
+    >>> logging.getLogger('jsonrpcclient').setLevel(logging.INFO)
 
 Changelog
 =========
