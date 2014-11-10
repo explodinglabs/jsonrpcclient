@@ -2,6 +2,7 @@
 # pylint: disable=line-too-long
 """setup.py"""
 
+import os
 from setuptools import setup
 
 def read(fname):
