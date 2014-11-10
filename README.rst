@@ -1,5 +1,5 @@
 jsonrpcclient
--------------
+=============
 
 A `JSON-RPC 2.0 <http://www.jsonrpc.org/>`_ client library for Python 3.
 
@@ -35,7 +35,7 @@ or your request was unsuccessful for some other reason.
     >>>     print(str(e))
 
 Logging
-=======
+-------
 
 The log entries are on a StreamHandler set to show DEBUG-severity log entries.
 If you don't want them, turn them off with:
@@ -44,7 +44,7 @@ If you don't want them, turn them off with:
     >>> logging.getLogger('jsonrpcclient').setLevel(logging.INFO)
 
 Changelog
-=========
+---------
 
 v1.0.3: Better logging.
 
