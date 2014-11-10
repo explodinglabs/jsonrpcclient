@@ -5,7 +5,7 @@ A `JSON-RPC 2.0 <http://www.jsonrpc.org/>`_ client library for Python 3.
 
 An example of adding two numbers:
 
-.. code-block:: python
+.. sourcecode::
     >>> import jsonrpcclient
     >>> proxy = jsonrpcclient.Proxy('http://endpoint/')
     >>> proxy.add(2, 3, response=True)
@@ -19,7 +19,7 @@ message. ``response=True`` tells the server you're expecting a response.
 You can pass any number of positional or keyword arguments, and they will be
 translated into JSON-RPC.
 
-.. code-block:: python
+.. sourcecode::
     >>> result = proxy.find(42, name='Foo', response=True)
     --> {"jsonrpc": "2.0", "method": "find", "params": [42, {"name": "Foo"}], "id": 1}
     <-- {"jsonrpc": "2.0", "result": "Bar", "id": 1}
@@ -28,7 +28,7 @@ translated into JSON-RPC.
 You should catch ``RPCClientException``, in case there's a connection problem,
 or your request was unsuccessful for some other reason.
 
-.. code-block:: python
+.. sourcecode::
     >>> try:
     >>>     proxy.go()
     >>> except jsonrpcclient.exceptions.RPCClientException as e:
@@ -36,7 +36,7 @@ or your request was unsuccessful for some other reason.
 
 If you don't want the log entries, turn them off with:
 
-.. code-block:: python
+.. sourcecode::
     >>> logging.getLogger('jsonrpcclient').setLevel(logging.INFO)
 
 If you need a server, try my
