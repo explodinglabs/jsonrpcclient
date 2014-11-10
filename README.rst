@@ -24,7 +24,7 @@ arguments, and they will be translated into JSON-RPC.
 
 .. sourcecode:: python
 
-    >>> result = server.request('find', 42, name='Foo')
+    >>> server.request('find', 42, name='Foo')
     --> {"jsonrpc": "2.0", "method": "find", "params": [42, {"name": "Foo"}], "id": 1}
     <-- {"jsonrpc": "2.0", "result": "Bar", "id": 1}
     Bar
