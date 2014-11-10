@@ -85,9 +85,9 @@ If you need a server, try my `jsonrpcserver
 Changelog
 ---------
 
-1.0.5 - 2014-11-10
-    * Better logging.
+    1.0.5 - 2014-11-10
+        * Better logging.
 
-1.0.4 - 2014-11-10
-    * "Proxy" class renamed to "Server".
-    * Logging improved.
+    1.0.4 - 2014-11-10
+        * "Proxy" class renamed to "Server".
+        * Logging improved.
