@@ -49,12 +49,12 @@ There's another way to send messages:
 
 .. sourcecode:: python
 
-    >>> server.find(42, name='Foo', response=True)
-    --> {"jsonrpc": "2.0", "method": "find", "params": [42, {"name": "Foo"}], "id": 1}
-    <-- {"jsonrpc": "2.0", "result": "Bar", "id": 1}
-    Bar
+    >>> server.add(2, 3, response=True)
+    --> {"jsonrpc": "2.0", "method": "add", "params": [2, 3], "id": 1}
+    <-- {"jsonrpc": "2.0", "result": 5, "id": 1}
+    5
 
-The library catches the undefined ``find()`` call, and sends it as a JSON-RPC
+The library catches the undefined ``add()`` call, and sends it as a JSON-RPC
 message.
 
 ``response=True`` tells the server you're expecting a response, without that
