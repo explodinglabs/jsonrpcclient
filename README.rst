@@ -7,8 +7,8 @@ A `JSON-RPC 2.0 <http://www.jsonrpc.org/>`_ client library for Python 3.
 .. sourcecode:: python
 
     >>> import jsonrpcclient
-    >>> remote = jsonrpcclient.Endpoint('http://127.0.0.1:5000')
-    >>> remote.add(2, 3, response=True)
+    >>> server = jsonrpcclient.Server('http://example/')
+    >>> server.add(2, 3, response=True)
     --> {"jsonrpc": "2.0", "method": "add", "params": [2, 3], "id": 1}
     <-- {"jsonrpc": "2.0", "result": 5, "id": 1}
     5
@@ -21,7 +21,7 @@ translated into JSON-RPC.
 
 .. sourcecode:: python
 
-    >>> result = ep.find(42, name='Foo', response=True)
+    >>> result = server.find(42, name='Foo', response=True)
     --> {"jsonrpc": "2.0", "method": "find", "params": [42, {"name": "Foo"}], "id": 1}
     <-- {"jsonrpc": "2.0", "result": "Bar", "id": 1}
     Bar
@@ -32,7 +32,7 @@ or your request was unsuccessful for some other reason.
 .. sourcecode:: python
 
     try:
-        ep.go()
+        server.go()
     except jsonrpcclient.exceptions.RPCClientException as e:
         print(str(e))
 
