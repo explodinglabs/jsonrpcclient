@@ -15,6 +15,8 @@ A `JSON-RPC 2.0 <http://www.jsonrpc.org/>`_ client library for Python 3.
 
 If you don't need any data to be returned, use ``notify()``:
 
+.. sourcecode:: python
+
     >>> server.notify('go')
     --> {"jsonrpc": "2.0", "method": "go"}
     >>>
