@@ -31,8 +31,8 @@ translated into JSON-RPC.
     <-- {"jsonrpc": "2.0", "result": "Bar", "id": 1}
     Bar
 
-You should catch ``RPCClientException``, in case there's a connection problem,
-or your request was unsuccessful.
+You should catch ``RPCClientException``. This will be raised for connection
+problems or if the server responds with JSON-RPC *error*.
 
 .. sourcecode:: python
 
