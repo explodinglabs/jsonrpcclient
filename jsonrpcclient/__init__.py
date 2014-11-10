@@ -1,3 +1,3 @@
 """rpcclient"""
 
-from .proxy import Proxy
+from .server import Server

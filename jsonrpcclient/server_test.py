@@ -15,7 +15,7 @@ class ServerTest(unittest.TestCase):
 
     def setUp(self):
         rpc.id_generator = itertools.count(1) # First generated is 1
-        self.server = server('http://non-existant/')
+        self.server = Server('http://non-existant/')
         self.server.logger.setLevel(logging.INFO) # Turn off logging
 
     def test_request(self):
@@ -32,4 +32,4 @@ class ServerTest(unittest.TestCase):
 
     def test_handle_response_none(self):
         with assert_raises(exceptions.ParseError):
-            Server.handle_response('{')
+            self.server.handle_response('{')

@@ -13,8 +13,8 @@ from . import exceptions
 class Server:
     """This class acts as the remote server"""
 
-    def __init__(self, url):
-        self.url = url
+    def __init__(self, endpoint):
+        self.endpoint = endpoint
 
         self.logger = logging.getLogger('jsonrpcclient')
         self.logger.addHandler(logging.StreamHandler())
@@ -59,7 +59,7 @@ class Server:
         try:
             # Send the message
             r = requests.post(
-                self.url,
+                self.endpoint,
                 headers={
                     'Content-Type': 'application/json; charset=utf-8'
                 },
