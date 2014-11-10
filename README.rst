@@ -33,16 +33,16 @@ or your request was unsuccessful for some other reason.
 
 .. sourcecode:: python
 
-    >>> try:
-    >>>     proxy.go()
-    >>> except jsonrpcclient.exceptions.RPCClientException as e:
-    >>>     print(str(e))
+    try:
+        proxy.go()
+    except jsonrpcclient.exceptions.RPCClientException as e:
+        print(str(e))
 
 If you don't want the log entries, turn them off with:
 
 .. sourcecode:: python
 
-    >>> logging.getLogger('jsonrpcclient').setLevel(logging.INFO)
+    logging.getLogger('jsonrpcclient').setLevel(logging.INFO)
 
 If you need a server, try my `jsonrpcserver
 <https://bitbucket.org/beau-barker/jsonrpcserver>`_ library.
