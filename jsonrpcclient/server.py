@@ -66,6 +66,11 @@ class Server:
                 json=request_dict
             )
 
+        except (requests.exceptions.InvalidSchema,
+                requests.exceptions.RequestException):
+            raise exceptions.ConnectionError()
+
+        if len(r.text):
             # Log the response
             self.logger.debug('<-- '+r.text \
                 .replace("\n",'') \
@@ -73,14 +78,13 @@ class Server:
                 .replace('{ ', '{')
                 )
 
-        except (requests.exceptions.InvalidSchema,
-                requests.exceptions.RequestException):
-            raise exceptions.ConnectionError()
+        else:
+            self.logger.debug('<-- {} {}'.format(r.status_code, r.reason))
 
-        # Raise exception the HTTP status code was not 200, and there was no
-        # response body, because this should be handled.
-        if not len(r.text) and r.status_code != 200:
-            raise exceptions.StatusCodeError(r.status_code)
+            # Raise exception the HTTP status code was not 200, and there was no
+            # response body, because this should be handled.
+            if r.status_code != 200:
+                raise exceptions.StatusCodeError(r.status_code)
 
         return r.text
 

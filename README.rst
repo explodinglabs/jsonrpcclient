@@ -1,10 +1,9 @@
-=============
 jsonrpcclient
 =============
 
 A `JSON-RPC 2.0 <http://www.jsonrpc.org/>`_ client library for Python 3.
 
-Give the remote server details, then use ``request()`` to make a remote
+Set the remote server details, then use ``request()`` to make a remote
 procedure call.
 
 .. sourcecode:: python
@@ -22,7 +21,7 @@ If you don't need any data to be returned, use ``notify()`` instead:
 
     >>> server.notify('go')
     --> {"jsonrpc": "2.0", "method": "go"}
-    >>>
+    <-- 200 OK
 
 You can pass any number of positional or keyword arguments, and they will be
 translated into JSON-RPC.
