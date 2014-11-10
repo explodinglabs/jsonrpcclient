@@ -45,6 +45,8 @@ response.
 Shorthand
 ---------
 
+These are the same:
+
 .. sourcecode:: python
 
     >>> server.add(2, 3, response=True)
@@ -54,6 +56,7 @@ Shorthand
 
 The library catches the undefined ``add()`` call, and sends it as a JSON-RPC
 message. ``response=True`` tells the server you're expecting a response.
+Without that, it's a notification.
 
 Logging
 -------
