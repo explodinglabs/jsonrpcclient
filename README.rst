@@ -54,9 +54,9 @@ These are the same:
     <-- {"jsonrpc": "2.0", "result": "Bar", "id": 1}
     Bar
 
-The library catches the undefined ``add()`` call, and sends it as a JSON-RPC
-message. ``response=True`` tells the server you're expecting a response.
-Without that, it's a notification.
+The library catches the undefined ``find()`` call, and sends it as a JSON-RPC
+message. ``response=True`` tells the server you're expecting a response,
+without that it's a notification.
 
 Logging
 -------
