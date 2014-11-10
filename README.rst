@@ -14,7 +14,7 @@ A `JSON-RPC 2.0 <http://www.jsonrpc.org/>`_ client library for Python 3.
     <-- {"jsonrpc": "2.0", "result": 5, "id": 1}
     5
 
-The library catches the unknown add call, and sends it as a JSON-RPC
+The library catches the undefined ``add()`` call, and sends it as a JSON-RPC
 message. response=True tells the server you're expecting a response.
 
 You can pass any number of positional or keyword arguments, and they will be
