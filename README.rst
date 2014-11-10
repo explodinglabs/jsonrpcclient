@@ -6,8 +6,8 @@ A `JSON-RPC 2.0 <http://www.jsonrpc.org/>`_ client library for Python 3.
 To make a `remote procedure call
 <http://en.wikipedia.org/wiki/Remote_procedure_call>`_:
 
-* Set the server endpoint address
-* Use ``request()`` to call the remote method
+# Set the server endpoint address
+# Use ``request()`` to call the remote method
 
 .. sourcecode:: python
 
