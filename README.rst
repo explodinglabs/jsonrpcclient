@@ -22,7 +22,6 @@ If you don't need any data to be returned, use ``notify()`` instead:
     >>> server.notify('go')
     --> {"jsonrpc": "2.0", "method": "go"}
     <-- 200 OK
-    >>>
 
 You can pass any number of positional or keyword arguments, and they will be
 translated into JSON-RPC.
