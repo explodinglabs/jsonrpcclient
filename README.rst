@@ -28,3 +28,13 @@ translated into JSON-RPC.
     <-- {"jsonrpc": "2.0", "result": "Bar", "id": 1}
     Bar
 
+You should catch ``RPCClientException``, in case there's a connection problem,
+or your request was unsuccessful for some other reason.
+
+.. sourcecode:: python
+
+    >>> try:
+    >>>     proxy.go()
+    >>> except jsonrpcclient.exceptions.RPCClientException as e:
+    >>>     print(str(e))
+
