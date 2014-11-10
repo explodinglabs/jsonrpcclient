@@ -15,7 +15,7 @@ procedure call.
     <-- {"jsonrpc": "2.0", "result": 5, "id": 1}
     5
 
-If you don't need any data to be returned, use ``notify()`` instead:
+If you don't need any data returned, use ``notify()`` instead:
 
 .. sourcecode:: python
 
