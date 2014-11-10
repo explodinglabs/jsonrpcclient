@@ -55,7 +55,8 @@ Exceptions
 ----------
 
 You should catch ``RPCClientException``. This will be raised in the event of
-connection problems, or if the server responded with JSON-RPC *error* response.
+connection problems, or if the server responded with a JSON-RPC *error*
+response.
 
 .. sourcecode:: python
 
