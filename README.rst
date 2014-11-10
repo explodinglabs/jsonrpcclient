@@ -43,10 +43,5 @@ If you don't want them, turn them off with:
 .. sourcecode:: python
     >>> logging.getLogger('jsonrpcclient').setLevel(logging.INFO)
 
-Changelog
----------
-
-v1.0.3: Better logging.
-
 If you need a server, try my
 `jsonrpcserver <https://bitbucket.org/beau-barker/jsonrpcserver> library`_.
