@@ -72,7 +72,6 @@ If you don't want the log entries, turn them off with:
 .. sourcecode:: python
 
     logging.getLogger('jsonrpcclient').setLevel(logging.INFO)
-    logging.getLogger('requests').setLevel(logging.INFO)
 
 If you need a server, try my `jsonrpcserver
 <https://bitbucket.org/beau-barker/jsonrpcserver>`_ library.
