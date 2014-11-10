@@ -38,3 +38,9 @@ or your request was unsuccessful for some other reason.
     >>> except jsonrpcclient.exceptions.RPCClientException as e:
     >>>     print(str(e))
 
+If you don't want the log entries, turn them off with:
+
+.. sourcecode:: python
+
+    >>> logging.getLogger('jsonrpcclient').setLevel(logging.INFO)
+
