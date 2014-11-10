@@ -7,7 +7,7 @@ A `JSON-RPC 2.0 <http://www.jsonrpc.org/>`_ client library for Python 3.
 .. sourcecode:: python
 
     >>> import jsonrpcclient
-    >>> server = jsonrpcclient.Server('http://example/')
+    >>> server = jsonrpcclient.Server('http://endpoint')
     >>> server.add(2, 3, response=True)
     --> {"jsonrpc": "2.0", "method": "add", "params": [2, 3], "id": 1}
     <-- {"jsonrpc": "2.0", "result": 5, "id": 1}
