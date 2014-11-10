@@ -10,7 +10,7 @@ call.
 .. sourcecode:: python
 
     >>> import jsonrpcclient
-    >>> server = jsonrpcclient.Server('http://endpoint')
+    >>> server = jsonrpcclient.Server('http://endpoint/')
     >>> server.request('add', 2, 3)
     --> {"jsonrpc": "2.0", "method": "add", "params": [2, 3], "id": 1}
     <-- {"jsonrpc": "2.0", "result": 5, "id": 1}
