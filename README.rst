@@ -49,4 +49,4 @@ Changelog
 v1.0.3: Better logging.
 
 If you need a server, try my
-[jsonrpcserver](https://bitbucket.org/beau-barker/jsonrpcserver) library.
+`jsonrpcserver <https://bitbucket.org/beau-barker/jsonrpcserver> library`.
