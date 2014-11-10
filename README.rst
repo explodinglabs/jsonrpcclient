@@ -45,7 +45,7 @@ response.
 Shorthand
 ---------
 
-These are the same:
+There's another way to send messages:
 
 .. sourcecode:: python
 
