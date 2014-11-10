@@ -21,3 +21,10 @@ message. response=True tells the server you're expecting a response.
 You can pass any number of positional or keyword arguments, and they will be
 translated into JSON-RPC.
 
+.. sourcecode:: python
+
+    >>> result = proxy.find(42, name='Foo', response=True)
+    --> {"jsonrpc": "2.0", "method": "find", "params": [42, {"name": "Foo"}], "id": 1}
+    <-- {"jsonrpc": "2.0", "result": "Bar", "id": 1}
+    Bar
+
