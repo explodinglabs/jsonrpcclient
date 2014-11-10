@@ -68,7 +68,8 @@ response.
 Logging
 -------
 
-If you don't want the log entries, turn them off with:
+If you don't want to see the underlying JSON messages, increase the logging
+level above DEBUG:
 
 .. sourcecode:: python
 
