@@ -86,8 +86,8 @@ Changelog
 ---------
 
 1.0.5 - 2014-11-10
-* Better logging.
+    * Better logging.
 
 1.0.4 - 2014-11-10
-* "Proxy" class renamed to "Server".
-* Logging improved.
+    * "Proxy" class renamed to "Server".
+    * Logging improved.
