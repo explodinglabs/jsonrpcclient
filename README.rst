@@ -4,6 +4,8 @@ jsonrpcclient
 
 A `JSON-RPC 2.0 <http://www.jsonrpc.org/>`_ client library for Python 3.
 
+Define the server, then use ``request()`` to make a remote procedure call.
+
 .. sourcecode:: python
 
     >>> import jsonrpcclient
@@ -13,7 +15,7 @@ A `JSON-RPC 2.0 <http://www.jsonrpc.org/>`_ client library for Python 3.
     <-- {"jsonrpc": "2.0", "result": 5, "id": 1}
     5
 
-If you don't need any data to be returned, use ``notify()``:
+If you don't need any data to be returned, use ``notify()`` instead:
 
 .. sourcecode:: python
 
