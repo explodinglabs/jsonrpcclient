@@ -31,9 +31,9 @@ translated into JSON-RPC.
     <-- {"jsonrpc": "2.0", "result": "Bar", "id": 1}
     Bar
 
-You should catch ``RPCClientException``. The library will raise this on errors
-such as connection problems, or if the server responded with JSON-RPC *error*
-response.
+You should catch ``RPCClientException``. This will be raised in the event of
+errors such as connection problems, or if the server responded with JSON-RPC
+*error* response.
 
 .. sourcecode:: python
 
