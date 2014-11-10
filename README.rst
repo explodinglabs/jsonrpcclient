@@ -60,7 +60,7 @@ There's another way to send messages:
 The library catches the undefined ``add()`` call, and sends it as a JSON-RPC
 message.
 
-``response=True`` tells the server you're expecting a response, without that
+``response=True`` tells the server you're expecting a response; without that
 it's a notification.
 
 Logging
