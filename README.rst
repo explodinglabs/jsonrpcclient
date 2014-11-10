@@ -5,7 +5,7 @@ A `JSON-RPC 2.0 <http://www.jsonrpc.org/>`_ client library for Python 3.
 
 An example of adding two numbers:
 
-sourcecode::
+.. sourcecode:: python
     >>> import jsonrpcclient
     >>> proxy = jsonrpcclient.Proxy('http://endpoint/')
     >>> proxy.add(2, 3, response=True)
