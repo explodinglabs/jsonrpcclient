@@ -19,6 +19,7 @@ message. ``response=True`` tells the server you're expecting a response.
 You can pass any number of positional or keyword arguments, and they will be
 translated into JSON-RPC.
 
+.. code-block:: python
     >>> result = proxy.find(42, name='Foo', response=True)
     --> {"jsonrpc": "2.0", "method": "find", "params": [42, {"name": "Foo"}], "id": 1}
     <-- {"jsonrpc": "2.0", "result": "Bar", "id": 1}
@@ -27,17 +28,15 @@ translated into JSON-RPC.
 You should catch ``RPCClientException``, in case there's a connection problem,
 or your request was unsuccessful for some other reason.
 
+.. code-block:: python
     >>> try:
     >>>     proxy.go()
     >>> except jsonrpcclient.exceptions.RPCClientException as e:
     >>>     print(str(e))
 
-Logging
--------
+If you don't want the log entries, turn them off with:
 
-The log entries are on a StreamHandler set to show DEBUG-severity log entries.
-If you don't want them, turn them off with:
-
+.. code-block:: python
     >>> logging.getLogger('jsonrpcclient').setLevel(logging.INFO)
 
 If you need a server, try my
