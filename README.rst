@@ -32,7 +32,7 @@ translated into JSON-RPC.
     Bar
 
 You should catch ``RPCClientException``. This will be raised for connection
-problems or if the server responds with JSON-RPC *error*.
+problems, or if the server responds with JSON-RPC *error* response.
 
 .. sourcecode:: python
 
