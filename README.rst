@@ -4,7 +4,7 @@ jsonrpcclient
 
 A `JSON-RPC 2.0 <http://www.jsonrpc.org/>`_ client library for Python 3.
 
-Give the details of the remote server, then use ``request()`` to make a remote
+Give the remote server details, then use ``request()`` to make a remote
 procedure call.
 
 .. sourcecode:: python
