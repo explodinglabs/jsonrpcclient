@@ -17,8 +17,8 @@ details and then use ``request()`` to call the remote method.
     5
 
 The first argument to ``request()`` is the method name, and everything else is
-just passed as parameters to the method. You can pass any number of positional
-or keyword arguments, and they will be translated into JSON-RPC.
+just passed as parameters. You can pass any number of positional or keyword
+arguments, and they will be translated into JSON-RPC.
 
 .. sourcecode:: python
 
