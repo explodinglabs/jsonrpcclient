@@ -81,3 +81,13 @@ level above DEBUG:
 
 If you need a server, try my `jsonrpcserver
 <https://bitbucket.org/beau-barker/jsonrpcserver>`_ library.
+
+Changelog
+---------
+
+1.0.5 - 2014-11-10
+    * Better logging.
+
+1.0.4 - 2014-11-10
+    * "Proxy" class renamed to "Server".
+    * Logging improved.

@@ -16,7 +16,7 @@ class ServerTest(unittest.TestCase):
     def setUp(self):
         rpc.id_generator = itertools.count(1) # First generated is 1
         self.server = Server('http://non-existant/')
-        self.server.logger.setLevel(logging.INFO) # Turn off logging
+        logging.getLogger('jsonrpcclient').setLevel(logging.INFO) # Turn off logging
 
     def test_request(self):
         with assert_raises(exceptions.ConnectionError):

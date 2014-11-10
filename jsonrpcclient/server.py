@@ -18,7 +18,6 @@ class Server:
 
         self.logger = logging.getLogger('jsonrpcclient')
         self.logger.addHandler(logging.StreamHandler())
-        self.logger.setLevel(logging.DEBUG)
 
     def __getattr__(self, name):
         """Catch undefined methods and handle them as RPC requests.
