@@ -72,12 +72,11 @@ response.
 Logging
 -------
 
-If you don't want to see the underlying JSON messages, increase the logging
-level above DEBUG:
+To see the underlying JSON messages, set the logging level to DEBUG:
 
 .. sourcecode:: python
 
-    logging.getLogger('jsonrpcclient').setLevel(logging.INFO)
+    logging.getLogger('jsonrpcclient').setLevel(logging.DEBUG)
 
 If you need a server, try my `jsonrpcserver
 <https://bitbucket.org/beau-barker/jsonrpcserver>`_ library.

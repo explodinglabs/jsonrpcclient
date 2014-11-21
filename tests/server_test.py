@@ -3,12 +3,13 @@
 
 import unittest
 import itertools
-from nose.tools import assert_raises # pylint: disable=no-name-in-module
 import logging
 
-from .server import Server
-from . import rpc
-from . import exceptions
+from nose.tools import assert_raises # pylint: disable=no-name-in-module
+
+from jsonrpcclient.server import Server
+from jsonrpcclient import rpc
+from jsonrpcclient import exceptions
 
 class ServerTest(unittest.TestCase):
     # pylint: disable=too-many-public-methods
@@ -16,7 +17,6 @@ class ServerTest(unittest.TestCase):
     def setUp(self):
         rpc.id_generator = itertools.count(1) # First generated is 1
         self.server = Server('http://non-existant/')
-        logging.getLogger('jsonrpcclient').setLevel(logging.INFO) # Turn off logging
 
     def test_request(self):
         with assert_raises(exceptions.ConnectionError):
