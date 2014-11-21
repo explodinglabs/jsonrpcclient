@@ -1,23 +1,20 @@
 """server.py"""
 
 import json
-import logging
 import pkgutil
 
 import requests
 import jsonschema
 
-from . import rpc
-from . import exceptions
+from jsonrpcclient import rpc
+from jsonrpcclient import exceptions
+from jsonrpcclient import logger
 
 class Server:
     """This class acts as the remote server"""
 
     def __init__(self, endpoint):
         self.endpoint = endpoint
-
-        self.logger = logging.getLogger('jsonrpcclient')
-        self.logger.addHandler(logging.StreamHandler())
 
     def __getattr__(self, name):
         """Catch undefined methods and handle them as RPC requests.
@@ -53,7 +50,7 @@ class Server:
         """
 
         # Log the request
-        self.logger.debug('--> '+json.dumps(request_dict))
+        logger.debug('--> '+json.dumps(request_dict))
 
         try:
             # Send the message
@@ -71,14 +68,14 @@ class Server:
 
         if len(r.text):
             # Log the response
-            self.logger.debug('<-- '+r.text \
+            logger.debug('<-- '+r.text \
                 .replace("\n",'') \
                 .replace('  ', ' ')
                 .replace('{ ', '{')
                 )
 
         else:
-            self.logger.debug('<-- {} {}'.format(r.status_code, r.reason))
+            logger.debug('<-- {} {}'.format(r.status_code, r.reason))
 
             # Raise exception the HTTP status code was not 200, and there was no
             # response body, because this should be handled.

@@ -1,7 +1,9 @@
-"""rpcclient"""
+"""__init__.py"""
 
 import logging
 
-from .server import Server
+logger = logging.getLogger('jsonrpcclient')
+logger.addHandler(logging.StreamHandler())
+logger.setLevel(logging.WARNING)
 
-logging.getLogger('jsonrpcclient').setLevel(logging.DEBUG)
+from jsonrpcclient.server import Server
