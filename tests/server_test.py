@@ -3,7 +3,6 @@
 
 import unittest
 import itertools
-import logging
 
 from nose.tools import assert_raises # pylint: disable=no-name-in-module
 
