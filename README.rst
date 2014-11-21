@@ -86,6 +86,8 @@ Changelog
 ---------
 
 1.0.7 - 2014-11-21
+    * When using the "alternate" (``server.add()``) method to make a request,
+      only send "id" if response=True is explicitly passed (fixed)
     * The underlying JSON messages are now hidden by default. To see them you
       should increase the logging level (see above).
     * Tests moved into separate "tests" dir.
