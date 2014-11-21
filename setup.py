@@ -6,6 +6,7 @@ import os
 from setuptools import setup
 
 def read(fname):
+    """Get the readme from a file, to use as long_description"""
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 setup(
