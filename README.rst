@@ -76,7 +76,8 @@ To see the underlying JSON messages, set the logging level to DEBUG:
 
 .. sourcecode:: python
 
-    logging.getLogger('jsonrpcclient').setLevel(logging.DEBUG)
+    import logging
+    jsonrpcclient.logger.setLevel(logging.DEBUG)
 
 If you need a server, try my `jsonrpcserver
 <https://bitbucket.org/beau-barker/jsonrpcserver>`_ library.
