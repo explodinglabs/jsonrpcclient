@@ -25,7 +25,11 @@ class Server:
 
         def attr_handler(*args, **kwargs):
             """Call self.request from here"""
-            return self.request(name, *args, **kwargs)
+
+            if kwargs.get('response', False):
+                return self.request(name, *args, **kwargs)
+            else:
+                return self.notify(name, *args, **kwargs)
 
         return attr_handler
 
