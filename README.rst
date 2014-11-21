@@ -77,13 +77,13 @@ To see the underlying JSON messages, set the logging level to DEBUG:
 .. sourcecode:: python
 
     import logging
-    jsonrpcclient.logger.setLevel(logging.DEBUG)
+    logging.getLogger('jsonrpcclient').setLevel(logging.DEBUG)
 
 Issue tracker is `here
 <https://bitbucket.org/beau-barker/jsonrpcclient/issues>`_.
 
 If you need a server, try my `jsonrpcserver
-<https://bitbucket.org/beau-barker/jsonrpcserver>`_ library.
+<https://pypi.python.org/pypi/jsonrpcserver>`_ library.
 
 Changelog
 ---------
