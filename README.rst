@@ -86,8 +86,8 @@ Changelog
 ---------
 
 1.0.7 - 2014-11-21
-    * The underlying JSON messages are now hidden by default. In order to see
-      them you should increase the logging level (see above).
+    * The underlying JSON messages are now hidden by default. To see them you
+      should increase the logging level (see above).
     * Tests moved into separate "tests" dir.
 
 1.0.6 - 2014-11-11
