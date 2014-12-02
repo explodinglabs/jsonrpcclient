@@ -10,9 +10,8 @@ To make a `remote procedure call
 #. Use ``request()`` to call the remote method
 
 .. sourcecode:: python
-
     >>> import jsonrpcclient
-    >>> server = jsonrpcclient.Server('http://endpoint/')
+    >>> server = jsonrpcclient.Server('http://example/')
     >>> server.request('add', 2, 3)
     --> {"jsonrpc": "2.0", "method": "add", "params": [2, 3], "id": 1}
     <-- 200 {"jsonrpc": "2.0", "result": 5, "id": 1}
@@ -23,7 +22,6 @@ passed as parameters. You can pass any number of positional or keyword
 arguments, and they will be translated into JSON-RPC.
 
 .. sourcecode:: python
-
     >>> server.request('find', 42, name='Foo')
     --> {"jsonrpc": "2.0", "method": "find", "params": [42, {"name": "Foo"}], "id": 1}
     <-- 200 {"jsonrpc": "2.0", "result": "Bar", "id": 1}
@@ -32,7 +30,6 @@ arguments, and they will be translated into JSON-RPC.
 If you don't need any data returned, use ``notify()`` instead:
 
 .. sourcecode:: python
-
     >>> server.notify('go')
     --> {"jsonrpc": "2.0", "method": "go"}
     <-- 200 OK
@@ -43,7 +40,6 @@ Shorthand
 There's another way to send messages:
 
 .. sourcecode:: python
-
     >>> server.add(2, 3, response=True)
     --> {"jsonrpc": "2.0", "method": "add", "params": [2, 3], "id": 1}
     <-- 200 {"jsonrpc": "2.0", "result": 5, "id": 1}
@@ -63,11 +59,22 @@ connection problems, or if the server responded with a JSON-RPC *error*
 response.
 
 .. sourcecode:: python
-
     try:
         server.go()
     except jsonrpcclient.exceptions.RPCClientException as e:
         print(str(e))
+
+Authentication
+--------------
+
+Make authenticated requests by passing a second argument to `Server()`.
+
+.. sourcecode:: python
+    >>> server = jsonrpcclient.Server('http://example/', auth=('user', 'pass'))
+
+For more options, see the `requests
+<http://docs.python-requests.org/en/latest/user/authentication/>` which handles
+the authentication.
 
 Logging
 -------
@@ -75,7 +82,6 @@ Logging
 To see the underlying JSON messages, set the logging level to DEBUG:
 
 .. sourcecode:: python
-
     import logging
     logging.getLogger('jsonrpcclient').setLevel(logging.DEBUG)
 
@@ -85,12 +91,11 @@ Issue tracker is `here
 If you need a server, try my `jsonrpcserver
 <https://pypi.python.org/pypi/jsonrpcserver>`_ library.
 
-Todo
-----
-Authentication.
-
 Changelog
 ---------
+
+1.0.9 - 2014-12-02
+    * Added authentication.
 
 1.0.8 - 2014-12-02
     * Show the response status code in the log.
@@ -103,7 +108,7 @@ Changelog
     * Tests moved into separate "tests" dir.
 
 1.0.6 - 2014-11-11
-    * Fixed installer
+    * Fixed installer.
 
 1.0.5 - 2014-11-10
     * Better logging.
