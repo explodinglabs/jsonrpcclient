@@ -13,7 +13,8 @@ from jsonrpcclient import logger
 class Server:
     """This class acts as the remote server"""
 
-    def __init__(self, endpoint):
+    def __init__(self, endpoint, auth=None):
+        self.auth = auth
         self.endpoint = endpoint
 
     def __getattr__(self, name):
@@ -63,7 +64,8 @@ class Server:
                 headers={
                     'Content-Type': 'application/json; charset=utf-8'
                 },
-                json=request_dict
+                json=request_dict,
+                auth=self.auth
             )
 
         except (requests.exceptions.InvalidSchema,
