@@ -86,12 +86,12 @@ response.
 Logging
 -------
 
-To see the underlying JSON messages, set the logging level to DEBUG:
+To see the underlying JSON messages, set the logging level to INFO or lower:
 
 .. sourcecode:: python
 
     import logging
-    logging.getLogger('jsonrpcclient').setLevel(logging.DEBUG)
+    logging.getLogger('jsonrpcclient').setLevel(logging.INFO)
 
 Issue tracker is `here
 <https://bitbucket.org/beau-barker/jsonrpcclient/issues>`_.
@@ -104,6 +104,7 @@ Changelog
 
 1.0.9 - 2014-12-02
     * Added authentication.
+    * Messages are now output on the INFO log level.
 
 1.0.8 - 2014-12-02
     * Show the response status code in the log.
