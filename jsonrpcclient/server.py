@@ -72,7 +72,7 @@ class Server:
 
         if len(r.text):
             # Log the response
-            logger.debug('<-- '+r.text \
+            logger.debug('<-- '+str(r.status_code)+' '+r.text \
                 .replace("\n", '') \
                 .replace('  ', ' ') \
                 .replace('{ ', '{'))
