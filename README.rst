@@ -15,7 +15,7 @@ To make a `remote procedure call
     >>> server = jsonrpcclient.Server('http://endpoint/')
     >>> server.request('add', 2, 3)
     --> {"jsonrpc": "2.0", "method": "add", "params": [2, 3], "id": 1}
-    <-- {"jsonrpc": "2.0", "result": 5, "id": 1}
+    <-- 200 {"jsonrpc": "2.0", "result": 5, "id": 1}
     5
 
 The first argument to ``request()`` is the method name; everything else is
@@ -26,7 +26,7 @@ arguments, and they will be translated into JSON-RPC.
 
     >>> server.request('find', 42, name='Foo')
     --> {"jsonrpc": "2.0", "method": "find", "params": [42, {"name": "Foo"}], "id": 1}
-    <-- {"jsonrpc": "2.0", "result": "Bar", "id": 1}
+    <-- 200 {"jsonrpc": "2.0", "result": "Bar", "id": 1}
     Bar
 
 If you don't need any data returned, use ``notify()`` instead:
@@ -46,7 +46,7 @@ There's another way to send messages:
 
     >>> server.add(2, 3, response=True)
     --> {"jsonrpc": "2.0", "method": "add", "params": [2, 3], "id": 1}
-    <-- {"jsonrpc": "2.0", "result": 5, "id": 1}
+    <-- 200 {"jsonrpc": "2.0", "result": 5, "id": 1}
     5
 
 The library catches the undefined ``add()`` call, and sends it as a JSON-RPC
@@ -85,8 +85,15 @@ Issue tracker is `here
 If you need a server, try my `jsonrpcserver
 <https://pypi.python.org/pypi/jsonrpcserver>`_ library.
 
+Todo
+----
+Authentication.
+
 Changelog
 ---------
+
+1.0.8 - 2014-12-02
+    * Show the response status code in the log.
 
 1.0.7 - 2014-11-21
     * When using the "alternate" (``server.add()``) method to make a request,
