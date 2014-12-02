@@ -65,8 +65,8 @@ Make authenticated requests by passing a second argument to `Server()`.
     >>> server = jsonrpcclient.Server('http://example/', auth=('user', 'pass'))
 
 For more options, see the `requests
-<http://docs.python-requests.org/en/latest/user/authentication/>`_ which
-handles the authentication.
+<http://docs.python-requests.org/en/latest/user/authentication/>`_ package
+which handles the authentication.
 
 Exceptions
 ----------
