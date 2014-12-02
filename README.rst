@@ -37,19 +37,6 @@ If you don't need any data returned, use ``notify()`` instead:
     --> {"jsonrpc": "2.0", "method": "go"}
     <-- 200 OK
 
-Authentication
---------------
-
-Make authenticated requests by passing a second argument to `Server()`.
-
-.. sourcecode:: python
-
-    >>> server = jsonrpcclient.Server('http://example/', auth=('user', 'pass'))
-
-For more options, see the `requests
-<http://docs.python-requests.org/en/latest/user/authentication/>`_ which
-handles the authentication.
-
 Shorthand
 ---------
 
@@ -67,6 +54,19 @@ message.
 
 ``response=True`` tells the server you're expecting a response; without that
 it's a notification.
+
+Authentication
+--------------
+
+Make authenticated requests by passing a second argument to `Server()`.
+
+.. sourcecode:: python
+
+    >>> server = jsonrpcclient.Server('http://example/', auth=('user', 'pass'))
+
+For more options, see the `requests
+<http://docs.python-requests.org/en/latest/user/authentication/>`_ which
+handles the authentication.
 
 Exceptions
 ----------
