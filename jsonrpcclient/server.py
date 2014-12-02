@@ -55,7 +55,7 @@ class Server:
         """
 
         # Log the request
-        logger.debug('--> '+json.dumps(request_dict))
+        logger.info('--> '+json.dumps(request_dict))
 
         try:
             # Send the message
@@ -74,13 +74,13 @@ class Server:
 
         if len(r.text):
             # Log the response
-            logger.debug('<-- '+str(r.status_code)+' '+r.text \
+            logger.info('<-- {} {}'.format(r.status_code, r.text) \
                 .replace("\n", '') \
                 .replace('  ', ' ') \
                 .replace('{ ', '{'))
 
         else:
-            logger.debug('<-- {} {}'.format(r.status_code, r.reason))
+            logger.info('<-- {} {}'.format(r.status_code, r.reason))
 
             # Raise exception the HTTP status code was not 200, and there was no
             # response body, because this should be handled.
