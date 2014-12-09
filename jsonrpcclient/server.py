@@ -10,6 +10,7 @@ from jsonrpcclient import rpc
 from jsonrpcclient import exceptions
 from jsonrpcclient import logger
 
+
 class Server:
     """This class acts as the remote server"""
 

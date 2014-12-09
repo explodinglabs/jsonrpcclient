@@ -5,6 +5,7 @@ from collections import OrderedDict
 
 id_generator = itertools.count(1) # First generated is 1
 
+
 def request(method, *args, **kwargs):
     """Returns an rpc notification, (a request not expecting a response.
 
