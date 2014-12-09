@@ -27,7 +27,8 @@ from nose.tools import assert_equal # pylint: disable=no-name-in-module
 
 from jsonrpcclient import rpc
 
-class RPCTest(unittest.TestCase):
+
+class TestRPC(unittest.TestCase):
     # pylint: disable=too-many-public-methods,no-self-use
 
     def setUp(self):
