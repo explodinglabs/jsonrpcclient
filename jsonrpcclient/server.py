@@ -70,7 +70,7 @@ class Server:
             )
         except requests.exceptions.InvalidSchema:
             raise exceptions.InvalidRequest()
-        except requests.exceptions.RequestException: # The base requests exception
+        except requests.exceptions.RequestException: # The base exception
             raise exceptions.ConnectionError()
 
         # Log the response
