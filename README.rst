@@ -108,8 +108,8 @@ Changelog
 ---------
 
 1.0.10 - 2014-12-11
-    * The base exception is now named ``JsonRpcClientError``. Exceptions have
-      been cleaned up.
+    * Exceptions have been cleaned up. The base exception is now named
+      ``JsonRpcClientError``.
     * Tests added for 100% code coverage.
 
 1.0.9 - 2014-12-02
