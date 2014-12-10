@@ -22,12 +22,12 @@ class TestServer(TestCase): # pylint: disable=too-many-public-methods
     @responses.activate
     def test_notify(self):
         responses.add(responses.POST, 'http://non-existant/', status=200)
-        response = self.server.notify('go')
+        self.server.notify('go')
 
     @responses.activate
     def test_notify_alternate(self):
         responses.add(responses.POST, 'http://non-existant/', status=200)
-        response = self.server.go()
+        self.server.go()
 
     @responses.activate
     def test_request(self):
