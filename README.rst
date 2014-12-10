@@ -9,8 +9,8 @@ address, then use ``request()`` to call the remote method.
 
 .. sourcecode:: python
 
-    >>> import jsonrpcclient
-    >>> server = jsonrpcclient.Server('http://example/')
+    >>> from jsonrpcclient import Server
+    >>> server = Server('http://example/')
     >>> server.request('add', 2, 3)
     --> {"jsonrpc": "2.0", "method": "add", "params": [2, 3], "id": 1}
     <-- 200 {"jsonrpc": "2.0", "result": 5, "id": 1}
@@ -34,6 +34,11 @@ If you don't need any data returned, use ``notify()`` instead:
     >>> server.notify('go')
     --> {"jsonrpc": "2.0", "method": "go"}
     <-- 200 OK
+
+.. note::
+    To see the underlying JSON messages, set the logging level to INFO or lower:
+
+    ``import logging; logging.getLogger('jsonrpcclient').setLevel(logging.INFO)``
 
 Alternate usage
 ---------------
@@ -61,7 +66,7 @@ Make authenticated requests by passing a second argument to `Server()`.
 
 .. sourcecode:: python
 
-    >>> server = jsonrpcclient.Server('http://example/', auth=('user', 'pass'))
+    >>> server = Server('http://example/', auth=('user', 'pass'))
 
 For more options, see the `requests
 <http://docs.python-requests.org/en/latest/user/authentication/>`_ package
@@ -77,21 +82,11 @@ response.
 
 .. sourcecode:: python
 
-
+    from jsonrpcclient.exceptions import JsonRpcClientError
     try:
         server.go()
-    except jsonrpcclient.exceptions.JsonRpcClientError as e:
+    except JsonRpcClientError as e:
         print(str(e))
-
-Logging
--------
-
-To see the underlying JSON messages, set the logging level to INFO or lower:
-
-.. sourcecode:: python
-
-    import logging
-    logging.getLogger('jsonrpcclient').setLevel(logging.INFO)
 
 Issue tracker is `here
 <https://bitbucket.org/beau-barker/jsonrpcclient/issues>`_.
