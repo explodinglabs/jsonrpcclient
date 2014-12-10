@@ -5,7 +5,7 @@ jsonrpcclient
 
 To make a `remote procedure call
 <http://en.wikipedia.org/wiki/Remote_procedure_call>`_, simply set the server
-address, and use ``request()`` to call the remote method.
+address, and then use ``request()`` to call the remote method.
 
 .. sourcecode:: python
 
