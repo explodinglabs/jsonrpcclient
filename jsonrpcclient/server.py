@@ -52,7 +52,7 @@ class Server:
         """Send the RPC request to the server.
 
         Calls a procedure on another server.
-        Raises RPCClientException: On any error caught.
+        Raises JsonRpcClientError: On any error caught.
         """
 
         # Log the request

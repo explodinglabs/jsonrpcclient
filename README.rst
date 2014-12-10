@@ -71,7 +71,7 @@ which handles the authentication.
 Exceptions
 ----------
 
-You should catch ``RPCClientException``. This will be raised in the event of
+You should catch ``JsonRpcClientError``. This will be raised in the event of
 connection problems, or if the server responded with a JSON-RPC *error*
 response.
 
@@ -80,7 +80,7 @@ response.
 
     try:
         server.go()
-    except jsonrpcclient.exceptions.RPCClientException as e:
+    except jsonrpcclient.exceptions.JsonRpcClientError as e:
         print(str(e))
 
 Logging
