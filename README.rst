@@ -6,8 +6,7 @@ jsonrpcclient
 To make a `remote procedure call
 <http://en.wikipedia.org/wiki/Remote_procedure_call>`_:
 
-#. Set the server address
-#. Use ``request()`` to call the remote method
+Set the server address, then use ``request()`` to call the remote method.
 
 .. sourcecode:: python
 
@@ -104,9 +103,10 @@ If you need a server, try my `jsonrpcserver
 Changelog
 ---------
 
-1.0.10 - 2014-12-02
-    * 
-    * Messages are now output on the INFO log level.
+1.0.10 - 2014-12-11
+    * The base exception is now named ``JsonRpcClientError``. Exceptions have
+      been cleaned up.
+    * Tests added for 100% code coverage.
 
 1.0.9 - 2014-12-02
     * Added authentication.
