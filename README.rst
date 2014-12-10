@@ -104,6 +104,16 @@ Issue tracker is `here
 If you need a server, try my `jsonrpcserver
 <https://pypi.python.org/pypi/jsonrpcserver>`_ library.
 
+Todo
+----
+
+* GET requests
+
+* Ability to configure the Content-Type header. Currently hard-coded as
+  "application/json", but perhaps should be "application/json-rpc". See
+  http://jsonrpc.org/historical/json-rpc-over-http.html
+
+
 Changelog
 ---------
 
