@@ -86,9 +86,9 @@ which handles the authentication.
 Exceptions
 ----------
 
-You should catch ``JsonRpcClientError``, which is the base exception. This will
-be raised in the event of any issue that should be handled, such as connection
-problems, or if the server responded with a *error* response.
+You should catch the base exception, ``JsonRpcClientError``. This will be raised
+in the event of any issue that should be handled, such as connection problems,
+or if the server responded with a *error* response.
 
 .. sourcecode:: python
 
