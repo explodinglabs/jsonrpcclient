@@ -14,8 +14,8 @@ Usage
 To make a `remote procedure call
 <http://en.wikipedia.org/wiki/Remote_procedure_call>`_:
 
-    #. Set the server address
-    #. Use ``request()`` to call the remote method.
+#. Set the server address
+#. Use ``request()`` to call the remote method.
 
 .. sourcecode:: python
 
