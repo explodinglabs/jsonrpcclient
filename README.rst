@@ -73,7 +73,7 @@ it's a notification.
 Authentication
 --------------
 
-Make authenticated requests by passing a second argument to `Server()`.
+Make authenticated requests by passing a second argument to ``Server()``.
 
 .. sourcecode:: python
 
