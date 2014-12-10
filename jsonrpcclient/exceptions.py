@@ -15,32 +15,46 @@ class ConnectionError(JsonRpcClientError): # pylint: disable=redefined-builtin
         super().__init__('Connection error')
 
 
-class StatusCodeError(JsonRpcClientError):
+class InvalidRequest(JsonRpcClientError):
+    """The request you've sent is not valid json"""
+
+    def __init__(self):
+        super().__init__('The request you\'re sending is not valid json')
+
+
+class Non200Response(JsonRpcClientError):
     """The server responded with status code != 200"""
 
     def __init__(self, status_code):
         super().__init__('Returned status code '+str(status_code))
 
 
-class ParseError(JsonRpcClientError):
+class ParseResponseError(JsonRpcClientError):
     """Couldnt parse the json response (invalid json)"""
 
     def __init__(self):
-        super().__init__('Parse error')
+        super().__init__('The response was not valid json')
 
 
 class InvalidResponse(JsonRpcClientError):
-    """The response didnt validate against the JSON-RPC response schema"""
+    """The response didnt validate against the json-rpc response schema"""
 
     def __init__(self):
-        super().__init__('Invalid response')
+        super().__init__('The response was not a valid json-rpc 2.0 response')
+
+
+class UnwantedResponse(JsonRpcClientError):
+    """The response didnt validate against the json-rpc response schema"""
+
+    def __init__(self):
+        super().__init__('The response was not asked for')
 
 
 class ReceivedNoResponse(JsonRpcClientError):
     """A response was expected, but no response was received"""
 
     def __init__(self):
-        super().__init__('No response')
+        super().__init__('No response was received')
 
 
 class ReceivedErrorResponse(JsonRpcClientError):

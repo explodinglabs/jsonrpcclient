@@ -1,32 +1,83 @@
 # pylint: disable=missing-docstring,line-too-long,no-self-use
 """server_test.py"""
 
-import unittest
+from unittest import TestCase
 import itertools
+from collections import namedtuple
 
-from jsonrpcclient.server import Server
-from jsonrpcclient import rpc
-from jsonrpcclient import exceptions
+import requests
+import responses
+
+from jsonrpcclient import server, rpc, exceptions
 
 
-class TestServer(unittest.TestCase): # pylint: disable=too-many-public-methods
+class TestServer(TestCase): # pylint: disable=too-many-public-methods
 
     def setUp(self):
-        rpc.id_generator = itertools.count(1) # First generated is 1
-        self.server = Server('http://non-existant/')
+        rpc.id_generator = itertools.count(1) # Ensure the first generated is 1
+        self.server = server.Server('http://non-existant/')
 
-    def test_request(self):
-        with self.assertRaises(exceptions.ConnectionError):
-            self.server.request('add', 1, 2)
+    # Test the public methods (request and notify)
 
+    @responses.activate
     def test_notify(self):
-        with self.assertRaises(exceptions.ConnectionError):
-            self.server.notify('add', 1, 2)
+        responses.add(responses.POST, 'http://non-existant/', status=200)
+        response = self.server.notify('go')
 
-    def test_alternate_usage(self):
-        with self.assertRaises(exceptions.ConnectionError):
-            self.server.add(1, 2)
+    @responses.activate
+    def test_notify_alternate(self):
+        responses.add(responses.POST, 'http://non-existant/', status=200)
+        response = self.server.go()
 
-    def test_parse_error(self):
-        with self.assertRaises(exceptions.ParseError):
-            self.server.handle_response('{')
+    @responses.activate
+    def test_request(self):
+        responses.add(responses.POST, 'http://non-existant/', status=200, body='{"jsonrpc": "2.0", "result": 5, "id": null}')
+        self.server.request('add', 1, 2)
+
+    @responses.activate
+    def test_request_alternate(self):
+        responses.add(responses.POST, 'http://non-existant/', status=200, body='{"jsonrpc": "2.0", "result": 5, "id": null}')
+        self.server.add(1, 2, response=True)
+
+    # Test send_message()
+
+    def test_send_message_with_connection_error(self):
+        with self.assertRaises(exceptions.ConnectionError):
+            self.server.send_message(rpc.request('go'))
+
+    @responses.activate
+    def test_send_message_with_invalid_request(self):
+        # Impossible to pass an invalid dict, so just assume the exception was raised
+        responses.add(responses.POST, 'http://non-existant/', status=400, body=requests.exceptions.InvalidSchema())
+        with self.assertRaises(exceptions.InvalidRequest):
+            self.server.send_message(rpc.request('go'))
+
+    # Test handle_response()
+
+    def test_send_message_with_dodgy_response(self):
+        response = namedtuple('Response', 'status_code, text')
+        response.status_code = 200
+        response.text = '{dodgy}'
+        with self.assertRaises(exceptions.ParseResponseError):
+            self.server.handle_response(response)
+
+    def test_send_message_with_error_response(self):
+        response = namedtuple('Response', 'status_code, text')
+        response.status_code = 404
+        response.text = '{"jsonrpc": "2.0", "error": {"code": -32000, "message": "Not Found"}, "id": null}'
+        with self.assertRaises(exceptions.ReceivedErrorResponse):
+            self.server.handle_response(response, expected_response=True)
+
+    def test_send_message_with_unwanted_response(self):
+        response = namedtuple('Response', 'status_code, text')
+        response.status_code = 200
+        response.text = '{"jsonrpc": "2.0", "result": 5, "id": null}'
+        with self.assertRaises(exceptions.UnwantedResponse):
+            self.server.handle_response(response)
+
+    def test_send_message_with_non_200_response(self):
+        response = namedtuple('Response', 'status_code, text')
+        response.status_code = 404
+        response.text = '{"jsonrpc": "2.0", "result": 5, "id": null}'
+        with self.assertRaises(exceptions.Non200Response):
+            self.server.handle_response(response, expected_response=True)
