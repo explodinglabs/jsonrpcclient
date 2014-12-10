@@ -23,8 +23,6 @@ Requests (requiring a response):
 import unittest
 import itertools
 
-from nose.tools import assert_equal # pylint: disable=no-name-in-module
-
 from jsonrpcclient import rpc
 
 
@@ -37,31 +35,31 @@ class TestRPC(unittest.TestCase):
     # Notifications
 
     def test_method_only(self):
-        assert_equal(
+        self.assertEqual(
             {"jsonrpc": "2.0", "method": "go"},
             rpc.request('go')
         )
 
     def test_one_arg(self):
-        assert_equal(
+        self.assertEqual(
             {"jsonrpc": "2.0", "method": "print", "params": ["Hello world"]},
             rpc.request('print', 'Hello world')
         )
 
     def test_two_args(self):
-        assert_equal(
+        self.assertEqual(
             {"jsonrpc": "2.0", "method": "print", "params": ["Hello", "world"]},
             rpc.request('print', 'Hello', 'world')
         )
 
     def test_one_kwarg(self):
-        assert_equal(
+        self.assertEqual(
             {"jsonrpc": "2.0", "method": "print", "params": {"string": "Hello world"}},
             rpc.request('print', string='Hello world')
         )
 
     def test_two_kwargs(self):
-        assert_equal(
+        self.assertEqual(
             {"jsonrpc": "2.0", "method": "print", "params": {"string1": "Hello", "string2": "world"}},
             rpc.request('print', string1='Hello', string2='world')
         )
@@ -69,7 +67,7 @@ class TestRPC(unittest.TestCase):
     def test_args_and_kwargs(self):
         """Both args and kwargs"""
 
-        assert_equal(
+        self.assertEqual(
             {"jsonrpc": "2.0", "method": "set_age", "params": [40, {"name": "Beau Barker"}]},
             rpc.request('set_age', 40, name='Beau Barker')
         )
@@ -77,7 +75,7 @@ class TestRPC(unittest.TestCase):
     def test_multiple_args_and_kwargs(self):
         """Both args and kwargs"""
 
-        assert_equal(
+        self.assertEqual(
             {"jsonrpc": "2.0", "method": "set_age", "params": [39, 40, {"first": "Beau", "last": "Barker"}]},
             rpc.request('set_age', 39, 40, first='Beau', last='Barker')
         )
@@ -85,25 +83,25 @@ class TestRPC(unittest.TestCase):
 # Non-notifications (require a response)
 
     def test_method_only_request(self):
-        assert_equal(
+        self.assertEqual(
             {"jsonrpc": "2.0", "method": "get", "id": 1},
             rpc.request('get', response=True)
         )
 
     def test_one_arg_request(self):
-        assert_equal(
+        self.assertEqual(
             {"jsonrpc": "2.0", "method": "sqrt", "params": [1], "id": 1},
             rpc.request('sqrt', 1, response=True)
         )
 
     def test_two_args_request(self):
-        assert_equal(
+        self.assertEqual(
             {"jsonrpc": "2.0", "method": "add", "params": [1, 2], "id": 1},
             rpc.request('add', 1, 2, response=True)
         )
 
     def test_one_kwarg_request(self):
-        assert_equal(
+        self.assertEqual(
             {"jsonrpc": "2.0", "method": "find", "params": {"name": "Beau"}, "id": 1},
             rpc.request('find', name='Beau', response=True)
         )
@@ -111,24 +109,24 @@ class TestRPC(unittest.TestCase):
     def test_two_kwargs_request(self):
         # Note in the resulting json, the params are in reverse order to how the
         # kwargs are called, because the args are sorted by key in the request
-        # function. This is the only way to know exactly how the request will look
-        # because the kwargs come in a random order. There is no way of getting the
-        # actual order of the kwargs
-        assert_equal(
+        # function. This is the only way to know exactly how the request will
+        # look because the kwargs come in a random order. There is no way of
+        # getting the actual order of the kwargs
+        self.assertEqual(
             {"jsonrpc": "2.0", "method": "find", "params": {"age": 38, "name": "Beau"}, "id": 1},
             rpc.request('find', name='Beau', age=38, response=True)
         )
 
     def test_args_and_kwargs_request(self):
         # Includes both args and kwargs
-        assert_equal(
+        self.assertEqual(
             {"jsonrpc": "2.0", "method": "find", "params": {"age": 38, "name": "Beau"}, "id": 1},
             rpc.request('find', name='Beau', age=38, response=True)
         )
 
     def test_multiple_args_and_kwargs_request(self):
         # Both args and kwargs
-        assert_equal(
+        self.assertEqual(
             {"jsonrpc": "2.0", "method": "set_age", "params": [39, 40, {"first": "Beau", "last": "Barker"}], "id": 1},
             rpc.request('set_age', 39, 40, first='Beau', last='Barker', response=True)
         )

@@ -60,7 +60,7 @@ class Server:
 
         try:
             # Send the message
-            r = requests.post(
+            response = requests.post(
                 self.endpoint,
                 headers={
                     'Content-Type': 'application/json; charset=utf-8'
@@ -68,59 +68,51 @@ class Server:
                 json=request_dict,
                 auth=self.auth
             )
-
-        except (requests.exceptions.InvalidSchema,
-                requests.exceptions.RequestException):
+        except requests.exceptions.InvalidSchema:
+            raise exceptions.InvalidRequest()
+        except requests.exceptions.RequestException: # The base requests exception
             raise exceptions.ConnectionError()
 
-        if len(r.text):
+        # Log the response
+        if len(response.text):
             # Log the response
-            logger.info('<-- {} {}'.format(r.status_code, r.text) \
+            logger.info('<-- {} {}'.format(response.status_code, response.text)\
                 .replace("\n", '') \
                 .replace('  ', ' ') \
                 .replace('{ ', '{'))
 
         else:
-            logger.info('<-- {} {}'.format(r.status_code, r.reason))
+            logger.info('<-- {} {}'.format(
+                response.status_code, response.reason))
 
-            # Raise exception the HTTP status code was not 200, and there was no
-            # response body, because this should be handled.
-            if r.status_code != 200:
-                raise exceptions.StatusCodeError(r.status_code)
-
-        return r.text
+        return response
 
     @staticmethod
-    def handle_response(response_str, expected_response=True):
+    def handle_response(response, expected_response=False):
         """Processes the response from a request"""
 
         # A response was expected, but none was given?
-        if expected_response and not len(response_str):
+        if expected_response and not len(response.text):
             raise exceptions.ReceivedNoResponse()
 
         # Was response given?
-        if len(response_str):
+        if len(response.text):
 
             # Attempt to parse the response
             try:
-                response_dict = json.loads(response_str)
-
+                response_dict = json.loads(response.text)
             except ValueError:
-                raise exceptions.ParseError()
+                raise exceptions.ParseResponseError()
 
-            # A response was *not* expected, but one was given? It may not
-            # be necessary to raise here. If we receive a response anyway,
-            # can't we just ignore it?
+            # Unwanted response - A response was not asked for, but one was
+            # given anyway. It may not be necessary to raise here.
             if not expected_response and 'result' in response_dict:
-                raise exceptions.InvalidResponse()
+                raise exceptions.UnwantedResponse()
 
             # Validate the response against the Response schema
             try:
-                jsonschema.validate(
-                    response_dict,
-                    json.loads(pkgutil.get_data(
-                        __name__, 'response-schema.json').decode('utf-8')))
-
+                jsonschema.validate(response_dict, json.loads(pkgutil.get_data(
+                    __name__, 'response-schema.json').decode('utf-8')))
             except jsonschema.ValidationError:
                 raise exceptions.InvalidResponse()
 
@@ -130,7 +122,15 @@ class Server:
                     response_dict['error']['code'],
                     response_dict['error']['message'])
 
-            # Otherwise, surely we have a result to return
-            print(response_dict['result'])
+            # Raise exception the HTTP status code was not 200.
+            if response.status_code != 200:
+                raise exceptions.Non200Response(response.status_code)
+
+             # Otherwise, surely we have a result to return
+            return response_dict['result']
+
+        # Raise exception the HTTP status code was not 200.
+        if response.status_code != 200:
+            raise exceptions.Non200Response(response.status_code)
 
         return None
