@@ -37,10 +37,10 @@ If you don't need any data returned, use ``notify()`` instead:
     --> {"jsonrpc": "2.0", "method": "go"}
     <-- 200 OK
 
-Shorthand
----------
+Alternate usage
+---------------
 
-There's another way to send messages:
+There's another way to call a remote procedure:
 
 .. sourcecode:: python
 
@@ -49,8 +49,9 @@ There's another way to send messages:
     <-- 200 {"jsonrpc": "2.0", "result": 5, "id": 1}
     5
 
-The library catches the undefined ``add()`` call, and sends it as a JSON-RPC
-message.
+The command above is the same as calling ``server.request('add', 2, 3)``. It
+works by recognizing that ``add()`` is not a method in the Server class, so
+treats it as a ``request()`` command.
 
 ``response=True`` tells the server you're expecting a response; without that
 it's a notification.
@@ -71,7 +72,8 @@ which handles the authentication.
 Exceptions
 ----------
 
-You should catch ``JsonRpcClientError``. This will be raised in the event of
+You should catch ``JsonRpcClientError``, which is the base exception class. This
+will be raised in the event of various issues that should be handled, such as
 connection problems, or if the server responded with a JSON-RPC *error*
 response.
 
@@ -101,6 +103,10 @@ If you need a server, try my `jsonrpcserver
 
 Changelog
 ---------
+
+1.0.10 - 2014-12-02
+    * 
+    * Messages are now output on the INFO log level.
 
 1.0.9 - 2014-12-02
     * Added authentication.
