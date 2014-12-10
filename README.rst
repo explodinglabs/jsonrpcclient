@@ -36,7 +36,8 @@ If you don't need any data returned, use ``notify()`` instead:
     <-- 200 OK
 
 .. note::
-    To see the underlying JSON messages, set the logging level to INFO or lower:
+    To see the underlying messages going back and forth, set the logging level
+    to INFO or lower:
 
     ``import logging; logging.getLogger('jsonrpcclient').setLevel(logging.INFO)``
 
@@ -75,10 +76,9 @@ which handles the authentication.
 Exceptions
 ----------
 
-You should catch ``JsonRpcClientError``, which is the base exception class. This
-will be raised in the event of various issues that should be handled, such as
-connection problems, or if the server responded with a JSON-RPC *error*
-response.
+You should catch ``JsonRpcClientError``, which is the base exception. This will
+be raised in the event of any issue that should be handled, such as connection
+problems, or if the server responded with a *error* response.
 
 .. sourcecode:: python
 
