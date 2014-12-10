@@ -27,8 +27,8 @@ To make a `remote procedure call
     5
 
 The first argument to ``request()`` is the method name; everything else is
-passed as parameters. You can pass any number of positional or keyword
-arguments, and they will be translated into JSON-RPC.
+passed as *params*. You can pass any number of positional or keyword arguments,
+and they will be translated into JSON-RPC.
 
 .. sourcecode:: python
 
