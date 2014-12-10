@@ -26,7 +26,7 @@ To make a `remote procedure call
     <-- 200 {"jsonrpc": "2.0", "result": 5, "id": 1}
     5
 
-The first argument to ``request()`` is the method name; everything else is
+The first argument to ``request()`` is the *method name*; everything else is
 passed as *params*. You can pass any number of positional or keyword arguments,
 and they will be translated into JSON-RPC.
 
