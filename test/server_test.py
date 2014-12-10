@@ -54,30 +54,51 @@ class TestServer(TestCase): # pylint: disable=too-many-public-methods
 
     # Test handle_response()
 
-    def test_send_message_with_dodgy_response(self):
-        response = namedtuple('Response', 'status_code, text')
-        response.status_code = 200
-        response.text = '{dodgy}'
-        with self.assertRaises(exceptions.ParseResponseError):
-            self.server.handle_response(response)
-
-    def test_send_message_with_error_response(self):
-        response = namedtuple('Response', 'status_code, text')
-        response.status_code = 404
-        response.text = '{"jsonrpc": "2.0", "error": {"code": -32000, "message": "Not Found"}, "id": null}'
-        with self.assertRaises(exceptions.ReceivedErrorResponse):
-            self.server.handle_response(response, expected_response=True)
-
-    def test_send_message_with_unwanted_response(self):
+    def test_handle_response_with_unwanted_text(self):
         response = namedtuple('Response', 'status_code, text')
         response.status_code = 200
         response.text = '{"jsonrpc": "2.0", "result": 5, "id": null}'
         with self.assertRaises(exceptions.UnwantedResponse):
             self.server.handle_response(response)
 
-    def test_send_message_with_non_200_response(self):
+    def test_handle_response_with_no_text_but_expected_text(self):
+        response = namedtuple('Response', 'status_code, text')
+        response.status_code = 404
+        response.text = ''
+        with self.assertRaises(exceptions.ReceivedNoResponse):
+            self.server.handle_response(response, expected_response=True)
+
+    def test_handle_response_with_dodgy_text(self):
+        response = namedtuple('Response', 'status_code, text')
+        response.status_code = 200
+        response.text = '{dodgy}'
+        with self.assertRaises(exceptions.ParseResponseError):
+            self.server.handle_response(response)
+
+    def test_handle_response_with_non_validating_text(self):
+        response = namedtuple('Response', 'status_code, text')
+        response.status_code = 200
+        response.text = '{"json": "2.0"}'
+        with self.assertRaises(exceptions.InvalidResponse):
+            self.server.handle_response(response, expected_response=True)
+
+    def test_handle_response_with_error_text(self):
+        response = namedtuple('Response', 'status_code, text')
+        response.status_code = 404
+        response.text = '{"jsonrpc": "2.0", "error": {"code": -32000, "message": "Not Found"}, "id": null}'
+        with self.assertRaises(exceptions.ReceivedErrorResponse):
+            self.server.handle_response(response, expected_response=True)
+
+    def test_handle_response_with_result_but_non_200_status(self):
         response = namedtuple('Response', 'status_code, text')
         response.status_code = 404
         response.text = '{"jsonrpc": "2.0", "result": 5, "id": null}'
         with self.assertRaises(exceptions.Non200Response):
             self.server.handle_response(response, expected_response=True)
+
+    def test_handle_response_with_no_text_and_non_200_status(self):
+        response = namedtuple('Response', 'status_code, text')
+        response.status_code = 404
+        response.text = ''
+        with self.assertRaises(exceptions.Non200Response):
+            self.server.handle_response(response)
