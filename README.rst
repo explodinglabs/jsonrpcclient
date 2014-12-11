@@ -101,9 +101,9 @@ If you need a server, try my `jsonrpcserver
 Todo
 ----
 
-* Make GET requests
+* Ability to make GET requests.
 
-* Ability to configure the Content-Type header. Currently hard-coded as
+* Ability to configure the http header. Currently Content-Type is hard-coded as
   "application/json", but perhaps should be "application/json-rpc". See
   http://jsonrpc.org/historical/json-rpc-over-http.html#http-header
 
