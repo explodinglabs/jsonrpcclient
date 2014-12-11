@@ -62,8 +62,7 @@ There's another way to call a remote procedure:
 
 Which is the same as saying ``server.request('add', 2, 3)``.
 
-``response=True`` tells the server you're expecting a response; without that
-it's a notification.
+Use ``response=True`` to get a response; without that it's a notification.
 
 Authentication
 --------------
