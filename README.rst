@@ -1,7 +1,9 @@
 jsonrpcclient
 =============
 
-`JSON-RPC 2.0 <http://www.jsonrpc.org/>`_ client library for Python 3.
+Allows you to make a `remote procedure call
+<http://en.wikipedia.org/wiki/Remote_procedure_call>`_ using `JSON-RPC 2.0
+<http://www.jsonrpc.org/>`_ requests.
 
 Installation
 ------------
@@ -10,9 +12,6 @@ Installation
 
 Usage
 -----
-
-To make a `remote procedure call
-<http://en.wikipedia.org/wiki/Remote_procedure_call>`_:
 
 #. Set the server address
 #. Make a ``request()``
