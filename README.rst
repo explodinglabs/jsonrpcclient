@@ -45,6 +45,7 @@ If you don't need any data returned, use ``notify()`` instead:
     <-- 200 OK
 
 .. note::
+
     To see the underlying messages going back and forth, set the logging level
     to INFO:
 
