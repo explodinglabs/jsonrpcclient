@@ -8,6 +8,8 @@ Allows you to make a `remote procedure call
 Installation
 ------------
 
+.. sourcecode:: 
+
     pip install jsonrpcclient
 
 Usage
