@@ -105,7 +105,7 @@ Todo
 
 * Ability to configure the Content-Type header. Currently hard-coded as
   "application/json", but perhaps should be "application/json-rpc". See
-  http://jsonrpc.org/historical/json-rpc-over-http.html
+  http://jsonrpc.org/historical/json-rpc-over-http.html#http-header
 
 
 Changelog
