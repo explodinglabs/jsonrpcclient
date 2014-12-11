@@ -36,7 +36,7 @@ and they will be translated into JSON-RPC.
     <-- 200 {"jsonrpc": "2.0", "result": "Bar", "id": 1}
     Bar
 
-If you don't need any data returned, use ``notify()`` instead:
+If you don't need any data returned, use ``notify()`` instead of ``request()``.
 
 .. sourcecode:: python
 
@@ -54,7 +54,7 @@ If you don't need any data returned, use ``notify()`` instead:
 Alternate usage
 ---------------
 
-There's another way to call a remote procedure:
+If you prefer, there's another way to call a remote procedure:
 
 .. sourcecode:: python
 
