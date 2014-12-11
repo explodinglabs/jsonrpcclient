@@ -59,13 +59,8 @@ There's another way to call a remote procedure:
 .. sourcecode:: python
 
     >>> server.add(2, 3, response=True)
-    --> {"jsonrpc": "2.0", "method": "add", "params": [2, 3], "id": 1}
-    <-- 200 {"jsonrpc": "2.0", "result": 5, "id": 1}
-    5
 
-The command above is the same as calling ``server.request('add', 2, 3)``. It
-works by recognizing that ``add()`` is not a method in the Server class, so
-treats it as a ``request()`` command.
+Which is the same as saying ``server.request('add', 2, 3)``.
 
 ``response=True`` tells the server you're expecting a response; without that
 it's a notification.
