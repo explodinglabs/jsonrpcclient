@@ -101,7 +101,7 @@ If you need a server, try my `jsonrpcserver
 Todo
 ----
 
-* GET requests
+* Make GET requests
 
 * Ability to configure the Content-Type header. Currently hard-coded as
   "application/json", but perhaps should be "application/json-rpc". See
