@@ -1,8 +1,8 @@
 jsonrpcclient
 =============
 
-Allows you to make a `remote procedure call
-<http://en.wikipedia.org/wiki/Remote_procedure_call>`_ using `JSON-RPC 2.0
+Allows you to make `remote procedure calls
+<http://en.wikipedia.org/wiki/Remote_procedure_call>`_ with `JSON-RPC 2.0
 <http://www.jsonrpc.org/>`_ requests.
 
 Installation
