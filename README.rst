@@ -48,7 +48,7 @@ If you don't need any data returned, use ``notify()`` instead:
     To see the underlying messages going back and forth, set the logging level
     to INFO:
 
-    ``import logging; logging.getLogger('jsonrpcclient').setLevel(logging.INFO)``
+    ``logging.getLogger('jsonrpcclient').setLevel(logging.INFO)``
 
 Alternate usage
 ---------------
