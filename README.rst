@@ -85,8 +85,8 @@ Exceptions
 ----------
 
 Catch the base exception ``JsonRpcClientError`` when communicating with the
-server. This will be raised when there's an issue such as connection problems,
-or if the server responded with an *error* response.
+server. This is raised when there's an issue such as connection problems, or if
+the server responded with an *error* response.
 
 .. sourcecode:: python
 
@@ -95,6 +95,9 @@ or if the server responded with an *error* response.
         server.request('go')
     except JsonRpcClientError as e:
         print(str(e))
+
+The full list of exceptions is here - some may not be important to you, in which
+case you should catch them to let them ``pass`` silently.
 
 Issue tracker is `here
 <https://bitbucket.org/beau-barker/jsonrpcclient/issues>`_.
