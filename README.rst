@@ -36,6 +36,12 @@ they will be translated into JSON-RPC.
     <-- 200 {"jsonrpc": "2.0", "result": "Bar", "id": 1}
     Bar
 
+.. note::
+    Using both positional and keyword arguments in the same request is not
+    strictly allowed by the JSON-RPC protocol. The specification `says
+    <http://www.jsonrpc.org/specification#parameter_structures>`_ to use one or
+    the other, but not both.
+
 If you don't need any data returned, use ``notify()`` instead of ``request()``.
 
 .. sourcecode:: python
@@ -44,7 +50,7 @@ If you don't need any data returned, use ``notify()`` instead of ``request()``.
     --> {"jsonrpc": "2.0", "method": "go"}
     <-- 200 OK
 
-.. note::
+.. hint::
 
     To see the underlying messages going back and forth, set the logging level
     to INFO:
