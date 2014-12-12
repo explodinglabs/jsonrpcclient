@@ -18,7 +18,7 @@ Set the server details, then start making requests.
 .. sourcecode:: python
 
     >>> from jsonrpcclient import Server
-    >>> server = Server('http://example/')
+    >>> server = Server('http://example.com/api')
     >>> server.request('add', 2, 3)
     5
 
@@ -75,7 +75,7 @@ Make authenticated requests by passing a second argument to ``Server()``.
 
 .. sourcecode:: python
 
-    >>> server = Server('http://example/', auth=('user', 'pass'))
+    >>> server = Server('http://example.com/api', auth=('user', 'pass'))
 
 For more options, see the `requests
 <http://docs.python-requests.org/en/latest/user/authentication/>`_ package
