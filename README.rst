@@ -5,6 +5,12 @@ Make `remote procedure calls
 <http://en.wikipedia.org/wiki/Remote_procedure_call>`_ with `JSON-RPC 2.0
 <http://www.jsonrpc.org/>`_.
 
+Issue tracker is `here
+<https://bitbucket.org/beau-barker/jsonrpcclient/issues>`_.
+
+If you need a server, try my `jsonrpcserver
+<https://pypi.python.org/pypi/jsonrpcserver>`_ library.
+
 Installation
 ------------
 
@@ -95,12 +101,6 @@ problems, or if the server responded with a *error* response.
         server.go()
     except JsonRpcClientError as e:
         print(str(e))
-
-Issue tracker is `here
-<https://bitbucket.org/beau-barker/jsonrpcclient/issues>`_.
-
-If you need a server, try my `jsonrpcserver
-<https://pypi.python.org/pypi/jsonrpcserver>`_ library.
 
 Todo
 ----
