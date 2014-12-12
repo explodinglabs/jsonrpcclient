@@ -13,8 +13,8 @@ Installation
 Usage
 -----
 
-#. Set the server address
-#. Make a ``request()``
+#. Set the server address.
+#. Make a request.
 
 .. sourcecode:: python
 
@@ -49,7 +49,7 @@ they will be translated into JSON-RPC.
     `link
     <http://www.jsonrpc.org/specification#parameter_structures>`_.
 
-If you don't need any data returned, use ``notify()`` instead of ``request()``.
+If you don't need any data returned, use ``notify`` instead of ``request``.
 
 .. sourcecode:: python
 
