@@ -44,10 +44,10 @@ they will be translated into JSON-RPC.
     Bar
 
 .. note::
-    Using both positional and keyword arguments in the same request is not
-    strictly allowed by the JSON-RPC protocol. The specification `says
-    <http://www.jsonrpc.org/specification#parameter_structures>`_ to use one or
-    the other, but not both.
+    To conform strictly to JSON-RPC 2.0 protocol, one should use `either
+    positional or keyword parameters
+    <http://www.jsonrpc.org/specification#parameter_structures>`_ , but not both
+    in the same request.
 
 If you don't need any data returned, use ``notify()`` instead of ``request()``.
 
