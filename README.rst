@@ -2,7 +2,7 @@ jsonrpcclient
 =============
 
 Make `remote procedure calls
-<http://en.wikipedia.org/wiki/Remote_procedure_call>`_ with `JSON-RPC 2.0
+<http://en.wikipedia.org/wiki/Remote_procedure_call>`_ with `JSON-RPC
 <http://www.jsonrpc.org/>`_.
 
 Installation
