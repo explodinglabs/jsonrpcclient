@@ -84,15 +84,15 @@ which handles the authentication.
 Exceptions
 ----------
 
-You should catch ``JsonRpcClientError``, which is the base exception. This will
-be raised in the event of any issue that should be handled, such as connection
-problems, or if the server responded with a *error* response.
+Catch the base exception ``JsonRpcClientError`` when communicating with the
+server. This will be raised when there's an issue such as connection problems,
+or if the server responded with an *error* response.
 
 .. sourcecode:: python
 
     from jsonrpcclient.exceptions import JsonRpcClientError
     try:
-        server.go()
+        server.request('go')
     except JsonRpcClientError as e:
         print(str(e))
 
