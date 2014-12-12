@@ -29,7 +29,7 @@ Set the server details, then start making requests.
 
     ``logging.getLogger('jsonrpcclient').setLevel(logging.INFO)``
 
-The first argument to ``request()`` is the *method*; everything else is passed
+The first argument to ``request`` is the *method*; everything else is passed
 as *params*. You can pass any number of positional or keyword arguments, and
 they will be translated into JSON-RPC.
 
@@ -71,7 +71,7 @@ Use ``response=True`` to get a response; without that it's a notification.
 Authentication
 --------------
 
-Make authenticated requests by passing a second argument to ``Server()``.
+Make authenticated requests by passing a second argument to ``Server``.
 
 .. sourcecode:: python
 
@@ -128,7 +128,7 @@ Changelog
     * Show the response status code in the log.
 
 1.0.7 - 2014-11-21
-    * When using the "alternate" (``server.add()``) method to make a request,
+    * When using the "alternate" (``server.add``) method to make a request,
       only send "id" if response=True is explicitly passed (fixed)
     * The underlying JSON messages are now hidden by default. To see them you
       should increase the logging level (see above).
