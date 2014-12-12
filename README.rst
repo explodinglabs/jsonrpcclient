@@ -20,8 +20,6 @@ Set the server details, then start making requests.
     >>> from jsonrpcclient import Server
     >>> server = Server('http://example/')
     >>> server.request('add', 2, 3)
-    --> {"jsonrpc": "2.0", "method": "add", "params": [2, 3], "id": 1}
-    <-- 200 {"jsonrpc": "2.0", "result": 5, "id": 1}
     5
 
 .. hint::
