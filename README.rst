@@ -13,9 +13,6 @@ Installation
 Usage
 -----
 
-#. Set the server address.
-#. Make a request.
-
 .. sourcecode:: python
 
     >>> from jsonrpcclient import Server
