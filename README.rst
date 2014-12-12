@@ -25,6 +25,13 @@ Usage
     <-- 200 {"jsonrpc": "2.0", "result": 5, "id": 1}
     5
 
+.. hint::
+
+    To see the underlying messages going back and forth, set the logging level
+    to INFO:
+
+    ``logging.getLogger('jsonrpcclient').setLevel(logging.INFO)``
+
 The first argument to ``request()`` is the *method*; everything else is passed
 as *params*. You can pass any number of positional or keyword arguments, and
 they will be translated into JSON-RPC.
@@ -49,13 +56,6 @@ If you don't need any data returned, use ``notify()`` instead of ``request()``.
     >>> server.notify('go')
     --> {"jsonrpc": "2.0", "method": "go"}
     <-- 200 OK
-
-.. hint::
-
-    To see the underlying messages going back and forth, set the logging level
-    to INFO:
-
-    ``logging.getLogger('jsonrpcclient').setLevel(logging.INFO)``
 
 Alternate usage
 ---------------
