@@ -1,13 +1,14 @@
 """rpc.py"""
 
 import itertools
-import json
+import json #pylint:disable=unused-import
 from collections import OrderedDict
 
 id_generator = itertools.count(1) # First generated is 1
 
 
 def request(method, *args, **kwargs):
+    #pylint:disable=line-too-long
     """Returns a JSON-RPC 2.0 request, in OrderedDict format. Convert to a json
     string with json.dumps().
 
@@ -86,7 +87,10 @@ def request(method, *args, **kwargs):
 
     if len(params):
 
-        if len(params) == 1 and (isinstance(params[0], dict) or isinstance(params[0], list)):
+        # If there's only param and it's a dict or list, take it out of the
+        # params list, rather than having a list within a list [[]]
+        if len(params) == 1 and (
+                isinstance(params[0], dict) or isinstance(params[0], list)):
             params = params[0]
 
         r.update(OrderedDict([
