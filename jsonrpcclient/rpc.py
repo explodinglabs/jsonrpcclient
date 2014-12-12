@@ -63,7 +63,7 @@ def request(method, *args, **kwargs):
     if kwargs.get('response', False):
         request_id = next(id_generator)
 
-    # If 'response' is present in kwargs, pop it out of the dict
+    # Pop 'response' out of the kwargs if present
     if 'response' in kwargs:
         kwargs.pop('response')
 
