@@ -115,6 +115,9 @@ Todo
 Changelog
 ---------
 
+1.0.11 - 2014-12-12
+    * Rewrote the rpc.response function.
+
 1.0.10 - 2014-12-11
     * Exceptions have been cleaned up. The base exception is now named
       ``JsonRpcClientError``.
@@ -133,13 +136,3 @@ Changelog
     * The underlying JSON messages are now hidden by default. To see them you
       should increase the logging level (see above).
     * Tests moved into separate "tests" dir.
-
-1.0.6 - 2014-11-11
-    * Fixed installer.
-
-1.0.5 - 2014-11-10
-    * Better logging.
-
-1.0.4 - 2014-11-10
-    * "Proxy" class renamed to "Server".
-    * Logging improved.
