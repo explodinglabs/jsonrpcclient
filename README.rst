@@ -41,7 +41,7 @@ they will be translated into JSON-RPC.
     Bar
 
 .. note::
-    To conform strictly to JSON-RPC 2.0 protocol, one should use either
+    To conform strictly to JSON-RPC 2.0 protocol, one should use **either**
     positional or keyword parameters, but not both in the same request. See
     `link
     <http://www.jsonrpc.org/specification#parameter_structures>`_.
