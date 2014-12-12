@@ -71,7 +71,7 @@ Use ``response=True`` to get a response; without that it's a notification.
 Authentication
 --------------
 
-Make authenticated requests by passing a second argument to ``Server``.
+To make authenticated requests, pass a second argument to ``Server``.
 
 .. sourcecode:: python
 
