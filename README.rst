@@ -44,9 +44,9 @@ they will be translated into JSON-RPC.
     Bar
 
 .. note::
-    To conform strictly to JSON-RPC 2.0 protocol, one should use `either
-    positional or keyword parameters, but not both in the same request
-    <http://www.jsonrpc.org/specification#parameter_structures>`_.
+    To conform strictly to JSON-RPC 2.0 protocol, one should use either
+    positional or keyword parameters, but not both in the same request.
+    `link <http://www.jsonrpc.org/specification#parameter_structures>`_
 
 If you don't need any data returned, use ``notify()`` instead of ``request()``.
 
