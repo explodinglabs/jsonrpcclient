@@ -2,7 +2,7 @@
 
 
 class JsonRpcClientError(Exception):
-    """Base class for the other rpcclient exceptions"""
+    """Base class for the other exceptions"""
     pass
 
 
