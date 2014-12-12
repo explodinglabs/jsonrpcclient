@@ -96,9 +96,6 @@ the server responded with an *error* response.
     except JsonRpcClientError as e:
         print(str(e))
 
-The full list of exceptions is here - some may not be important to you, in which
-case you should catch them to let them ``pass`` silently.
-
 Issue tracker is `here
 <https://bitbucket.org/beau-barker/jsonrpcclient/issues>`_.
 
