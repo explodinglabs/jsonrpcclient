@@ -116,7 +116,7 @@ Changelog
 ---------
 
 1.0.11 - 2014-12-12
-    * Rewrote the rpc.response function.
+    * Rewrote an important internal function (``rpc.request``).
 
 1.0.10 - 2014-12-11
     * Exceptions have been cleaned up. The base exception is now named
