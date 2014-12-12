@@ -13,7 +13,7 @@ Installation
 Usage
 -----
 
-Set the server address, then make a request.
+Set the server address, then make requests.
 
 .. sourcecode:: python
 
