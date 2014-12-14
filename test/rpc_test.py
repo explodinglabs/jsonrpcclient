@@ -33,13 +33,13 @@ class TestRPC(TestCase):
             rpc.request('add', 1, 2)
         )
 
-    def one_keyword(self):
+    def test_one_keyword(self):
         self.assertEqual(
             {"jsonrpc": "2.0", "method": "find", "params": {"name": "Foo"}},
             rpc.request('find', name='Foo')
         )
 
-    def two_keywords(self):
+    def test_two_keywords(self):
         """Note that keyword arguments are sorted in alphabetical order by the
         keys. This is because they're not received in any order, so we sort
         them, to be sure of *some* order"""
@@ -48,19 +48,19 @@ class TestRPC(TestCase):
             rpc.request('find', name='Foo', age=42)
         )
 
-    def both_positional_and_keyword(self):
+    def test_both_positional_and_keyword(self):
         self.assertEqual(
             {"jsonrpc": "2.0", "method": "find", "params": ["Foo", {"age": 42}]},
             rpc.request('find', 'Foo', age=42)
         )
 
-    def dict_params(self):
+    def test_dict_params(self):
         self.assertEqual(
             {"jsonrpc": "2.0", "method": "find", "params": {"age": 42, "name": "Foo"}},
             rpc.request('find', name='Foo', age=42)
         )
 
-    def list_params(self):
+    def test_list_params(self):
         self.assertEqual(
             {"jsonrpc": "2.0", "method": "find", "params": ["Foo", 42]},
             rpc.request('find', ['Foo', 42])
@@ -68,14 +68,14 @@ class TestRPC(TestCase):
 
     # Requests (requiring a response)
 
-    def request_method_only(self):
+    def test_request_method_only(self):
         self.assertEqual(
             {"jsonrpc": "2.0", "method": "go", "id": 1},
             rpc.request('go', response=True)
         )
 
-    def request_both_positional_and_keyword(self):
+    def test_request_both_positional_and_keyword(self):
         self.assertEqual(
-            {"jsonrpc": "2.0", "method": "go", "params": ["positional", {"keyword": "foo"}], "id": 2},
+            {"jsonrpc": "2.0", "method": "go", "params": ["positional", {"keyword": "foo"}], "id": 1},
             rpc.request('go', 'positional', keyword='foo', response=True)
         )
