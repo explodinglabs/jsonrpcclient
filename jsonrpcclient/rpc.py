@@ -12,50 +12,17 @@ def request(method, *args, **kwargs):
     """Returns a JSON-RPC 2.0 request, in OrderedDict format. Convert to a json
     string with json.dumps().
 
-    Notifications:
-
-    No arguments
+    Notification
     >>> json.dumps(request('get'))
     '{"jsonrpc": "2.0", "method": "get"}'
 
-    One positional
-    >>> json.dumps(request('sqrt', 1))
-    '{"jsonrpc": "2.0", "method": "sqrt", "params": [1]}'
-
-    Two positional
-    >>> json.dumps(request('add', 1, 2))
-    '{"jsonrpc": "2.0", "method": "add", "params": [1, 2]}'
-
-    One keyword
-    >>> json.dumps(request('find', name='Foo'))
-    '{"jsonrpc": "2.0", "method": "find", "params": {"name": "Foo"}}'
-
-    Two keywords
-    Note that keyword arguments are sorted in alphabetical order by the keys.
-    This is because they're not received in any order, so we sort them, to be
-    sure of *some* order
-    >>> json.dumps(request('find', name='Foo', age=42))
-    '{"jsonrpc": "2.0", "method": "find", "params": {"age": 42, "name": "Foo"}}'
-
-    Both positional and keyword
+    Passing both positional and keyword arguments
     >>> json.dumps(request('find', 'Foo', age=42))
     '{"jsonrpc": "2.0", "method": "find", "params": ["Foo", {"age": 42}]}'
 
-    Dict
-    >>> json.dumps(request('find', name='Foo', age=42))
-    '{"jsonrpc": "2.0", "method": "find", "params": {"age": 42, "name": "Foo"}}'
-
-    List
-    >>> json.dumps(request('find', ['Foo', 42]))
-    '{"jsonrpc": "2.0", "method": "find", "params": ["Foo", 42]}'
-
-    Requests (requiring a response):
-
-    >>> json.dumps(request('go', response=True))
-    '{"jsonrpc": "2.0", "method": "go", "id": 1}'
-
-    >>> json.dumps(request('go', 'positional', keyword='foo', response=True))
-    '{"jsonrpc": "2.0", "method": "go", "params": ["positional", {"keyword": "foo"}], "id": 2}'
+    Requests (requiring a response)
+    >>> json.dumps(request('add', 2, 3, response=True))
+    '{"jsonrpc": "2.0", "method": "add", "params": [2, 3], "id": 1}'
     """
 
     # Get the request id
