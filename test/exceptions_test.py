@@ -1,12 +1,13 @@
 """exceptions_test.py"""
 # pylint: disable=missing-docstring,line-too-long
 
-import unittest
+from unittest import TestCase
 
 from jsonrpcclient import exceptions
 
 
-class TestExceptions(unittest.TestCase): # pylint: disable=too-many-public-methods
+class TestExceptions(TestCase):
+    # pylint:disable=too-many-public-methods
 
     def test_ConnectionError(self):
         with self.assertRaises(exceptions.ConnectionError):
