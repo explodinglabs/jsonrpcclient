@@ -30,21 +30,21 @@ Set the server details, then make a request.
     5
 
 The first argument to ``request`` is the *method*, and everything else is
-passed as *params*. You can pass any number of positional or keyword arguments,
-and they will be translated into JSON-RPC.
+passed as *params*. You can can also use keyword arguments, and they will be
+translated into JSON-RPC.
 
 .. sourcecode:: python
 
-    >>> server.request('find', 42, name='Foo')
-    --> {"jsonrpc": "2.0", "method": "find", "params": [42, {"name": "Foo"}], "id": 1}
+    >>> server.request('find', name='Foo', age=42)
+    --> {"jsonrpc": "2.0", "method": "find", "params": {"name": "Foo", "age": 42}, "id": 1}
     Bar
 
 .. tip::
 
-    To see the underlying JSON messages, see Logging_.
+    To see the underlying JSON messages going back and forth, see the Logging_
+    section below.
 
-.. note::
-
+..
     To comply strictly with the JSON-RPC 2.0 protocol, one should use *either*
     positional or keyword arguments, but not both in the same request. See
     `Parameter Structures
@@ -67,7 +67,7 @@ If you prefer, there's another way to make a request:
     >>> server.add(2, 3, response=True)
     5
 
-Is the same as saying ``server.request('add', 2, 3)``.
+That's the same as saying ``server.request('add', 2, 3)``.
 
 Use ``response=True`` to get a response; without that it's a notification.
 
@@ -116,11 +116,11 @@ if the server responded with *error*.
 Logging
 -------
 
-To give finer control, two separate loggers are used - one for *requests* and
-another for *responses*. These do nothing until you set them up and add
-handlers to them.
+To give finer control, two separate loggers are used - one for requests and
+another for responses. These do nothing until you set them up and add handlers
+to them.
 
-The following demonstrates how to output **requests** to stderr.
+The following demonstrates how to output requests to stderr.
 
 .. sourcecode:: python
 
@@ -132,7 +132,7 @@ The following demonstrates how to output **requests** to stderr.
     >>> request_handler = logging.StreamHandler()
     >>> request_log.addHandler(request_handler)
 
-Do the same with ``response_log`` to see the **responses**.
+Do the same with ``response_log`` to see the responses.
 
 For better log entries, customize the log format:
 
@@ -142,7 +142,7 @@ For better log entries, customize the log format:
     >>> response_handler.setFormatter(logging.Formatter(fmt='%(asctime)s <-- %(http_code)d %(http_reason)s: %(message)s')
 
 In the response format, ``%(http_code)`` and ``%(http_reason)`` are the status
-code (eg. 400) and reason (eg. "BAD REQUEST"), returned from the server.
+code and reason (eg. *400* and *"BAD REQUEST"*), returned from the server.
 
 Issue tracker
 -------------
