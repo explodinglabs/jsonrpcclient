@@ -30,13 +30,13 @@ Set the server details, then make a request.
     5
 
 The first argument to ``request`` is the *method*, and everything else is
-passed as *params*. You can can also use keyword arguments, and they will be
-translated into JSON-RPC.
+passed as *params*. You can can also use keyword arguments.
 
 .. sourcecode:: python
 
     >>> server.request('find', name='Foo', age=42)
     --> {"jsonrpc": "2.0", "method": "find", "params": {"name": "Foo", "age": 42}, "id": 1}
+    <-- {"jsonrpc": "2.0", "result": "Bar", "id": 1}
     Bar
 
 .. tip::
@@ -67,9 +67,8 @@ If you prefer, there's another way to make a request:
     >>> server.add(2, 3, response=True)
     5
 
-That's the same as saying ``server.request('add', 2, 3)``.
-
-Use ``response=True`` to get a response; without that it's a notification.
+That's the same as saying ``server.request('add', 2, 3)``. Use
+``response=True`` to get a response; without that it's a notification.
 
 Authentication
 --------------
@@ -87,7 +86,7 @@ handles the authentication.
 Headers
 -------
 
-To set custom HTTP headers, pass a ``headers`` argument to ``Server``.
+To customize the HTTP headers, pass a ``headers`` argument to ``Server``.
 
 .. sourcecode:: python
 
@@ -120,29 +119,41 @@ To give finer control, two separate loggers are used - one for requests and
 another for responses. These do nothing until you set them up and add handlers
 to them.
 
-The following demonstrates how to output requests to stderr.
+The following shows how to output requests to stderr.
 
 .. sourcecode:: python
 
-    >>> import logging
-    >>> from jsonrpcclient import request_log
-    >>> # Json messages are logged with info(), so set the log level.
-    >>> request_log.setLevel(logging.INFO)
-    >>> # Add a stream handler to output to stderr.
-    >>> request_handler = logging.StreamHandler()
-    >>> request_log.addHandler(request_handler)
+    import logging
+    from jsonrpcclient import request_log
+    # Json messages are logged with info(), so set the log level.
+    request_log.setLevel(logging.INFO)
+    # Add a stream handler to output to stderr.
+    request_handler = logging.StreamHandler()
+    request_log.addHandler(request_handler)
 
 Do the same with ``response_log`` to see the responses.
+
+.. sourcecode:: python
+
+    from jsonrpcclient import response_log
+    response_log.setLevel(logging.INFO)
+    response_handler = logging.StreamHandler()
+    response_log.addHandler(response_handler)
 
 For better log entries, customize the log format:
 
 .. sourcecode:: python
 
-    >>> request_handler.setFormatter(logging.Formatter(fmt='%(asctime)s --> %(message)s')
-    >>> response_handler.setFormatter(logging.Formatter(fmt='%(asctime)s <-- %(http_code)d %(http_reason)s: %(message)s')
+    request_format = logging.Formatter(fmt='%(asctime)s --> %(message)s')
+    request_handler.setFormatter(request_format)
 
-In the response format, ``%(http_code)`` and ``%(http_reason)`` are the status
-code and reason (eg. *400* and *"BAD REQUEST"*), returned from the server.
+    response_format = logging.Formatter(fmt='%(asctime)s <-- %(http_code)d %(http_reason)s %(message)s')
+    response_handler.setFormatter(response_format)
+
+In the response format, these extra fields can be used:
+
+* ``%(http_code)`` is the HTTP status code received from the server (eg. *400*)
+* ``%(http_reason)`` is the description of the status code (eg. *"BAD REQUEST"*)
 
 Issue tracker
 -------------
@@ -165,7 +176,7 @@ Todo
 Changelog
 ---------
 
-1.0.12 - 2014-12-12
+1.0.12 - 2014-12-16
     * Default HTTP headers changed to meet `this document
       <http://www.simple-is-better.org/json-rpc/transport_http.html#post-request>`_.
     * Ability customize the headers.
