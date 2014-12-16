@@ -102,8 +102,8 @@ Exceptions
 ----------
 
 Catch the base exception ``JsonRpcClientError`` when communicating with the
-server. This is raised when there's an issue such as connection problems, or if
-the server responded with an *error* response.
+server. This is raised on a variety of issues such as connection problems, or
+if the server responded with *error*.
 
 .. sourcecode:: python
 
@@ -116,9 +116,9 @@ the server responded with an *error* response.
 Logging
 -------
 
-To give finer control, two separate loggers are used - one each for *requests*
-and *responses*. The loggers do nothing until you set them up and add handlers
-to them.
+To give finer control, two separate loggers are used - one for *requests* and
+another for *responses*. These do nothing until you set them up and add
+handlers to them.
 
 The following demonstrates how to output **requests** to stderr.
 
@@ -132,7 +132,7 @@ The following demonstrates how to output **requests** to stderr.
     >>> request_handler = logging.StreamHandler()
     >>> request_log.addHandler(request_handler)
 
-Do the same with ``response_log`` to see the server responses.
+Do the same with ``response_log`` to see the **responses**.
 
 For better log entries, customize the log format:
 
