@@ -29,8 +29,6 @@ Set the server details, then make a request.
     To see the underlying messages going back and forth, set the logging level
     to INFO::
 
-    .. sourcecode:: python
-
         logging.getLogger('jsonrpcclient').setLevel(logging.INFO)
 
 The first argument to ``request`` is the *method*; everything else is passed as
