@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# pylint: disable=line-too-long
+#pylint:disable=line-too-long
 """setup.py"""
 
 import os
@@ -14,7 +14,7 @@ setup(
     packages=['jsonrpcclient'],
     package_data={'jsonrpcclient': ['response-schema.json']},
     install_requires=['requests', 'jsonschema'],
-    version='1.0.11',
+    version='1.0.12',
     description='JSON-RPC 2.0 client library for Python 3',
     long_description=read('README.rst'),
     author='Beau Barker',
