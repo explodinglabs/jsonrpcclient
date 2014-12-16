@@ -43,8 +43,8 @@ they will be translated into JSON-RPC.
 .. note::
 
     To comply strictly with the JSON-RPC 2.0 protocol, one should use **either**
-    positional or keyword parameters, but not both in the same request. See
-    `link <http://www.jsonrpc.org/specification#parameter_structures>`_.
+    positional or keyword arguments, but not both in the same request. See `link
+    <http://www.jsonrpc.org/specification#parameter_structures>`_.
 
 If you don't need any data returned, use ``notify`` instead of ``request``.
 
@@ -67,18 +67,32 @@ Which is the same as saying ``server.request('add', 2, 3)``.
 
 Use ``response=True`` to get a response; without that it's a notification.
 
-Authentication
---------------
+Authentication and Headers
+--------------------------
 
-To make authenticated requests, pass a second argument to ``Server``.
+To make authenticated requests, pass an ``auth`` argument to ``Server``.
+    
+An example using Basic Auth:
 
 .. sourcecode:: python
 
     >>> server = Server('http://example.com/api', auth=('user', 'pass'))
 
-For more options, see the `requests
-<http://docs.python-requests.org/en/latest/user/authentication/>`_ package
-which handles the authentication.
+For more authentication options, see the `requests
+<http://docs.python-requests.org/en/latest/user/authentication/>`_ package which
+handles the authentication.
+
+Similarly, pass a ``headers`` argument to send custom HTTP headers.
+
+    >>> server = Server('http://example.com/api', headers={'Content-Type': 'application/json-rpc'})
+
+If no headers are given, the following default headers are used:
+
+.. sourcecode::
+
+    Content-Type: application/json
+    Accept: application/json
+
 
 Exceptions
 ----------
