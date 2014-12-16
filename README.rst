@@ -156,11 +156,10 @@ Changelog
 ---------
 
 1.0.12 - 2014-12-12
-    * Default HTTP headers changed to meet `this
-      <http://www.simple-is-better.org/json-rpc/transport_http.html#post-request>`_
-      document.
+    * Default HTTP headers changed to meet `this document
+      <http://www.simple-is-better.org/json-rpc/transport_http.html#post-request>`_.
     * Ability customize the headers.
-    * Logging has changed, see the Logging section of the docs.
+    * Logging has changed. See Logging_.
 
 1.0.11 - 2014-12-12
     * Rewrote an internal function, ``rpc.request``.
