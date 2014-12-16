@@ -133,7 +133,7 @@ For better log entries, customize the log format:
     >>> response_handler.setFormatter(logging.Formatter(fmt='%(asctime)s <-- %(http_code)d %(http_reason)s: %(message)s')
 
 In the response format, ``%(http_code)`` and ``%(http_reason)`` are the status
-code and reason (eg 'BAD REQUEST'), returned from the server.
+code and reason (such as "BAD REQUEST"), returned from the server.
 
 Issue tracker
 -------------
