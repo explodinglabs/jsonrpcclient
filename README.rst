@@ -104,7 +104,6 @@ the server responded with an *error* response.
     except JsonRpcClientError as e:
         print(str(e))
 
-.. Logging_:
 Logging
 -------
 
