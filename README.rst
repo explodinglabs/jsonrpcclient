@@ -141,8 +141,8 @@ Issue tracker
 Issue tracker is `here
 <https://bitbucket.org/beau-barker/jsonrpcclient/issues>`_.
 
-JSON-RPC Server
----------------
+Server
+------
 
 If you need a server, try my `jsonrpcserver
 <https://pypi.python.org/pypi/jsonrpcserver>`_ library.
