@@ -24,13 +24,6 @@ Set the server details, then make a request.
     >>> server.request('add', 2, 3)
     5
 
-.. tip::
-
-    To see the underlying messages going back and forth, set the logging level
-    to INFO::
-
-        logging.getLogger('jsonrpcclient').setLevel(logging.INFO)
-
 The first argument to ``request`` is the *method*; everything else is passed as
 *params*. You can pass any number of positional or keyword arguments, and they
 will be translated into JSON-RPC.
@@ -39,8 +32,12 @@ will be translated into JSON-RPC.
 
     >>> server.request('find', 42, name='Foo')
     --> {"jsonrpc": "2.0", "method": "find", "params": [42, {"name": "Foo"}], "id": 1}
-    <-- 200 {"jsonrpc": "2.0", "result": "Bar", "id": 1}
+    <-- {"jsonrpc": "2.0", "result": "Bar", "id": 1}
     Bar
+
+.. tip::
+
+    To see the underlying messages going back and forth, see `Logging <>`_.
 
 .. note::
 
@@ -54,8 +51,6 @@ If you don't need any data returned, use ``notify`` instead of ``request``.
 .. sourcecode:: python
 
     >>> server.notify('go')
-    --> {"jsonrpc": "2.0", "method": "go"}
-    <-- 200 OK
 
 Alternate usage
 ~~~~~~~~~~~~~~~
@@ -65,6 +60,7 @@ If you prefer, there's another way to call a remote procedure:
 .. sourcecode:: python
 
     >>> server.add(2, 3, response=True)
+    5
 
 Which is the same as saying ``server.request('add', 2, 3)``.
 
@@ -81,7 +77,7 @@ To make authenticated requests, pass an ``auth`` argument to ``Server``.
 
 The above example uses Basic Auth. For more authentication options, see the
 `requests <http://docs.python-requests.org/en/latest/user/authentication/>`_
-package which handles the authentication.
+module which handles the authentication.
 
 Similarly, a ``headers`` argument allows you to send custom HTTP headers.
 
@@ -89,7 +85,7 @@ Similarly, a ``headers`` argument allows you to send custom HTTP headers.
 
     >>> server = Server('http://example.com/api', headers={'Content-Type': 'application/json-rpc'})
 
-If custom headers are not passed, the following default headers are used::
+If no custom headers are specified, the following headers are used::
 
     Content-Type: application/json
     Accept: application/json
@@ -109,8 +105,45 @@ the server responded with an *error* response.
     except JsonRpcClientError as e:
         print(str(e))
 
+Logging
+-------
+
+To give finer control, two separate loggers are used - one each for requests
+and responses. The loggers do nothing until you set them up and add handlers to
+them.
+
+The following demonstrates how to output the requests to stderr.
+
+.. sourcecode:: python
+
+    >>> import logging
+    >>> from jsonrpcclient import request_log
+    >>> # Json messages are logged with info(), so set the log level
+    >>> request_log.setLevel(logging.INFO)
+    >>> # Add a stream handler to output to stderr.
+    >>> request_handler = logging.StreamHandler()
+    >>> request_log.addHandler(request_handler)
+
+Do the same with `response_log` to see the server responses.
+
+For better log entries, customize the log format:
+
+.. sourcecode:: python
+
+    >>> request_handler.setFormatter(logging.Formatter(fmt='%(asctime)s --> %(message)s')
+    >>> response_handler.setFormatter(logging.Formatter(fmt='%(asctime)s <-- %(http_code)d %(http_reason)s: %(message)s')
+
+In the response format, `%(http_code)` and `%(http_reason)` are the HTTP status
+code and reason (eg 'BAD REQUEST'), returned from the server.
+
+Issue tracker
+-------------
+
 Issue tracker is `here
 <https://bitbucket.org/beau-barker/jsonrpcclient/issues>`_.
+
+JSON-RPC Server
+---------------
 
 If you need a server, try my `jsonrpcserver
 <https://pypi.python.org/pypi/jsonrpcserver>`_ library.
