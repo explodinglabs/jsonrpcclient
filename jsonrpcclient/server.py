@@ -65,7 +65,7 @@ class Server:
         return self.handle_response(
             self.send_message(rpc.request(method_name, *args, **kwargs)), False)
 
-    def send_message(self, request_dict):
+    def send_message(self, request):
         """Send the RPC request to the server.
 
         Calls a procedure on another server.
@@ -73,14 +73,14 @@ class Server:
         """
 
         # Log the request
-        request_log.info(json.dumps(request_dict))
+        request_log.info(json.dumps(request))
 
         try:
             # Send the message
             response = requests.post(
                 self.endpoint,
                 self.headers,
-                json=request_dict,
+                json=request,
                 auth=self.auth
             )
         except requests.exceptions.InvalidSchema:
