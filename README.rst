@@ -24,8 +24,8 @@ Set the server details, then make a request.
     >>> server.request('add', 2, 3)
     5
 
-The first argument to ``request`` is the *method*; everything else is passed as
-*params*. You can pass any number of positional or keyword arguments, and they
+The first argument to ``request`` is the method; everything else is passed as
+arguments. You can pass any number of positional or keyword arguments, and they
 will be translated into JSON-RPC.
 
 .. sourcecode:: python
