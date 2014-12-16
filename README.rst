@@ -15,7 +15,7 @@ Installation
 Usage
 -----
 
-Set the server details, then start making requests.
+Set the server details, then make a request.
 
 .. sourcecode:: python
 
