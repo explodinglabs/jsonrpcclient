@@ -45,8 +45,8 @@ they will be translated into JSON-RPC.
 .. note::
 
     To comply strictly with the JSON-RPC 2.0 protocol, one should use *either*
-    positional or keyword arguments, but not both in the same request. See specs
-    section 4.2, `Parameter Structures
+    positional or keyword arguments, but not both in the same request. See
+    section 4.2 of the specs, `Parameter Structures
     <http://www.jsonrpc.org/specification#parameter_structures>`_.
 
 If you don't need any data returned, use ``notify`` instead of ``request``.
