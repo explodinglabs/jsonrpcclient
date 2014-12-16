@@ -13,8 +13,8 @@ def request(method, *args, **kwargs):
     string with json.dumps().
 
     Notification
-    >>> json.dumps(request('get'))
-    '{"jsonrpc": "2.0", "method": "get"}'
+    >>> json.dumps(request('go'))
+    '{"jsonrpc": "2.0", "method": "go"}'
 
     Passing both positional and keyword arguments
     >>> json.dumps(request('find', 'Foo', age=42))
