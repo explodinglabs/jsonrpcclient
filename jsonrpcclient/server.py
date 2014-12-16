@@ -11,8 +11,10 @@ from jsonrpcclient import exceptions
 from jsonrpcclient import logger
 
 
-DEFAULT_HTTP_HEADER = {'Content-Type': 'application/json; charset=utf-8'}
-
+DEFAULT_HTTP_HEADER = {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+}
 
 class Server:
     """This class acts as the remote server"""
