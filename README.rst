@@ -117,7 +117,7 @@ The following demonstrates how to output **requests** to stderr.
 
     >>> import logging
     >>> from jsonrpcclient import request_log
-    >>> # Json messages are logged with info(), so set the log level
+    >>> # Json messages are logged with info(), so set the log level.
     >>> request_log.setLevel(logging.INFO)
     >>> # Add a stream handler to output to stderr.
     >>> request_handler = logging.StreamHandler()
