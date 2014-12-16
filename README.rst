@@ -125,7 +125,9 @@ Changelog
 
 1.0.12 - 2014-12-12
     * Ability to add custom http headers.
-    * Default HTTP headers changed.
+    * Default HTTP headers changed to satisfy `this
+      <http://www.simple-is-better.org/json-rpc/transport_http.html#post-request>`_
+      document.
 
 1.0.11 - 2014-12-12
     * Rewrote an internal function, ``rpc.request``.
