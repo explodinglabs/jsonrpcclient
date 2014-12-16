@@ -5,6 +5,10 @@ Make `remote procedure calls
 <http://en.wikipedia.org/wiki/Remote_procedure_call>`_ with `JSON-RPC
 <http://www.jsonrpc.org/>`_.
 
+Compliant with the `JSON-RPC 2.0 specification
+<http://www.jsonrpc.org/specification>`_ and `RFC 4627
+<http://tools.ietf.org/html/rfc4627>`_ on Javascript Object Notation.
+
 Installation
 ------------
 
@@ -24,9 +28,9 @@ Set the server details, then make a request.
     >>> server.request('add', 2, 3)
     5
 
-The first argument to ``request`` is the method; everything else is passed as
-arguments. You can pass any number of positional or keyword arguments, and they
-will be translated into JSON-RPC.
+The first argument to ``request`` is the *method*, and everything else is
+passed as *params*. You can pass any number of positional or keyword arguments,
+and they will be translated into JSON-RPC.
 
 .. sourcecode:: python
 
@@ -46,7 +50,7 @@ will be translated into JSON-RPC.
     <http://www.jsonrpc.org/specification#parameter_structures>`_.
 
 If you don't need any data returned when the procedure is successful, use
-``notify`` instead of ``request``.
+``notify`` instead of ``request``. (this is called a ``notification`` in rpc).
 
 .. sourcecode:: python
 
@@ -155,6 +159,7 @@ If you need a server, try my `jsonrpcserver
 Todo
 ----
 
+* Support `batch calls <http://www.jsonrpc.org/specification#batch>`_.
 * Ability to make GET requests - maybe.
 
 Changelog
