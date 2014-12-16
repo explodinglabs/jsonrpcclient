@@ -63,7 +63,7 @@ If you prefer, there's another way to make a request:
     >>> server.add(2, 3, response=True)
     5
 
-Which is the same as saying ``server.request('add', 2, 3)``.
+Is the same as saying ``server.request('add', 2, 3)``.
 
 Use ``response=True`` to get a response; without that it's a notification.
 
