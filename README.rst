@@ -27,9 +27,9 @@ Set the server details, then make a request.
 .. tip::
 
     To see the underlying messages going back and forth, set the logging level
-    to INFO:
+    to INFO::
 
-    ``logging.getLogger('jsonrpcclient').setLevel(logging.INFO)``
+        logging.getLogger('jsonrpcclient').setLevel(logging.INFO)
 
 The first argument to ``request`` is the *method*; everything else is passed
 as *params*. You can pass any number of positional or keyword arguments, and
