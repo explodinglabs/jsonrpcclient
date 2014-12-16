@@ -36,7 +36,7 @@ will be translated into JSON-RPC.
 
 .. tip::
 
-    To see the underlying JSON messages, see `Logging <>`_.
+    To see the underlying JSON messages, see Logging_.
 
 .. note::
 
@@ -104,6 +104,7 @@ the server responded with an *error* response.
     except JsonRpcClientError as e:
         print(str(e))
 
+.. Logging_:
 Logging
 -------
 
@@ -123,7 +124,7 @@ The following demonstrates how to output the requests to stderr.
     >>> request_handler = logging.StreamHandler()
     >>> request_log.addHandler(request_handler)
 
-Do the same with `response\_log` to see the server responses.
+Do the same with ``response_log`` to see the server responses.
 
 For better log entries, customize the log format:
 
@@ -156,10 +157,11 @@ Changelog
 ---------
 
 1.0.12 - 2014-12-12
-    * Ability to add custom http headers.
-    * Default HTTP headers changed to satisfy `this
+    * Default HTTP headers changed to meet `this
       <http://www.simple-is-better.org/json-rpc/transport_http.html#post-request>`_
       document.
+    * Ability customize the headers.
+    * Logging has changed, see the Logging section of the docs.
 
 1.0.11 - 2014-12-12
     * Rewrote an internal function, ``rpc.request``.
