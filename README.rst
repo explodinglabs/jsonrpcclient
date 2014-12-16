@@ -50,8 +50,7 @@ and they will be translated into JSON-RPC.
     `Parameter Structures
     <http://www.jsonrpc.org/specification#parameter_structures>`_.
 
-If you don't need any data returned when the procedure is successful, use
-``notify`` instead of ``request``. (this is called a ``notification`` in rpc).
+If you don't need any data returned, use ``notify`` instead of ``request``.
 
 .. sourcecode:: python
 
