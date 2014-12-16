@@ -20,8 +20,8 @@ Set the server details, then make a request.
 .. sourcecode:: python
 
     >>> from jsonrpcclient import Server
-    >>> server = Server('http://example.com/api')
-    >>> server.request('add', 2, 3)
+    >>> s = Server('http://example.com/api')
+    >>> s.request('add', 2, 3)
     5
 
 .. tip::
@@ -37,7 +37,7 @@ they will be translated into JSON-RPC.
 
 .. sourcecode:: python
 
-    >>> server.request('find', 42, name='Foo')
+    >>> s.request('find', 42, name='Foo')
     --> {"jsonrpc": "2.0", "method": "find", "params": [42, {"name": "Foo"}], "id": 1}
     <-- 200 {"jsonrpc": "2.0", "result": "Bar", "id": 1}
     Bar
@@ -53,7 +53,7 @@ If you don't need any data returned, use ``notify`` instead of ``request``.
 
 .. sourcecode:: python
 
-    >>> server.notify('go')
+    >>> s.notify('go')
     --> {"jsonrpc": "2.0", "method": "go"}
     <-- 200 OK
 
@@ -64,9 +64,9 @@ If you prefer, there's another way to call a remote procedure:
 
 .. sourcecode:: python
 
-    >>> server.add(2, 3, response=True)
+    >>> s.add(2, 3, response=True)
 
-Which is the same as saying ``server.request('add', 2, 3)``.
+Which is the same as saying ``s.request('add', 2, 3)``.
 
 Use ``response=True`` to get a response; without that it's a notification.
 
@@ -77,7 +77,7 @@ To make authenticated requests, pass an ``auth`` argument to ``Server``.
 
 .. sourcecode:: python
 
-    >>> server = Server('http://example.com/api', auth=('user', 'pass'))
+    >>> s = Server('http://example.com/api', auth=('user', 'pass'))
 
 The above example uses *Basic Auth*. For more authentication options, see the
 `requests <http://docs.python-requests.org/en/latest/user/authentication/>`_
@@ -87,7 +87,7 @@ Similarly, a ``headers`` argument allows you to send custom HTTP headers.
 
 .. sourcecode:: python
 
-    >>> server = Server('http://example.com/api', headers={'Content-Type': 'application/json-rpc'})
+    >>> s = Server('http://example.com/api', headers={'Content-Type': 'application/json-rpc'})
 
 If custom headers are not passed, the following default headers are used::
 
@@ -105,7 +105,7 @@ the server responded with an *error* response.
 
     from jsonrpcclient.exceptions import JsonRpcClientError
     try:
-        server.request('go')
+        s.request('go')
     except JsonRpcClientError as e:
         print(str(e))
 
