@@ -9,6 +9,7 @@ Installation
 ------------
 
 ::
+
     pip install jsonrpcclient
 
 Usage
@@ -87,7 +88,7 @@ Similarly, a ``headers`` argument allows you to send custom HTTP headers.
 
     >>> server = Server('http://example.com/api', headers={'Content-Type': 'application/json-rpc'})
 
-If custom headers are not passed, the following default headers are used:::
+If custom headers are not passed, the following default headers are used::
 
     Content-Type: application/json
     Accept: application/json
