@@ -84,6 +84,8 @@ handles the authentication.
 
 Similarly, pass a ``headers`` argument to send custom HTTP headers.
 
+.. sourcecode:: python
+
     >>> server = Server('http://example.com/api', headers={'Content-Type': 'application/json-rpc'})
 
 If no headers are given, the following default headers are used:
