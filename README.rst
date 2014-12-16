@@ -24,7 +24,7 @@ Set the server details, then start making requests.
     >>> server.request('add', 2, 3)
     5
 
-.. hint::
+.. tip::
 
     To see the underlying messages going back and forth, set the logging level
     to INFO:
