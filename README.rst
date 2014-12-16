@@ -79,7 +79,7 @@ To make authenticated requests, pass an ``auth`` argument to ``Server``.
 
     >>> server = Server('http://example.com/api', auth=('user', 'pass'))
 
-The above example uses *Basic Auth*. For more authentication options, see the
+The above example uses Basic Auth. For more authentication options, see the
 `requests <http://docs.python-requests.org/en/latest/user/authentication/>`_
 package which handles the authentication.
 
