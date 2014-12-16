@@ -8,6 +8,7 @@ Make `remote procedure calls
 Installation
 ------------
 
+::
     pip install jsonrpcclient
 
 Usage
@@ -71,30 +72,25 @@ Authentication and Headers
 --------------------------
 
 To make authenticated requests, pass an ``auth`` argument to ``Server``.
-    
-An example using Basic Auth:
 
 .. sourcecode:: python
 
     >>> server = Server('http://example.com/api', auth=('user', 'pass'))
 
-For more authentication options, see the `requests
-<http://docs.python-requests.org/en/latest/user/authentication/>`_ package which
-handles the authentication.
+The above example uses *Basic Auth*. For more authentication options, see the
+`requests <http://docs.python-requests.org/en/latest/user/authentication/>`_
+package which handles the authentication.
 
-Similarly, pass a ``headers`` argument to send custom HTTP headers.
+Similarly, a ``headers`` argument allows you to send custom HTTP headers.
 
 .. sourcecode:: python
 
     >>> server = Server('http://example.com/api', headers={'Content-Type': 'application/json-rpc'})
 
-If no headers are given, the following default headers are used:
-
-.. sourcecode::
+If custom headers are not passed, the following default headers are used:::
 
     Content-Type: application/json
     Accept: application/json
-
 
 Exceptions
 ----------
@@ -120,15 +116,14 @@ If you need a server, try my `jsonrpcserver
 Todo
 ----
 
-* Ability to make GET requests.
-
-* Ability to configure the http header. Currently Content-Type is hard-coded as
-  "application/json", but perhaps should be "application/json-rpc". See
-  http://jsonrpc.org/historical/json-rpc-over-http.html#http-header
-
+* Ability to make GET requests (maybe.)
 
 Changelog
 ---------
+
+1.0.12 - 2014-12-12
+    * Ability to add custom http headers.
+    * Default HTTP headers changed.
 
 1.0.11 - 2014-12-12
     * Rewrote an internal function, ``rpc.request``.
@@ -144,10 +139,3 @@ Changelog
 
 1.0.8 - 2014-12-02
     * Show the response status code in the log.
-
-1.0.7 - 2014-11-21
-    * When using the "alternate" (``server.add``) method to make a request,
-      only send "id" if response=True is explicitly passed (fixed)
-    * The underlying JSON messages are now hidden by default. To see them you
-      should increase the logging level (see above).
-    * Tests moved into separate "tests" dir.
