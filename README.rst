@@ -44,7 +44,7 @@ they will be translated into JSON-RPC.
 
 .. note::
 
-    To comply strictly with the JSON-RPC 2.0 protocol, one should use **either**
+    To comply strictly with the JSON-RPC 2.0 protocol, one should use *either*
     positional or keyword arguments, but not both in the same request. See `link
     <http://www.jsonrpc.org/specification#parameter_structures>`_.
 
