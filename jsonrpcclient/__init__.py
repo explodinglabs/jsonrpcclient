@@ -1,9 +1,8 @@
 """__init__.py"""
 
-import logging
+from logging import getLogger, StreamHandler
 
-logger = logging.getLogger('jsonrpcclient')
-logger.addHandler(logging.StreamHandler())
-logger.setLevel(logging.WARNING)
+request_log = getLogger('jsonrpcclient.request')
+response_log = getLogger('jsonrpcclient.response')
 
 from jsonrpcclient.server import Server
