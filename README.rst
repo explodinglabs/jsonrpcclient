@@ -57,7 +57,7 @@ If you don't need any data returned, use ``notify`` instead of ``request``.
     <-- 200 OK
 
 Alternate usage
----------------
+~~~~~~~~~~~~~~~
 
 If you prefer, there's another way to call a remote procedure:
 
