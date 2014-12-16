@@ -8,7 +8,7 @@ import jsonschema
 
 from jsonrpcclient import rpc
 from jsonrpcclient import exceptions
-from jsonrpcclient import logger
+from jsonrpcclient import request_log, response_log
 
 
 DEFAULT_HTTP_HEADER = {
@@ -22,7 +22,7 @@ class Server:
     def __init__(self, endpoint, headers=None, auth=None):
         """Instantiate a remote server object.
 
-        >>> s = Server('http://example.com/api', \
+        >>> server = Server('http://example.com/api', \
                 headers={'Content-Type': 'application/json-rpc'}, \
                 auth=('user', 'pass'))
         """
@@ -73,7 +73,7 @@ class Server:
         """
 
         # Log the request
-        logger.info('--> '+json.dumps(request_dict))
+        request_log.info(json.dumps(request_dict))
 
         try:
             # Send the message
@@ -88,17 +88,14 @@ class Server:
         except requests.exceptions.RequestException: # The base exception
             raise exceptions.ConnectionError()
 
-        # Log the response
-        if len(response.text):
-            # Log the response
-            logger.info('<-- {} {}'.format(response.status_code, response.text)\
-                .replace("\n", '') \
-                .replace('  ', ' ') \
-                .replace('{ ', '{'))
-
-        else:
-            logger.info('<-- {} {}'.format(
-                response.status_code, response.reason))
+        # Log the response, cleaning it up a bit
+        response_log.info(
+            response.text \
+                .replace("\n", '').replace('  ', ' ').replace('{ ', '{'),
+            extra={
+                'http_code': response.status_code,
+                'http_reason': response.reason,
+            })
 
         return response
 
