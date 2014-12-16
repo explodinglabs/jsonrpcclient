@@ -32,12 +32,11 @@ will be translated into JSON-RPC.
 
     >>> server.request('find', 42, name='Foo')
     --> {"jsonrpc": "2.0", "method": "find", "params": [42, {"name": "Foo"}], "id": 1}
-    <-- {"jsonrpc": "2.0", "result": "Bar", "id": 1}
     Bar
 
 .. tip::
 
-    To see the underlying messages going back and forth, see `Logging <>`_.
+    To see the underlying JSON messages, see `Logging <>`_.
 
 .. note::
 
@@ -124,7 +123,7 @@ The following demonstrates how to output the requests to stderr.
     >>> request_handler = logging.StreamHandler()
     >>> request_log.addHandler(request_handler)
 
-Do the same with `response_log` to see the server responses.
+Do the same with `response\_log` to see the server responses.
 
 For better log entries, customize the log format:
 
