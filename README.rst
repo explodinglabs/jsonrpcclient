@@ -31,9 +31,9 @@ Set the server details, then make a request.
 
         logging.getLogger('jsonrpcclient').setLevel(logging.INFO)
 
-The first argument to ``request`` is the *method*; everything else is passed
-as *params*. You can pass any number of positional or keyword arguments, and
-they will be translated into JSON-RPC.
+The first argument to ``request`` is the *method*; everything else is passed as
+*params*. You can pass any number of positional or keyword arguments, and they
+will be translated into JSON-RPC.
 
 .. sourcecode:: python
 
@@ -47,7 +47,7 @@ they will be translated into JSON-RPC.
     To comply strictly with the JSON-RPC 2.0 protocol, one should use *either*
     positional or keyword arguments, but not both in the same request. See
     `Parameter Structures
-    <http://www.jsonrpc.org/specification#parameter_structures>`_ in the specs.
+    <http://www.jsonrpc.org/specification#parameter_structures>`_.
 
 If you don't need any data returned, use ``notify`` instead of ``request``.
 
