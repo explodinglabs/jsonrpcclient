@@ -45,11 +45,13 @@ will be translated into JSON-RPC.
     `Parameter Structures
     <http://www.jsonrpc.org/specification#parameter_structures>`_.
 
-If you don't need any data returned, use ``notify`` instead of ``request``.
+If you don't need any data returned when the procedure is successful, use
+``notify`` instead of ``request``.
 
 .. sourcecode:: python
 
     >>> server.notify('go')
+    >>>
 
 Alternate usage
 ~~~~~~~~~~~~~~~
