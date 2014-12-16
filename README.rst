@@ -111,7 +111,7 @@ To give finer control, two separate loggers are used - one each for requests
 and responses. The loggers do nothing until you set them up and add handlers to
 them.
 
-The following demonstrates how to output the requests to stderr.
+The following demonstrates how to output **requests** to stderr.
 
 .. sourcecode:: python
 
