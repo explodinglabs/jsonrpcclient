@@ -5,9 +5,10 @@ Make `remote procedure calls
 <http://en.wikipedia.org/wiki/Remote_procedure_call>`_ with `JSON-RPC
 <http://www.jsonrpc.org/>`_.
 
-Compliant with the `JSON-RPC 2.0 specification
-<http://www.jsonrpc.org/specification>`_ and `RFC 4627
-<http://tools.ietf.org/html/rfc4627>`_ on Javascript Object Notation.
+.. comment:
+    Compliant with the `JSON-RPC 2.0 specification
+    <http://www.jsonrpc.org/specification>`_ and `RFC 4627
+    <http://tools.ietf.org/html/rfc4627>`_ on Javascript Object Notation.
 
 Installation
 ------------
