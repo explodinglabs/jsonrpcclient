@@ -11,12 +11,27 @@ from jsonrpcclient import exceptions
 from jsonrpcclient import logger
 
 
+DEFAULT_HTTP_HEADER = {'Content-Type': 'application/json; charset=utf-8'}
+
+
 class Server:
     """This class acts as the remote server"""
 
-    def __init__(self, endpoint, auth=None):
-        self.auth = auth
+    def __init__(self, endpoint, headers=None, auth=None):
+        """Instantiate a remote server object.
+
+        >>> s = Server('http://example.com/api', \
+                headers={'Content-Type': 'application/json-rpc'}, \
+                auth=('user', 'pass'))
+        """
+
         self.endpoint = endpoint
+        self.auth = auth
+
+        if headers:
+            self.headers = headers
+        else:
+            self.headers = DEFAULT_HTTP_HEADER
 
     def __getattr__(self, name):
         """Catch undefined methods and handle them as RPC requests.
@@ -62,9 +77,7 @@ class Server:
             # Send the message
             response = requests.post(
                 self.endpoint,
-                headers={
-                    'Content-Type': 'application/json; charset=utf-8'
-                },
+                self.headers,
                 json=request_dict,
                 auth=self.auth
             )
