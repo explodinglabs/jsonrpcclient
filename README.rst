@@ -118,7 +118,7 @@ If you need a server, try my `jsonrpcserver
 Todo
 ----
 
-* Ability to make GET requests (maybe.)
+* Make GET requests - maybe.
 
 Changelog
 ---------
