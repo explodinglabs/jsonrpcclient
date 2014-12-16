@@ -67,8 +67,8 @@ Is the same as saying ``server.request('add', 2, 3)``.
 
 Use ``response=True`` to get a response; without that it's a notification.
 
-Authentication and Headers
---------------------------
+Authentication
+--------------
 
 To make authenticated requests, pass an ``auth`` argument to ``Server``.
 
@@ -80,7 +80,10 @@ The above example uses Basic Auth. For more authentication options, see the
 `requests <http://docs.python-requests.org/en/latest/user/authentication/>`_
 module which handles the authentication.
 
-Similarly, a ``headers`` argument allows you to send custom HTTP headers.
+Headers
+-------
+
+To set custom HTTP headers, pass a ``headers`` argument to ``Server``.
 
 .. sourcecode:: python
 
