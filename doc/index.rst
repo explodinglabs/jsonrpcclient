@@ -3,7 +3,7 @@ jsonrpcclient
 
 Make `remote procedure calls
 <http://en.wikipedia.org/wiki/Remote_procedure_call>`_ with `JSON-RPC
-<http://www.jsonrpc.org/>`_.
+<http://www.jsonrpc.org/>`_..
 
 ..
     Compliant with the `JSON-RPC 2.0 specification
