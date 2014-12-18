@@ -19,7 +19,7 @@ setup(
     long_description=read('README.rst'),
     author='Beau Barker',
     author_email='beauinmelbourne@gmail.com',
-    url='https://bitbucket.org/beau-barker/jsonrpcclient',
+    url='http://jsonrpcclient.readthedocs.org/',
     keywords=['json-rpc', 'json', 'api'],
     classifiers=[
         'Programming Language :: Python',
