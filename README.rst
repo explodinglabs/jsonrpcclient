@@ -22,7 +22,7 @@ Usage
 
 Set the server details, then make a request.
 
-.. sourcecode:: python
+.. code-block:: python
 
     >>> from jsonrpcclient import Server
     >>> server = Server('http://example.com/api')
@@ -32,7 +32,7 @@ Set the server details, then make a request.
 The first argument to ``request`` is the *method*, and everything else is
 passed as *params*. You can can also use keyword arguments.
 
-.. sourcecode:: python
+.. code-block:: python
 
     >>> server.request('find', name='Foo', age=42)
     --> {"jsonrpc": "2.0", "method": "find", "params": {"name": "Foo", "age": 42}, "id": 1}
@@ -52,7 +52,7 @@ passed as *params*. You can can also use keyword arguments.
 
 If you don't need any data returned, use ``notify`` instead of ``request``.
 
-.. sourcecode:: python
+.. code-block:: python
 
     >>> server.notify('go')
     >>>
@@ -62,7 +62,7 @@ Alternate usage
 
 If you prefer, there's another way to make a request:
 
-.. sourcecode:: python
+.. code-block:: python
 
     >>> server.add(2, 3, response=True)
     5
@@ -75,7 +75,7 @@ Authentication
 
 To make authenticated requests, pass an ``auth`` argument to ``Server``.
 
-.. sourcecode:: python
+.. code-block:: python
 
     >>> server = Server('http://example.com/api', auth=('user', 'pass'))
 
@@ -88,7 +88,7 @@ Headers
 
 To customize the HTTP headers, pass a ``headers`` argument to ``Server``.
 
-.. sourcecode:: python
+.. code-block:: python
 
     >>> server = Server('http://example.com/api', headers={'Content-Type': 'application/json-rpc'})
 
@@ -104,7 +104,7 @@ Catch the base exception ``JsonRpcClientError`` when communicating with the
 server. This is raised on a variety of issues such as connection problems, or
 if the server responded with *error*.
 
-.. sourcecode:: python
+.. code-block:: python
 
     from jsonrpcclient.exceptions import JsonRpcClientError
     try:
@@ -121,7 +121,7 @@ to them.
 
 The following shows how to output requests to stderr.
 
-.. sourcecode:: python
+.. code-block:: python
 
     import logging
     from jsonrpcclient import request_log
@@ -133,7 +133,7 @@ The following shows how to output requests to stderr.
 
 Do the same with ``response_log`` to see the responses.
 
-.. sourcecode:: python
+.. code-block:: python
 
     from jsonrpcclient import response_log
     response_log.setLevel(logging.INFO)
@@ -142,7 +142,7 @@ Do the same with ``response_log`` to see the responses.
 
 For better log entries, customize the log format:
 
-.. sourcecode:: python
+.. code-block:: python
 
     request_format = logging.Formatter(fmt='%(asctime)s --> %(message)s')
     request_handler.setFormatter(request_format)
