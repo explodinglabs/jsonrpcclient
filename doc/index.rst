@@ -148,23 +148,22 @@ The following shows how to output requests to stderr.
 
 .. code-block:: python
 
-    import logging
-    from jsonrpcclient import request_log
+    from logging import StreamHandler, Formatter, INFO
+    from jsonrpcclient import request_log, response_log
 
     # Json messages are logged with info(), so set the log level.
-    request_log.setLevel(logging.INFO)
+    request_log.setLevel(INFO)
 
     # Add a stream handler to output to stderr.
-    request_handler = logging.StreamHandler()
+    request_handler = StreamHandler()
     request_log.addHandler(request_handler)
 
 Do the same with ``response_log`` to see the responses.
 
 .. code-block:: python
 
-    from jsonrpcclient import response_log
-    response_log.setLevel(logging.INFO)
-    response_handler = logging.StreamHandler()
+    response_log.setLevel(INFO)
+    response_handler = StreamHandler()
     response_log.addHandler(response_handler)
 
 For better log entries, customize the log format:
@@ -172,11 +171,11 @@ For better log entries, customize the log format:
 .. code-block:: python
 
     # Set a custom request log format
-    request_format = logging.Formatter(fmt='%(asctime)s --> %(message)s')
+    request_format = Formatter(fmt='%(asctime)s --> %(message)s')
     request_handler.setFormatter(request_format)
 
     # Set a custom response log format
-    response_format = logging.Formatter(
+    response_format = Formatter(
         fmt='%(asctime)s <-- %(http_code)d %(http_reason)s %(message)s')
     response_handler.setFormatter(response_format)
 
