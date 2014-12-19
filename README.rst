@@ -11,7 +11,7 @@ Make `remote procedure calls
 <http://en.wikipedia.org/wiki/Remote_procedure_call>`_ with `JSON-RPC
 <http://www.jsonrpc.org/>`_.
 
-Set the server details, then make a request:
+Simply set the server details, then make a request:
 
 .. sourcecode:: python
 
@@ -21,8 +21,8 @@ Set the server details, then make a request:
     5
 
 The library complies with the `JSON-RPC 2.0 specification
-<http://www.jsonrpc.org/specification>`_ and `RFC 4627
-<http://tools.ietf.org/html/rfc4627>`_ on JSON notation.
+<http://www.jsonrpc.org/specification>`_ and `RFC 4627 on JSON notation
+<http://tools.ietf.org/html/rfc4627>`_.
 
 Installation
 ------------
