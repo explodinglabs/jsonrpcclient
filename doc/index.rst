@@ -60,9 +60,7 @@ If you don't need any data returned, use ``notify`` instead of ``request``.
 Alternate usage
 ^^^^^^^^^^^^^^^
 
-If you prefer, there's another way to make a request:
-
-.. code-block:: python
+If you prefer, there's another way to make a request::
 
     >>> server.add(2, 3, response=True)
     5
