@@ -5,8 +5,6 @@ Make `remote procedure calls
 <http://en.wikipedia.org/wiki/Remote_procedure_call>`_ with `JSON-RPC
 <http://www.jsonrpc.org/>`_.
 
-
-
 .. sourcecode:: python
 
     >>> from jsonrpcclient import Server
