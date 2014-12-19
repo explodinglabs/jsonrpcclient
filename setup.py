@@ -3,24 +3,32 @@
 """setup.py"""
 
 import os
-from setuptools import setup
 
-def read(fname):
-    """Get the readme from a file, to use as long_description"""
-    return open(os.path.join(os.path.dirname(__file__), fname)).read()
+from codecs import open
+
+try:
+    from setuptools import setup
+except ImportError:
+    from distutils.core import setup
+
+with open('README.rst', 'r', 'utf-8') as f:
+    readme = f.read()
+
+with open('HISTORY.rst', 'r', 'utf-8') as f:
+    history = f.read()
 
 setup(
     name='jsonrpcclient',
-    packages=['jsonrpcclient'],
-    package_data={'jsonrpcclient': ['response-schema.json']},
-    install_requires=['requests', 'jsonschema'],
     version='1.0.12',
-    description='JSON-RPC 2.0 client library for Python 3',
-    long_description=read('README.rst'),
+    description='JSON-RPC 2.0 client library for Python 3.',
+    long_description=readme + '\n\n' + history,
     author='Beau Barker',
     author_email='beauinmelbourne@gmail.com',
     url='http://jsonrpcclient.readthedocs.org/',
-    keywords=['json-rpc', 'json', 'api'],
+    packages=['jsonrpcclient'],
+    package_data={'jsonrpcclient': ['response-schema.json']},
+    include_package_data=True,
+    install_requires=['requests', 'jsonschema'],
     classifiers=[
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
