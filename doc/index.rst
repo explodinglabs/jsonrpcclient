@@ -100,8 +100,8 @@ If no custom headers are given, the following headers are used::
 Exceptions
 ^^^^^^^^^^
 
-Catch the base exception ``JsonRpcClientError`` in case there's a network
-issue, or the server responded with *error*.
+Catch the base exception ``JsonRpcClientError`` in case there's a problem such
+as network issue, or the server responded with *error*.
 
 .. code-block:: python
 
@@ -136,7 +136,7 @@ UnwantedResponse
     A response was not requested, but was given anyway.
 
 ReceivedErrorResponse
-    The server responded with 'error'.
+    The server responded with *error*.
 
 Logging
 ^^^^^^^
