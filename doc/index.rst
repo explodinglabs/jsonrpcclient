@@ -124,7 +124,7 @@ Non200Response
     The server responded with status code other than 200.
 
 ParseResponseError
-    Couldnt parse the json response.
+    The response was not valid json.
 
 InvalidResponse
     The response didnt validate against the json-rpc response schema.
