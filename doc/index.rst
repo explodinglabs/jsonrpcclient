@@ -92,7 +92,7 @@ To customize the HTTP headers, pass a ``headers`` argument to ``Server``.
 
     >>> server = Server('http://example.com/api', headers={'Content-Type': 'application/json-rpc'})
 
-If no custom headers are specified, the following headers are used::
+If no custom headers are given, the following headers are used::
 
     Content-Type: application/json
     Accept: application/json
