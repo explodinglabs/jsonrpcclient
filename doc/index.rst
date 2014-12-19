@@ -67,8 +67,9 @@ If you prefer, there's another way to make a request:
     >>> server.add(2, 3, response=True)
     5
 
-That's the same as saying ``server.request('add', 2, 3)``. Use
-``response=True`` to get a response; without that it's a notification.
+That's the same as saying ``server.request('add', 2, 3)``.
+
+Use ``response=True`` to get a response; without that it's a notification.
 
 Authentication
 ^^^^^^^^^^^^^^
