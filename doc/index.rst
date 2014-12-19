@@ -175,8 +175,7 @@ For better log entries, customize the log format:
     request_handler.setFormatter(request_format)
 
     # Set a custom response log format
-    response_format = Formatter(
-        fmt='%(asctime)s <-- %(http_code)d %(http_reason)s %(message)s')
+    response_format = Formatter(fmt='%(asctime)s <-- %(http_code)d %(http_reason)s %(message)s')
     response_handler.setFormatter(response_format)
 
 In the response format, these extra fields can be used:
