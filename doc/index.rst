@@ -150,7 +150,7 @@ output requests to stderr.
     from logging import StreamHandler, Formatter, INFO
     from jsonrpcclient import request_log, response_log
 
-    # Json messages are logged with info(), so set the log level.
+    # Json messages are on the INFO log level.
     request_log.setLevel(INFO)
 
     # Add a stream handler to output to stderr.
