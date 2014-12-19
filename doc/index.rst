@@ -155,14 +155,13 @@ In the response format, these extra fields can be used:
 * ``%(http_code)`` is the HTTP status code received from the server (eg. *400*)
 * ``%(http_reason)`` is the description of the status code (eg. *"BAD REQUEST"*)
 
-Issue tracker
--------------
+Links
+-----
 
-Issue tracker is `here
-<https://bitbucket.org/beau-barker/jsonrpcclient/issues>`_.
-
-Server
-------
+Documentation: http://jsonrpcclient.readthedocs.org/
+Package: https://bitbucket.org/beau-barker/jsonrpcclient/issues
+Repository: https://bitbucket.org/beau-barker/jsonrpcclient/issues
+Issue tracker: https://bitbucket.org/beau-barker/jsonrpcclient/issues
 
 If you need a server, try my `jsonrpcserver
 <https://pypi.python.org/pypi/jsonrpcserver>`_ library.
