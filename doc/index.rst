@@ -88,7 +88,7 @@ communicating with the server::
 Here's the full list of exceptions, if you need to handle them individually:
 
 InvalidRequest
-    The request being sent is not valid json.
+    The request being sent is not valid JSON.
 
 ConnectionError
     There was a network issue, timeout, or invalid HTTP response.
