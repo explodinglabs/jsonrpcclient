@@ -1,8 +1,6 @@
 jsonrpcclient
 =============
 
-|
-
 .. image:: https://pypip.in/v/jsonrpcclient/badge.png
     :target: https://crate.io/packages/jsonrpcclient/
         :alt: Latest PyPI version
