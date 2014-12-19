@@ -24,5 +24,8 @@ Documentation
 
 Documentation is available at http://jsonrpcclient.readthedocs.org/.
 
+Server
+------
+
 If you need a server, try my `jsonrpcserver
 <https://pypi.python.org/pypi/jsonrpcserver>`_ library.
