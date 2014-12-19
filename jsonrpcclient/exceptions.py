@@ -27,6 +27,20 @@ class Non200Response(JsonRpcClientError):
         super().__init__('Returned status code '+str(status_code))
 
 
+class ReceivedNoResponse(JsonRpcClientError):
+    """A response message was expected, but none was given."""
+
+    def __init__(self):
+        super().__init__('No response was received')
+
+
+class UnwantedResponse(JsonRpcClientError):
+    """A response was not requested, but one was given anyway."""
+
+    def __init__(self):
+        super().__init__('An unwanted response was given')
+
+
 class ParseResponseError(JsonRpcClientError):
     """The response was not valid json."""
 
@@ -35,24 +49,10 @@ class ParseResponseError(JsonRpcClientError):
 
 
 class InvalidResponse(JsonRpcClientError):
-    """The response didnt validate against the JSON-RPC response schema."""
+    """The response was not a valid JSON-RPC response."""
 
     def __init__(self):
         super().__init__('The response was not a valid json-rpc 2.0 response')
-
-
-class ReceivedNoResponse(JsonRpcClientError):
-    """A response was expected, but none was given."""
-
-    def __init__(self):
-        super().__init__('No response was received')
-
-
-class UnwantedResponse(JsonRpcClientError):
-    """A response was not requested, but was given anyway."""
-
-    def __init__(self):
-        super().__init__('An unwanted response was given')
 
 
 class ReceivedErrorResponse(JsonRpcClientError):
