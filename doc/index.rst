@@ -102,7 +102,7 @@ Exceptions
 ^^^^^^^^^^
 
 Catch the base exception ``JsonRpcClientError`` in case there's a problem such
-as network issue.
+as a network issue.
 
 .. code-block:: python
 
