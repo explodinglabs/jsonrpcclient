@@ -1,6 +1,9 @@
 jsonrpcclient
 =============
 
+.. image:: https://badge.fury.io/py/jsonrpcclient.svg
+    :target: http://badge.fury.io/py/jsonrpcclient
+
 Make `remote procedure calls
 <http://en.wikipedia.org/wiki/Remote_procedure_call>`_ with `JSON-RPC
 <http://www.jsonrpc.org/>`_.
