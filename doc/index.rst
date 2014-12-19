@@ -1,3 +1,6 @@
+.. role:: python(code)
+    :language: python
+
 jsonrpcclient
 =============
 
@@ -44,12 +47,6 @@ The first argument to ``request`` is the *method*; everything else is passed as
     To see the underlying JSON messages going back and forth, see the Logging_
     section below.
 
-..
-    To comply strictly with the JSON-RPC 2.0 protocol, one should use *either*
-    positional or keyword arguments, but not both in the same request. See
-    `Parameter Structures
-    <http://www.jsonrpc.org/specification#parameter_structures>`_.
-
 If you don't need any data returned, use ``notify`` instead of ``request``.
 
 .. code-block:: python
@@ -67,7 +64,7 @@ If you prefer, there's another way to make a request:
     >>> server.add(2, 3, response=True)
     5
 
-That's the same as saying :code:`server.request('add', 2, 3)`. With this usage, use
+That's the same as saying :python:`server.request('add', 2, 3)`. With this usage, use
 ``response=True`` to get a response; without that it's a notification.
 
 Authentication
