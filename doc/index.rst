@@ -171,10 +171,13 @@ For better log entries, customize the log format:
 
 .. code-block:: python
 
+    # Set a custom request log format
     request_format = logging.Formatter(fmt='%(asctime)s --> %(message)s')
     request_handler.setFormatter(request_format)
 
-    response_format = logging.Formatter(fmt='%(asctime)s <-- %(http_code)d %(http_reason)s %(message)s')
+    # Set a custom response log format
+    response_format = logging.Formatter(
+        fmt='%(asctime)s <-- %(http_code)d %(http_reason)s %(message)s')
     response_handler.setFormatter(response_format)
 
 In the response format, these extra fields can be used:
