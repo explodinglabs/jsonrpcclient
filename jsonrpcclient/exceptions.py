@@ -28,7 +28,7 @@ class Non200Response(JsonRpcClientError):
 
 
 class ParseResponseError(JsonRpcClientError):
-    """Couldnt parse the json response."""
+    """The response was not valid json."""
 
     def __init__(self):
         super().__init__('The response was not valid json')
