@@ -7,7 +7,7 @@ class JsonRpcClientError(Exception):
 
 
 class InvalidRequest(JsonRpcClientError):
-    """The request being sent is not valid json."""
+    """The request being sent is not valid JSON."""
 
     def __init__(self):
         super().__init__('The request you\'re sending is not valid json')
