@@ -13,9 +13,9 @@ Make `remote procedure calls
 Installation
 ------------
 
-::
+.. code-block:: sh
 
-    pip install jsonrpcclient
+    $ pip install jsonrpcclient
 
 Usage
 -----
@@ -29,8 +29,8 @@ Set the server details, then make a request.
     >>> server.request('add', 2, 3)
     5
 
-The first argument to ``request`` is the *method*, and everything else is
-passed as *params*. You can can also use keyword arguments.
+The first argument to ``request`` is the *method*; everything else is passed as
+*params*. You can can also use keyword arguments.
 
 .. code-block:: python
 
