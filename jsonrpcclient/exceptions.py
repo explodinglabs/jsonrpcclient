@@ -14,8 +14,7 @@ class InvalidRequest(JsonRpcClientError):
 
 
 class ConnectionError(JsonRpcClientError): # pylint: disable=redefined-builtin
-    """The requests module raised an error, due to a network issue, invalid HTTP
-    response or timeout."""
+    """There was a network issue, invalid HTTP response or timeout."""
 
     def __init__(self):
         super().__init__('Connection error')
