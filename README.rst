@@ -1,5 +1,13 @@
 .. image:: https://badge.fury.io/py/jsonrpcclient.png
 
+.. image:: https://pypip.in/v/$REPO/badge.png
+    :target: https://crate.io/packages/$REPO/
+        :alt: Latest PyPI version
+
+.. image:: https://pypip.in/d/$REPO/badge.png
+   :target: https://crate.io/packages/$REPO/
+        :alt: Number of PyPI downloads
+
 jsonrpcclient
 =============
 
