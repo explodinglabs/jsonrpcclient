@@ -13,7 +13,8 @@ Make `remote procedure calls
 <http://en.wikipedia.org/wiki/Remote_procedure_call>`_ with `JSON-RPC
 <http://www.jsonrpc.org/>`_.
 
-Simply set the server details, then make a request:
+..
+Set the server details, then make a request:
 
 .. sourcecode:: python
 
