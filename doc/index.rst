@@ -152,7 +152,7 @@ For better log entries, customize the log format:
 
 In the response format, these extra fields can be used:
 
-``%(http_code)``
+%(http_code)
     The HTTP status code received from the server (eg. *400*)
 
 %(http_reason)
