@@ -136,7 +136,7 @@ UnwantedResponse
     A response was not requested, but was given anyway.
 
 ReceivedErrorResponse
-    The server responded with *error*.
+    The server responded with a JSON-RPC *error* response.
 
 Logging
 ^^^^^^^
