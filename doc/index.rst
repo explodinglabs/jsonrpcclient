@@ -100,9 +100,8 @@ If no custom headers are given, the following headers are used::
 Exceptions
 ^^^^^^^^^^
 
-Catch the base exception ``JsonRpcClientError`` when communicating with the
-server. This is raised on a variety of issues such as connection problems, or
-if the server responded with *error*.
+Catch the base exception ``JsonRpcClientError`` in case there's a network
+issue, or the server responded with *error*.
 
 .. code-block:: python
 
@@ -111,6 +110,33 @@ if the server responded with *error*.
         server.request('go')
     except JsonRpcClientError as e:
         print(str(e))
+
+Here is the full list of exceptions, if you want to handle them individually:
+
+InvalidRequest
+    The request you're trying to send is not valid json.
+
+ConnectionError
+    The requests module raised an error, due to a network issue, invalid HTTP
+    response or timeout.
+
+Non200Response
+    The server responded with status code other than 200.
+
+ParseResponseError
+    Couldnt parse the json response.
+
+InvalidResponse
+    The response didnt validate against the json-rpc response schema.
+
+ReceivedNoResponse
+    A response was expected, but none was given.
+
+UnwantedResponse
+    A response was not requested, but was given anyway.
+
+ReceivedErrorResponse
+    The server responded with 'error'.
 
 Logging
 ^^^^^^^
