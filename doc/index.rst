@@ -155,6 +155,12 @@ In the response format, these extra fields can be used:
 * ``%(http_code)`` is the HTTP status code received from the server (eg. *400*)
 * ``%(http_reason)`` is the description of the status code (eg. *"BAD REQUEST"*)
 
+Todo
+----
+
+* Support `batch calls <http://www.jsonrpc.org/specification#batch>`_.
+* Ability to make GET requests - maybe.
+
 Links
 -----
 
@@ -165,11 +171,5 @@ Links
 
 If you need a server, try my `jsonrpcserver
 <https://pypi.python.org/pypi/jsonrpcserver>`_ library.
-
-Todo
-----
-
-* Support `batch calls <http://www.jsonrpc.org/specification#batch>`_.
-* Ability to make GET requests - maybe.
 
 .. include:: ../HISTORY.rst
