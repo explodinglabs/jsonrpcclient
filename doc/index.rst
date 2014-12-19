@@ -141,7 +141,7 @@ ReceivedErrorResponse
 Logging
 ^^^^^^^
 
-To give finer control, two loggers are used, one for requests and another for
+To give fine control, two loggers are used - one for requests and another for
 responses. These do nothing until you set them up.
 
 The following shows how to output requests to stderr.
@@ -150,8 +150,10 @@ The following shows how to output requests to stderr.
 
     import logging
     from jsonrpcclient import request_log
+
     # Json messages are logged with info(), so set the log level.
     request_log.setLevel(logging.INFO)
+
     # Add a stream handler to output to stderr.
     request_handler = logging.StreamHandler()
     request_log.addHandler(request_handler)
