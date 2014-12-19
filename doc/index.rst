@@ -38,7 +38,6 @@ The first argument to ``request`` is the *method*; everything else is passed as
 If you don't need any data returned, use ``notify`` instead of ``request``::
 
     >>> server.notify('go')
-    >>>
 
 Alternate usage
 ^^^^^^^^^^^^^^^
