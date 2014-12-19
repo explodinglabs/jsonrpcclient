@@ -20,9 +20,10 @@ Simply set the server details, then make a request:
     >>> server.request('add', 2, 3)
     5
 
-The library complies with the `JSON-RPC 2.0 specification
-<http://www.jsonrpc.org/specification>`_ and `RFC 4627 on JSON notation
-<http://tools.ietf.org/html/rfc4627>`_.
+..
+    The library complies with the `JSON-RPC 2.0 specification
+    <http://www.jsonrpc.org/specification>`_ and `RFC 4627 on JSON notation
+    <http://tools.ietf.org/html/rfc4627>`_.
 
 Installation
 ------------
