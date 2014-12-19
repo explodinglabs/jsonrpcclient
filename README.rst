@@ -1,11 +1,11 @@
 jsonrpcclient
 =============
 
-..
-    .. image:: https://pypip.in/v/jsonrpcclient/badge.png
-        :target: https://crate.io/packages/jsonrpcclient/
-    .. image:: https://pypip.in/d/jsonrpcclient/badge.png
-       :target: https://pypi.python.org/jsonrpcclient/
+.. image:: https://pypip.in/v/jsonrpcclient/badge.png
+    :target: https://crate.io/packages/jsonrpcclient/
+
+.. image:: https://pypip.in/d/jsonrpcclient/badge.png
+   :target: https://pypi.python.org/jsonrpcclient/
 
 Make `remote procedure calls
 <http://en.wikipedia.org/wiki/Remote_procedure_call>`_ with `JSON-RPC
