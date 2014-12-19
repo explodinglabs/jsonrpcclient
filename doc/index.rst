@@ -112,7 +112,7 @@ as a network issue.
     except JsonRpcClientError as e:
         print(str(e))
 
-Here is the full list of exceptions, if you want to handle them individually:
+If you want to handle them individually, here is the full list:
 
 InvalidRequest
     The request you're trying to send is not valid json.
