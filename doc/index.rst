@@ -141,9 +141,8 @@ ReceivedErrorResponse
 Logging
 ^^^^^^^
 
-To give finer control, two separate loggers are used - one for requests and
-another for responses. These do nothing until you set them up and add handlers
-to them.
+To give finer control, two loggers are used, one for requests and another for
+responses. These do nothing until you set them up.
 
 The following shows how to output requests to stderr.
 
