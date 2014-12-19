@@ -101,7 +101,7 @@ If no custom headers are given, the following headers are used::
 Exceptions
 ^^^^^^^^^^
 
-Catch the base exception ``JsonRpcClientError`` in case there's a problem, such
+Catch the base exception ``JsonRpcClientError`` in case there's a problem such
 as network issue.
 
 .. code-block:: python
