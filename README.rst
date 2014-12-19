@@ -18,7 +18,7 @@ If you need a server, try my `jsonrpcserver
 Installation
 ------------
 
-.. source-code:: sh
+.. sourcecode:: sh
 
     $ pip install jsonrpcclient
 
