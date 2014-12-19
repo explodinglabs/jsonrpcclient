@@ -35,7 +35,7 @@ class ParseResponseError(JsonRpcClientError):
 
 
 class InvalidResponse(JsonRpcClientError):
-    """The response didnt validate against the json-rpc response schema."""
+    """The response didnt validate against the JSON-RPC response schema."""
 
     def __init__(self):
         super().__init__('The response was not a valid json-rpc 2.0 response')
