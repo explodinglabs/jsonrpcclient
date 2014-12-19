@@ -144,12 +144,12 @@ For better log entries, customize the log format::
     response_format = Formatter(fmt='<-- %(http_code)d %(http_reason)s %(message)s')
     response_handler.setFormatter(response_format)
 
-In the response format, these extra fields can be used:
+The response format has these extra fields:
 
-%(http_code)
+%(http_code)s
     The HTTP status code received from the server, eg. *400*.
 
-%(http_reason)
+%(http_reason)s
     The description of the status code, eg. *"BAD REQUEST"*.
 
 Todo
