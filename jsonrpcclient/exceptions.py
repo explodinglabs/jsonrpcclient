@@ -52,11 +52,11 @@ class UnwantedResponse(JsonRpcClientError):
     """A response was not requested, but was given anyway."""
 
     def __init__(self):
-        super().__init__('The response was not asked for')
+        super().__init__('An unwanted response was given')
 
 
 class ReceivedErrorResponse(JsonRpcClientError):
-    """The server responded with *error*."""
+    """The server responded with a JSON-RPC *error* response."""
 
     def __init__(self, code, message): #pylint:disable=unused-argument
         super().__init__(message)
