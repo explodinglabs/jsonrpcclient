@@ -142,9 +142,8 @@ Logging
 ^^^^^^^
 
 To give fine control, two loggers are used - one for requests and another for
-responses. These do nothing until you set them up.
-
-The following shows how to output requests to stderr.
+responses. These do nothing until you set them up. The following shows how to
+output requests to stderr.
 
 .. code-block:: python
 
