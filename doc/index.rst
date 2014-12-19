@@ -115,7 +115,7 @@ ReceivedErrorResponse
 Logging
 ^^^^^^^
 
-To give fine control, two loggers are used - one for requests and another for
+To give fine control, two loggers are used; one for requests and another for
 responses. These do nothing until they're set up. The following shows how to
 output requests to stderr::
 
