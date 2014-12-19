@@ -28,4 +28,4 @@ Server
 ------
 
 If you need a server, try my `jsonrpcserver
-<https://pypi.python.org/pypi/jsonrpcserver>`_ library.
+<https://jsonrpcserver.readthedocs.org/>`_ library.
