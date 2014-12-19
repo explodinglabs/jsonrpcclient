@@ -158,8 +158,8 @@ In the response format, these extra fields can be used:
 Links
 -----
 
-* Documentation: http://jsonrpcclient.readthedocs.org/
-* Package: https://bitbucket.org/beau-barker/jsonrpcclient/issues
+* Documentation: http://jsonrpcclient.readthedocs.org
+* Package: https://pypi.python.org/pypi/jsonrpcclient
 * Repository: https://bitbucket.org/beau-barker/jsonrpcclient
 * Issue tracker: https://bitbucket.org/beau-barker/jsonrpcclient/issues
 
