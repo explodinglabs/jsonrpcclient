@@ -23,7 +23,7 @@ Set the server details, then make a request::
     5
 
 The first argument to ``request`` is the *method*; everything else is passed as
-*params*. You can can also use keyword arguments::
+*params*. Keyword arguments are also acceptable::
 
     >>> server.request('find', name='Foo', age=42)
     --> {"jsonrpc": "2.0", "method": "find", "params": {"name": "Foo", "age": 42}, "id": 1}
@@ -89,7 +89,7 @@ communicating with the server::
 The full list of exceptions, if you need to handle them individually:
 
 InvalidRequest
-    The request you're trying to send is not valid json.
+    The request being sent is not valid json.
 
 ConnectionError
     There was a network issue, invalid HTTP response or timeout.
@@ -116,7 +116,7 @@ Logging
 ^^^^^^^
 
 To give fine control, two loggers are used - one for requests and another for
-responses. These do nothing until you set them up. The following shows how to
+responses. These do nothing until they're set up. The following shows how to
 output requests to stderr::
 
     from logging import StreamHandler, Formatter, INFO
