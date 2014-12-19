@@ -83,8 +83,12 @@ class Server:
                 json=request,
                 auth=self.auth
             )
+        # Catch the requests module's InvalidSchema exception if the json is
+        # invalid.
         except requests.exceptions.InvalidSchema:
             raise exceptions.InvalidRequest()
+        # Catch all other requests exceptions, such as network issues.
+        # See http://stackoverflow.com/questions/16511337/
         except requests.exceptions.RequestException: # The base exception
             raise exceptions.ConnectionError()
 
