@@ -1,6 +1,3 @@
-jsonrpcclient
-=============
-
 .. image:: https://pypip.in/v/jsonrpcclient/badge.png
     :target: https://crate.io/packages/jsonrpcclient/
         :alt: Latest PyPI version
@@ -8,6 +5,9 @@ jsonrpcclient
 .. image:: https://pypip.in/d/jsonrpcclient/badge.png
    :target: https://crate.io/packages/jsonrpcclient/
         :alt: Number of PyPI downloads
+
+jsonrpcclient
+=============
 
 Make `remote procedure calls
 <http://en.wikipedia.org/wiki/Remote_procedure_call>`_ with `JSON-RPC
