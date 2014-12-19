@@ -94,19 +94,19 @@ ConnectionError
     There was a network issue, timeout, or invalid HTTP response.
 
 Non200Response
-    The server responded with a HTTP status code other than 200.
+    The server returned a HTTP status code other than 200.
+
+ReceivedNoResponse
+    A response message was expected, but none was given.
+
+UnwantedResponse
+    A response was not requested, but one was given anyway.
 
 ParseResponseError
     The response was not valid json.
 
 InvalidResponse
-    The response didnt validate against the json-rpc response schema.
-
-ReceivedNoResponse
-    A response was expected, but none was given.
-
-UnwantedResponse
-    A response was not requested, but was given anyway.
+    The response was not a valid JSON-RPC response.
 
 ReceivedErrorResponse
     The server gave a valid JSON-RPC *error* response.
