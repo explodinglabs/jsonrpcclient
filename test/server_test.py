@@ -8,14 +8,28 @@ from collections import namedtuple
 import requests
 import responses
 
-from jsonrpcclient import server, rpc, exceptions
+from jsonrpcclient import Server, rpc, exceptions
 
 
 class TestServer(TestCase): # pylint: disable=too-many-public-methods
 
     def setUp(self):
         rpc.id_generator = itertools.count(1) # Ensure the first generated is 1
-        self.server = server.Server('http://non-existant/')
+        self.server = Server('http://non-existant/')
+
+    # Test instantiating
+
+    def test_server_url_only(self):
+        Server('http://example.com/api')
+
+    def test_server_with_headers(self):
+        Server('http://example.com/api', headers={'Content-Type': 'application/json-rpc'})
+
+    def test_server_with_auth(self):
+        Server('http://example.com/api', auth=('user', 'pass'))
+
+    def test_server_with_headers_and_auth(self):
+        Server('http://example.com/api', headers={'Content-Type': 'application/json-rpc'}, auth=('user', 'pass'))
 
     # Test the public methods (request and notify)
 
