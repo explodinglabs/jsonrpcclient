@@ -7,7 +7,7 @@ Make `remote procedure calls
 
 Compliant with the `JSON-RPC 2.0 specification
 <http://www.jsonrpc.org/specification>`_ and `RFC 4627
-<http://tools.ietf.org/html/rfc4627>`_ on Javascript Object Notation.
+<http://tools.ietf.org/html/rfc4627>`_ on JSON notation.
 
 .. sourcecode:: python
 
