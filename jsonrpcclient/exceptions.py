@@ -21,7 +21,7 @@ class ConnectionError(JsonRpcClientError): # pylint: disable=redefined-builtin
 
 
 class Non200Response(JsonRpcClientError):
-    """The server responded with status code other than 200."""
+    """The server responded with a HTTP status code other than 200."""
 
     def __init__(self, status_code):
         super().__init__('Returned status code '+str(status_code))
@@ -56,7 +56,7 @@ class UnwantedResponse(JsonRpcClientError):
 
 
 class ReceivedErrorResponse(JsonRpcClientError):
-    """The server responded with a JSON-RPC *error* response."""
+    """The server gave a valid JSON-RPC *error* response."""
 
     def __init__(self, code, message): #pylint:disable=unused-argument
         super().__init__(message)

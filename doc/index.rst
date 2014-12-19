@@ -112,7 +112,7 @@ as a network issue.
     except JsonRpcClientError as e:
         print(str(e))
 
-If you want to handle them individually, here is the full list:
+Here is the full list of exceptions. You may for example, not care about 
 
 InvalidRequest
     The request you're trying to send is not valid json.
@@ -121,7 +121,7 @@ ConnectionError
     There was a network issue, invalid HTTP response or timeout.
 
 Non200Response
-    The server responded with status code other than 200.
+    The server responded with a HTTP status code other than 200.
 
 ParseResponseError
     The response was not valid json.
@@ -136,7 +136,7 @@ UnwantedResponse
     A response was not requested, but was given anyway.
 
 ReceivedErrorResponse
-    The server responded with a JSON-RPC *error* response.
+    The server gave a valid JSON-RPC *error* response.
 
 Logging
 ^^^^^^^
