@@ -160,7 +160,7 @@ Links
 
 * Documentation: http://jsonrpcclient.readthedocs.org/
 * Package: https://bitbucket.org/beau-barker/jsonrpcclient/issues
-* Repository: https://bitbucket.org/beau-barker/jsonrpcclient/issues
+* Repository: https://bitbucket.org/beau-barker/jsonrpcclient
 * Issue tracker: https://bitbucket.org/beau-barker/jsonrpcclient/issues
 
 If you need a server, try my `jsonrpcserver
