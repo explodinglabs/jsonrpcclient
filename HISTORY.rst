@@ -2,7 +2,7 @@ Release History
 ---------------
 
 1.0.12 (2014-12-16)
-~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^
 
 * Default HTTP headers changed to meet `this document
   <http://www.simple-is-better.org/json-rpc/transport_http.html#post-request>`_.
