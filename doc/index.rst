@@ -91,7 +91,7 @@ InvalidRequest
     The request being sent is not valid json.
 
 ConnectionError
-    There was a network issue, invalid HTTP response or timeout.
+    There was a network issue, timeout, or invalid HTTP response.
 
 Non200Response
     The server responded with a HTTP status code other than 200.
