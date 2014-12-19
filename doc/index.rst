@@ -71,7 +71,7 @@ That's the same as saying ``server.request('add', 2, 3)``. Use
 ``response=True`` to get a response; without that it's a notification.
 
 Authentication
---------------
+~~~~~~~~~~~~~~
 
 To make authenticated requests, pass an ``auth`` argument to ``Server``.
 
@@ -84,7 +84,7 @@ For more authentication options, see the `requests
 handles the authentication.
 
 Headers
--------
+~~~~~~~
 
 To customize the HTTP headers, pass a ``headers`` argument to ``Server``.
 
@@ -98,7 +98,7 @@ If no custom headers are specified, the following headers are used::
     Accept: application/json
 
 Exceptions
-----------
+~~~~~~~~~~
 
 Catch the base exception ``JsonRpcClientError`` when communicating with the
 server. This is raised on a variety of issues such as connection problems, or
@@ -113,7 +113,7 @@ if the server responded with *error*.
         print(str(e))
 
 Logging
--------
+~~~~~~~
 
 To give finer control, two separate loggers are used - one for requests and
 another for responses. These do nothing until you set them up and add handlers
