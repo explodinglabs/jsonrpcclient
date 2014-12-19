@@ -68,7 +68,7 @@ To customize the HTTP headers, pass a ``headers`` argument to ``Server``::
 
     >>> server = Server('http://example.com/api', headers={'Content-Type': 'application/json-rpc'})
 
-If no custom headers are given, the following headers are used::
+If no headers are given, the following headers are used::
 
     Content-Type: application/json
     Accept: application/json
@@ -114,9 +114,9 @@ ReceivedErrorResponse
 Logging
 ^^^^^^^
 
-To give fine control, two loggers are used; one for requests and another for
-responses. These do nothing until they're set up. The following shows how to
-output requests to stderr::
+To give fine control, two loggers are used; ``request_log`` for requests and
+``response_log`` for responses. These do nothing until they're set up. The
+following shows how to output the ``request_log`` to stderr::
 
     from logging import StreamHandler, Formatter, INFO
     from jsonrpcclient import request_log, response_log
