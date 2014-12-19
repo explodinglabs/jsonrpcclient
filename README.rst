@@ -14,7 +14,7 @@ Make `remote procedure calls
 <http://www.jsonrpc.org/>`_.
 
 ..
-Set the server details, then make a request:
+    Set the server details, then make a request:
 
 .. sourcecode:: python
 
