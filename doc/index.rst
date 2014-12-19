@@ -1,17 +1,9 @@
-.. role:: python(code)
-    :language: python
-
 jsonrpcclient
 =============
 
 Make `remote procedure calls
 <http://en.wikipedia.org/wiki/Remote_procedure_call>`_ with `JSON-RPC
 <http://www.jsonrpc.org/>`_.
-
-..
-    Compliant with the `JSON-RPC 2.0 specification
-    <http://www.jsonrpc.org/specification>`_ and `RFC 4627
-    <http://tools.ietf.org/html/rfc4627>`_ on Javascript Object Notation.
 
 Installation
 ------------
@@ -23,9 +15,7 @@ Installation
 Usage
 -----
 
-Set the server details, then make a request.
-
-.. code-block:: python
+Set the server details, then make a request::
 
     >>> from jsonrpcclient import Server
     >>> server = Server('http://example.com/api')
@@ -33,9 +23,7 @@ Set the server details, then make a request.
     5
 
 The first argument to ``request`` is the *method*; everything else is passed as
-*params*. You can can also use keyword arguments.
-
-.. code-block:: python
+*params*. You can can also use keyword arguments::
 
     >>> server.request('find', name='Foo', age=42)
     --> {"jsonrpc": "2.0", "method": "find", "params": {"name": "Foo", "age": 42}, "id": 1}
@@ -47,9 +35,7 @@ The first argument to ``request`` is the *method*; everything else is passed as
     To see the underlying JSON messages going back and forth, see the Logging_
     section below.
 
-If you don't need any data returned, use ``notify`` instead of ``request``.
-
-.. code-block:: python
+If you don't need any data returned, use ``notify`` instead of ``request``::
 
     >>> server.notify('go')
     >>>
@@ -57,22 +43,19 @@ If you don't need any data returned, use ``notify`` instead of ``request``.
 Alternate usage
 ^^^^^^^^^^^^^^^
 
-If you prefer, there's another way to make a request:
-
-.. code-block:: python
+If you prefer, there's another way to make a request::
 
     >>> server.add(2, 3, response=True)
     5
 
-That's the same as saying :python:`server.request('add', 2, 3)`. With this usage, use
-``response=True`` to get a response; without that it's a notification.
+That's the same as saying ``server.request('add', 2, 3)``. With this
+usage, use ``response=True`` to get a response; without that it's a
+notification.
 
 Authentication
 ^^^^^^^^^^^^^^
 
-To make authenticated requests, pass an ``auth`` argument to ``Server``.
-
-.. code-block:: python
+To make authenticated requests, pass an ``auth`` argument to ``Server``::
 
     >>> server = Server('http://example.com/api', auth=('user', 'pass'))
 
@@ -83,9 +66,7 @@ handles the authentication.
 Headers
 ^^^^^^^
 
-To customize the HTTP headers, pass a ``headers`` argument to ``Server``.
-
-.. code-block:: python
+To customize the HTTP headers, pass a ``headers`` argument to ``Server``::
 
     >>> server = Server('http://example.com/api', headers={'Content-Type': 'application/json-rpc'})
 
@@ -98,9 +79,7 @@ Exceptions
 ^^^^^^^^^^
 
 Catch the base exception ``JsonRpcClientError``, in case there's a problem
-communicating with the server.
-
-.. code-block:: python
+communicating with the server::
 
     from jsonrpcclient.exceptions import JsonRpcClientError
     try:
@@ -139,9 +118,7 @@ Logging
 
 To give fine control, two loggers are used - one for requests and another for
 responses. These do nothing until you set them up. The following shows how to
-output requests to stderr.
-
-.. code-block:: python
+output requests to stderr::
 
     from logging import StreamHandler, Formatter, INFO
     from jsonrpcclient import request_log, response_log
@@ -153,17 +130,13 @@ output requests to stderr.
     request_handler = StreamHandler()
     request_log.addHandler(request_handler)
 
-Do the same with ``response_log`` to see the responses.
-
-.. code-block:: python
+Do the same with ``response_log`` to see the responses::
 
     response_log.setLevel(INFO)
     response_handler = StreamHandler()
     response_log.addHandler(response_handler)
 
-For better log entries, customize the log format:
-
-.. code-block:: python
+For better log entries, customize the log format::
 
     # Set a custom request log format
     request_format = Formatter(fmt='--> %(message)s')
