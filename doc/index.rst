@@ -60,12 +60,14 @@ If you don't need any data returned, use ``notify`` instead of ``request``.
 Alternate usage
 ^^^^^^^^^^^^^^^
 
-If you prefer, there's another way to make a request::
+If you prefer, there's another way to make a request:
+
+.. code-block:: python
 
     >>> server.add(2, 3, response=True)
     5
 
-That's the same as saying ``server.request('add', 2, 3)``. With this usage, use
+That's the same as saying :code:`server.request('add', 2, 3)`. With this usage, use
 ``response=True`` to get a response; without that it's a notification.
 
 Authentication
