@@ -1,5 +1,3 @@
-.. image:: https://badge.fury.io/py/jsonrpcclient.png
-
 .. image:: https://pypip.in/v/jsonrpcclient/badge.png
     :target: https://crate.io/packages/jsonrpcclient/
         :alt: Latest PyPI version
