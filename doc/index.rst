@@ -100,8 +100,8 @@ If no custom headers are given, the following headers are used::
 Exceptions
 ^^^^^^^^^^
 
-Catch the base exception ``JsonRpcClientError`` in case there's a problem such
-as network issue, or the server responded with *error*.
+Catch the base exception ``JsonRpcClientError`` in case there's a problem, such
+as network issue.
 
 .. code-block:: python
 
@@ -117,8 +117,7 @@ InvalidRequest
     The request you're trying to send is not valid json.
 
 ConnectionError
-    The requests module raised an error, due to a network issue, invalid HTTP
-    response or timeout.
+    There was a network issue, invalid HTTP response or timeout.
 
 Non200Response
     The server responded with status code other than 200.
