@@ -86,7 +86,7 @@ communicating with the server::
     except JsonRpcClientError as e:
         print(str(e))
 
-The full list of exceptions, if you need to handle them individually:
+Here's the full list of exceptions, if you need to handle them individually:
 
 InvalidRequest
     The request being sent is not valid json.
