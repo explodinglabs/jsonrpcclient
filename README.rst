@@ -6,6 +6,7 @@
    :target: https://crate.io/packages/jsonrpcclient/
         :alt: Number of PyPI downloads
 
+=============
 jsonrpcclient
 =============
 
