@@ -12,6 +12,12 @@ Make `remote procedure calls
     >>> server.request('add', 2, 3)
     5
 
+Server
+~~~~~~
+
+If you need a server, try my `jsonrpcserver
+<https://pypi.python.org/pypi/jsonrpcserver>`_ library.
+
 Installation
 ------------
 
@@ -24,8 +30,3 @@ Documentation
 
 Documentation is available at http://jsonrpcclient.readthedocs.org/.
 
-Server
-------
-
-If you need a server, try my `jsonrpcserver
-<https://pypi.python.org/pypi/jsonrpcserver>`_ library.
