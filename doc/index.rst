@@ -77,7 +77,7 @@ If no custom headers are given, the following headers are used::
 Exceptions
 ^^^^^^^^^^
 
-Catch the base exception ``JsonRpcClientError``, in case there's a problem
+Catch the base exception ``JsonRpcClientError`` in case there's a problem
 communicating with the server::
 
     from jsonrpcclient.exceptions import JsonRpcClientError
