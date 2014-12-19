@@ -7,7 +7,8 @@ Release History
 * Default HTTP headers changed to meet `this document
   <http://www.simple-is-better.org/json-rpc/transport_http.html#post-request>`_.
 * Ability customize the headers.
-* Logging has changed. See Logging_.
+* Logging has changed. See `Logging
+  <http://jsonrpcclient.readthedocs.org/#logging>`_.
 
 1.0.11 (2014-12-12)
 ~~~~~~~~~~~~~~~~~~~
