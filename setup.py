@@ -29,6 +29,7 @@ setup(
     package_data={'jsonrpcclient': ['response-schema.json']},
     include_package_data=True,
     install_requires=['requests', 'jsonschema'],
+    tests_require=['nose','rednose','nose-cov','responses'],
     classifiers=[
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
