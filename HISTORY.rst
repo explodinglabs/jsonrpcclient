@@ -8,7 +8,7 @@ Release History
   <http://www.simple-is-better.org/json-rpc/transport_http.html#post-request>`_.
 - Ability to customize the headers.
 - Logging has changed. See `Logging
-  <http://jsonrpcclient.readthedocs.org/#logging>`_.
+  <https://jsonrpcclient.readthedocs.org/#logging>`_.
 
 1.0.11 (2014-12-12)
 ^^^^^^^^^^^^^^^^^^^
