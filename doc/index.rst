@@ -166,4 +166,4 @@ Links
 * Issue tracker: https://bitbucket.org/beau-barker/jsonrpcclient/issues
 
 If you need a server, try my `jsonrpcserver
-<http://jsonrpcserver.readthedocs.org/>`_ library.
+<https://jsonrpcserver.readthedocs.org/>`_ library.
