@@ -32,8 +32,3 @@ Release History
 
 - Added authentication.
 - Messages are now output on the INFO log level.
-
-1.0.8 (2014-12-02)
-^^^^^^^^^^^^^^^^^^^
-
-- Show the response status code in the log.
