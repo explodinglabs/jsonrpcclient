@@ -19,7 +19,7 @@ with open('HISTORY.rst', 'r', 'utf-8') as f:
 
 setup(
     name='jsonrpcclient',
-    version='1.0.12',
+    version='1.1.0',
     description='JSON-RPC 2.0 client library for Python 3.',
     long_description=readme + '\n\n' + history,
     author='Beau Barker',
@@ -33,7 +33,7 @@ setup(
     classifiers=[
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
-        'Development Status :: 4 - Beta',
+        'Development Status :: 5 - Production/Stable',
         'Environment :: Other Environment',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: GNU Library or Lesser General Public License (LGPL)',
