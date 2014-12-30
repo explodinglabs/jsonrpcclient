@@ -4,8 +4,7 @@ Release History
 1.1.0 (2014-12-30)
 ^^^^^^^^^^^^^^^^^^
 
-- Out of beta. Some minor internal adjustments which should not affect existing
-  users.
+- Out of beta. Some minor internal adjustments.
 
 1.0.12 (2014-12-16)
 ^^^^^^^^^^^^^^^^^^^
