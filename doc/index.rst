@@ -75,9 +75,9 @@ If no headers are given, the following headers are used::
 
 .. note::
 
-    In addition to ``auth`` and ``headers``, other parameters can be passed to
-    the requests module. This allows you to set the timeout, cookies, ssl
-    verification etc. For the full list of options see the request method `here
+    In addition to ``auth`` and ``headers``, other arguments can be passed to
+    ``Server`` which allow you to set the timeout, cookies, ssl verification
+    and more. For the full list of options see the request method `here
     <https://github.com/kennethreitz/requests/blob/master/requests/api.py>`_.
 
 
