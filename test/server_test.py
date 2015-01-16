@@ -28,8 +28,8 @@ class TestServer(TestCase): # pylint: disable=too-many-public-methods
     def test_server_with_auth(self):
         Server('http://example.com/api', auth=('user', 'pass'))
 
-    def test_server_with_headers_and_auth(self):
-        Server('http://example.com/api', headers={'Content-Type': 'application/json-rpc'}, auth=('user', 'pass'))
+    def test_server_with_headers(self):
+        Server('http://example.com/api', headers={'Content-Type': 'application/json-rpc'})
 
     # Test the public methods (request and notify)
 

@@ -19,7 +19,7 @@ DEFAULT_HTTP_HEADER = {
 class Server:
     """This class acts as the remote server"""
 
-    def __init__(self, endpoint, headers=None, auth=None):
+    def __init__(self, endpoint, **kwargs):
         """Instantiate a remote server object.
 
         >>> server = Server('http://example.com/api', \
@@ -28,12 +28,10 @@ class Server:
         """
 
         self.endpoint = endpoint
-        self.auth = auth
+        self.requests_kwargs = kwargs
 
-        if headers:
-            self.headers = headers
-        else:
-            self.headers = DEFAULT_HTTP_HEADER
+        if not 'headers' in self.requests_kwargs:
+            self.requests_kwargs['headers'] = DEFAULT_HTTP_HEADER
 
     def __getattr__(self, name):
         """Catch undefined methods and handle them as RPC requests.
@@ -81,7 +79,7 @@ class Server:
                 self.endpoint,
                 self.headers,
                 json=request,
-                auth=self.auth
+                **self.requests_kwargs
             )
         # Catch the requests module's InvalidSchema exception if the json is
         # invalid.
@@ -89,7 +87,7 @@ class Server:
             raise exceptions.InvalidRequest()
         # Catch all other requests exceptions, such as network issues.
         # See http://stackoverflow.com/questions/16511337/
-        except requests.exceptions.RequestException: # The base exception
+        except requests.exceptions.RequestException: # Base requests exception
             raise exceptions.ConnectionError()
 
         # Log the response, cleaning it up a bit
