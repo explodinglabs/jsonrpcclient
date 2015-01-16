@@ -75,11 +75,9 @@ If no headers are given, the following headers are used::
 
 .. note::
 
-    All keyword arguments passed to ``Server`` are later passed on to the
-    requests module when communicating with the server. So in addition to
-    ``auth`` and ``headers``, other arguments can allow you to set the timeout,
-    cookies, ssl verification and more.  For the full list of options see the
-    request method `here
+    In addition to ``auth`` and ``headers``, other arguments can allow you to
+    set the timeout, cookies, ssl verification and more. For the full list of
+    options see the request method `here
     <https://github.com/kennethreitz/requests/blob/master/requests/api.py>`_.
 
 
