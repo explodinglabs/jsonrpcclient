@@ -16,8 +16,8 @@ with codecs_open('HISTORY.rst', 'r', 'utf-8') as f:
 
 setup(
     name='jsonrpcclient',
-    version='1.1.0',
-    description='JSON-RPC 2.0 client library for Python 3.',
+    version='1.1.1',
+    description='JSON-RPC 2.0 client library.',
     long_description=readme + '\n\n' + history,
     author='Beau Barker',
     author_email='beauinmelbourne@gmail.com',
@@ -30,6 +30,7 @@ setup(
     classifiers=[
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 2.7',
         'Development Status :: 5 - Production/Stable',
         'Environment :: Other Environment',
         'Intended Audience :: Developers',

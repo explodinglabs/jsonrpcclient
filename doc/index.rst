@@ -73,6 +73,14 @@ If no headers are given, the following headers are used::
     Content-Type: application/json
     Accept: application/json
 
+.. note::
+
+    In addition to ``auth`` and ``headers``, other parameters can be passed to
+    the requests module. This allows you to set the timeout, cookies, ssl
+    verification etc. For the full list of options see the request method `here
+    <https://github.com/kennethreitz/requests/blob/master/requests/api.py>`_.
+
+
 Exceptions
 ^^^^^^^^^^
 
