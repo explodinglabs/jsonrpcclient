@@ -1,6 +1,14 @@
 Release History
 ---------------
 
+1.1.1 (2015-01-16)
+^^^^^^^^^^^^^^^^^^
+
+- More features available when communicating with the server, such as setting a
+  timeout on requests, ssl verification, cookies etc.
+
+- Now compatible with older Python versions (tested with 2.7.9).
+
 1.1.0 (2014-12-30)
 ^^^^^^^^^^^^^^^^^^
 
