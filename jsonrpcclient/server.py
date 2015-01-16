@@ -11,7 +11,7 @@ from jsonrpcclient import exceptions
 from jsonrpcclient import request_log, response_log
 
 
-DEFAULT_HTTP_HEADER = {
+DEFAULT_HTTP_HEADERS = {
     'Content-Type': 'application/json',
     'Accept': 'application/json'
 }
@@ -28,10 +28,14 @@ class Server:
         """
 
         self.endpoint = endpoint
-        self.requests_kwargs = kwargs
 
-        if not 'headers' in self.requests_kwargs:
-            self.requests_kwargs['headers'] = DEFAULT_HTTP_HEADER
+        if 'headers' in kwargs:
+            self.headers = kwargs['headers']
+            kwargs.pop('headers')
+        else:
+            self.headers = DEFAULT_HTTP_HEADERS
+
+        self.requests_kwargs = kwargs
 
     def __getattr__(self, name):
         """Catch undefined methods and handle them as RPC requests.
