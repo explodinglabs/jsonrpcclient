@@ -29,8 +29,6 @@ setup(
     tests_require=['nose', 'rednose', 'nose-cov', 'responses'],
     classifiers=[
         'Programming Language :: Python',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 2.7',
         'Development Status :: 5 - Production/Stable',
         'Environment :: Other Environment',
         'Intended Audience :: Developers',
