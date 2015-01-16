@@ -27,15 +27,13 @@ class Server:
                 auth=('user', 'pass'))
         """
 
+        kwargs.setdefault('headers', DEFAULT_HTTP_HEADERS)
+
         self.endpoint = endpoint
-
-        if 'headers' in kwargs:
-            self.headers = kwargs['headers']
-            kwargs.pop('headers')
-        else:
-            self.headers = DEFAULT_HTTP_HEADERS
-
+        self.headers = kwargs['headers']
         self.requests_kwargs = kwargs
+
+        kwargs.pop('headers')
 
     def __getattr__(self, name):
         """Catch undefined methods and handle them as RPC requests.
