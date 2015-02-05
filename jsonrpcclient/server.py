@@ -3,7 +3,8 @@
 import json
 import pkgutil
 
-import requests
+from requests import Request, Session
+from requests.exceptions import InvalidSchema, RequestException
 import jsonschema
 
 from jsonrpcclient import rpc
@@ -72,25 +73,35 @@ class Server:
         Raises JsonRpcClientError: On any error caught.
         """
 
-        # Log the request
-        request_log.info(json.dumps(request))
+        s = Session()
+
+        # Prepare the request
+        request = Request(method='POST', url=self.endpoint,
+            headers=self.headers, json=request, **self.requests_kwargs)
+        request = s.prepare_request(request)
+
+        request.headers = dict(list(dict(request.headers).items()) + list(self.headers.items()))
+
+        # Log the request before sending
+        request_log.info(
+            request.body,
+            extra={
+                'http_headers': request.headers
+            })
 
         try:
-            # Send the message
-            response = requests.post(
-                self.endpoint,
-                self.headers,
-                json=request,
-                **self.requests_kwargs
-            )
+            response = s.send(request)
+
         # Catch the requests module's InvalidSchema exception if the json is
         # invalid.
-        except requests.exceptions.InvalidSchema:
+        except InvalidSchema:
             raise exceptions.InvalidRequest()
         # Catch all other requests exceptions, such as network issues.
         # See http://stackoverflow.com/questions/16511337/
-        except requests.exceptions.RequestException: # Base requests exception
+        except RequestException: # Base requests exception
             raise exceptions.ConnectionError()
+        finally:
+            s.close()
 
         # Log the response, cleaning it up a bit
         response_log.info(
@@ -99,6 +110,7 @@ class Server:
             extra={
                 'http_code': response.status_code,
                 'http_reason': response.reason,
+                'http_headers': response.headers
             })
 
         return response
