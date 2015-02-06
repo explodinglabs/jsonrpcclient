@@ -162,7 +162,7 @@ The request format has these fields:
 
 The response format has these fields:
 
-%(http_code)s
+%(http_code)d
     The HTTP status code received from the server, eg. *400*.
 
 %(http_reason)s
