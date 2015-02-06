@@ -1,6 +1,16 @@
 Release History
 ---------------
 
+1.1.2 (2015-02-06)
+^^^^^^^^^^^^^^^^^^
+
+- Added the ability to show the incoming and outgoing HTTP headers in the log
+  output.
+
+- Bugfix - HTTP headers were often incorrect due to quirks in the requests
+  module. Now using a different method to set the headers.
+
+
 1.1.1 (2015-01-16)
 ^^^^^^^^^^^^^^^^^^
 
