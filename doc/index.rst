@@ -158,7 +158,7 @@ The request format has these fields:
     The full HTTP headers.
 
 %(message)s
-    The json request.
+    The json request (the body).
 
 The response format has these fields:
 
@@ -172,7 +172,7 @@ The response format has these fields:
     The full HTTP headers.
 
 %(message)s
-    The json request.
+    The json response (the body).
 
 Todo
 ----
