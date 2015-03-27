@@ -1,14 +1,13 @@
-"""rpc_test.py"""
-# pylint: disable=missing-docstring,line-too-long
+"""test_rpc.py"""
+# pylint: disable=missing-docstring,line-too-long,too-many-public-methods
 
-from unittest import TestCase
+from unittest import TestCase, main
 import itertools
 
 from jsonrpcclient import rpc
 
 
 class TestRPC(TestCase):
-    # pylint: disable=too-many-public-methods,no-self-use
 
     def setUp(self):
         rpc.id_generator = itertools.count(1) # First generated is 1
@@ -79,3 +78,6 @@ class TestRPC(TestCase):
             {"jsonrpc": "2.0", "method": "go", "params": ["positional", {"keyword": "foo"}], "id": 1},
             rpc.request('go', 'positional', keyword='foo', response=True)
         )
+
+if __name__ == '__main__':
+    main()

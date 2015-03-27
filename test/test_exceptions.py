@@ -1,25 +1,32 @@
-"""exceptions_test.py"""
-# pylint: disable=missing-docstring,line-too-long
+"""test_exceptions.py"""
+# pylint: disable=missing-docstring,line-too-long,too-many-public-methods
 
-from unittest import TestCase
+from unittest import TestCase, main
 
 from jsonrpcclient import exceptions
 
 
 class TestExceptions(TestCase):
-    # pylint:disable=too-many-public-methods
-
-    def test_ConnectionError(self):
-        with self.assertRaises(exceptions.ConnectionError):
-            raise exceptions.ConnectionError
 
     def test_InvalidRequest(self):
         with self.assertRaises(exceptions.InvalidRequest):
             raise exceptions.InvalidRequest()
 
+    def test_ConnectionError(self):
+        with self.assertRaises(exceptions.ConnectionError):
+            raise exceptions.ConnectionError
+
     def test_Non200Response(self):
         with self.assertRaises(exceptions.Non200Response):
             raise exceptions.Non200Response(404)
+
+    def test_ReceivedNoResponse(self):
+        with self.assertRaises(exceptions.ReceivedNoResponse):
+            raise exceptions.ReceivedNoResponse
+
+    def test_UnwantedResponse(self):
+        with self.assertRaises(exceptions.UnwantedResponse):
+            raise exceptions.UnwantedResponse
 
     def test_ParseResponseError(self):
         with self.assertRaises(exceptions.ParseResponseError):
@@ -29,10 +36,9 @@ class TestExceptions(TestCase):
         with self.assertRaises(exceptions.InvalidResponse):
             raise exceptions.InvalidResponse
 
-    def test_ReceivedNoResponse(self):
-        with self.assertRaises(exceptions.ReceivedNoResponse):
-            raise exceptions.ReceivedNoResponse
-
     def test_ReceivedErrorResponse(self):
         with self.assertRaises(exceptions.ReceivedErrorResponse):
             raise exceptions.ReceivedErrorResponse(1, 'Member not found')
+
+if __name__ == '__main__':
+    main()
