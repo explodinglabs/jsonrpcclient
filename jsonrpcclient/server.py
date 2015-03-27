@@ -76,11 +76,12 @@ class Server:
         s = Session()
 
         # Prepare the request
-        request = Request(method='POST', url=self.endpoint,
+        request = Request(method='POST', url=self.endpoint, \
             headers=self.headers, json=request, **self.requests_kwargs)
         request = s.prepare_request(request)
 
-        request.headers = dict(list(dict(request.headers).items()) + list(self.headers.items()))
+        request.headers = dict(list(dict(request.headers).items()) + list(
+            self.headers.items()))
 
         # Log the request before sending
         request_log.info(
@@ -91,7 +92,6 @@ class Server:
 
         try:
             response = s.send(request)
-
         # Catch the requests module's InvalidSchema exception if the json is
         # invalid.
         except InvalidSchema:

@@ -1,7 +1,7 @@
-# pylint: disable=missing-docstring,line-too-long,no-self-use
-"""server_test.py"""
+"""test_server.py"""
+# pylint: disable=missing-docstring,line-too-long,too-many-public-methods
 
-from unittest import TestCase
+from unittest import TestCase, main
 import itertools
 from collections import namedtuple
 
@@ -11,7 +11,7 @@ import responses
 from jsonrpcclient import Server, rpc, exceptions
 
 
-class TestServer(TestCase): # pylint: disable=too-many-public-methods
+class TestServer(TestCase):
 
     def setUp(self):
         rpc.id_generator = itertools.count(1) # Ensure the first generated is 1
@@ -19,17 +19,17 @@ class TestServer(TestCase): # pylint: disable=too-many-public-methods
 
     # Test instantiating
 
-    def test_server_url_only(self):
+    @staticmethod
+    def test_server_url_only():
         Server('http://example.com/api')
 
-    def test_server_with_headers(self):
+    @staticmethod
+    def test_server_with_headers():
         Server('http://example.com/api', headers={'Content-Type': 'application/json-rpc'})
 
-    def test_server_with_auth(self):
+    @staticmethod
+    def test_server_with_auth():
         Server('http://example.com/api', auth=('user', 'pass'))
-
-    def test_server_with_headers(self):
-        Server('http://example.com/api', headers={'Content-Type': 'application/json-rpc'})
 
     # Test the public methods (request and notify)
 
@@ -116,3 +116,6 @@ class TestServer(TestCase): # pylint: disable=too-many-public-methods
         response.text = ''
         with self.assertRaises(exceptions.Non200Response):
             self.server.handle_response(response)
+
+if __name__ == '__main__':
+    main()
