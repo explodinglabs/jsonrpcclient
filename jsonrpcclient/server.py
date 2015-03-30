@@ -17,7 +17,7 @@ DEFAULT_HTTP_HEADERS = {
     'Accept': 'application/json'
 }
 
-class Server:
+class Server(object):
     """This class acts as the remote server"""
 
     def __init__(self, endpoint, **kwargs):
