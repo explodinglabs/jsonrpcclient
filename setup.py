@@ -20,7 +20,7 @@ class Tox(TestCommand):
     user_options = [('tox-args=', 'a', "Arguments to pass to tox")]
     def initialize_options(self):
         TestCommand.initialize_options(self)
-        self.tox_args = None # '-v'
+        self.tox_args = '-v'
     def finalize_options(self):
         TestCommand.finalize_options(self)
         self.test_args = []
