@@ -16,10 +16,6 @@ class TestExceptions(TestCase):
         with self.assertRaises(exceptions.ConnectionError):
             raise exceptions.ConnectionError
 
-    def test_Non200Response(self):
-        with self.assertRaises(exceptions.Non200Response):
-            raise exceptions.Non200Response(404)
-
     def test_ReceivedNoResponse(self):
         with self.assertRaises(exceptions.ReceivedNoResponse):
             raise exceptions.ReceivedNoResponse
@@ -39,6 +35,7 @@ class TestExceptions(TestCase):
     def test_ReceivedErrorResponse(self):
         with self.assertRaises(exceptions.ReceivedErrorResponse):
             raise exceptions.ReceivedErrorResponse(1, 'Member not found')
+
 
 if __name__ == '__main__':
     main()

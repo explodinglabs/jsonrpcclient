@@ -22,14 +22,6 @@ class ConnectionError(JsonRpcClientError): # pylint: disable=redefined-builtin
             'Connection error')
 
 
-class Non200Response(JsonRpcClientError):
-    """The server responded with a HTTP status code other than 200."""
-
-    def __init__(self, status_code):
-        super(Non200Response, self).__init__(
-            'Returned status code '+str(status_code))
-
-
 class ReceivedNoResponse(JsonRpcClientError):
     """A response message was expected, but none was given."""
 

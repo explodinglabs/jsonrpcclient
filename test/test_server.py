@@ -103,19 +103,5 @@ class TestServer(TestCase):
         with self.assertRaises(exceptions.ReceivedErrorResponse):
             self.server.handle_response(response, expected_response=True)
 
-    def test_handle_response_with_result_but_non_200_status(self):
-        response = namedtuple('Response', 'status_code, text')
-        response.status_code = 404
-        response.text = '{"jsonrpc": "2.0", "result": 5, "id": null}'
-        with self.assertRaises(exceptions.Non200Response):
-            self.server.handle_response(response, expected_response=True)
-
-    def test_handle_response_with_no_text_and_non_200_status(self):
-        response = namedtuple('Response', 'status_code, text')
-        response.status_code = 404
-        response.text = ''
-        with self.assertRaises(exceptions.Non200Response):
-            self.server.handle_response(response)
-
 if __name__ == '__main__':
     main()

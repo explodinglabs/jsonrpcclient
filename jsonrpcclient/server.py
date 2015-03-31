@@ -150,15 +150,7 @@ class Server(object):
                     response_dict['error']['code'],
                     response_dict['error']['message'])
 
-            # Raise exception the HTTP status code was not 200.
-            if response.status_code != 200:
-                raise exceptions.Non200Response(response.status_code)
-
-             # Otherwise, surely we have a result to return
+            # Otherwise, surely we have a result to return
             return response_dict['result']
-
-        # Raise exception the HTTP status code was not 200.
-        if response.status_code != 200:
-            raise exceptions.Non200Response(response.status_code)
 
         return None
