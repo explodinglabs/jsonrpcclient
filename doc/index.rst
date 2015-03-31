@@ -101,9 +101,6 @@ InvalidRequest
 ConnectionError
     There was a network issue, timeout, or invalid HTTP response.
 
-Non200Response
-    The server returned a HTTP status code other than 200.
-
 ReceivedNoResponse
     A response message was expected, but none was given.
 
