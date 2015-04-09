@@ -12,9 +12,10 @@ Simply set the server details, then make a request:
 
 .. sourcecode:: python
 
-    >>> from jsonrpcclient import Server
     >>> Server('http://example.com/api').request('add', 2, 3)
     5
+
+Full documentation is available at https://jsonrpcclient.readthedocs.org/.
 
 Installation
 ------------
@@ -22,8 +23,3 @@ Installation
 .. sourcecode:: sh
 
     $ pip install jsonrpcclient
-
-Documentation
--------------
-
-Documentation is available at https://jsonrpcclient.readthedocs.org/.
