@@ -47,12 +47,8 @@ setup(
     tests_require=['tox'],
     cmdclass = {'test': Tox},
     classifiers=[
-        'Programming Language :: Python',
-        'Development Status :: 5 - Production/Stable',
-        'Environment :: Other Environment',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: GNU Library or Lesser General Public License (LGPL)',
-        'Operating System :: OS Independent',
-        'Topic :: Software Development :: Libraries :: Python Modules',
+        'Operating System :: OS Independent'
         ],
     )
