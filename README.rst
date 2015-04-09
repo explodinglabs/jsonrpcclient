@@ -12,9 +12,7 @@ Simply set the server details, then make a request:
 
 .. sourcecode:: python
 
-    >>> from jsonrpcclient import Server
-    >>> server = Server('http://example.com/api')
-    >>> server.request('add', 2, 3)
+    >>> Server('http://example.com/api').request('add', 2, 3)
     5
 
 Installation
