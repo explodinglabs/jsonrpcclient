@@ -16,10 +16,3 @@ Simply set the server details, then make a request:
     5
 
 Full documentation is available at https://jsonrpcclient.readthedocs.org/.
-
-Installation
-------------
-
-.. sourcecode:: sh
-
-    $ pip install jsonrpcclient
