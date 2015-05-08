@@ -1,6 +1,11 @@
 Release History
 ---------------
 
+1.1.5 (2015-05-09)
+^^^^^^^^^^^^^^^^^^
+
+- Removed Non2xxResponse error which served no real purpose.
+
 1.1.4 (2015-05-09)
 ^^^^^^^^^^^^^^^^^^
 

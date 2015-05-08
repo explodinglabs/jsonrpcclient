@@ -99,9 +99,6 @@ class Server(object):
                 'http_reason': response.reason,
                 'http_headers': response.headers
             })
-        # Raise exception if the HTTP status code was not 200-299.
-        if response.status_code not in range(200, 300):
-            raise exceptions.Non2xxResponse(response.status_code)
         return response.text
 
     @staticmethod
