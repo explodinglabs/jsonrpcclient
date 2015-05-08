@@ -66,6 +66,13 @@ class TestServer(TestCase):
         with self.assertRaises(exceptions.InvalidRequest):
             self.server.send_message(rpc.request('go'))
 
+    @responses.activate
+    def test_send_message_with_non_2xx_response(self):
+        # Impossible to pass an invalid dict, so just assume the exception was raised
+        responses.add(responses.POST, 'http://non-existant/', status=404)
+        with self.assertRaises(exceptions.Non2xxResponse):
+            self.server.send_message(rpc.request('go'))
+
     # Test handle_response()
 
     def test_handle_response_with_unwanted_text(self):
