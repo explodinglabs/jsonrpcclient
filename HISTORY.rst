@@ -1,6 +1,14 @@
 Release History
 ---------------
 
+1.1.4 (2015-05-09)
+^^^^^^^^^^^^^^^^^^
+
+- Non200Response error replaced with Non2xxResponse - any 2xx status from the
+  server is taken as success, including 204 "No Content" which may be returned
+  for notifications.
+- Logging fixed - see the documentation for changes.
+
 1.1.3 (2015-03-30)
 ^^^^^^^^^^^^^^^^^^
 
