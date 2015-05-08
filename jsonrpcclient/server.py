@@ -67,7 +67,7 @@ class Server(object):
             self.send_message(rpc.request(method_name, *args, **kwargs)), False)
 
     def send_message(self, request):
-        """Send the RPC request to the server.
+        """Send the RPC request (a json dict) to the server.
 
         Calls a procedure on another server.
         Raises JsonRpcClientError: On any error caught.
@@ -117,7 +117,7 @@ class Server(object):
 
     @staticmethod
     def handle_response(response, expected_response=False):
-        """Processes the response from a request"""
+        """Processes the response (a json string)"""
 
         # A response was expected, but none was given?
         if expected_response and not len(response.text):
