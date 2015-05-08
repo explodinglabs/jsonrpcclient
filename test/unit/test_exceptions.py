@@ -24,10 +24,6 @@ class TestExceptions(TestCase):
         with self.assertRaises(exceptions.UnwantedResponse):
             raise exceptions.UnwantedResponse
 
-    def test_Non2xxResponse(self):
-        with self.assertRaises(exceptions.Non2xxResponse):
-            raise exceptions.Non2xxResponse(404)
-
     def test_ParseResponseError(self):
         with self.assertRaises(exceptions.ParseResponseError):
             raise exceptions.ParseResponseError

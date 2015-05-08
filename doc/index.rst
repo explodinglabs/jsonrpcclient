@@ -107,9 +107,6 @@ ReceivedNoResponse
 UnwantedResponse
     A response was not requested, but one was given anyway.
 
-Non2xxResponse
-    The server responded with a HTTP status code other than 200-299.
-
 ParseResponseError
     The response was not valid json.
 

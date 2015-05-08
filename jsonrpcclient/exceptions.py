@@ -27,13 +27,6 @@ class ReceivedNoResponse(JsonRpcClientError):
             'No response was received')
 
 
-class Non2xxResponse(JsonRpcClientError):
-    """The server responded with a HTTP status code other than 200-299."""
-    def __init__(self, status_code):
-        super(Non2xxResponse, self).__init__(
-            'Returned status code '+str(status_code))
-
-
 class UnwantedResponse(JsonRpcClientError):
     """A response was not requested, but one was given anyway."""
     def __init__(self):
