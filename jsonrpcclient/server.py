@@ -99,19 +99,22 @@ class Server(object):
                 'http_reason': response.reason,
                 'http_headers': response.headers
             })
-        return response
+        # Raise exception if the HTTP status code was not 200-299.
+        if response.status_code not in range(200, 300):
+            raise exceptions.Non2xxResponse(response.status_code)
+        return response.text
 
     @staticmethod
     def handle_response(response, expected_response=False):
         """Processes the response (a json string)"""
         # A response was expected, but none was given?
-        if expected_response and not len(response.text):
+        if expected_response and not len(response):
             raise exceptions.ReceivedNoResponse()
         # Was a response given?
-        if len(response.text):
+        if len(response):
             # Attempt to parse the response
             try:
-                response_dict = json.loads(response.text)
+                response_dict = json.loads(response)
             except ValueError:
                 raise exceptions.ParseResponseError()
             # Unwanted response - A response was not asked for, but one was
