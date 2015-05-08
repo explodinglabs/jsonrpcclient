@@ -167,7 +167,7 @@ Todo
 ----
 
 * Support `batch calls <http://www.jsonrpc.org/specification#batch>`_.
-* Ability to make GET requests - maybe.
+* More transport options.
 
 Links
 -----
