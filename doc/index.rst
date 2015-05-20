@@ -140,6 +140,9 @@ customize the log format for ``jsonrpcclient.server.request`` and
 
 The request format has these fields:
 
+%(endpoint)s
+    The server endpoint, eg. ``http://example/endpoint``.
+
 %(http_headers)s
     The full HTTP headers.
 
@@ -148,11 +151,14 @@ The request format has these fields:
 
 The response format has these fields:
 
+%(endpoint)s
+    The server endpoint, eg. ``http://example/endpoint``.
+
 %(http_code)d
-    The HTTP status code received from the server, eg. *400*.
+    The HTTP status code received from the server, eg. ``400``.
 
 %(http_reason)s
-    The description of the status code, eg. *"BAD REQUEST"*.
+    The description of the status code, eg. ``BAD REQUEST``.
 
 %(http_headers)s
     The full HTTP headers.

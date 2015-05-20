@@ -1,6 +1,11 @@
 Release History
 ---------------
 
+1.1.7 (2015-05-20)
+^^^^^^^^^^^^^^^^^^
+
+- Include the server endpoint in log entries.
+
 1.1.6 (2015-05-09)
 ^^^^^^^^^^^^^^^^^^
 
