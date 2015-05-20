@@ -64,7 +64,7 @@ class Server(object):
         Calls a procedure on another server.
         Raises JsonRpcClientError: On any error caught.
         """
-        logger.debug('Sending via http post...')
+        logger.info('Sending via http post...')
         s = Session()
         # Prepare the request
         request = Request(method='POST', url=self.endpoint, \
