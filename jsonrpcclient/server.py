@@ -76,6 +76,7 @@ class Server(object):
         request_log.info(
             request.body,
             extra={
+                'endpoint': self.endpoint,
                 'http_headers': request.headers
             })
         try:
@@ -95,6 +96,7 @@ class Server(object):
             response.text \
                 .replace("\n", '').replace('  ', ' ').replace('{ ', '{'),
             extra={
+                'endpoint': self.endpoint,
                 'http_code': response.status_code,
                 'http_reason': response.reason,
                 'http_headers': response.headers
