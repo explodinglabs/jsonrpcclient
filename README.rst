@@ -1,9 +1,6 @@
 jsonrpcclient
 =============
 
-.. image:: https://pypip.in/v/jsonrpcclient/badge.png
-.. image:: https://pypip.in/d/jsonrpcclient/badge.png
-
 Make `remote procedure calls
 <http://en.wikipedia.org/wiki/Remote_procedure_call>`_ with `JSON-RPC
 <http://www.jsonrpc.org/>`_.
