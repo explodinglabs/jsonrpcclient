@@ -91,6 +91,20 @@ communicating with the server::
     try:
         server.request('go')
     except JsonRpcClientError as e:
+        print(str(e)) # Gives an explanation of the error
+
+If the server responds with a `JSON-RPC error response
+<http://www.jsonrpc.org/specification#error_object>`_, the
+``ReceivedErrorResponse`` exception gives details of the response::
+
+    from jsonrpcclient.exceptions import ReceivedErrorResponse, JsonRpcClientError
+    try:
+        server.request('go')
+    # Handle a JSON-RPC "error" response
+    except ReceivedErrorResponse as e:
+        print(e.code, e.message, e.data)
+    # Catch the other errors
+    except JsonRpcClientError as e:
         print(str(e))
 
 Here's the full list of exceptions, if you need to handle them individually:
@@ -114,7 +128,7 @@ InvalidResponse
     The response was not a valid JSON-RPC response.
 
 ReceivedErrorResponse
-    The server gave a valid JSON-RPC *error* response.
+    The server gave a valid JSON-RPC error response.
 
 Logging
 ^^^^^^^
