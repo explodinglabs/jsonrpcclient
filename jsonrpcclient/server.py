@@ -129,8 +129,9 @@ class Server(object):
             # If the response was "error", raise it, to ensure it's handled
             if 'error' in response_dict:
                 raise exceptions.ReceivedErrorResponse(
-                    response_dict['error']['code'],
-                    response_dict['error']['message'])
+                    response_dict['error'].get('code'),
+                    response_dict['error'].get('message'),
+                    response_dict['error'].get('data'))
             # Otherwise, surely we have a result to return
             return response_dict['result']
 
