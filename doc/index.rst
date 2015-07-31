@@ -93,9 +93,9 @@ communicating with the server::
     except JsonRpcClientError as e:
         print(str(e)) # Gives an explanation of the error
 
-If the server responds with a `JSON-RPC error response
-<http://www.jsonrpc.org/specification#error_object>`_, the
-``ReceivedErrorResponse`` exception gives details of the response::
+If the server responds with a `JSON-RPC error
+<http://www.jsonrpc.org/specification#error_object>`_, handle
+``ReceivedErrorResponse`` separately for access to the details::
 
     from jsonrpcclient.exceptions import ReceivedErrorResponse, JsonRpcClientError
     try:
