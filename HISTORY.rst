@@ -6,7 +6,7 @@ Release History
 
 - Further details provided when the server responds with a JSON-RPC error
   response. See `Exceptions
-  <http://www.jsonrpc.org/specification#error_object>`_.
+  <http://jsonrpcclient.readthedocs.org/#exceptions>`_.
 
 1.1.7 (2015-05-20)
 ^^^^^^^^^^^^^^^^^^
