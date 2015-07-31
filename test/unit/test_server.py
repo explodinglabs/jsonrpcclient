@@ -88,10 +88,21 @@ class TestServer(TestCase):
         with self.assertRaises(exceptions.InvalidResponse):
             self.server.handle_response(response, expected_response=True)
 
-    def test_handle_response_with_error_text(self):
-        response = '{"jsonrpc": "2.0", "error": {"code": -32000, "message": "Not Found"}, "id": null}'
-        with self.assertRaises(exceptions.ReceivedErrorResponse):
+    def test_handle_error_response(self):
+        response = '{"jsonrpc": "2.0", "error": {"code": -32000, "message": "Not Found", "data": "A Primitive or Structured value that contains additional information about the error. This may be omitted. The value of this member is defined by the Server (e.g. detailed error information, nested errors etc.)"}, "id": null}'
+        with self.assertRaises(exceptions.ReceivedErrorResponse) as e:
             self.server.handle_response(response, expected_response=True)
+        self.assertEqual(e.exception.code, -32000)
+        self.assertEqual(e.exception.message, 'Not Found')
+        self.assertEqual(e.exception.data, 'A Primitive or Structured value that contains additional information about the error. This may be omitted. The value of this member is defined by the Server (e.g. detailed error information, nested errors etc.)')
+
+    def test_handle_error_response_without_data(self):
+        response = '{"jsonrpc": "2.0", "error": {"code": -32000, "message": "Not Found"}, "id": null}'
+        with self.assertRaises(exceptions.ReceivedErrorResponse) as e:
+            self.server.handle_response(response, expected_response=True)
+        self.assertEqual(e.exception.code, -32000)
+        self.assertEqual(e.exception.message, 'Not Found')
+        self.assertEqual(e.exception.data, None)
 
 if __name__ == '__main__':
     main()

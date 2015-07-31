@@ -34,7 +34,7 @@ class TestExceptions(TestCase):
 
     def test_ReceivedErrorResponse(self):
         with self.assertRaises(exceptions.ReceivedErrorResponse):
-            raise exceptions.ReceivedErrorResponse(1, 'Member not found')
+            raise exceptions.ReceivedErrorResponse(1, 'foo', 'bar')
 
 
 if __name__ == '__main__':
