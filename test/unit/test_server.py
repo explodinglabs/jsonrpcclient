@@ -3,7 +3,6 @@
 
 from unittest import TestCase, main
 import itertools
-from mock import patch, Mock
 
 from jsonrpcclient import rpc, exceptions
 from jsonrpcclient.server import Server
