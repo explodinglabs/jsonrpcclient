@@ -3,92 +3,106 @@
 
 from unittest import TestCase, main
 import itertools
-from collections import namedtuple
+from mock import patch, Mock
 
-import requests
-import responses
-
-from jsonrpcclient import Server, rpc, exceptions
+from jsonrpcclient import rpc, exceptions
+from jsonrpcclient.server import Server
 
 
 class TestServer(TestCase):
 
     def setUp(self):
         rpc.id_generator = itertools.count(1) # Ensure the first generated is 1
-        self.server = Server('http://non-existant/')
+        self.server = Server('http://non-existant:80/')
 
-    # Test instantiating
+    # notify()
 
-    @staticmethod
-    def test_server_url_only():
-        Server('http://example.com/api')
-
-    @staticmethod
-    def test_server_with_headers():
-        Server('http://example.com/api', headers={'Content-Type': 'application/json-rpc'})
-
-    @staticmethod
-    def test_server_with_auth():
-        Server('http://example.com/api', auth=('user', 'pass'))
-
-    # Test the public methods (request and notify)
-
-    @responses.activate
     def test_notify(self):
-        responses.add(responses.POST, 'http://non-existant/', status=200)
-        self.server.notify('go')
+        with self.assertRaises(NotImplementedError):
+            self.server.notify('go')
 
-    @responses.activate
-    def test_notify_alternate(self):
-        responses.add(responses.POST, 'http://non-existant/', status=200)
-        self.server.go()
+    def test_notify_alternate_usage(self):
+        with self.assertRaises(NotImplementedError):
+            self.server.go()
 
-    @responses.activate
+    # request()
+
     def test_request(self):
-        responses.add(responses.POST, 'http://non-existant/', status=200, body='{"jsonrpc": "2.0", "result": 5, "id": null}')
-        self.server.request('add', 1, 2)
+        with self.assertRaises(NotImplementedError):
+            self.server.request('add', 2, 3)
 
-    @responses.activate
-    def test_request_alternate(self):
-        responses.add(responses.POST, 'http://non-existant/', status=200, body='{"jsonrpc": "2.0", "result": 5, "id": null}')
-        self.server.add(1, 2, response=True)
+    def test_request_alternate_usage(self):
+        with self.assertRaises(NotImplementedError):
+            self.server.add(2, 3, response=True)
 
-    # Test send_message()
+    # handle_response() - notifications
 
-    def test_send_message_with_connection_error(self):
-        with self.assertRaises(exceptions.ConnectionError):
-            self.server.send_message(rpc.request('go'))
+    def test_handle_notification_with_no_response(self):
+        response = None
+        self.server.handle_response(response)
 
-    @responses.activate
-    def test_send_message_with_invalid_request(self):
-        # Impossible to pass an invalid dict, so just assume the exception was raised
-        responses.add(responses.POST, 'http://non-existant/', status=400, body=requests.exceptions.InvalidSchema())
-        with self.assertRaises(exceptions.InvalidRequest):
-            self.server.send_message(rpc.request('go'))
-
-    # Test handle_response()
-
-    def test_handle_response_with_unwanted_text(self):
-        response = '{"jsonrpc": "2.0", "result": 5, "id": null}'
-        with self.assertRaises(exceptions.UnwantedResponse):
-            self.server.handle_response(response)
-
-    def test_handle_response_with_no_text_but_expected_text(self):
+    def test_handle_notification_with_empty_string_response(self):
         response = ''
-        with self.assertRaises(exceptions.ReceivedNoResponse):
-            self.server.handle_response('', expected_response=True)
+        self.server.handle_response(response)
 
-    def test_handle_response_with_dodgy_text(self):
+    def test_handle_notification_with_invalid_json_response(self):
         response = '{dodgy}'
         with self.assertRaises(exceptions.ParseResponseError):
             self.server.handle_response(response)
 
-    def test_handle_response_with_non_validating_text(self):
+    def test_handle_notification_with_invalid_jsonrpc_response(self):
+        response = '{"json": "2.0"}'
+        with self.assertRaises(exceptions.InvalidResponse):
+            self.server.handle_response(response)
+
+    def test_handle_notification_with_valid_response(self):
+        response = '{"jsonrpc": "2.0", "result": 5, "id": null}'
+        with self.assertRaises(exceptions.UnwantedResponse):
+            self.server.handle_response(response)
+
+    def test_handle_notification_with_error_response(self):
+        response = '{"jsonrpc": "2.0", "error": {"code": -32000, "message": "Not Found", "data": "A Primitive or Structured value that contains additional information about the error. This may be omitted. The value of this member is defined by the Server (e.g. detailed error information, nested errors etc.)"}, "id": null}'
+        with self.assertRaises(exceptions.ReceivedErrorResponse) as e:
+            self.server.handle_response(response)
+        self.assertEqual(e.exception.code, -32000)
+        self.assertEqual(e.exception.message, 'Not Found')
+        self.assertEqual(e.exception.data, 'A Primitive or Structured value that contains additional information about the error. This may be omitted. The value of this member is defined by the Server (e.g. detailed error information, nested errors etc.)')
+
+    def test_handle_notification_with_error_without_data(self):
+        response = '{"jsonrpc": "2.0", "error": {"code": -32000, "message": "Not Found"}, "id": null}'
+        with self.assertRaises(exceptions.ReceivedErrorResponse) as e:
+            self.server.handle_response(response)
+        self.assertEqual(e.exception.code, -32000)
+        self.assertEqual(e.exception.message, 'Not Found')
+        self.assertEqual(e.exception.data, None)
+
+    # handle_response() - requests
+
+    def test_handle_request_with_no_response(self):
+        response = None
+        with self.assertRaises(exceptions.ReceivedNoResponse):
+            self.server.handle_response(response, expected_response=True)
+
+    def test_handle_request_with_empty_string_response(self):
+        response = ''
+        with self.assertRaises(exceptions.ReceivedNoResponse):
+            self.server.handle_response(response, expected_response=True)
+
+    def test_handle_request_with_invalid_json_response(self):
+        response = '{dodgy}'
+        with self.assertRaises(exceptions.ParseResponseError):
+            self.server.handle_response(response, expected_response=True)
+
+    def test_handle_request_with_invalid_jsonrpc_response(self):
         response = '{"json": "2.0"}'
         with self.assertRaises(exceptions.InvalidResponse):
             self.server.handle_response(response, expected_response=True)
 
-    def test_handle_error_response(self):
+    def test_handle_request_with_valid_response(self):
+        response = '{"jsonrpc": "2.0", "result": 5, "id": null}'
+        self.assertEqual(5, self.server.handle_response(response, expected_response=True))
+
+    def test_handle_request_with_error_response(self):
         response = '{"jsonrpc": "2.0", "error": {"code": -32000, "message": "Not Found", "data": "A Primitive or Structured value that contains additional information about the error. This may be omitted. The value of this member is defined by the Server (e.g. detailed error information, nested errors etc.)"}, "id": null}'
         with self.assertRaises(exceptions.ReceivedErrorResponse) as e:
             self.server.handle_response(response, expected_response=True)
@@ -96,13 +110,14 @@ class TestServer(TestCase):
         self.assertEqual(e.exception.message, 'Not Found')
         self.assertEqual(e.exception.data, 'A Primitive or Structured value that contains additional information about the error. This may be omitted. The value of this member is defined by the Server (e.g. detailed error information, nested errors etc.)')
 
-    def test_handle_error_response_without_data(self):
+    def test_handle_request_with_error_without_data(self):
         response = '{"jsonrpc": "2.0", "error": {"code": -32000, "message": "Not Found"}, "id": null}'
         with self.assertRaises(exceptions.ReceivedErrorResponse) as e:
             self.server.handle_response(response, expected_response=True)
         self.assertEqual(e.exception.code, -32000)
         self.assertEqual(e.exception.message, 'Not Found')
         self.assertEqual(e.exception.data, None)
+
 
 if __name__ == '__main__':
     main()
