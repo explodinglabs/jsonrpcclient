@@ -1,5 +1,5 @@
 """setup.py"""
-#pylint:disable=line-too-long
+#pylint:disable=line-too-long,missing-docstring
 
 import sys
 from setuptools.command.test import test as TestCommand
@@ -18,6 +18,9 @@ with codecs_open('HISTORY.rst', 'r', 'utf-8') as f:
 
 class Tox(TestCommand):
     user_options = [('tox-args=', 'a', "Arguments to pass to tox")]
+    test_suite = False
+    tox_args = None
+    test_args = None
     def initialize_options(self):
         TestCommand.initialize_options(self)
         self.tox_args = '-v'
@@ -29,8 +32,8 @@ class Tox(TestCommand):
         #import here, cause outside the eggs aren't loaded
         import tox
         import shlex
-        errno = tox.cmdline(args=shlex.split(self.tox_args))
-        sys.exit(errno)
+        tox.cmdline(args=shlex.split(self.tox_args))
+        sys.exit()
 
 setup(
     name='jsonrpcclient',
@@ -45,7 +48,7 @@ setup(
     include_package_data=True,
     install_requires=['requests', 'jsonschema'],
     tests_require=['tox'],
-    cmdclass = {'test': Tox},
+    cmdclass={'test': Tox},
     classifiers=[
         'Intended Audience :: Developers',
         'License :: OSI Approved :: GNU Library or Lesser General Public License (LGPL)',
