@@ -9,8 +9,8 @@ Simply set the server details, then make a request:
 
 .. sourcecode:: python
 
-    >>> s = Server('http://example.com/api')
-    >>> s.request('add', 2, 3)
+    >>> server = HTTPServer('http://example.com/api')
+    >>> server.request('add', 2, 3)
     5
 
 Full documentation is available at https://jsonrpcclient.readthedocs.org/.
