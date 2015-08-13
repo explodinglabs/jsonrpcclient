@@ -6,10 +6,6 @@ The string passed to the Exception class can be accessed like ``str(e)``::
     ...     s.request('add', 1)
     ... except JsonRpcClientError as e:
     ...     print(str(e))
-    ...
-    The server gave a valid JSON-RPC error response
-    >>>
-
 """
 
 
@@ -22,7 +18,7 @@ class InvalidRequest(JsonRpcClientError):
     """The request being sent is not valid JSON."""
     def __init__(self):
         super(InvalidRequest, self).__init__(
-            'The request being sent is not valid json')
+            'The request being sent is not valid JSON')
 
 
 class ConnectionError(JsonRpcClientError): # pylint: disable=redefined-builtin
@@ -47,24 +43,24 @@ class UnwantedResponse(JsonRpcClientError):
 
 
 class ParseResponseError(JsonRpcClientError):
-    """The response was not valid json."""
+    """The response was not valid JSON."""
     def __init__(self):
         super(ParseResponseError, self).__init__(
-            'The response was not valid json')
+            'The response was not valid JSON')
 
 
 class InvalidResponse(JsonRpcClientError):
     """The response was not a valid JSON-RPC response."""
     def __init__(self):
         super(InvalidResponse, self).__init__(
-            'The response was not a valid json-rpc 2.0 response')
+            'The response was not a valid JSON-RPC 2.0 response')
 
 
 class ReceivedErrorResponse(JsonRpcClientError):
     """The server gave a valid JSON-RPC error response."""
     def __init__(self, code, message, data): #pylint:disable=unused-argument
         super(ReceivedErrorResponse, self).__init__(
-            'The server gave a valid JSON-RPC error response')
+            'The server gave a valid JSON-RPC error response: '+message)
         self.code = code
         self.message = message
         self.data = data
