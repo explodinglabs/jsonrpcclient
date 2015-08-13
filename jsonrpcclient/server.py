@@ -42,7 +42,8 @@ class Server(object):
         :param request: The JSON-RPC request string.
         :param extra: A dict of extra fields that may be logged.
         """
-        extra.update({'endpoint': self.endpoint})
+        if hasattr(extra, 'update'):
+            extra.update({'endpoint': self.endpoint})
         self.request_log.info(request, extra=extra)
 
     def log_response(self, response, extra=None):
@@ -54,7 +55,8 @@ class Server(object):
         """
         response = response.replace("\n", '').replace('  ', ' ') \
                 .replace('{ ', '{')
-        extra.update({'endpoint': self.endpoint})
+        if hasattr(extra, 'update'):
+            extra.update({'endpoint': self.endpoint})
         self.response_log.info(response, extra=extra)
 
     def request(self, method_name, *args, **kwargs):
