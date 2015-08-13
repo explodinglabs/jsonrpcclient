@@ -17,7 +17,7 @@ class HTTPServer(Server):
     }
 
     def __init__(self, endpoint, **kwargs):
-        """Instantiate a remote server object.
+        """A remote HTTP server.
 
         Example usage::
 
@@ -36,7 +36,7 @@ class HTTPServer(Server):
         kwargs.pop('headers')
 
     def send_message(self, request):
-        """Transport the request to the server.
+        """Transport the request to the server and return the response.
 
         :param request: The JSON-RPC request, in dict format.
         """
