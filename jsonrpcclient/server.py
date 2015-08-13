@@ -6,7 +6,7 @@ import logging
 
 import jsonschema
 
-from jsonrpcclient import rpc, exceptions
+from . import rpc, exceptions
 
 
 class Server(object):
