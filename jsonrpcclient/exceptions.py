@@ -14,20 +14,6 @@ class JsonRpcClientError(Exception):
     pass
 
 
-class InvalidRequest(JsonRpcClientError):
-    """The request being sent is not valid JSON."""
-    def __init__(self):
-        super(InvalidRequest, self).__init__(
-            'The request being sent is not valid JSON')
-
-
-class ConnectionError(JsonRpcClientError): # pylint: disable=redefined-builtin
-    """There was a network issue, invalid HTTP response or timeout."""
-    def __init__(self):
-        super(ConnectionError, self).__init__(
-            'Connection error')
-
-
 class ReceivedNoResponse(JsonRpcClientError):
     """A response message was expected, but none was given."""
     def __init__(self):

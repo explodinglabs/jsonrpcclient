@@ -1,9 +1,8 @@
 """http_server.py"""
 
 from requests import Request, Session
-from requests.exceptions import InvalidSchema, RequestException
+from requests.exceptions import RequestException
 
-from . import exceptions
 from .server import Server
 
 
@@ -40,7 +39,7 @@ class HTTPServer(Server):
 
         :param request: The JSON-RPC request, in dict format.
         """
-        # Prepare the request
+        # Prepare the session
         session = Session()
         request = Request(method='POST', url=self.endpoint, \
             headers=self.headers, json=request, **self.requests_kwargs)
@@ -49,17 +48,13 @@ class HTTPServer(Server):
             self.headers.items()))
         # Log the request
         self.log_request(request.body, {'http_headers': request.headers})
+        # Send the message
         try:
             response = session.send(request)
-        # If the outgoing JSON request is invalid, the requests module raises
-        # InvalidSchema
-        except InvalidSchema:
-            raise exceptions.InvalidRequest()
-        # Catch all other Requests exceptions, such as network issues
-        except RequestException: # Base Requests exception
-            raise exceptions.ConnectionError()
-        finally:
+        except RequestException:
             session.close()
+            raise
+        session.close()
         # Log the response
         self.log_response(response.text, {'http_code': response.status_code, \
             'http_reason': response.reason, 'http_headers': response.headers})

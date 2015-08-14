@@ -67,12 +67,6 @@ communicating with the server::
 
 Here's the full list of exceptions, if you need to handle them individually:
 
-InvalidRequest
-    The request being sent is not valid JSON.
-
-ConnectionError
-    There was a network issue, timeout, or invalid protocol response.
-
 ReceivedNoResponse
     A response message was expected, but none was given.
 
@@ -80,7 +74,7 @@ UnwantedResponse
     A response was not requested, but one was given anyway.
 
 ParseResponseError
-    The response was not valid json.
+    The response was not valid JSON.
 
 InvalidResponse
     The response was not a valid JSON-RPC response.
@@ -181,12 +175,12 @@ Logging
 
 HTTPServer has the following extra logging fields.
 
-The *request* format has these extra fields:
+The request format has these extra fields:
 
 %(http_headers)s
     The full HTTP headers.
 
-The *response* format has these extra fields:
+The response format has these extra fields:
 
 %(http_code)d
     The HTTP status code received from the server, eg. ``400``.
