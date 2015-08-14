@@ -194,15 +194,15 @@ The response format has these extra fields:
 Todo
 ====
 
-* Support `batch calls <http://www.jsonrpc.org/specification#batch>`_.
-* More transport options.
+- Support `batch calls <http://www.jsonrpc.org/specification#batch>`_.
+- More transport options.
 
 Links
 =====
 
-* PyPi Package: https://pypi.python.org/pypi/jsonrpcclient
-* Repository: https://bitbucket.org/beau-barker/jsonrpcclient
-* Issue tracker: https://bitbucket.org/beau-barker/jsonrpcclient/issues
+- PyPi Package: https://pypi.python.org/pypi/jsonrpcclient
+- Repository: https://bitbucket.org/beau-barker/jsonrpcclient
+- Issue tracker: https://bitbucket.org/beau-barker/jsonrpcclient/issues
 
 If you need a server, try my `jsonrpcserver
 <https://jsonrpcserver.readthedocs.org/>`_ library.
