@@ -8,14 +8,6 @@ from jsonrpcclient import exceptions
 
 class TestExceptions(TestCase):
 
-    def test_InvalidRequest(self):
-        with self.assertRaises(exceptions.InvalidRequest):
-            raise exceptions.InvalidRequest()
-
-    def test_ConnectionError(self):
-        with self.assertRaises(exceptions.ConnectionError):
-            raise exceptions.ConnectionError
-
     def test_ReceivedNoResponse(self):
         with self.assertRaises(exceptions.ReceivedNoResponse):
             raise exceptions.ReceivedNoResponse
