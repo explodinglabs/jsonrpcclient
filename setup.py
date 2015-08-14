@@ -46,7 +46,7 @@ setup(
     packages=['jsonrpcclient'],
     package_data={'jsonrpcclient': ['response-schema.json']},
     include_package_data=True,
-    install_requires=['requests', 'jsonschema'],
+    install_requires=['jsonschema', 'requests', 'pyzmq'],
     tests_require=['tox'],
     cmdclass={'test': Tox},
     classifiers=[
