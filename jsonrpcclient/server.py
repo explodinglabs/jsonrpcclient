@@ -12,6 +12,10 @@ from . import exceptions
 from .rpc import rpc_request_str
 
 
+json_validator = jsonschema.Draft4Validator(json.loads(pkgutil.get_data(
+    __name__, 'response-schema.json').decode('utf-8')))
+
+
 class Server(with_metaclass(ABCMeta, object)):
     """Transport-agnostic class representing the remote server. Subclasses
     should inherit and override ``send_message``."""
@@ -129,8 +133,7 @@ class Server(with_metaclass(ABCMeta, object)):
                 raise exceptions.UnwantedResponse()
             # Validate the response against the Response schema
             try:
-                jsonschema.validate(response_dict, json.loads(pkgutil.get_data(
-                    __name__, 'response-schema.json').decode('utf-8')))
+                json_validator.validate(response_dict)
             except jsonschema.ValidationError:
                 raise exceptions.InvalidResponse()
             # If the response was "error", raise to ensure it's handled
