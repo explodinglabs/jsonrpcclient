@@ -16,6 +16,8 @@ Adjust your code like this:
     >>> from jsonrpcclient.http_server import HTTPServer
     >>> server = HTTPServer('http://example.com/api')
 
+- Faster response validation.
+
 - The ``InvalidRequest`` exception has been removed. Invalid requests will be
   handled appropriately by the server. It's not the responsibility of this
   library to catch invalid requests.
