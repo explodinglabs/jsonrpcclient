@@ -18,8 +18,7 @@ class TestServer(TestCase):
         rpc.id_generator = itertools.count(1) # Ensure the first generated is 1
         self.server = DummyServer('http://non-existant:80/')
 
-    # notify()
-
+    # notify
     def test_notify(self):
         with self.assertRaises(exceptions.UnwantedResponse):
             self.server.notify('go')
@@ -28,8 +27,7 @@ class TestServer(TestCase):
         with self.assertRaises(exceptions.UnwantedResponse):
             self.server.go()
 
-    # request()
-
+    # request
     def test_request(self):
         self.assertEqual(5, self.server.request('add', 2, 3))
 

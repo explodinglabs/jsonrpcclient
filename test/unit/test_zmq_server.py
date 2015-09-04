@@ -1,11 +1,14 @@
 """test_zmq_server.py"""
 # pylint: disable=missing-docstring,line-too-long,too-many-public-methods
 
+import json
 from unittest import TestCase, main
 import itertools
+
 import zmq
 
 from jsonrpcclient import rpc
+from jsonrpcclient.rpc import request
 from jsonrpcclient.zmq_server import ZMQServer
 
 
@@ -25,7 +28,7 @@ class TestZMQServer(TestCase):
         server.socket.setsockopt(zmq.SNDTIMEO, 5)
         server.socket.setsockopt(zmq.LINGER, 5)
         with self.assertRaises(zmq.error.ZMQError):
-            server.send_message(rpc.request('go'))
+            server.send_message(json.dumps(request('go')))
 
 
 if __name__ == '__main__':

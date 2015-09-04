@@ -2,27 +2,37 @@
 
 import itertools
 import json #pylint:disable=unused-import
+from collections import OrderedDict
 
 id_generator = itertools.count(1) # First generated is 1
+
+
+def sort_request(req):
+    """Sorts a JSON-RPC request dict returning a sorted OrderedDict.
+
+    >>> json.dumps(sort_request(
+    ...     {'id': 2, 'params': [2, 3], 'method': 'add', 'jsonrpc': '2.0'}))
+    '{"jsonrpc": "2.0", "method": "add", "params": [2, 3], "id": 1}'
+
+    :param req: JSON-RPC request in dict format.
+    :return: The same request nicely sorted.
+    """
+    sort_order = ['jsonrpc', 'method', 'params', 'id']
+    return OrderedDict(sorted(req.items(), \
+            key=lambda k: sort_order.index(k[0])))
 
 
 def request(method, *args, **kwargs):
     """Builds a JSON-RPC request given a method name and arguments.
 
-    Notification usage::
+    >>> request('go')
+    {'jsonrpc': '2.0', 'method': 'go'}
 
-        >>> json.dumps(request('go'))
-        '{"jsonrpc": "2.0", "method": "go"}'
+    >>> request('find', 'Foo', age=42)
+    {'jsonrpc': '2.0', 'method': 'find', 'params': ['Foo', {'age': 42}]}
 
-    Passing both positional and keyword arguments::
-
-        >>> json.dumps(request('find', 'Foo', age=42))
-        '{"jsonrpc": "2.0", "method": "find", "params": ["Foo", {"age": 42}]}'
-
-    Requests (requiring a response)::
-
-        >>> json.dumps(request('add', 2, 3, response=True))
-        '{"jsonrpc": "2.0", "method": "add", "params": [2, 3], "id": 1}'
+    >>> request('add', 2, 3, response=True)
+    {'jsonrpc': '2.0', 'method': 'add', 'params': [2, 3], 'id': 2}
 
     :param method: The method name.
     :param args: List of positional arguments (optional).

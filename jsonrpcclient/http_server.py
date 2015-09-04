@@ -4,6 +4,7 @@ from requests import Request, Session
 from requests.exceptions import RequestException
 
 from .server import Server
+from .rpc import sort_request
 
 
 class HTTPServer(Server):
@@ -37,21 +38,21 @@ class HTTPServer(Server):
     def send_message(self, request):
         """Transport the request to the server and return the response.
 
-        :param request: The JSON-RPC request, in dict format.
+        :param request: The JSON-RPC request string.
         :return: The response (a string for requests, None for notifications).
         """
         # Prepare the session
         session = Session()
-        request = Request(method='POST', url=self.endpoint, \
-            headers=self.headers, json=request, **self.requests_kwargs)
-        request = session.prepare_request(request)
-        request.headers = dict(list(dict(request.headers).items()) + list(
-            self.headers.items()))
+        session_request = Request(method='POST', url=self.endpoint, \
+            headers=self.headers, data=request, **self.requests_kwargs)
+        prepared_request = session.prepare_request(session_request)
+        prepared_request.headers = dict(list(dict(
+            prepared_request.headers).items()) + list(self.headers.items()))
         # Log the request
-        self.log_request(request.body, {'http_headers': request.headers})
+        self.log_request(request, {'http_headers': prepared_request.headers})
         # Send the message
         try:
-            response = session.send(request)
+            response = session.send(prepared_request)
         except RequestException:
             session.close()
             raise

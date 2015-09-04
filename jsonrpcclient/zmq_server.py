@@ -4,6 +4,7 @@ import zmq
 import json
 
 from .server import Server
+from .rpc import sort_request
 
 
 class ZMQServer(Server):
@@ -28,11 +29,11 @@ class ZMQServer(Server):
     def send_message(self, request):
         """Transport the request to the server and return the response.
 
-        :param request: The JSON-RPC request, in dict format.
+        :param request: The JSON-RPC request string.
         :return: The response (a string for requests, None for notifications).
         """
-        self.log_request(json.dumps(request))
-        self.socket.send_string(json.dumps(request))
+        self.log_request(request)
+        self.socket.send_string(request)
         response = self.socket.recv().decode('UTF-8')
         self.log_response(response)
         return response

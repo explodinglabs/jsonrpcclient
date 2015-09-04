@@ -3,8 +3,10 @@
 
 from unittest import TestCase, main
 import itertools
+import json
 
 from jsonrpcclient import rpc
+from jsonrpcclient.rpc import request, sort_request
 
 
 class TestRPC(TestCase):
@@ -12,71 +14,76 @@ class TestRPC(TestCase):
     def setUp(self):
         rpc.id_generator = itertools.count(1) # First generated is 1
 
-    # Notifications
+    # sort_request
+    def test_sort_request(self):
+        self.assertEqual(
+            '{"jsonrpc": "2.0", "method": "add", "params": [2, 3], "id": 2}',
+            json.dumps(sort_request({'id': 2, 'params': [2, 3], 'method': 'add', 'jsonrpc': '2.0'})),
+        )
 
-    def test_no_arguments(self):
+    # Notifications
+    def test_request_no_arguments(self):
         self.assertEqual(
             {"jsonrpc": "2.0", "method": "get"},
-            rpc.request('get')
+            request('get')
         )
 
-    def test_one_positional(self):
+    def test_request_one_positional(self):
         self.assertEqual(
             {"jsonrpc": "2.0", "method": "sqrt", "params": [1]},
-            rpc.request('sqrt', 1)
+            request('sqrt', 1)
         )
 
-    def test_two_positionals(self):
+    def test_request_two_positionals(self):
         self.assertEqual(
             {"jsonrpc": "2.0", "method": "add", "params": [1, 2]},
-            rpc.request('add', 1, 2)
+            request('add', 1, 2)
         )
 
-    def test_one_keyword(self):
+    def test_request_one_keyword(self):
         self.assertEqual(
             {"jsonrpc": "2.0", "method": "find", "params": {"name": "Foo"}},
-            rpc.request('find', name='Foo')
+            request('find', name='Foo')
         )
 
-    def test_two_keywords(self):
+    def test_request_two_keywords(self):
         """Note that keyword arguments are sorted in alphabetical order by the
         keys. This is because they're not received in any order, so we sort
         them, to be sure of *some* order"""
         self.assertEqual(
             {"jsonrpc": "2.0", "method": "find", "params": {"age": 42, "name": "Foo"}},
-            rpc.request('find', name='Foo', age=42)
-        )
-
-    def test_both_positional_and_keyword(self):
-        self.assertEqual(
-            {"jsonrpc": "2.0", "method": "find", "params": ["Foo", {"age": 42}]},
-            rpc.request('find', 'Foo', age=42)
-        )
-
-    def test_dict_params(self):
-        self.assertEqual(
-            {"jsonrpc": "2.0", "method": "find", "params": {"age": 42, "name": "Foo"}},
-            rpc.request('find', name='Foo', age=42)
-        )
-
-    def test_list_params(self):
-        self.assertEqual(
-            {"jsonrpc": "2.0", "method": "find", "params": ["Foo", 42]},
-            rpc.request('find', ['Foo', 42])
-        )
-
-    # Requests (requiring a response)
-
-    def test_request_method_only(self):
-        self.assertEqual(
-            {"jsonrpc": "2.0", "method": "go", "id": 1},
-            rpc.request('go', response=True)
+            request('find', name='Foo', age=42)
         )
 
     def test_request_both_positional_and_keyword(self):
         self.assertEqual(
+            {"jsonrpc": "2.0", "method": "find", "params": ["Foo", {"age": 42}]},
+            request('find', 'Foo', age=42)
+        )
+
+    def test_request_dict_params(self):
+        self.assertEqual(
+            {"jsonrpc": "2.0", "method": "find", "params": {"age": 42, "name": "Foo"}},
+            request('find', name='Foo', age=42)
+        )
+
+    def test_request_list_params(self):
+        self.assertEqual(
+            {"jsonrpc": "2.0", "method": "find", "params": ["Foo", 42]},
+            request('find', ['Foo', 42])
+        )
+
+    # Requests (requiring a response)
+    def test_request_method_only_requiring_response(self):
+        self.assertEqual(
+            {"jsonrpc": "2.0", "method": "go", "id": 1},
+            request('go', response=True)
+        )
+
+    def test_request_both_positional_and_keyword_requiring_response(self):
+        self.assertEqual(
             {"jsonrpc": "2.0", "method": "go", "params": ["positional", {"keyword": "foo"}], "id": 1},
-            rpc.request('go', 'positional', keyword='foo', response=True)
+            request('go', 'positional', keyword='foo', response=True)
         )
 
 if __name__ == '__main__':

@@ -8,7 +8,8 @@ from abc import ABCMeta, abstractmethod
 import jsonschema
 from future.utils import with_metaclass
 
-from . import rpc, exceptions
+from .rpc import request, sort_request
+from . import exceptions
 
 
 class Server(with_metaclass(ABCMeta, object)):
@@ -43,7 +44,7 @@ class Server(with_metaclass(ABCMeta, object)):
 
     def log_request(self, request, extra=None):
         """Log the JSON-RPC request before sending. Should be called by
-        subclasses before transporting.
+        subclasses before sending.
 
         :param request: The JSON-RPC request string.
         :param extra: A dict of extra fields that may be logged.
@@ -75,8 +76,8 @@ class Server(with_metaclass(ABCMeta, object)):
         :param kwargs: Keyword arguments passed to the remote procedure.
         :return: None
         """
-        return self.handle_response(
-            self.send_message(rpc.request(method_name, *args, **kwargs)), False)
+        req = json.dumps(sort_request(request(method_name, *args, **kwargs)))
+        return self.handle_response(self.send_message(req), False)
 
     def request(self, method_name, *args, **kwargs):
         """Send a JSON-RPC Request. Request means a response is expected.
@@ -87,8 +88,8 @@ class Server(with_metaclass(ABCMeta, object)):
         :return: The response string.
         """
         kwargs['response'] = True
-        return self.handle_response(
-            self.send_message(rpc.request(method_name, *args, **kwargs)), True)
+        req = json.dumps(sort_request(request(method_name, *args, **kwargs)))
+        return self.handle_response(self.send_message(req), True)
 
     @abstractmethod
     def send_message(self, request):
