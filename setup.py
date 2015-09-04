@@ -1,8 +1,6 @@
 """setup.py"""
-#pylint:disable=line-too-long,missing-docstring
+#pylint:disable=line-too-long
 
-import sys
-from setuptools.command.test import test as TestCommand
 from codecs import open as codecs_open
 
 try:
@@ -15,25 +13,6 @@ with codecs_open('README.rst', 'r', 'utf-8') as f:
 
 with codecs_open('HISTORY.rst', 'r', 'utf-8') as f:
     history = f.read()
-
-class Tox(TestCommand):
-    user_options = [('tox-args=', 'a', "Arguments to pass to tox")]
-    test_suite = False
-    tox_args = None
-    test_args = None
-    def initialize_options(self):
-        TestCommand.initialize_options(self)
-        self.tox_args = '-v'
-    def finalize_options(self):
-        TestCommand.finalize_options(self)
-        self.test_args = []
-        self.test_suite = True
-    def run_tests(self):
-        #import here, cause outside the eggs aren't loaded
-        import tox
-        import shlex
-        tox.cmdline(args=shlex.split(self.tox_args))
-        sys.exit()
 
 setup(
     name='jsonrpcclient',
@@ -48,9 +27,10 @@ setup(
     include_package_data=True,
     install_requires=['jsonschema', 'future', 'requests', 'pyzmq'],
     tests_require=['tox'],
-    cmdclass={'test': Tox},
     classifiers=[
         'License :: OSI Approved :: GNU Library or Lesser General Public License (LGPL)',
-        'Intended Audience :: Developers',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4',
         ],
     )
