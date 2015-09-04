@@ -62,8 +62,10 @@ class Server(with_metaclass(ABCMeta, object)):
         :param extra: A dict of extra fields that may be logged.
         :return: None
         """
+        # Clean up the response
         response = response.replace("\n", '').replace('  ', ' ') \
                 .replace('{ ', '{')
+        # Add the endpoint option to the log entry
         if hasattr(extra, 'update'):
             extra.update({'endpoint': self.endpoint})
         self.response_log.info(response, extra=extra)
