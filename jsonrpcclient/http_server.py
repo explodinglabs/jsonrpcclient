@@ -21,9 +21,9 @@ class HTTPServer(Server):
 
         Example usage::
 
-            server = HTTPServer('http://example.com/api', \
-                headers={'Content-Type': 'application/json-rpc'}, \
-                auth=('user', 'pass'))
+            >>> server = HTTPServer('http://example.com/api', \
+            ...     headers={'Content-Type': 'application/json-rpc'}, \
+            ...     auth=('user', 'pass'))
 
         :param endpoint: The remote server address.
         :param kwargs: Can be used to customize the HTTP headers used, and
