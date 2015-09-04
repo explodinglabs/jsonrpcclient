@@ -46,12 +46,11 @@ setup(
     packages=['jsonrpcclient'],
     package_data={'jsonrpcclient': ['response-schema.json']},
     include_package_data=True,
-    install_requires=['jsonschema', 'requests', 'pyzmq'],
+    install_requires=['jsonschema', 'future', 'requests', 'pyzmq'],
     tests_require=['tox'],
     cmdclass={'test': Tox},
     classifiers=[
-        'Intended Audience :: Developers',
         'License :: OSI Approved :: GNU Library or Lesser General Public License (LGPL)',
-        'Operating System :: OS Independent'
+        'Intended Audience :: Developers',
         ],
     )
