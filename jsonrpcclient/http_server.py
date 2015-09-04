@@ -4,7 +4,6 @@ from requests import Request, Session
 from requests.exceptions import RequestException
 
 from .server import Server
-from .rpc import sort_request
 
 
 class HTTPServer(Server):
