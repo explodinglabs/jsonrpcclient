@@ -14,10 +14,10 @@ class ZMQServer(Server):
 
         Example usage::
 
-            server = ZMQServer('tcp://hostname:5555', zmq.REQ)
+            >>> server = ZMQServer('tcp://hostname:5555', zmq.REQ)
 
         :param endpoint: The remote server address.
-        :param options: Socket options, see options here:
+        :param options: Socket options, see
             http://api.zeromq.org/2-1:zmq-setsockopt
         """
         super(ZMQServer, self).__init__(endpoint)
@@ -29,6 +29,7 @@ class ZMQServer(Server):
         """Transport the request to the server and return the response.
 
         :param request: The JSON-RPC request, in dict format.
+        :return: The response (a string for requests, None for notifications).
         """
         self.log_request(json.dumps(request))
         self.socket.send_string(json.dumps(request))

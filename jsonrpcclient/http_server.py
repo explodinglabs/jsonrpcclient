@@ -38,6 +38,7 @@ class HTTPServer(Server):
         """Transport the request to the server and return the response.
 
         :param request: The JSON-RPC request, in dict format.
+        :return: The response (a string for requests, None for notifications).
         """
         # Prepare the session
         session = Session()
