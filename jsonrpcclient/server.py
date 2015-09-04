@@ -3,15 +3,21 @@
 import json
 import pkgutil
 import logging
+from abc import ABCMeta, abstractmethod
 
 import jsonschema
+from future.utils import with_metaclass
 
 from . import rpc, exceptions
 
 
-class Server(object):
-    """Transport-agnostic class representing the remote server. Should be
-    inherited by transport-specific subclasses."""
+class Server(with_metaclass(ABCMeta, object)):
+    """Transport-agnostic class representing the remote server. Subclasses
+    should inherit and override ``send_message``."""
+
+    # This class is abstract
+    __metaclass__ = ABCMeta
+
     # Request and response logs
     request_log = logging.getLogger(__name__+'.request')
     response_log = logging.getLogger(__name__+'.response')
@@ -80,9 +86,10 @@ class Server(object):
         return self.handle_response(
             self.send_message(rpc.request(method_name, *args, **kwargs)), False)
 
+    @abstractmethod
     def send_message(self, request):
         """Send the RPC request to the server. Override this method in the
-        transport-specific subclass. Returns the response string.
+        transport-specific subclass, and return the response string.
 
         :param request: A JSON-RPC request, in dict format.
         """

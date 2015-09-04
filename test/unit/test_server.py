@@ -7,32 +7,34 @@ import itertools
 from jsonrpcclient import rpc, exceptions
 from jsonrpcclient.server import Server
 
+class DummyServer(Server):
+    """A dummy class for testing the abstract Server class"""
+    def send_message(self, request):
+        return '{"jsonrpc": "2.0", "result": 5, "id": 1}'
 
 class TestServer(TestCase):
 
     def setUp(self):
         rpc.id_generator = itertools.count(1) # Ensure the first generated is 1
-        self.server = Server('http://non-existant:80/')
+        self.server = DummyServer('http://non-existant:80/')
 
     # notify()
 
     def test_notify(self):
-        with self.assertRaises(NotImplementedError):
+        with self.assertRaises(exceptions.UnwantedResponse):
             self.server.notify('go')
 
     def test_notify_alternate_usage(self):
-        with self.assertRaises(NotImplementedError):
+        with self.assertRaises(exceptions.UnwantedResponse):
             self.server.go()
 
     # request()
 
     def test_request(self):
-        with self.assertRaises(NotImplementedError):
-            self.server.request('add', 2, 3)
+        self.assertEqual(5, self.server.request('add', 2, 3))
 
     def test_request_alternate_usage(self):
-        with self.assertRaises(NotImplementedError):
-            self.server.add(2, 3, response=True)
+        self.assertEqual(5, self.server.add(2, 3, response=True))
 
     # handle_response() - notifications
 
