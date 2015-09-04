@@ -8,8 +8,8 @@ from abc import ABCMeta, abstractmethod
 import jsonschema
 from future.utils import with_metaclass
 
-from .rpc import request, sort_request
 from . import exceptions
+from .rpc import rpc_request_str
 
 
 class Server(with_metaclass(ABCMeta, object)):
@@ -78,8 +78,8 @@ class Server(with_metaclass(ABCMeta, object)):
         :param kwargs: Keyword arguments passed to the remote procedure.
         :return: None
         """
-        req = json.dumps(sort_request(request(method_name, *args, **kwargs)))
-        return self.handle_response(self.send_message(req), False)
+        request = rpc_request_str(method_name, *args, **kwargs)
+        return self.handle_response(self.send_message(request), False)
 
     def request(self, method_name, *args, **kwargs):
         """Send a JSON-RPC Request. Request means a response is expected.
@@ -90,8 +90,8 @@ class Server(with_metaclass(ABCMeta, object)):
         :return: The response string.
         """
         kwargs['response'] = True
-        req = json.dumps(sort_request(request(method_name, *args, **kwargs)))
-        return self.handle_response(self.send_message(req), True)
+        request = rpc_request_str(method_name, *args, **kwargs)
+        return self.handle_response(self.send_message(request), True)
 
     @abstractmethod
     def send_message(self, request):

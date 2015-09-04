@@ -6,7 +6,7 @@ import itertools
 import json
 
 from jsonrpcclient import rpc
-from jsonrpcclient.rpc import request, sort_request
+from jsonrpcclient.rpc import rpc_request, sort_request
 
 
 class TestRPC(TestCase):
@@ -25,25 +25,25 @@ class TestRPC(TestCase):
     def test_request_no_arguments(self):
         self.assertEqual(
             {"jsonrpc": "2.0", "method": "get"},
-            request('get')
+            rpc_request('get')
         )
 
     def test_request_one_positional(self):
         self.assertEqual(
             {"jsonrpc": "2.0", "method": "sqrt", "params": [1]},
-            request('sqrt', 1)
+            rpc_request('sqrt', 1)
         )
 
     def test_request_two_positionals(self):
         self.assertEqual(
             {"jsonrpc": "2.0", "method": "add", "params": [1, 2]},
-            request('add', 1, 2)
+            rpc_request('add', 1, 2)
         )
 
     def test_request_one_keyword(self):
         self.assertEqual(
             {"jsonrpc": "2.0", "method": "find", "params": {"name": "Foo"}},
-            request('find', name='Foo')
+            rpc_request('find', name='Foo')
         )
 
     def test_request_two_keywords(self):
@@ -52,38 +52,38 @@ class TestRPC(TestCase):
         them, to be sure of *some* order"""
         self.assertEqual(
             {"jsonrpc": "2.0", "method": "find", "params": {"age": 42, "name": "Foo"}},
-            request('find', name='Foo', age=42)
+            rpc_request('find', name='Foo', age=42)
         )
 
     def test_request_both_positional_and_keyword(self):
         self.assertEqual(
             {"jsonrpc": "2.0", "method": "find", "params": ["Foo", {"age": 42}]},
-            request('find', 'Foo', age=42)
+            rpc_request('find', 'Foo', age=42)
         )
 
     def test_request_dict_params(self):
         self.assertEqual(
             {"jsonrpc": "2.0", "method": "find", "params": {"age": 42, "name": "Foo"}},
-            request('find', name='Foo', age=42)
+            rpc_request('find', name='Foo', age=42)
         )
 
     def test_request_list_params(self):
         self.assertEqual(
             {"jsonrpc": "2.0", "method": "find", "params": ["Foo", 42]},
-            request('find', ['Foo', 42])
+            rpc_request('find', ['Foo', 42])
         )
 
     # Requests (requiring a response)
     def test_request_method_only_requiring_response(self):
         self.assertEqual(
             {"jsonrpc": "2.0", "method": "go", "id": 1},
-            request('go', response=True)
+            rpc_request('go', response=True)
         )
 
     def test_request_both_positional_and_keyword_requiring_response(self):
         self.assertEqual(
             {"jsonrpc": "2.0", "method": "go", "params": ["positional", {"keyword": "foo"}], "id": 1},
-            request('go', 'positional', keyword='foo', response=True)
+            rpc_request('go', 'positional', keyword='foo', response=True)
         )
 
 if __name__ == '__main__':

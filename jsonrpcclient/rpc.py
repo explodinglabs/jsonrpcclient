@@ -22,17 +22,17 @@ def sort_request(req):
             key=lambda k: sort_order.index(k[0])))
 
 
-def request(method, *args, **kwargs):
+def rpc_request(method, *args, **kwargs):
     """Builds a JSON-RPC request given a method name and arguments.
 
-    >>> request('go')
-    {'jsonrpc': '2.0', 'method': 'go'}
+    >>> rpc_request('go')
+    '{"jsonrpc": "2.0", "method": "go"}'
 
-    >>> request('find', 'Foo', age=42)
-    {'jsonrpc': '2.0', 'method': 'find', 'params': ['Foo', {'age': 42}]}
+    >>> rpc_request('find', 'Foo', age=42)
+    '{"jsonrpc": "2.0", "method": "find", "params": ["Foo", {"age": 42}]}'
 
-    >>> request('add', 2, 3, response=True)
-    {'jsonrpc': '2.0', 'method': 'add', 'params': [2, 3], 'id': 2}
+    >>> rpc_request('add', 2, 3, response=True)
+    '{"jsonrpc": "2.0", "method": "add", "params": [2, 3], "id": 2}'
 
     :param method: The method name.
     :param args: List of positional arguments (optional).
@@ -63,3 +63,7 @@ def request(method, *args, **kwargs):
             params = params[0]
         req['params'] = params
     return req
+
+def rpc_request_str(method, *args, **kwargs):
+    """Wrapper around rpc_request, returning a string instead of a dict"""
+    return json.dumps(sort_request(rpc_request(method, args, kwargs)))

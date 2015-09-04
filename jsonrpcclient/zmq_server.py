@@ -1,10 +1,8 @@
 """zmq_server.py"""
 
 import zmq
-import json
 
 from .server import Server
-from .rpc import sort_request
 
 
 class ZMQServer(Server):

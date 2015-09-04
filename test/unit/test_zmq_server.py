@@ -8,7 +8,7 @@ import itertools
 import zmq
 
 from jsonrpcclient import rpc
-from jsonrpcclient.rpc import request
+from jsonrpcclient.rpc import rpc_request_str
 from jsonrpcclient.zmq_server import ZMQServer
 
 
@@ -28,7 +28,7 @@ class TestZMQServer(TestCase):
         server.socket.setsockopt(zmq.SNDTIMEO, 5)
         server.socket.setsockopt(zmq.LINGER, 5)
         with self.assertRaises(zmq.error.ZMQError):
-            server.send_message(json.dumps(request('go')))
+            server.send_message(json.dumps(rpc_request_str('go')))
 
 
 if __name__ == '__main__':
