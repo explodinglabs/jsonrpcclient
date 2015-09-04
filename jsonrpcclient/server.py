@@ -47,6 +47,7 @@ class Server(with_metaclass(ABCMeta, object)):
 
         :param request: The JSON-RPC request string.
         :param extra: A dict of extra fields that may be logged.
+        :return: None
         """
         if hasattr(extra, 'update'):
             extra.update({'endpoint': self.endpoint})
@@ -58,6 +59,7 @@ class Server(with_metaclass(ABCMeta, object)):
 
         :param response: The JSON-RPC response string.
         :param extra: A dict of extra fields that may be logged.
+        :return: None
         """
         response = response.replace("\n", '').replace('  ', ' ') \
                 .replace('{ ', '{')
@@ -65,33 +67,36 @@ class Server(with_metaclass(ABCMeta, object)):
             extra.update({'endpoint': self.endpoint})
         self.response_log.info(response, extra=extra)
 
-    def request(self, method_name, *args, **kwargs):
-        """Send a JSON-RPC Request. Request means a response is expected.
-
-        :param method_name: The remote procedure's method name.
-        :param args: Positional arguments passed to the remote procedure.
-        :param kwargs: Keyword arguments passed to the remote procedure.
-        """
-        kwargs['response'] = True
-        return self.handle_response(
-            self.send_message(rpc.request(method_name, *args, **kwargs)), True)
-
     def notify(self, method_name, *args, **kwargs):
         """JSON-RPC Notification. Notification means no response is expected.
 
         :param method_name: The remote procedure's method name.
         :param args: Positional arguments passed to the remote procedure.
         :param kwargs: Keyword arguments passed to the remote procedure.
+        :return: None
         """
         return self.handle_response(
             self.send_message(rpc.request(method_name, *args, **kwargs)), False)
 
+    def request(self, method_name, *args, **kwargs):
+        """Send a JSON-RPC Request. Request means a response is expected.
+
+        :param method_name: The remote procedure's method name.
+        :param args: Positional arguments passed to the remote procedure.
+        :param kwargs: Keyword arguments passed to the remote procedure.
+        :return: The response string.
+        """
+        kwargs['response'] = True
+        return self.handle_response(
+            self.send_message(rpc.request(method_name, *args, **kwargs)), True)
+
     @abstractmethod
     def send_message(self, request):
         """Send the RPC request to the server. Override this method in the
-        transport-specific subclass, and return the response string.
+        transport-specific subclass, and return the response.
 
         :param request: A JSON-RPC request, in dict format.
+        :return: The response (a string for requests, None for notifications).
         """
         raise NotImplementedError(
             'The Server class is now abstract; '
@@ -103,6 +108,7 @@ class Server(with_metaclass(ABCMeta, object)):
 
         :param response: The JSON-RPC response string to process.
         :param expected_response: True if we were expecting a result
+        :return: The response (a string for requests, None for notifications).
         """
         # A response was expected, but none was given
         if expected_response and not response:

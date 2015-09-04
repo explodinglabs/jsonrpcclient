@@ -8,21 +8,27 @@ id_generator = itertools.count(1) # First generated is 1
 
 
 def request(method, *args, **kwargs):
-    #pylint:disable=line-too-long
-    """Returns a JSON-RPC 2.0 request, in OrderedDict format. Convert to a json
-    string with json.dumps().
+    """Builds a JSON-RPC request given a method name and arguments.
 
-    Notification
-    >>> json.dumps(request('go'))
-    '{"jsonrpc": "2.0", "method": "go"}'
+    Notification usage::
 
-    Passing both positional and keyword arguments
-    >>> json.dumps(request('find', 'Foo', age=42))
-    '{"jsonrpc": "2.0", "method": "find", "params": ["Foo", {"age": 42}]}'
+        >>> json.dumps(request('go'))
+        '{"jsonrpc": "2.0", "method": "go"}'
 
-    Requests (requiring a response)
-    >>> json.dumps(request('add', 2, 3, response=True))
-    '{"jsonrpc": "2.0", "method": "add", "params": [2, 3], "id": 1}'
+    Passing both positional and keyword arguments::
+
+        >>> json.dumps(request('find', 'Foo', age=42))
+        '{"jsonrpc": "2.0", "method": "find", "params": ["Foo", {"age": 42}]}'
+
+    Requests (requiring a response)::
+
+        >>> json.dumps(request('add', 2, 3, response=True))
+        '{"jsonrpc": "2.0", "method": "add", "params": [2, 3], "id": 1}'
+
+    :param method: The method name.
+    :param args: List of positional arguments (optional).
+    :param kwargs: Dict of keyword arguments (optional).
+    :returns: The JSON-RPC request in dict format.
     """
     # Get the request id
     request_id = None
@@ -38,9 +44,11 @@ def request(method, *args, **kwargs):
     ])
     # Get the params
     params = list()
+    # Positional arguments
     if args:
         for i in args:
             params.append(i)
+    # Keyword arguments
     if kwargs:
         params.append(OrderedDict(sorted(kwargs.items())))
     if len(params):
@@ -52,7 +60,7 @@ def request(method, *args, **kwargs):
         r.update(OrderedDict([
             ('params', params)
         ]))
-    # response_id
+    # request_id
     if request_id:
         r.update(OrderedDict([
             ('id', request_id)

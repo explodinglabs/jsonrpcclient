@@ -43,7 +43,12 @@ class InvalidResponse(JsonRpcClientError):
 
 
 class ReceivedErrorResponse(JsonRpcClientError):
-    """The server gave a valid JSON-RPC error response."""
+    """The server gave a valid JSON-RPC error response.
+
+    :param code: The JSON-RPC ``code`` value received.
+    :param message: The JSON-RPC ``message`` value received.
+    :param data: The JSON-RPC ``data`` value received.
+    """
     def __init__(self, code, message, data): #pylint:disable=unused-argument
         super(ReceivedErrorResponse, self).__init__(
             'The server gave a valid JSON-RPC error response: '+message)
