@@ -14,3 +14,5 @@ Simply set the server details, then make a request:
     5
 
 Full documentation is available at https://jsonrpcclient.readthedocs.org/.
+
+Tested on Python 2.7, 3.3 and 3.4.
