@@ -2,7 +2,6 @@
 
 import itertools
 import json #pylint:disable=unused-import
-from collections import OrderedDict
 
 id_generator = itertools.count(1) # First generated is 1
 
@@ -28,41 +27,29 @@ def request(method, *args, **kwargs):
     :param method: The method name.
     :param args: List of positional arguments (optional).
     :param kwargs: Dict of keyword arguments (optional).
-    :returns: The JSON-RPC request in dict format.
+    :returns: The JSON-RPC request, as a dict.
     """
-    # Get the request id
-    request_id = None
-    if kwargs.get('response', False):
-        request_id = next(id_generator)
-    # Pop 'response' out of the kwargs if present
-    if 'response' in kwargs:
-        kwargs.pop('response')
-    # jsonrpc, method
-    r = OrderedDict([
-        ('jsonrpc', '2.0'),
-        ('method', method)
-    ])
-    # Get the params
+    # The basic request
+    req = {'jsonrpc': '2.0', 'method': method}
+    # Get the request id, if 'response' is passed as True. (We do this first so
+    # we can then remove that key from the keyword arguments.)
+    if kwargs.get('response'):
+        req['id'] = next(id_generator)
+    kwargs.pop('response', None)
+    # Get the 'params' part. (In JSON-RPC the key is named 'params' when
+    # technically they are arguments, not parameters.)
     params = list()
-    # Positional arguments
     if args:
         for i in args:
             params.append(i)
-    # Keyword arguments
     if kwargs:
-        params.append(OrderedDict(sorted(kwargs.items())))
-    if len(params):
-        # If there's only param and it's a dict or list, take it out of the
-        # params list, rather than having a list within a list [[]]
-        if len(params) == 1 and (
-                isinstance(params[0], dict) or isinstance(params[0], list)):
+        params.append(kwargs)
+    if params:
+        # The 'params' can be either "by-position" (a list) or "by-name" (a
+        # dict). If there's only one list or dict in the params list, take it
+        # out of the enclosing list, ie. [] instead of [[]], {} instead of [{}].
+        if len(params) == 1 and (isinstance(params[0], dict) or \
+                isinstance(params[0], list)):
             params = params[0]
-        r.update(OrderedDict([
-            ('params', params)
-        ]))
-    # request_id
-    if request_id:
-        r.update(OrderedDict([
-            ('id', request_id)
-        ]))
-    return r
+        req['params'] = params
+    return req
