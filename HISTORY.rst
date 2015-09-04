@@ -7,9 +7,7 @@ Release History
 A major update.
 
 - The ``Server`` class has been renamed ``HTTPServer``. This is in order to make
-  way for more transport options.
-
-Adjust your code like this:
+  way for more transport options. Adjust your code like this:
 
 .. sourcecode:: python
 
