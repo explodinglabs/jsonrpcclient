@@ -20,12 +20,12 @@ Adjust your code like this:
   handled appropriately by the server. It's not the responsibility of this
   library to catch invalid requests.
 
-- The ``ConnectionError`` exception has been removed, because it only served to
-  squash other more meaningful exceptions raised by the transport libraries. For
-  example if you're working with ``HTTPServer`` which uses the requests module,
-  catch the `requests module exceptions
-  <http://www.python-requests.org/en/latest/api/#exceptions>`_ instead of
-  ``ConnectionError``.
+- The ``InvalidResponse`` exception has been removed. Catch
+  ``jsonschema.ValidationError`` instead if you need to.
+
+- The ``ConnectionError`` exception has been removed. If you're working with
+  ``HTTPServer``, catch the `requests module exceptions
+  <http://www.python-requests.org/en/latest/api/#exceptions>`_ instead.
 
 1.1.8 (2015-08-01)
 ------------------
