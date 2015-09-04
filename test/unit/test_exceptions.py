@@ -20,10 +20,6 @@ class TestExceptions(TestCase):
         with self.assertRaises(exceptions.ParseResponseError):
             raise exceptions.ParseResponseError
 
-    def test_InvalidResponse(self):
-        with self.assertRaises(exceptions.InvalidResponse):
-            raise exceptions.InvalidResponse
-
     def test_ReceivedErrorResponse(self):
         with self.assertRaises(exceptions.ReceivedErrorResponse):
             raise exceptions.ReceivedErrorResponse(1, 'foo', 'bar')

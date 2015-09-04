@@ -131,11 +131,9 @@ class Server(with_metaclass(ABCMeta, object)):
             # given anyway. It may not be necessary to raise here.
             if not expected_response and 'result' in response_dict:
                 raise exceptions.UnwantedResponse()
-            # Validate the response against the Response schema
-            try:
-                json_validator.validate(response_dict)
-            except jsonschema.ValidationError:
-                raise exceptions.InvalidResponse()
+            # Validate the response against the Response schema (raises
+            # jsonschema.ValidationError if invalid)
+            json_validator.validate(response_dict)
             # If the response was "error", raise to ensure it's handled
             if 'error' in response_dict:
                 raise exceptions.ReceivedErrorResponse(

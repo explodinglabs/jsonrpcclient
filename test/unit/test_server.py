@@ -4,6 +4,8 @@
 from unittest import TestCase, main
 import itertools
 
+from jsonschema import ValidationError
+
 from jsonrpcclient import rpc, exceptions
 from jsonrpcclient.server import Server
 
@@ -51,7 +53,7 @@ class TestServer(TestCase):
 
     def test_handle_notification_with_invalid_jsonrpc_response(self):
         response = '{"json": "2.0"}'
-        with self.assertRaises(exceptions.InvalidResponse):
+        with self.assertRaises(ValidationError):
             self.server.handle_response(response)
 
     def test_handle_notification_with_valid_response(self):
@@ -94,7 +96,7 @@ class TestServer(TestCase):
 
     def test_handle_request_with_invalid_jsonrpc_response(self):
         response = '{"json": "2.0"}'
-        with self.assertRaises(exceptions.InvalidResponse):
+        with self.assertRaises(ValidationError):
             self.server.handle_response(response, expected_response=True)
 
     def test_handle_request_with_valid_response(self):

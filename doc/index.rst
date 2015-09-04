@@ -56,44 +56,35 @@ That's the same as saying ``server.request('add', 2, 3)``. With this usage, pass
 Exceptions
 ----------
 
-Catch the base exception ``JsonRpcClientError`` in case there's a problem
-communicating with the server::
+Some exceptions that may be raised when making a request:
 
-    from jsonrpcclient.exceptions import ReceivedErrorResponse, JsonRpcClientError
-    try:
-        server.request('go')
-    except JsonRpcClientError as e:
-        print(str(e))
-
-Here's the full list of exceptions, if you need to handle them individually:
-
-ReceivedNoResponse
+jsonrpcclient.exceptions.ReceivedNoResponse
     A response message was expected, but none was given.
 
-UnwantedResponse
-    A response was not requested, but one was given anyway.
+jsonrpcclient.exceptions.UnwantedResponse
+    A response was not requested, but one was given.
 
-ParseResponseError
+jsonrpcclient.exceptions.ParseResponseError
     The response was not valid JSON.
 
-InvalidResponse
-    The response was not a valid JSON-RPC response.
+jsonschema.ValidationError
+    The response was not a valid JSON-RPC response object.
 
-ReceivedErrorResponse
-    The server gave a valid JSON-RPC error response.
+jsonrpcclient.exceptions.ReceivedErrorResponse
+    The server gave a valid `JSON-RPC error response
+<http://www.jsonrpc.org/specification#error_object>`_.
 
-If the server responds with a valid `JSON-RPC error object
-<http://www.jsonrpc.org/specification#error_object>`_, the
-``ReceivedErrorResponse`` exception has the details::
+The ``ReceivedErrorResponse`` exception has extra details::
 
-    from jsonrpcclient.exceptions import ReceivedErrorResponse, JsonRpcClientError
+    from jsonrpcclient.exceptions import ReceivedErrorResponse
     try:
         server.request('go')
     except ReceivedErrorResponse as e:
         print(e.code, e.message, e.data)
-    # Catch the base exception for other errors
-    except JsonRpcClientError as e:
-        print(str(e))
+
+Plus other exceptions depending on the transport library being used, such as for
+``HTTPServer``, the `request module exceptions
+<http://docs.python-requests.org/en/latest/user/quickstart/#errors-and-exceptions>`_.
 
 Logging
 -------

@@ -35,13 +35,6 @@ class ParseResponseError(JsonRpcClientError):
             'The response was not valid JSON')
 
 
-class InvalidResponse(JsonRpcClientError):
-    """The response was not a valid JSON-RPC response."""
-    def __init__(self):
-        super(InvalidResponse, self).__init__(
-            'The response was not a valid JSON-RPC 2.0 response')
-
-
 class ReceivedErrorResponse(JsonRpcClientError):
     """The server gave a valid JSON-RPC error response.
 
