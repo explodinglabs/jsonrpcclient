@@ -4,28 +4,31 @@ Release History
 2.0.1 (2015-09-04)
 ------------------
 
-A major update.
+A major update. These changes will open up the module for using communication
+protocols other than just HTTP.
 
-- The ``Server`` class has been renamed ``HTTPServer``. This is in order to make
-  way for more transport options. Adjust your code like this:
+- Most importantly, the ``Server`` class has been renamed ``HTTPServer``.
+  Adjust your code like this:
 
 .. sourcecode:: python
 
     >>> from jsonrpcclient.http_server import HTTPServer
     >>> server = HTTPServer('http://example.com/api')
 
-- Faster response validation.
+- The requests module, which is required to send requests over HTTP, will no
+  longer be installed as a dependency. It's now up to the user to install it
+  like this:
 
-- The ``InvalidRequest`` exception has been removed. Invalid requests will be
-  handled appropriately by the server. It's not the responsibility of this
-  library to catch invalid requests.
+.. sourcecode:: sh
 
-- The ``InvalidResponse`` exception has been removed. Catch
-  ``jsonschema.ValidationError`` instead if you need to.
+    $ pip install jsonrpcclient requests
 
-- The ``ConnectionError`` exception has been removed. If you're working with
-  ``HTTPServer``, catch the `requests module exceptions
-  <http://www.python-requests.org/en/latest/api/#exceptions>`_ instead.
+- Three exceptions have been removed: ``InvalidRequest`` (out of scope),
+  ``InvalidResponse`` (catch ``jsonschema.ValidationError`` instead) and
+  ``ConnectionError`` (catch the `requests module exceptions
+  <http://www.python-requests.org/en/latest/api/#exceptions>`_ instead).
+
+- Faster validation of response messages.
 
 1.1.8 (2015-08-01)
 ------------------

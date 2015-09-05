@@ -3,7 +3,7 @@ jsonrpcclient
 
 Make `remote procedure calls
 <http://en.wikipedia.org/wiki/Remote_procedure_call>`_ with `JSON-RPC
-<http://www.jsonrpc.org/>`_ over HTTP.
+<http://www.jsonrpc.org/>`_.
 
 Installation
 ============
@@ -82,8 +82,8 @@ The ``ReceivedErrorResponse`` exception has extra details::
     except ReceivedErrorResponse as e:
         print(e.code, e.message, e.data)
 
-Plus other exceptions depending on the transport library being used, such as for
-``HTTPServer``, the `request module exceptions
+Plus other exceptions depending on the communications protocol being used, such
+as for ``HTTPServer``, the `request module exceptions
 <http://docs.python-requests.org/en/latest/user/quickstart/#errors-and-exceptions>`_.
 
 Logging
@@ -124,12 +124,13 @@ The response format has these fields:
 %(message)s
     The json response (the body).
 
-More logging fields are available depending on your chosen transport method.
+More logging fields are available depending on your chosen communications
+protocol.
 
 HTTPServer
 ==========
 
-This section relates specifically to the HTTP transport protocol.
+This section relates specifically to the HTTP communications protocol.
 
 Authentication
 --------------
@@ -181,12 +182,6 @@ The response format has these extra fields:
 
 %(http_headers)s
     The full HTTP headers.
-
-Todo
-====
-
-- Support `batch calls <http://www.jsonrpc.org/specification#batch>`_.
-- More transport options.
 
 Links
 =====
