@@ -25,7 +25,7 @@ setup(
     packages=['jsonrpcclient'],
     package_data={'jsonrpcclient': ['response-schema.json']},
     include_package_data=True,
-    install_requires=['jsonschema', 'future', 'requests', 'pyzmq'],
+    install_requires=['jsonschema', 'future'],
     tests_require=['tox'],
     classifiers=[
         'License :: OSI Approved :: GNU Library or Lesser General Public License (LGPL)',
