@@ -30,6 +30,11 @@ protocols other than just HTTP.
 
 - Faster validation of response messages.
 
+- Requests are sent and logged with the JSON-RPC parts in the right order,
+  (beginning with ``'jsonrpc': 2.0'`` etc.), which is just nicer to read.
+
+- Other fixes and improvements.
+
 1.1.8 (2015-08-01)
 ------------------
 
