@@ -66,4 +66,4 @@ def rpc_request(method, *args, **kwargs):
 
 def rpc_request_str(method, *args, **kwargs):
     """Wrapper around rpc_request, returning a string instead of a dict"""
-    return json.dumps(sort_request(rpc_request(method, args, kwargs)))
+    return json.dumps(sort_request(rpc_request(method, *args, **kwargs)))
