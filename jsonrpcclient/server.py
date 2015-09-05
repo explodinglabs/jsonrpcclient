@@ -17,8 +17,8 @@ json_validator = jsonschema.Draft4Validator(json.loads(pkgutil.get_data(
 
 
 class Server(with_metaclass(ABCMeta, object)):
-    """Transport-agnostic class representing the remote server. Subclasses
-    should inherit and override ``send_message``."""
+    """Protocol-agnostic class representing the remote server. Subclasses should
+    inherit and override ``send_message``."""
 
     # This class is abstract
     __metaclass__ = ABCMeta
@@ -60,7 +60,7 @@ class Server(with_metaclass(ABCMeta, object)):
 
     def log_response(self, response, extra=None):
         """Log the JSON-RPC response after sending. Should be called by
-        subclasses after transporting.
+        subclasses after sending.
 
         :param response: The JSON-RPC response string.
         :param extra: A dict of extra fields that may be logged.
@@ -100,14 +100,14 @@ class Server(with_metaclass(ABCMeta, object)):
     @abstractmethod
     def send_message(self, request):
         """Send the RPC request to the server. Override this method in the
-        transport-specific subclass, and return the response.
+        protocol-specific subclass, and return the response.
 
         :param request: A JSON-RPC request, in dict format.
         :return: The response (a string for requests, None for notifications).
         """
         raise NotImplementedError(
             'The Server class is now abstract; '
-            'use a transport-specific class such as HTTPServer instead')
+            'use a protocol-specific class such as HTTPServer instead')
 
     @staticmethod
     def handle_response(response, expected_response=False):

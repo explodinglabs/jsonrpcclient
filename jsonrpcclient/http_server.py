@@ -7,7 +7,7 @@ from .server import Server
 
 
 class HTTPServer(Server):
-    """HTTP transport"""
+    """Communicate with a HTTP server"""
 
     # The default HTTP header, used if no others are specified
     DEFAULT_HTTP_HEADERS = {
@@ -35,7 +35,7 @@ class HTTPServer(Server):
         kwargs.pop('headers')
 
     def send_message(self, request):
-        """Transport the request to the server and return the response.
+        """Send the request to the server and return the response.
 
         :param request: The JSON-RPC request string.
         :return: The response (a string for requests, None for notifications).
