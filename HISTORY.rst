@@ -1,5 +1,5 @@
-Release History
-===============
+Recent Changes
+==============
 
 2.0.1 (2015-09-04)
 ------------------
@@ -41,8 +41,3 @@ protocols other than just HTTP.
 - Further details provided when the server responds with a JSON-RPC error
   response. See `Exceptions
   <http://jsonrpcclient.readthedocs.org/#exceptions>`_.
-
-1.1.7 (2015-05-20)
-------------------
-
-- Include the server endpoint in log entries.
