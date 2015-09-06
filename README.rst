@@ -1,15 +1,15 @@
 jsonrpcclient
 *************
 
-Make `remote procedure calls
-<http://en.wikipedia.org/wiki/Remote_procedure_call>`_ with `JSON-RPC
-<http://www.jsonrpc.org/>`_.
+Make `JSON-RPC <http://www.jsonrpc.org/>`_ requests.
+
+Install:
 
 .. sourcecode:: sh
 
     $ pip install jsonrpcclient requests
 
-Simply set the server details, then make a request:
+Set the server details, then make a request:
 
 .. sourcecode:: python
 
