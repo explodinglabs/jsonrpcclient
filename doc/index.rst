@@ -6,8 +6,8 @@ Make `JSON-RPC <http://www.jsonrpc.org/>`_ requests in Python 2.7 and 3.3+.
 Guides
 ======
 
-- `Using jsonrpcclient over HTTP <http_server.html>`_
-- `Using jsonrpcclient over ZeroMQ <zmq_server.html>`_
+- `Using jsonrpcclient over HTTP <http.html>`_
+- `Using jsonrpcclient over ZeroMQ <zeromq.html>`_
 
 Links
 =====

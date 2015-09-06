@@ -4,11 +4,11 @@ Recent Changes
 2.0.1 (2015-09-04)
 ------------------
 
-A major update. These changes will open up the module for using communication
-protocols other than just HTTP.
+A major update. These changes open up the module for communication protocols
+other than just HTTP.
 
-- Most importantly, the ``Server`` class has been renamed ``HTTPServer``.
-  Adjust your code like this:
+- Importantly, the ``Server`` class has been renamed ``HTTPServer``. Adjust
+  your code like this:
 
 .. sourcecode:: python
 
@@ -30,14 +30,12 @@ protocols other than just HTTP.
 
 - Faster validation of response messages.
 
-- Requests are sent and logged with the JSON-RPC parts in the right order,
+- Requests are now sent and logged with the JSON-RPC parts in the right order,
   (beginning with ``'jsonrpc': 2.0'`` etc.), which is just nicer to read.
 
+- `ZeroMQ <http://jsonrpcclient.readthedocs.org/zmq_server.html>`_ protocol
+  added.
+
+- `Documentation <http://jsonrpcclient.readthedocs.org/>`_ overhauled.
+
 - Other fixes and improvements.
-
-1.1.8 (2015-08-01)
-------------------
-
-- Further details provided when the server responds with a JSON-RPC error
-  response. See `Exceptions
-  <http://jsonrpcclient.readthedocs.org/#exceptions>`_.
