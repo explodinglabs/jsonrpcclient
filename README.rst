@@ -3,17 +3,10 @@ jsonrpcclient
 
 Make `JSON-RPC <http://www.jsonrpc.org/>`_ requests in Python 2.7 and 3.3+.
 
-Install:
-
-.. sourcecode:: sh
-
-    $ pip install jsonrpcclient requests
-
-Set the server details, then make a request:
+Simply set the server details, then make a request:
 
 .. sourcecode:: python
 
-    >>> from jsonrpcclient.http_server import HTTPServer
     >>> server = HTTPServer('http://example.com/api')
     >>> server.request('add', 2, 3)
     5
