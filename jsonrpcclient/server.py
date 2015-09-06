@@ -20,9 +20,6 @@ class Server(with_metaclass(ABCMeta, object)):
     """Protocol-agnostic class representing the remote server. Subclasses should
     inherit and override ``send_message``."""
 
-    # This class is abstract
-    __metaclass__ = ABCMeta
-
     # Request and response logs
     request_log = logging.getLogger(__name__+'.request')
     response_log = logging.getLogger(__name__+'.response')
@@ -46,7 +43,7 @@ class Server(with_metaclass(ABCMeta, object)):
                 return self.notify(name, *args, **kwargs)
         return attr_handler
 
-    def log_request(self, request, extra=None):
+    def log_request(self, request, extra={}):
         """Log the JSON-RPC request before sending. Should be called by
         subclasses before sending.
 
@@ -54,11 +51,11 @@ class Server(with_metaclass(ABCMeta, object)):
         :param extra: A dict of extra fields that may be logged.
         :return: None
         """
-        if hasattr(extra, 'update'):
-            extra.update({'endpoint': self.endpoint})
+        # Add endpoint to list of extra info to include in log message
+        extra.update({'endpoint': self.endpoint})
         self.request_log.info(request, extra=extra)
 
-    def log_response(self, response, extra=None):
+    def log_response(self, response, extra={}):
         """Log the JSON-RPC response after sending. Should be called by
         subclasses after sending.
 
@@ -69,9 +66,8 @@ class Server(with_metaclass(ABCMeta, object)):
         # Clean up the response
         response = response.replace("\n", '').replace('  ', ' ') \
                 .replace('{ ', '{')
-        # Add the endpoint option to the log entry
-        if hasattr(extra, 'update'):
-            extra.update({'endpoint': self.endpoint})
+        # Add the endpoint to the log entry
+        extra.update({'endpoint': self.endpoint})
         self.response_log.info(response, extra=extra)
 
     def notify(self, method_name, *args, **kwargs):
@@ -105,9 +101,6 @@ class Server(with_metaclass(ABCMeta, object)):
         :param request: A JSON-RPC request, in dict format.
         :return: The response (a string for requests, None for notifications).
         """
-        raise NotImplementedError(
-            'The Server class is now abstract; '
-            'use a protocol-specific class such as HTTPServer instead')
 
     @staticmethod
     def handle_response(response, expected_response=False):
