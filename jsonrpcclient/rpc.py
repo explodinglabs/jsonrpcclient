@@ -8,18 +8,19 @@ id_generator = itertools.count(1) # First generated is 1
 
 
 def sort_request(req):
-    """Sorts a JSON-RPC request dict returning a sorted OrderedDict.
+    """Sorts a JSON-RPC request dict returning a sorted OrderedDict, having no
+    effect other than making it nicer to read.
 
     >>> json.dumps(sort_request(
     ...     {'id': 2, 'params': [2, 3], 'method': 'add', 'jsonrpc': '2.0'}))
     '{"jsonrpc": "2.0", "method": "add", "params": [2, 3], "id": 1}'
 
     :param req: JSON-RPC request in dict format.
-    :return: The same request nicely sorted.
+    :return: The same request, nicely sorted.
     """
     sort_order = ['jsonrpc', 'method', 'params', 'id']
-    return OrderedDict(sorted(req.items(), \
-            key=lambda k: sort_order.index(k[0])))
+    return OrderedDict(sorted(req.items(), key=lambda k: sort_order.index(
+        k[0])))
 
 
 def rpc_request(method, *args, **kwargs):
