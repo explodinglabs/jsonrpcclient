@@ -4,8 +4,7 @@ Recent Changes
 2.0.1 (2015-09-04)
 ------------------
 
-A major update. These changes open up the module for communication protocols
-other than just HTTP.
+A major update, which makes way for protocols other than just HTTP.
 
 - Importantly, the ``Server`` class has been renamed ``HTTPServer``. Adjust
   your code like this:
