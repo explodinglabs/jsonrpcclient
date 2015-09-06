@@ -33,7 +33,7 @@ other than just HTTP.
 - Requests are now sent and logged with the JSON-RPC parts in the right order,
   (beginning with ``'jsonrpc': 2.0'`` etc.), which is just nicer to read.
 
-- `ZeroMQ <http://jsonrpcclient.readthedocs.org/zmq_server.html>`_ protocol
+- `ZeroMQ <http://jsonrpcclient.readthedocs.org/zeromq.html>`_ protocol
   added.
 
 - `Documentation <http://jsonrpcclient.readthedocs.org/>`_ overhauled.
