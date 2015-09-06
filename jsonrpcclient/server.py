@@ -43,7 +43,7 @@ class Server(with_metaclass(ABCMeta, object)):
                 return self.notify(name, *args, **kwargs)
         return attr_handler
 
-    def log_request(self, request, extra={}):
+    def log_request(self, request, extra=None):
         """Log the JSON-RPC request before sending. Should be called by
         subclasses before sending.
 
@@ -51,11 +51,13 @@ class Server(with_metaclass(ABCMeta, object)):
         :param extra: A dict of extra fields that may be logged.
         :return: None
         """
-        # Add endpoint to list of extra info to include in log message
+        if extra is None:
+            extra = {}
+        # Add endpoint to list of info to include in log message
         extra.update({'endpoint': self.endpoint})
         self.request_log.info(request, extra=extra)
 
-    def log_response(self, response, extra={}):
+    def log_response(self, response, extra=None):
         """Log the JSON-RPC response after sending. Should be called by
         subclasses after sending.
 
@@ -63,11 +65,13 @@ class Server(with_metaclass(ABCMeta, object)):
         :param extra: A dict of extra fields that may be logged.
         :return: None
         """
-        # Clean up the response
-        response = response.replace("\n", '').replace('  ', ' ') \
-                .replace('{ ', '{')
+        if extra is None:
+            extra = {}
         # Add the endpoint to the log entry
         extra.update({'endpoint': self.endpoint})
+        # Clean up the response for logging
+        response = response.replace("\n", '').replace('  ', ' ') \
+                .replace('{ ', '{')
         self.response_log.info(response, extra=extra)
 
     def notify(self, method_name, *args, **kwargs):
