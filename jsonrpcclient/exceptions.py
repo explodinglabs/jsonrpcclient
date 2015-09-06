@@ -42,9 +42,9 @@ class ReceivedErrorResponse(JsonRpcClientError):
     :param message: The JSON-RPC ``message`` value received.
     :param data: The JSON-RPC ``data`` value received.
     """
-    def __init__(self, code, message, data): #pylint:disable=unused-argument
-        super(ReceivedErrorResponse, self).__init__('; '.join(filter(
-            None, [message, data])))
+    def __init__(self, code, message, data):
+        super(ReceivedErrorResponse, self).__init__('; '.join(
+            [item for item in [message, data] if item is not None]))
         self.code = code
         self.message = message
         self.data = data
