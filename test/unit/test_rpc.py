@@ -6,7 +6,7 @@ import itertools
 import json
 
 from jsonrpcclient import rpc
-from jsonrpcclient.rpc import rpc_request, sort_request
+from jsonrpcclient.rpc import rpc_request, rpc_request_str, sort_request
 
 
 class TestRPC(TestCase):
@@ -85,6 +85,14 @@ class TestRPC(TestCase):
             {"jsonrpc": "2.0", "method": "go", "params": ["positional", {"keyword": "foo"}], "id": 1},
             rpc_request('go', 'positional', keyword='foo', response=True)
         )
+
+    # request_str
+    def test_request_str(self):
+        self.assertEqual(
+            '{"jsonrpc": "2.0", "method": "get"}',
+            rpc_request_str('get')
+        )
+
 
 if __name__ == '__main__':
     main()
