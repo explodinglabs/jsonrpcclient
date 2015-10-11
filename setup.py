@@ -13,7 +13,7 @@ with codecs_open('HISTORY.rst', 'r', 'utf-8') as f:
 setup(
     name='jsonrpcclient',
     version='2.0.1',
-    description='JSON-RPC client library.',
+    description='JSON-RPC client library',
     long_description=readme + '\n\n' + history,
     author='Beau Barker',
     author_email='beauinmelbourne@gmail.com',
