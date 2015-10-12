@@ -1,33 +1,32 @@
-"""http_server.py"""
+"""
+HTTPServer
+**********
+
+Send JSON-RPC messages to an HTTP server, for example::
+
+    HTTPServer('http://example.com/api').notify('go')
+"""
 
 from requests import Request, Session
 from requests.exceptions import RequestException
 
-from .server import Server
+from jsonrpcclient.server import Server
 
 
 class HTTPServer(Server):
-    """Communicate with a HTTP server"""
+    """
+    :param endpoint: The server address.
+    :param kwargs: HTTP headers and other options passed on to the requests
+                   module.
+    """
 
-    # The default HTTP header, used if no others are specified
+    # The default HTTP header, these are used if no other headers are specified
     DEFAULT_HTTP_HEADERS = {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
     }
 
     def __init__(self, endpoint, **kwargs):
-        """A remote HTTP server.
-
-        Example usage::
-
-            >>> server = HTTPServer('http://example.com/api', \
-            ...     headers={'Content-Type': 'application/json-rpc'}, \
-            ...     auth=('user', 'pass'))
-
-        :param endpoint: The remote server address.
-        :param kwargs: Can be used to customize the HTTP headers used, and
-            specify other options for the requests-module.
-        """
         super(HTTPServer, self).__init__(endpoint)
         kwargs.setdefault('headers', self.DEFAULT_HTTP_HEADERS)
         self.headers = kwargs['headers']
