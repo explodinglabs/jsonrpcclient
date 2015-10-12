@@ -1,13 +1,17 @@
 jsonrpcclient
 *************
 
-Make `JSON-RPC <http://www.jsonrpc.org/>`_ requests in Python 2.7 and 3.3+.
+Send `JSON-RPC <http://www.jsonrpc.org/>`_ requests in Python 2.7 and 3.3+.
 
 Guides
 ======
 
-- `Using jsonrpcclient over HTTP <http.html>`_
-- `Using jsonrpcclient over ZeroMQ <zeromq.html>`_
+.. toctree::
+    :maxdepth: 2
+
+    http
+    zeromq
+    api
 
 Links
 =====
@@ -17,4 +21,4 @@ Links
 - `Issue Tracker <https://bitbucket.org/beau-barker/jsonrpcclient/issues>`_
 - `Twitter @bbmelb <https://twitter.com/bbmelb>`_
 
-See also: `jsonrpcserver <https://jsonrpcserver.readthedocs.org/>`_.
+See also: `jsonrpcserver <https://jsonrpcserver.readthedocs.org/>`_

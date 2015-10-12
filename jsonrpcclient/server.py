@@ -1,4 +1,7 @@
-"""server.py"""
+"""
+Server
+******
+"""
 
 import json
 import pkgutil
@@ -8,8 +11,8 @@ from abc import ABCMeta, abstractmethod
 import jsonschema
 from future.utils import with_metaclass
 
-from . import exceptions
-from .rpc import rpc_request_str
+from jsonrpcclient import exceptions
+from jsonrpcclient.rpc import rpc_request_str
 
 
 json_validator = jsonschema.Draft4Validator(json.loads(pkgutil.get_data(
@@ -18,22 +21,30 @@ json_validator = jsonschema.Draft4Validator(json.loads(pkgutil.get_data(
 
 class Server(with_metaclass(ABCMeta, object)):
     """Protocol-agnostic class representing the remote server. Subclasses should
-    inherit and override ``send_message``."""
+    inherit and override ``send_message``.
+
+    :param endpoint: The server address.
+    """
 
     # Request and response logs
     request_log = logging.getLogger(__name__+'.request')
     response_log = logging.getLogger(__name__+'.response')
 
     def __init__(self, endpoint):
-        """Instantiate a remote server object.
-
-        :param endpoint: The remote server address.
-        """
+        #: Holds the server address
         self.endpoint = endpoint
 
     def __getattr__(self, name):
-        """Catch undefined methods and handle them as RPC requests. Technique is
-        explained here: http://code.activestate.com/recipes/307618/
+        """This gives us an alternate way to make a request::
+
+            >>> server.cube(3, response=True)
+            5
+
+        That's the same as saying ``server.request('cube', 3)``. With this
+        usage, pass ``response=True`` to get a response; without that it's a
+        notification.
+
+        Technique is explained here: http://code.activestate.com/recipes/307618/
         """
         def attr_handler(*args, **kwargs):
             """Call self.request from here"""
@@ -49,7 +60,6 @@ class Server(with_metaclass(ABCMeta, object)):
 
         :param request: The JSON-RPC request string.
         :param extra: A dict of extra fields that may be logged.
-        :return: None
         """
         if extra is None:
             extra = {}
@@ -63,7 +73,6 @@ class Server(with_metaclass(ABCMeta, object)):
 
         :param response: The JSON-RPC response string.
         :param extra: A dict of extra fields that may be logged.
-        :return: None
         """
         if extra is None:
             extra = {}
@@ -75,27 +84,27 @@ class Server(with_metaclass(ABCMeta, object)):
         self.response_log.info(response, extra=extra)
 
     def notify(self, method_name, *args, **kwargs):
-        """JSON-RPC Notification. Notification means no response is expected.
+        """Send a JSON-RPC notification to the server. No response data is
+        expected.
 
         :param method_name: The remote procedure's method name.
         :param args: Positional arguments passed to the remote procedure.
         :param kwargs: Keyword arguments passed to the remote procedure.
-        :return: None
         """
         request = rpc_request_str(method_name, *args, **kwargs)
-        return self.handle_response(self.send_message(request), False)
+        return self._handle_response(self.send_message(request), False)
 
     def request(self, method_name, *args, **kwargs):
-        """Send a JSON-RPC Request. Request means a response is expected.
+        """Send a JSON-RPC request, and get a response.
 
         :param method_name: The remote procedure's method name.
         :param args: Positional arguments passed to the remote procedure.
         :param kwargs: Keyword arguments passed to the remote procedure.
-        :return: The response string.
+        :return: The payload (i.e. the ``data`` part of the response.)
         """
         kwargs['response'] = True
         request = rpc_request_str(method_name, *args, **kwargs)
-        return self.handle_response(self.send_message(request), True)
+        return self._handle_response(self.send_message(request), True)
 
     @abstractmethod
     def send_message(self, request):
@@ -107,7 +116,7 @@ class Server(with_metaclass(ABCMeta, object)):
         """
 
     @staticmethod
-    def handle_response(response, expected_response=False):
+    def _handle_response(response, expected_response=False):
         """Processes the response and returns the 'result' portion if present.
 
         :param response: The JSON-RPC response string to process.
@@ -126,7 +135,7 @@ class Server(with_metaclass(ABCMeta, object)):
                 raise exceptions.ParseResponseError()
             # Unwanted response - A response was not asked for, but one was
             # given anyway. It may not be necessary to raise here.
-            if not expected_response and 'result' in response_dict:
+            if not expected_response and response_dict.get('result'):
                 raise exceptions.UnwantedResponse()
             # Validate the response against the Response schema (raises
             # jsonschema.ValidationError if invalid)

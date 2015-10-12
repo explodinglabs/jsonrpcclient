@@ -1,24 +1,25 @@
-"""zmq_server.py"""
+"""
+ZMQServer
+*********
+
+Send JSON-RPC requests to a ZeroMQ server, for example::
+
+    ZMQServer('tcp://hostname:5555').notify('go')
+"""
 
 import zmq
 
-from .server import Server
+from jsonrpcclient.server import Server
 
 
 class ZMQServer(Server):
-    """Encapsulates a ZMQ server"""
+    """
+    :param endpoint: The server address.
+    :param options: The socket type, which can be any of the zeromq socket
+                    types. Default is *zmq.REQ*.
+    """
 
     def __init__(self, endpoint, socket_type=zmq.REQ):
-        """Connect to the ZMQ socket.
-
-        Example usage::
-
-            >>> server = ZMQServer('tcp://hostname:5555', zmq.REQ)
-
-        :param endpoint: The remote server address.
-        :param options: Socket options, see
-            http://api.zeromq.org/2-1:zmq-setsockopt
-        """
         super(ZMQServer, self).__init__(endpoint)
         self.context = zmq.Context()
         self.socket = self.context.socket(socket_type)

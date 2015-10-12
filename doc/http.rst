@@ -1,7 +1,7 @@
 jsonrpcclient over HTTP
 ***********************
 
-Make JSON-RPC requests over HTTP.
+Send JSON-RPC requests over HTTP.
 
 Installation
 ============
@@ -15,8 +15,8 @@ Usage
 
 Set the server details::
 
-    >>> from jsonrpcclient.http_server import HTTPServer
-    >>> server = HTTPServer('http://example.com/api')
+    from jsonrpcclient.http_server import HTTPServer
+    server = HTTPServer('http://example.com/api')
 
 .. include:: _includes/making_a_request.rst
 
@@ -25,7 +25,7 @@ Authentication
 
 To make authenticated requests, pass an ``auth`` argument to ``HTTPServer``::
 
-    >>> server = HTTPServer('http://example.com/api', auth=('user', 'pass'))
+    server = HTTPServer('http://example.com/api', auth=('user', 'pass'))
 
 For more authentication options, see the `requests module
 <http://docs.python-requests.org/en/latest/user/authentication/>`_ which
@@ -36,7 +36,7 @@ Headers
 
 To customize the HTTP headers, pass a ``headers`` argument to ``HTTPServer``::
 
-    >>> server = HTTPServer('http://example.com/api', headers={'Content-Type': 'application/json-rpc'})
+    server = HTTPServer('http://example.com/api', headers={'Content-Type': 'application/json-rpc'})
 
 If no headers are given, the following headers are used::
 
@@ -46,7 +46,7 @@ If no headers are given, the following headers are used::
 .. note::
 
     In addition to ``auth`` and ``headers``, other arguments can allow you to
-    set the timeout, cookies, ssl verification and more. For the full list of
+    set the timeout, cookies, SSL verification and more. For the full list of
     options see the request method `here
     <https://github.com/kennethreitz/requests/blob/master/requests/api.py>`_.
 
@@ -61,27 +61,12 @@ In the event of a communications problem, the Requests module raises
     except requests.exceptions.RequestException as e:
         print(str(e))
 
-Other standard exceptions are:
-
 .. include:: _includes/standard_exceptions.rst
 
 Logging
 =======
 
 .. include:: _includes/basic_logging.rst
-
-For more advanced logging, use custom handlers and formats::
-
-    import logging
-    logging.getLogger('jsonrpcclient').setLevel(logging.INFO)
-
-    request_handler = logging.StreamHandler()
-    request_handler.setFormatter(logging.Formatter(fmt='%(endpoint)s --> %(message)s'))
-    logging.getLogger('jsonrpcclient.server.request').addHandler(request_handler)
-
-    response_handler = logging.StreamHandler()
-    response_handler.setFormatter(logging.Formatter(fmt='%(endpoint)s <-- %(message)s'))
-    logging.getLogger('jsonrpcclient.server.response').addHandler(response_handler)
 
 The request format has these fields:
 
@@ -114,6 +99,8 @@ The response format has these fields:
 Examples
 ========
 
-- `JSON-RPC over HTTP Client in Python <https://bitbucket.org/snippets/beau-barker/KAjrB/json-rpc-over-http-client-in-python>`_
+- `HTTP Client
+  <https://bitbucket.org/snippets/beau-barker/KAjrB/json-rpc-over-http-client-in-python>`_
+  using Requests
 
 `Back home <index.html>`_
