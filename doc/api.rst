@@ -15,4 +15,3 @@ API
 .. automodule:: jsonrpcclient.exceptions
     :show-inheritance:
     :members:
-    :member-order: bysource
