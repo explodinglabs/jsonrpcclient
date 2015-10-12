@@ -12,6 +12,6 @@ API
 .. autoclass:: ZMQServer
     :members: notify, request
 
-.. automodule:: exceptions
+.. automodule:: jsonrpcclient.exceptions
     :show-inheritance:
     :members:
