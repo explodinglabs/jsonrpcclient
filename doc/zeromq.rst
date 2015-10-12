@@ -38,21 +38,6 @@ Logging
 
 .. include:: _includes/basic_logging.rst
 
-Or use custom handlers and formats::
-
-    request_format = '%(endpoint)s --> %(message)s'
-    response_format = '%(endpoint)s <-- %(message)s'
-
-    request_handler = logging.StreamHandler()
-    request_handler.setFormatter(logging.Formatter(fmt=request_format))
-    logging.getLogger('jsonrpcclient.server.request').addHandler(
-        request_handler)
-
-    response_handler = logging.StreamHandler()
-    response_handler.setFormatter(logging.Formatter(fmt=response_format))
-    logging.getLogger('jsonrpcclient.server.response').addHandler(
-        response_handler)
-
 The request format has these fields:
 
 %(endpoint)s
