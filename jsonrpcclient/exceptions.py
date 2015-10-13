@@ -52,7 +52,10 @@ class ReceivedErrorResponse(JsonRpcClientError):
     1. There was a problem with the request.
     2. There was a problem with the application at the server's end.
 
-    To see information about the error, handle the exception::
+    To see information about the error, catch the exception:
+
+    .. code-block:: python
+        :emphasize-lines: 5-6
 
         from jsonrpcclient.exceptions import JsonRpcClientError, \\
             ReceivedErrorResponse
@@ -61,7 +64,6 @@ class ReceivedErrorResponse(JsonRpcClientError):
         except ReceivedErrorResponse as e:
             print(e.code, e.message, e.data)
         except JsonRpcClientError as e:
-            # Handle the other exceptions..
             print(str(e))
     """
 
