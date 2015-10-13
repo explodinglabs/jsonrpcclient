@@ -100,7 +100,7 @@ class Server(with_metaclass(ABCMeta, object)):
         :param method_name: The remote procedure's method name.
         :param args: Positional arguments passed to the remote procedure.
         :param kwargs: Keyword arguments passed to the remote procedure.
-        :return: The payload (i.e. the ``data`` part of the response.)
+        :return: The payload (i.e. the ``result`` part of the response.)
         """
         kwargs['response'] = True
         request = rpc_request_str(method_name, *args, **kwargs)
