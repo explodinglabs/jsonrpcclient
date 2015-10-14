@@ -57,7 +57,7 @@ In the event of a communications problem, the Requests module raises
 `requests.exceptions.RequestException <http://docs.python-requests.org/en/latest/user/quickstart/#errors-and-exceptions>`_::
 
     try:
-        server.request('go')
+        server.notify('go')
     except requests.exceptions.RequestException as e:
         print(str(e))
 
