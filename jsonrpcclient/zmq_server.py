@@ -2,9 +2,12 @@
 ZMQServer
 *********
 
-Send JSON-RPC requests to a ZeroMQ server, for example::
+A ZeroMQ server to communicate with, for example::
 
     ZMQServer('tcp://hostname:5555').notify('go')
+
+.. _socket type:
+    https://zeromq.github.io/pyzmq/api/zmq.html#zmq.Context.socket
 """
 
 import zmq
@@ -15,8 +18,7 @@ from jsonrpcclient.server import Server
 class ZMQServer(Server):
     """
     :param endpoint: The server address.
-    :param options: The socket type, which can be any of the zeromq socket
-                    types. Default is *zmq.REQ*.
+    :param socket_type: The zeromq `socket type`_. Default is *zmq.REQ*.
     """
 
     def __init__(self, endpoint, socket_type=zmq.REQ):

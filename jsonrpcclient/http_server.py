@@ -2,7 +2,7 @@
 HTTPServer
 **********
 
-Send JSON-RPC messages to an HTTP server, for example::
+An HTTP server to communicate with, for example::
 
     HTTPServer('http://example.com/api').notify('go')
 """
