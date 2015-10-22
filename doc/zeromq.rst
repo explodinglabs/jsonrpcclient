@@ -57,8 +57,7 @@ The response format has these fields:
 Examples
 ========
 
-- `ZeroMQ Client
-  <https://bitbucket.org/snippets/beau-barker/89AGe/json-rpc-over-zeromq-request-reply-client>`_
-  using PyZMQ
+- ZeroMQ Client using `PyZMQ
+  <https://bitbucket.org/snippets/beau-barker/89AGe>`_
 
 `Back home <index.html>`_
