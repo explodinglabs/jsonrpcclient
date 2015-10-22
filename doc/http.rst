@@ -99,8 +99,7 @@ The response format has these fields:
 Examples
 ========
 
-- `HTTP Client
+- `HTTP Client using Requests
   <https://bitbucket.org/snippets/beau-barker/KAjrB/json-rpc-over-http-client-in-python>`_
-  using Requests
 
 `Back home <index.html>`_
