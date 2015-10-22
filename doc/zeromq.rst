@@ -57,7 +57,7 @@ The response format has these fields:
 Examples
 ========
 
-- ZeroMQ Client using `PyZMQ
+- `ZeroMQ Client using PyZMQ
   <https://bitbucket.org/snippets/beau-barker/89AGe>`_
 
 `Back home <index.html>`_
