@@ -3,7 +3,7 @@ Make a request::
     >>> server.request('cube', 3)
     27
 
-The first argument to ``request`` is the *method*; everything else is
+The first argument to ``request()`` is the *method*; everything else is
 *arguments* to the method. Keyword arguments are also acceptable::
 
     >>> server.request('find', name='Foo', age=42)
@@ -16,6 +16,7 @@ The first argument to ``request`` is the *method*; everything else is
     To see the underlying JSON-RPC messages going back and forth, see the
     Logging_ section below.
 
-If you don't need any data returned, use ``notify`` instead of ``request``::
+If you don't need any data returned, use ``notify()`` instead of
+``request()``::
 
     server.notify('go')
