@@ -1,5 +1,4 @@
 """setup.py"""
-#pylint:disable=line-too-long
 
 from setuptools import setup
 from codecs import open as codecs_open
@@ -24,9 +23,9 @@ setup(
     install_requires=['jsonschema', 'future'],
     tests_require=['tox'],
     classifiers=[
-        'License :: OSI Approved :: GNU Library or Lesser General Public License (LGPL)',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
         ],
     )
