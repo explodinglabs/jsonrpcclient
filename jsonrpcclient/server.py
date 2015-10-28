@@ -133,10 +133,6 @@ class Server(with_metaclass(ABCMeta, object)):
                 response_dict = json.loads(response)
             except ValueError:
                 raise exceptions.ParseResponseError()
-            # Unwanted response - A response was not asked for, but one was
-            # given anyway. It may not be necessary to raise here.
-            if not expected_response and response_dict.get('result'):
-                raise exceptions.UnwantedResponse()
             # Validate the response against the Response schema (raises
             # jsonschema.ValidationError if invalid)
             json_validator.validate(response_dict)
