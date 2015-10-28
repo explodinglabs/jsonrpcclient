@@ -10,10 +10,12 @@ from testfixtures import LogCapture
 from jsonrpcclient import rpc, exceptions
 from jsonrpcclient.server import Server
 
+
 class DummyServer(Server):
     """A dummy class for testing the abstract Server class"""
     def send_message(self, request):
         return '{"jsonrpc": "2.0", "result": 5, "id": 1}'
+
 
 class TestServer(TestCase):
 
@@ -21,7 +23,22 @@ class TestServer(TestCase):
         rpc.id_generator = itertools.count(1) # Ensure the first generated is 1
         self.server = DummyServer('http://non-existant:80/')
 
-    # notify
+
+class TestLogging(TestServer):
+
+    def test_log_request(self):
+        with LogCapture() as l:
+            self.server.log_request('{"jsonrpc": "2.0", "method": "go"}')
+        l.check(('jsonrpcclient.server.request', 'INFO', '{"jsonrpc": "2.0", "method": "go"}'))
+
+    def test_log_response(self):
+        with LogCapture() as l:
+            self.server.log_response('{"jsonrpc": "2.0", "result": 5, "id": 1}')
+        l.check(('jsonrpcclient.server.response', 'INFO', '{"jsonrpc": "2.0", "result": 5, "id": 1}'))
+
+
+class TestNotify(TestServer):
+
     def test_notify(self):
         with self.assertRaises(exceptions.UnwantedResponse):
             self.server.notify('go')
@@ -30,12 +47,17 @@ class TestServer(TestCase):
         with self.assertRaises(exceptions.UnwantedResponse):
             self.server.go()
 
-    # request
+
+class TestRequest(TestServer):
+
     def test_request(self):
         self.assertEqual(5, self.server.request('add', 2, 3))
 
     def test_request_alternate_usage(self):
         self.assertEqual(5, self.server.add(2, 3, response=True))
+
+
+class TestHandleResponseNotifications(TestServer):
 
     # handle_response - notifications
     def test_handle_response_notification_with_no_response(self):
@@ -77,7 +99,9 @@ class TestServer(TestCase):
         self.assertEqual(e.exception.message, 'Not Found')
         self.assertEqual(e.exception.data, None)
 
-    # handle_response - requests
+
+class TestHandleResponseRequests(TestServer):
+
     def test_handle_response_request_with_no_response(self):
         response = None
         with self.assertRaises(exceptions.ReceivedNoResponse):
@@ -118,17 +142,6 @@ class TestServer(TestCase):
         self.assertEqual(e.exception.message, 'Not Found')
         self.assertEqual(e.exception.data, None)
 
-    # log_request
-    def test_log_request(self):
-        with LogCapture() as l:
-            self.server.log_request('{"jsonrpc": "2.0", "method": "go"}')
-        l.check(('jsonrpcclient.server.request', 'INFO', '{"jsonrpc": "2.0", "method": "go"}'))
-
-    # log_response
-    def test_log_response(self):
-        with LogCapture() as l:
-            self.server.log_response('{"jsonrpc": "2.0", "result": 5, "id": 1}')
-        l.check(('jsonrpcclient.server.response', 'INFO', '{"jsonrpc": "2.0", "result": 5, "id": 1}'))
 
 if __name__ == '__main__':
     main()
