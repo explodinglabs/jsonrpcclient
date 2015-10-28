@@ -40,12 +40,10 @@ class TestLogging(TestServer):
 class TestNotify(TestServer):
 
     def test_notify(self):
-        with self.assertRaises(exceptions.UnwantedResponse):
-            self.server.notify('go')
+        self.server.notify('go')
 
     def test_notify_alternate_usage(self):
-        with self.assertRaises(exceptions.UnwantedResponse):
-            self.server.go()
+        self.server.go()
 
 
 class TestRequest(TestServer):
@@ -59,7 +57,6 @@ class TestRequest(TestServer):
 
 class TestHandleResponseNotifications(TestServer):
 
-    # handle_response - notifications
     def test_handle_response_notification_with_no_response(self):
         response = None
         self.server._handle_response(response)
@@ -80,8 +77,7 @@ class TestHandleResponseNotifications(TestServer):
 
     def test_handle_response_notification_with_valid_response(self):
         response = '{"jsonrpc": "2.0", "result": 5, "id": null}'
-        with self.assertRaises(exceptions.UnwantedResponse):
-            self.server._handle_response(response)
+        self.server._handle_response(response)
 
     def test_handle_response_notification_with_error_response(self):
         response = '{"jsonrpc": "2.0", "error": {"code": -32000, "message": "Not Found", "data": "A Primitive or Structured value that contains additional information about the error. This may be omitted. The value of this member is defined by the Server (e.g. detailed error information, nested errors etc.)"}, "id": null}'
