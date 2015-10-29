@@ -13,7 +13,7 @@ def sort_request(req):
 
     >>> json.dumps(sort_request(
     ...     {'id': 2, 'params': [2, 3], 'method': 'add', 'jsonrpc': '2.0'}))
-    '{"jsonrpc": "2.0", "method": "add", "params": [2, 3], "id": 1}'
+    '{"jsonrpc": "2.0", "method": "add", "params": [2, 3], "id": 2}'
 
     :param req: JSON-RPC request in dict format.
     :return: The same request, nicely sorted.
@@ -27,13 +27,13 @@ def rpc_request(method, *args, **kwargs):
     """Builds a JSON-RPC request given a method name and arguments.
 
     >>> rpc_request('go')
-    '{"jsonrpc": "2.0", "method": "go"}'
+    {'jsonrpc': '2.0', 'method': 'go'}
 
     >>> rpc_request('find', 'Foo', age=42)
-    '{"jsonrpc": "2.0", "method": "find", "params": ["Foo", {"age": 42}]}'
+    {'jsonrpc': '2.0', 'method': 'find', 'params': ['Foo', {'age': 42}]}
 
     >>> rpc_request('add', 2, 3, response=True)
-    '{"jsonrpc": "2.0", "method": "add", "params": [2, 3], "id": 2}'
+    {'jsonrpc': '2.0', 'method': 'add', 'params': [2, 3], 'id': 2}
 
     :param method: The method name.
     :param args: List of positional arguments (optional).
