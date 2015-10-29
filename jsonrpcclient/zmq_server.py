@@ -21,7 +21,7 @@ class ZMQServer(Server):
     :param socket_type: The zeromq `socket type`_. Default is *zmq.REQ*.
     """
 
-    def __init__(self, endpoint, socket_type=zmq.REQ):
+    def __init__(self, endpoint, socket_type=zmq.REQ): # pylint: disable=no-member
         super(ZMQServer, self).__init__(endpoint)
         self.context = zmq.Context()
         self.socket = self.context.socket(socket_type)

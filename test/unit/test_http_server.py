@@ -15,7 +15,8 @@ from jsonrpcclient.http_server import HTTPServer
 class TestHTTPServer(TestCase):
 
     def setUp(self):
-        rpc.id_generator = itertools.count(1) # Ensure the first generated is 1
+        # Monkey patch ID_GENERATOR to ensure the first generated is 1
+        rpc.ID_GENERATOR = itertools.count(1)
         self.server = HTTPServer('http://test/')
 
     @staticmethod

@@ -15,7 +15,7 @@ from jsonrpcclient import exceptions
 from jsonrpcclient.rpc import rpc_request_str
 
 
-json_validator = jsonschema.Draft4Validator(json.loads(pkgutil.get_data(
+JSON_VALIDATOR = jsonschema.Draft4Validator(json.loads(pkgutil.get_data(
     __name__, 'response-schema.json').decode('utf-8')))
 
 
@@ -135,7 +135,7 @@ class Server(with_metaclass(ABCMeta, object)):
                 raise exceptions.ParseResponseError()
             # Validate the response against the Response schema (raises
             # jsonschema.ValidationError if invalid)
-            json_validator.validate(response_dict)
+            JSON_VALIDATOR.validate(response_dict)
             # If the response was "error", raise to ensure it's handled
             if 'error' in response_dict:
                 raise exceptions.ReceivedErrorResponse(
