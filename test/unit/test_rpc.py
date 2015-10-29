@@ -54,7 +54,8 @@ class TestNotifications(TestRPC):
     def test_two_keywords(self):
         """Note that keyword arguments are sorted in alphabetical order by the
         keys. This is because they're not received in any order, so we sort
-        them, to be sure of *some* order"""
+        them, to be sure of *some* order
+        """
         self.assertEqual(
             {"jsonrpc": "2.0", "method": "find", "params": {"age": 42, "name": "Foo"}},
             rpc_request('find', name='Foo', age=42)
