@@ -1,10 +1,10 @@
 """rpc.py"""
 
 import itertools
-import json #pylint:disable=unused-import
+import json
 from collections import OrderedDict
 
-id_generator = itertools.count(1) # First generated is 1
+ID_GENERATOR = itertools.count(1) # First generated is 1
 
 
 def sort_request(req):
@@ -45,7 +45,7 @@ def rpc_request(method, *args, **kwargs):
     # Get the request id, if 'response' is passed as True. (We do this first so
     # we can then remove that key from the keyword arguments.)
     if kwargs.get('response'):
-        req['id'] = next(id_generator)
+        req['id'] = next(ID_GENERATOR)
     kwargs.pop('response', None)
     # Get the 'params' part. (In JSON-RPC the key is named 'params' when
     # technically they are arguments, not parameters.)

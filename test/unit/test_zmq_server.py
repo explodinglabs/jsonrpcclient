@@ -1,5 +1,5 @@
 """test_zmq_server.py"""
-#pylint:disable=missing-docstring,line-too-long,too-many-public-methods
+#pylint:disable=missing-docstring,line-too-long
 
 import json
 from unittest import TestCase, main
@@ -16,7 +16,8 @@ from jsonrpcclient.zmq_server import ZMQServer
 class TestZMQServer(TestCase):
 
     def setUp(self):
-        rpc.id_generator = itertools.count(1) # Ensure the first generated is 1
+        # Monkey patch ID_GENERATOR to ensure the first generated is 1
+        rpc.ID_GENERATOR = itertools.count(1)
 
     @staticmethod
     def test_instantiate():
