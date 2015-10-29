@@ -38,7 +38,7 @@ class Server(with_metaclass(ABCMeta, object)):
         """This gives us an alternate way to make a request::
 
             >>> server.cube(3, response=True)
-            5
+            27
 
         That's the same as saying ``server.request('cube', 3)``. With this
         usage, pass ``response=True`` to get a response; without that it's a
