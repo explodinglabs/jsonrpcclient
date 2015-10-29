@@ -93,6 +93,16 @@ class TestRequests(TestRPC):
             rpc_request('go', 'positional', keyword='foo', response=True)
         )
 
+    def test_incremental_id(self):
+        self.assertEqual(
+            {"jsonrpc": "2.0", "method": "go", "id": 1},
+            rpc_request('go', response=True)
+        )
+        self.assertEqual(
+            {"jsonrpc": "2.0", "method": "go", "id": 2},
+            rpc_request('go', response=True)
+        )
+
     def test_str(self):
         self.assertEqual(
             '{"jsonrpc": "2.0", "method": "get"}',
