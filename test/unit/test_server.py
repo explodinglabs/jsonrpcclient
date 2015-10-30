@@ -20,8 +20,8 @@ class DummyServer(Server):
 class TestServer(TestCase):
 
     def setUp(self):
-        # Monkey patch ID_GENERATOR to ensure the first generated is 1
-        rpc.ID_GENERATOR = itertools.count(1)
+        # Monkey patch id_iterator to ensure the request id is always 1
+        rpc.id_iterator = itertools.count(1)
         self.server = DummyServer('http://non-existant:80/')
 
 
