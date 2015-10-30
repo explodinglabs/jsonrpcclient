@@ -12,8 +12,8 @@ from jsonrpcclient.rpc import rpc_request, rpc_request_str, sort_request
 class TestRPC(TestCase):
 
     def setUp(self):
-        # Monkey patch ID_GENERATOR to ensure it starts with 1
-        rpc.ID_GENERATOR = itertools.count(1) # First generated is 1
+        # Ensure we start each test with id 1
+        rpc.id_iterator = itertools.count(1)
 
 
 class TestSortRequest(TestRPC):
@@ -103,6 +103,16 @@ class TestRequests(TestRPC):
             {'jsonrpc': '2.0', 'method': 'go', 'id': 2},
             rpc_request('go', response=True)
         )
+
+    def test_custom_generator(self):
+        standard_generator = rpc.id_iterator
+        rpc.id_iterator = rpc.hex_iterator()
+        self.assertEqual(
+            {'jsonrpc': '2.0', 'method': 'go', 'id': '1'},
+            rpc_request('go', response=True)
+        )
+        # Restore
+        rpc.id_iterator = standard_generator
 
     def test_str(self):
         self.assertEqual(

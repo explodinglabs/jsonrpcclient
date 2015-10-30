@@ -4,7 +4,19 @@ import itertools
 import json
 from collections import OrderedDict
 
-ID_GENERATOR = itertools.count(1) # First generated is 1
+def hex_iterator(start=1):
+    """Can be used to generate hex request ids rather than decimal.
+
+    To use, patch id_iterator::
+
+        >>> from jsonrpcclient import rpc
+        >>> rpc.id_iterator = rpc.hex_iterator()
+    """
+    while True:
+        yield '%x' % start
+        start += 1
+
+id_iterator = itertools.count(1)
 
 
 def sort_request(req):
@@ -36,23 +48,20 @@ def rpc_request(method, *args, **kwargs):
         {'jsonrpc': '2.0', 'method': 'add', 'params': [2, 3], 'id': 2}
 
     :param method: The method name.
-    :param args: List of positional arguments (optional).
-    :param kwargs: Dict of keyword arguments (optional).
-    :returns: The JSON-RPC request, as a dict.
+    :param args: Positional arguments.
+    :param kwargs: Keyword arguments.
+    :returns: The JSON-RPC request.
     """
-    # The basic request
+    # Start the basic request
     req = {'jsonrpc': '2.0', 'method': method}
-    # Get the request id, if 'response' is passed as True. (We do this first so
-    # we can then remove that key from the keyword arguments.)
+    # Generate a unique id, if a response is expected
     if kwargs.get('response'):
-        req['id'] = next(ID_GENERATOR)
+        req['id'] = next(id_iterator)
     kwargs.pop('response', None)
-    # Get the 'params' part. (In JSON-RPC the key is named 'params' when
-    # technically they are arguments, not parameters.)
+    # Merge the positional and named arguments into one list
     params = list()
     if args:
-        for i in args:
-            params.append(i)
+        params.extend(args)
     if kwargs:
         params.append(kwargs)
     if params:
@@ -62,6 +71,7 @@ def rpc_request(method, *args, **kwargs):
         if len(params) == 1 and (isinstance(params[0], dict) or \
                 isinstance(params[0], list)):
             params = params[0]
+        # Add the params to the request
         req['params'] = params
     return req
 
