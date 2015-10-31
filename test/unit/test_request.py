@@ -5,18 +5,20 @@ from unittest import TestCase, main
 import itertools
 import json
 
-from jsonrpcclient import request
-from jsonrpcclient.request import Request, _sort_request
+from jsonrpcclient.request import hex_iterator, _sort_request, Request
 
 
-class TestRPC(TestCase):
+class TestHexIterator(TestCase):
 
-    def setUp(self):
-        # Ensure we start each test with id 1
-        request.id_iterator = itertools.count(1)
+    def test(self):
+        i = hex_iterator()
+        self.assertEqual('1', next(i))
+        i = hex_iterator(9)
+        self.assertEqual('9', next(i))
+        self.assertEqual('a', next(i))
 
 
-class TestSortRequest(TestRPC):
+class TestSortRequest(TestCase):
 
     def test(self):
         self.assertEqual(
@@ -25,7 +27,52 @@ class TestSortRequest(TestRPC):
         )
 
 
-class TestNotifications(TestRPC):
+class TestRequest(TestCase):
+
+    def setUp(self):
+        # Start each test with id 1
+        Request.id_iterator = itertools.count(1)
+
+    def test_method_only_requiring_response(self):
+        self.assertEqual(
+            {'jsonrpc': '2.0', 'method': 'go', 'id': 1},
+            Request('go', response=True)
+        )
+
+    def test_both_positional_and_keyword_requiring_response(self):
+        self.assertEqual(
+            {'jsonrpc': '2.0', 'method': 'go', 'params': ['positional', {'keyword': 'foo'}], 'id': 1},
+            Request('go', 'positional', keyword='foo', response=True)
+        )
+
+    def test_incremental_id(self):
+        self.assertEqual(
+            {'jsonrpc': '2.0', 'method': 'go', 'id': 1},
+            Request('go', response=True)
+        )
+        self.assertEqual(
+            {'jsonrpc': '2.0', 'method': 'go', 'id': 2},
+            Request('go', response=True)
+        )
+
+    def test_custom_iterator(self):
+        default_iterator = Request.id_iterator
+        Request.id_iterator = hex_iterator(10)
+        self.assertEqual(
+            {'jsonrpc': '2.0', 'method': 'go', 'id': 'a'},
+            Request('go', response=True)
+        )
+        # Restore default iterator
+        Request.id_iterator = default_iterator
+
+    def test_str(self):
+        self.assertEqual(
+            '{"jsonrpc": "2.0", "method": "get"}',
+            str(Request('get'))
+        )
+
+
+class TestNotificationRequest(TestCase):
 
     def test_no_arguments(self):
         self.assertEqual(
@@ -77,47 +124,6 @@ class TestNotifications(TestRPC):
         self.assertEqual(
             {'jsonrpc': '2.0', 'method': 'find', 'params': ['Foo', 42]},
             Request('find', ['Foo', 42])
-        )
-
-
-class TestRequests(TestRPC):
-
-    def test_method_only_requiring_response(self):
-        self.assertEqual(
-            {'jsonrpc': '2.0', 'method': 'go', 'id': 1},
-            Request('go', response=True)
-        )
-
-    def test_both_positional_and_keyword_requiring_response(self):
-        self.assertEqual(
-            {'jsonrpc': '2.0', 'method': 'go', 'params': ['positional', {'keyword': 'foo'}], 'id': 1},
-            Request('go', 'positional', keyword='foo', response=True)
-        )
-
-    def test_incremental_id(self):
-        self.assertEqual(
-            {'jsonrpc': '2.0', 'method': 'go', 'id': 1},
-            Request('go', response=True)
-        )
-        self.assertEqual(
-            {'jsonrpc': '2.0', 'method': 'go', 'id': 2},
-            Request('go', response=True)
-        )
-
-    def test_custom_generator(self):
-        standard_generator = request.id_iterator
-        request.id_iterator = request.hex_iterator()
-        self.assertEqual(
-            {'jsonrpc': '2.0', 'method': 'go', 'id': '1'},
-            Request('go', response=True)
-        )
-        # Restore
-        request.id_iterator = standard_generator
-
-    def test_str(self):
-        self.assertEqual(
-            '{"jsonrpc": "2.0", "method": "get"}',
-            str(Request('get'))
         )
 
 

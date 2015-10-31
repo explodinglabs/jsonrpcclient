@@ -7,16 +7,14 @@ from collections import OrderedDict
 def hex_iterator(start=1):
     """Can be used to generate hex request ids rather than decimal.
 
-    To use, patch id_iterator::
+    To use, patch Request.id_iterator::
 
-        >>> from jsonrpcclient import request
-        >>> request.id_iterator = request.hex_iterator()
+        >>> from jsonrpcclient import Request, hex_iterator
+        >>> Request.id_iterator = hex_iterator()
     """
     while True:
         yield '%x' % start
         start += 1
-
-id_iterator = itertools.count(1)
 
 
 def _sort_request(req):
@@ -36,6 +34,8 @@ def _sort_request(req):
 
 
 class Request(dict):
+
+    id_iterator = itertools.count(1)
 
     def __init__(self, method, *args, **kwargs):
         """Builds a JSON-RPC request given a method name and arguments.
@@ -59,7 +59,7 @@ class Request(dict):
         self['method'] = method
         # Generate a unique id, if a response is expected
         if kwargs.get('response'):
-            self['id'] = next(id_iterator)
+            self['id'] = next(self.id_iterator)
         kwargs.pop('response', None)
         # Merge the positional and named arguments into one list
         params = list()
