@@ -12,7 +12,7 @@ import jsonschema
 from future.utils import with_metaclass
 
 from jsonrpcclient import exceptions
-from jsonrpcclient.rpc import rpc_request_str
+from jsonrpcclient.request import rpc_request_str
 
 
 JSON_VALIDATOR = jsonschema.Draft4Validator(json.loads(pkgutil.get_data(

@@ -1,19 +1,19 @@
-"""test_rpc.py"""
+"""test_request.py"""
 # pylint: disable=missing-docstring,line-too-long,too-many-public-methods
 
 from unittest import TestCase, main
 import itertools
 import json
 
-from jsonrpcclient import rpc
-from jsonrpcclient.rpc import rpc_request, rpc_request_str, sort_request
+from jsonrpcclient import request
+from jsonrpcclient.request import rpc_request, rpc_request_str, sort_request
 
 
 class TestRPC(TestCase):
 
     def setUp(self):
         # Ensure we start each test with id 1
-        rpc.id_iterator = itertools.count(1)
+        request.id_iterator = itertools.count(1)
 
 
 class TestSortRequest(TestRPC):
@@ -105,14 +105,14 @@ class TestRequests(TestRPC):
         )
 
     def test_custom_generator(self):
-        standard_generator = rpc.id_iterator
-        rpc.id_iterator = rpc.hex_iterator()
+        standard_generator = request.id_iterator
+        request.id_iterator = request.hex_iterator()
         self.assertEqual(
             {'jsonrpc': '2.0', 'method': 'go', 'id': '1'},
             rpc_request('go', response=True)
         )
         # Restore
-        rpc.id_iterator = standard_generator
+        request.id_iterator = standard_generator
 
     def test_str(self):
         self.assertEqual(
