@@ -7,7 +7,7 @@ import itertools
 from jsonschema import ValidationError
 from testfixtures import LogCapture
 
-from jsonrpcclient import rpc, exceptions
+from jsonrpcclient import request, exceptions
 from jsonrpcclient.server import Server
 
 
@@ -21,7 +21,7 @@ class TestServer(TestCase):
 
     def setUp(self):
         # Monkey patch id_iterator to ensure the request id is always 1
-        rpc.id_iterator = itertools.count(1)
+        request.id_iterator = itertools.count(1)
         self.server = DummyServer('http://non-existant:80/')
 
 

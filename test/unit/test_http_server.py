@@ -7,8 +7,8 @@ import itertools
 import requests
 import responses
 
-from jsonrpcclient import rpc
-from jsonrpcclient.rpc import rpc_request
+from jsonrpcclient import request
+from jsonrpcclient.request import rpc_request
 from jsonrpcclient.http_server import HTTPServer
 
 
@@ -16,7 +16,7 @@ class TestHTTPServer(TestCase):
 
     def setUp(self):
         # Monkey patch id_iterator to ensure the request id is always 1
-        rpc.id_iterator = itertools.count(1)
+        request.id_iterator = itertools.count(1)
         self.server = HTTPServer('http://test/')
 
     @staticmethod

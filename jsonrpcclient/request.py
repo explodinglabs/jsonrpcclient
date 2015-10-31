@@ -1,4 +1,4 @@
-"""rpc.py"""
+"""request.py"""
 
 import itertools
 import json
@@ -9,8 +9,8 @@ def hex_iterator(start=1):
 
     To use, patch id_iterator::
 
-        >>> from jsonrpcclient import rpc
-        >>> rpc.id_iterator = rpc.hex_iterator()
+        >>> from jsonrpcclient import request
+        >>> request.id_iterator = request.hex_iterator()
     """
     while True:
         yield '%x' % start
