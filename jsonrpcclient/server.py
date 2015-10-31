@@ -12,7 +12,7 @@ import jsonschema
 from future.utils import with_metaclass
 
 from jsonrpcclient import exceptions
-from jsonrpcclient.request import rpc_request_str
+from jsonrpcclient.request import Request
 
 
 JSON_VALIDATOR = jsonschema.Draft4Validator(json.loads(pkgutil.get_data(
@@ -91,8 +91,8 @@ class Server(with_metaclass(ABCMeta, object)):
         :param args: Positional arguments passed to the remote procedure.
         :param kwargs: Keyword arguments passed to the remote procedure.
         """
-        request = rpc_request_str(method_name, *args, **kwargs)
-        return self._handle_response(self.send_message(request), False)
+        request = Request(method_name, *args, **kwargs)
+        return self._handle_response(self.send_message(str(request)), False)
 
     def request(self, method_name, *args, **kwargs):
         """Send a JSON-RPC request, and get a response.
@@ -103,8 +103,8 @@ class Server(with_metaclass(ABCMeta, object)):
         :return: The payload (i.e. the ``result`` part of the response.)
         """
         kwargs['response'] = True
-        request = rpc_request_str(method_name, *args, **kwargs)
-        return self._handle_response(self.send_message(request), True)
+        request = Request(method_name, *args, **kwargs)
+        return self._handle_response(self.send_message(str(request)), True)
 
     @abstractmethod
     def send_message(self, request):
