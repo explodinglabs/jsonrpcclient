@@ -3,11 +3,12 @@
 import itertools
 import json
 from collections import OrderedDict
+from uuid import uuid4
+from string import digits, ascii_lowercase
+from random import choice
 
 def hex_iterator(start=1):
-    """Can be used to generate hex request ids rather than decimal.
-
-    To use, patch Request.id_iterator::
+    """Use incremental request ids in hexadecimal rather than decimal format::
 
         >>> from jsonrpcclient import Request, hex_iterator
         >>> Request.id_iterator = hex_iterator()
@@ -15,6 +16,27 @@ def hex_iterator(start=1):
     while True:
         yield '%x' % start
         start += 1
+
+
+def uuid_iterator():
+    """Use unique uuid ids rather incremental decimal::
+
+        >>> from jsonrpcclient import Request, hex_iterator
+        >>> Request.id_iterator = uuid_iterator()
+    """
+    while True:
+        yield str(uuid4())
+
+
+def random_iterator(length=8, chars=digits+ascii_lowercase):
+    """Use a random string. Has possible collisions - with default values
+    probability is around 1 in a million::
+
+        >>> from jsonrpcclient import Request, shortuuid_iterator
+        >>> Request.id_iterator = random_iterator()
+    """
+    while True:
+        yield ''.join([choice(chars) for i in range(length)])
 
 
 def _sort_request(req):

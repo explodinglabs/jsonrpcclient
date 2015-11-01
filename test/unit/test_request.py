@@ -1,11 +1,14 @@
 """test_request.py"""
-# pylint: disable=missing-docstring,line-too-long,too-many-public-methods
+# pylint: disable=missing-docstring,line-too-long
 
 from unittest import TestCase, main
 import itertools
 import json
+import re
+from uuid import UUID
 
-from jsonrpcclient.request import hex_iterator, _sort_request, Request
+from jsonrpcclient.request import hex_iterator, uuid_iterator, \
+    random_iterator, _sort_request, Request
 
 
 class TestHexIterator(TestCase):
@@ -16,6 +19,21 @@ class TestHexIterator(TestCase):
         i = hex_iterator(9)
         self.assertEqual('9', next(i))
         self.assertEqual('a', next(i))
+
+
+class TestUUIDIterator(TestCase):
+
+    def test(self):
+        i = uuid_iterator()
+        # Raise ValueError if badly formed hexadecimal UUID string
+        UUID(next(i), version=4)
+
+
+class TestRandomIterator(TestCase):
+
+    def test(self):
+        i = random_iterator()
+        self.assertTrue(re.match('^[0-9,a-z]{8}$', next(i)))
 
 
 class TestSortRequest(TestCase):
