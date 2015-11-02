@@ -58,6 +58,6 @@ Examples
 ========
 
 - `ZeroMQ Client using PyZMQ
-  <https://bitbucket.org/snippets/beau-barker/89AGe>`_
+  <https://gist.github.com/bcb/1c74dfcd68b1649f58eb>`_
 
 `Back home <index.html>`_

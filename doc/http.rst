@@ -100,6 +100,6 @@ Examples
 ========
 
 - `HTTP Client using Requests
-  <https://bitbucket.org/snippets/beau-barker/KAjrB/json-rpc-over-http-client-in-python>`_
+  <https://gist.github.com/bcb/cb0c90fa74e83bce616c>`_
 
 `Back home <index.html>`_
