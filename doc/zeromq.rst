@@ -18,7 +18,7 @@ Set the server details::
     from jsonrpcclient.zmq_server import ZMQServer
     server = ZMQServer('tcp://localhost:5555')
 
-.. include:: _includes/making_a_request.rst
+.. include:: _includes/requests.rst
 
 Exceptions
 ==========
@@ -31,12 +31,12 @@ In the event of a communications problem, pyzmq raises `zmq.ZMQError
     except zmq.ZMQError as e:
         print(str(e))
 
-.. include:: _includes/standard_exceptions.rst
+.. include:: _includes/exceptions.rst
 
 Logging
 =======
 
-.. include:: _includes/basic_logging.rst
+.. include:: _includes/logging.rst
 
 The request format has these fields:
 

@@ -18,7 +18,7 @@ Set the server details::
     from jsonrpcclient.http_server import HTTPServer
     server = HTTPServer('http://example.com/api')
 
-.. include:: _includes/making_a_request.rst
+.. include:: _includes/requests.rst
 
 Authentication
 --------------
@@ -61,12 +61,12 @@ In the event of a communications problem, the Requests module raises
     except requests.exceptions.RequestException as e:
         print(str(e))
 
-.. include:: _includes/standard_exceptions.rst
+.. include:: _includes/exceptions.rst
 
 Logging
 =======
 
-.. include:: _includes/basic_logging.rst
+.. include:: _includes/logging.rst
 
 The request format has these fields:
 
