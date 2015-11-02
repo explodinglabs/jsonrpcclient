@@ -1,6 +1,13 @@
 Recent Changes
 ==============
 
+2.0.2 (2015-11-02)
+------------------
+
+- Removed ``UnwantedException`` because it wasn't useful.
+- Alternative ways to generate the "id" part of the message.
+- Project hosting moved to `github <https://github.com/bcb/jsonrpcclient>`_.
+
 2.0.1 (2015-09-04)
 ------------------
 
@@ -36,5 +43,3 @@ A major update, which makes way for protocols other than just HTTP.
   added.
 
 - `Documentation <http://jsonrpcclient.readthedocs.org/>`_ overhauled.
-
-- Other fixes and improvements.
