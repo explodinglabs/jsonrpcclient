@@ -8,4 +8,5 @@ Send `JSON-RPC <http://www.jsonrpc.org/>`_ requests in Python 2.7 and 3.3+.
     >>> HTTPServer('http://pets.com/api').request('cat')
     'meow'
 
-Full documentation is available at https://jsonrpcclient.readthedocs.org/.
+Full documentation is available at `readthedocs
+<https://jsonrpcclient.readthedocs.org/>`_.
