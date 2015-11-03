@@ -122,6 +122,8 @@ class Server(with_metaclass(ABCMeta, object)):
         :param response: The JSON-RPC response string to process.
         :param expected_response: True if we were expecting a result
         :return: The response (a string for requests, None for notifications).
+        :raise jsonschema.ValidationError:
+        :raise jsonrpcclient.JsonRpcClientError:
         """
         # A response was expected, but none was given
         if expected_response and not response:
