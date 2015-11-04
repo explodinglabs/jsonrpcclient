@@ -65,4 +65,4 @@ def random_iterator(length=8, chars=digits+ascii_lowercase):
     :param chars: The characters to randomly choose from.
     """
     while True:
-        yield ''.join([choice(chars) for i in range(length)])
+        yield ''.join([choice(chars) for _ in range(length)])
