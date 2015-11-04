@@ -45,12 +45,14 @@ class ParseResponseError(JsonRpcClientError):
 
 
 class ReceivedErrorResponse(JsonRpcClientError):
-    """The server sent back a JSON-RPC `error response object
-    <http://www.jsonrpc.org/specification#error_object>`_. This means one of two
-    things:
+    """Raised if a single JSON-RPC `error response object
+    <http://www.jsonrpc.org/specification#error_object>`_ is received. *This is
+    not raised when there are multiple responses to a batch request.*
+
+    This error means one of two things:
 
     1. There was a problem with the request.
-    2. There was a problem with the application at the server's end.
+    2. There was a problem with the application at the receiving end.
 
     To see information about the error, catch the exception:
 

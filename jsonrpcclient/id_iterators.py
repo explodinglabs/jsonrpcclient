@@ -3,14 +3,7 @@ ID Iterators
 ************
 
 The default "id" part of a request is a decimal number which increments starting
-from 1::
-
-    >>> Request('go', response=True)
-    {'jsonrpc': '2.0', 'method': 'get', 'id': 1}
-    >>> Request('go', response=True)
-    {'jsonrpc': '2.0', 'method': 'get', 'id': 2}
-
-The ids can be changed to different formats if you prefer::
+from 1, but the ids can be changed to different formats if you prefer::
 
     >>> from jsonrpcclient.request import Request
     >>> from jsonrpcclient.id_iterators import random_iterator

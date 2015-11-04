@@ -7,6 +7,7 @@ import json
 import pkgutil
 import logging
 from abc import ABCMeta, abstractmethod
+from past.builtins import basestring
 
 import jsonschema
 from future.utils import with_metaclass
@@ -33,26 +34,6 @@ class Server(with_metaclass(ABCMeta, object)):
     def __init__(self, endpoint):
         #: Holds the server address
         self.endpoint = endpoint
-
-    def __getattr__(self, name):
-        """This gives us an alternate way to make a request::
-
-            >>> server.cube(3, response=True)
-            27
-
-        That's the same as saying ``server.request('cube', 3)``. With this
-        usage, pass ``response=True`` to get a response; without that it's a
-        notification.
-
-        Technique is explained here: http://code.activestate.com/recipes/307618/
-        """
-        def attr_handler(*args, **kwargs):
-            """Call self.request from here"""
-            if kwargs.get('response', False):
-                return self.request(name, *args, **kwargs)
-            else:
-                return self.notify(name, *args, **kwargs)
-        return attr_handler
 
     def log_request(self, request, extra=None):
         """Log the JSON-RPC request before sending. Should be called by
@@ -83,28 +64,38 @@ class Server(with_metaclass(ABCMeta, object)):
                 .replace('{ ', '{')
         self.response_log.info(response, extra=extra)
 
-    def notify(self, method_name, *args, **kwargs):
-        """Send a JSON-RPC notification to the server. No response data is
-        expected.
+    def _process_response(self, response):
+        """Processes the response and returns the 'result' portion if present.
 
-        :param method_name: The remote procedure's method name.
-        :param args: Positional arguments passed to the remote procedure.
-        :param kwargs: Keyword arguments passed to the remote procedure.
+        :param response: The JSON-RPC response string to process.
+        :return: The response string, or None
+        :raise jsonschema.ValidationError:
+        :raise jsonrpcclient.JsonRpcClientError:
         """
-        request = Request(method_name, *args, **kwargs)
-        return self._handle_response(self.send_message(str(request)), False)
-
-    def request(self, method_name, *args, **kwargs):
-        """Send a JSON-RPC request, and get a response.
-
-        :param method_name: The remote procedure's method name.
-        :param args: Positional arguments passed to the remote procedure.
-        :param kwargs: Keyword arguments passed to the remote procedure.
-        :return: The payload (i.e. the ``result`` part of the response.)
-        """
-        kwargs['response'] = True
-        request = Request(method_name, *args, **kwargs)
-        return self._handle_response(self.send_message(str(request)), True)
+        if response:
+            if isinstance(response, basestring):
+                # Attempt to parse the response
+                try:
+                    response = json.loads(response)
+                except ValueError:
+                    raise exceptions.ParseResponseError()
+            # Validate the response against the Response schema (raises
+            # jsonschema.ValidationError if invalid)
+            JSON_VALIDATOR.validate(response)
+            if isinstance(response, list):
+                # For now, just return the whole response
+                return response
+            else:
+                # If the response was "error", raise to ensure it's handled
+                if 'error' in response:
+                    raise exceptions.ReceivedErrorResponse(
+                        response['error'].get('code'),
+                        response['error'].get('message'),
+                        response['error'].get('data'))
+                # else
+                return response.get('result')
+        # No response was given
+        return None
 
     @abstractmethod
     def send_message(self, request):
@@ -115,36 +106,40 @@ class Server(with_metaclass(ABCMeta, object)):
         :return: The response (a string for requests, None for notifications).
         """
 
-    @staticmethod
-    def _handle_response(response, expected_response=False):
-        """Processes the response and returns the 'result' portion if present.
+    def send(self, request):
+        """Send a request or batch of requests."""
+        response = self.send_message(str(request))
+        return self._process_response(response)
 
-        :param response: The JSON-RPC response string to process.
-        :param expected_response: True if we were expecting a result
-        :return: The response (a string for requests, None for notifications).
-        :raise jsonschema.ValidationError:
-        :raise jsonrpcclient.JsonRpcClientError:
+    # Alternate ways to send a request -----------
+
+    def request(self, method_name, *args, **kwargs):
+        """Send a JSON-RPC request, and get a response.
+
+        :param method_name: The remote procedure's method name.
+        :param args: Positional arguments passed to the remote procedure.
+        :param kwargs: Keyword arguments passed to the remote procedure.
+        :return: The payload (i.e. the ``result`` part of the response.)
         """
-        # A response was expected, but none was given
-        if expected_response and not response:
-            raise exceptions.ReceivedNoResponse()
-        # Was a response given?
-        if response:
-            # Attempt to parse the response
-            try:
-                response_dict = json.loads(response)
-            except ValueError:
-                raise exceptions.ParseResponseError()
-            # Validate the response against the Response schema (raises
-            # jsonschema.ValidationError if invalid)
-            JSON_VALIDATOR.validate(response_dict)
-            # If the response was "error", raise to ensure it's handled
-            if 'error' in response_dict:
-                raise exceptions.ReceivedErrorResponse(
-                    response_dict['error'].get('code'),
-                    response_dict['error'].get('message'),
-                    response_dict['error'].get('data'))
-            # Otherwise we must have a result to return
-            return response_dict['result']
-        # No response was given
-        return None
+        return self.send(Request(method_name, *args, **kwargs))
+
+    def notify(self, method_name, *args, **kwargs):
+        """An alias for ``request()``. Deprecated - use ``request`` instead."""
+        return self.request(method_name, *args, **kwargs)
+
+    def __getattr__(self, name):
+        """This gives us an alternate way to make a request::
+
+            >>> server.cube(3, response=True)
+            27
+
+        That's the same as saying ``server.request('cube', 3)``. With this
+        usage, pass ``response=True`` to get a response; without that it's a
+        notification.
+
+        Technique is explained here: http://code.activestate.com/recipes/307618/
+        """
+        def attr_handler(*args, **kwargs):
+            """Call self.request from here"""
+            return self.request(name, *args, **kwargs)
+        return attr_handler

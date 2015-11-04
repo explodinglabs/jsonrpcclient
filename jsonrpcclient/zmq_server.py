@@ -4,7 +4,7 @@ ZMQServer
 
 A ZeroMQ server to communicate with, for example::
 
-    ZMQServer('tcp://hostname:5555').notify('go')
+    ZMQServer('tcp://hostname:5555').request('go')
 
 .. _socket type:
     https://zeromq.github.io/pyzmq/api/zmq.html#zmq.Context.socket

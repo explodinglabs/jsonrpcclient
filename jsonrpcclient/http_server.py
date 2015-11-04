@@ -4,7 +4,7 @@ HTTPServer
 
 An HTTP server to communicate with, for example::
 
-    HTTPServer('http://example.com/api').notify('go')
+    HTTPServer('http://example.com/api').request('go')
 """
 
 from requests import Request, Session

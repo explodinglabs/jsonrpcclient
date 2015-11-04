@@ -49,15 +49,14 @@ class _RequestClassType(type):
 
 
 class Request(with_metaclass(_RequestClassType, dict)):
-    """Builds a JSON-RPC request message::
+    """Builds a JSON-RPC request::
 
-        >>> Request('go', 'foo', 'bar')
-        {'jsonrpc': '2.0', 'method': 'go', 'params': ['foo', 'bar']}
+        >>> Request('multiply', 5, 3, request_id=1)
+        {'jsonrpc': '2.0', 'method': 'cat', 'params': [5, 3], 'id': 1}
 
-    Pass ``response=True`` if expecting a response::
-
-        >>> Request('find', name='foo', response=True)
-        {'jsonrpc': '2.0', 'method': 'find', 'params': {'name': 'foo'}, 'id': 1}
+    Pass ``request_id=1`` to use an id of 1. Pass ``response=True`` to get an
+    auto-iterated id. If neither of those are passed, the request is a
+    notification, and is not expecting any response.
 
     :param method: The method name.
     :param args: Positional arguments.

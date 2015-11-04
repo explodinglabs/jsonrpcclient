@@ -2,16 +2,14 @@ Send a request::
 
     >>> server.send({'jsonrpc': '2.0', 'method': 'cat'})
 
-Send a batch of requests in one go::
+Send a list of requests (if the server supports batch calls)::
 
-    >>> server.send([
-            {'jsonrpc': '2.0', 'method': 'cat'},
-            {'jsonrpc': '2.0', 'method': 'dog'}])
+    >>> server.send([{'jsonrpc': '2.0', 'method': 'cat'}, {'jsonrpc': '2.0', 'method': 'dog'}])
 
 The Request class
 -----------------
 
-The Request class makes it easy to build JSON-RPC requests::
+The Request class makes it easier to make JSON-RPC requests::
 
     >>> from jsonrpcclient import Request
     >>> Request('cat')
@@ -26,42 +24,44 @@ The first argument to ``Request()`` is the *method*; everything else is
 Keyword arguments are also acceptable::
 
     >>> Request('cat', action='speak')
-    {"jsonrpc": "2.0", "method": "cat", "params": {"action": "speak"}}
+    {'jsonrpc': '2.0', 'method': 'cat', 'params': {'action': 'speak'}}
 
-In JSON-RPC, to get response back we must specify an ``id`` for the request::
+To get response back, specify a request id::
 
     >>> Request('cat', request_id=1)
-    {"jsonrpc": "2.0", "method": "cat", id=1}
+    {'jsonrpc': '2.0', 'method': 'cat', id=1}
 
-To use an auto-iterated id, use ``response=True``::
+Or use an auto-iterated id::
 
     >>> Request('cat', response=True)
-    {"jsonrpc": "2.0", "method": "cat", id=1}
+    {'jsonrpc': '2.0', 'method': 'cat', id=1}
     >>> Request('cat', response=True)
-    {"jsonrpc": "2.0", "method": "cat", id=2}
+    {'jsonrpc': '2.0', 'method': 'cat', id=2}
 
-If you prefer, an alternative way is to call the method name directly::
+If you prefer, call the method directly on the ``Request`` class::
 
     >>> Request.cat()
-    {"jsonrpc": "2.0", "method": "cat"}
+    {'jsonrpc': '2.0', 'method': 'cat'}
     >>> Request.multiply(5, 3, response=True)
-    {"jsonrpc": "2.0", "method": "multiply", params: [5, 3], id=3}
+    {'jsonrpc': '2.0', 'method': 'multiply', params: [5, 3], id=3}
 
-Back to sending requests
-------------------------
+Back to sending requests...
+---------------------------
 
-Send a Request::
+Send a request using the ``Request`` class::
 
     >>> server.send(Request('cat'))
 
-Send a batch of Requests::
+Send a list of requests::
 
     >>> server.send([Request('cat'), Request('dog')])
 
-Shorthand for sending a single request::
+Send a request using a shorthand version::
 
-    >> server.request('cat')
+    >>> server.request('cat') # short for server.send(Request('cat'))
 
-Even shorter, call the method name directly::
+Shorter still, is to call the method directly on the ``Server`` object::
 
-    >> server.cat()
+    >>> server.cat() # short for server.send(Request('cat'))
+
+.. note:: ``notify()`` is deprecated. Use ``request()`` instead.

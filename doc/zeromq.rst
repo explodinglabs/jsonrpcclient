@@ -27,7 +27,7 @@ In the event of a communications problem, pyzmq raises `zmq.ZMQError
 <https://zeromq.github.io/pyzmq/pyversions.html#exceptions>`_::
 
     try:
-        server.notify('go')
+        server.request('go')
     except zmq.ZMQError as e:
         print(str(e))
 

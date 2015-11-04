@@ -15,8 +15,8 @@ Usage
 
 Set the server details::
 
-    from jsonrpcclient.http_server import HTTPServer
-    server = HTTPServer('http://example.com/api')
+    >>> from jsonrpcclient.http_server import HTTPServer
+    >>> server = HTTPServer('http://example.com/api')
 
 .. include:: _includes/requests.rst
 
@@ -25,7 +25,7 @@ Authentication
 
 To make authenticated requests, pass an ``auth`` argument to ``HTTPServer``::
 
-    server = HTTPServer('http://example.com/api', auth=('user', 'pass'))
+    >>> server = HTTPServer('http://example.com/api', auth=('user', 'pass'))
 
 For more authentication options, see the `requests module
 <http://docs.python-requests.org/en/latest/user/authentication/>`_ which
@@ -36,7 +36,7 @@ Headers
 
 To customize the HTTP headers, pass a ``headers`` argument to ``HTTPServer``::
 
-    server = HTTPServer('http://example.com/api', headers={'Content-Type': 'application/json-rpc'})
+    >>> server = HTTPServer('http://example.com/api', headers={'Content-Type': 'application/json-rpc'})
 
 If no headers are given, the following headers are used::
 
@@ -57,7 +57,7 @@ In the event of a communications problem, the Requests module raises
 `requests.exceptions.RequestException <http://docs.python-requests.org/en/latest/user/quickstart/#errors-and-exceptions>`_::
 
     try:
-        server.notify('go')
+        server.request('go')
     except requests.exceptions.RequestException as e:
         print(str(e))
 
