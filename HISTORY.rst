@@ -4,7 +4,10 @@ Recent Changes
 2.0.2 (2015-11-02)
 ------------------
 
-- Removed ``UnwantedException`` because it wasn't useful.
+- server.request now must be passed ``response=True``.
+- Removed ``ReceivedNoResponse`` and ``UnwantedException``. The complexity of
+  supporting them, (particularly ``ReceivedNoResponse``), outweighed their
+  usefulness.
 - Alternative ways to generate the "id" part of the message.
 - Project hosting moved to `github <https://github.com/bcb/jsonrpcclient>`_.
 
