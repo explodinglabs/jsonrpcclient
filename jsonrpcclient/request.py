@@ -6,6 +6,7 @@ Request
 import itertools
 import json
 from collections import OrderedDict
+from future.utils import with_metaclass
 
 def _sort_request(req):
     """Sorts a JSON-RPC request dict returning a sorted OrderedDict, having no
@@ -23,7 +24,31 @@ def _sort_request(req):
         k[0])))
 
 
-class Request(dict):
+class _RequestClassType(type):
+    """Request Metaclass.
+
+    Purpose of this is to be able to catch undefined attributes on the class.
+    """
+
+    def __getattr__(cls, name):
+        """This gives us an alternate way to make a request::
+
+            >>> Request.cat()
+            {'jsonrpc': '2.0', 'method': 'cat'}
+
+        That's the same as saying ``Request('cat')``. Technique is explained
+        here: http://code.activestate.com/recipes/307618/
+        """
+        def attr_handler(*args, **kwargs):
+            """Return the request using the specified method name."""
+            if kwargs.get('response', False):
+                return Request(name, *args, **kwargs)
+            else:
+                return Request(name, *args, **kwargs)
+        return attr_handler
+
+
+class Request(with_metaclass(_RequestClassType, dict)):
     """Builds a JSON-RPC request message::
 
         >>> Request('go', 'foo', 'bar')

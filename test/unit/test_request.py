@@ -28,7 +28,7 @@ class TestRequest(TestCase):
         # Start each test with id 1
         Request.id_iterator = itertools.count(1)
 
-    def test_no_arguments(self):
+    def test(self):
         self.assertEqual(
             {'jsonrpc': '2.0', 'method': 'get'},
             Request('get')
@@ -38,6 +38,22 @@ class TestRequest(TestCase):
         self.assertEqual(
             '{"jsonrpc": "2.0", "method": "get"}',
             str(Request('get'))
+        )
+
+    def test_method_name_directly(self):
+        self.assertEqual(
+            {'jsonrpc': '2.0', 'method': 'cat'},
+            Request.cat()
+        )
+
+    def test_method_name_directly_custom_id(self):
+        self.assertEqual(
+            {'jsonrpc': '2.0', 'method': 'cat', 'id': 1},
+            Request.cat(response=True)
+        )
+        self.assertEqual(
+            {'jsonrpc': '2.0', 'method': 'cat', 'id': 2},
+            Request.cat(response=True)
         )
 
     def test_one_positional(self):
