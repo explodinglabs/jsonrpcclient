@@ -44,8 +44,8 @@ If you prefer, an alternative way is to call the method name directly::
 
     >>> Request.cat()
     {"jsonrpc": "2.0", "method": "cat"}
-    >>> Request.multiply(5, 3, request_id=1)
-    {"jsonrpc": "2.0", "method": "multiply", params: [5, 3], id=1}
+    >>> Request.multiply(5, 3, response=True)
+    {"jsonrpc": "2.0", "method": "multiply", params: [5, 3], id=3}
 
 Back to sending requests
 ------------------------
