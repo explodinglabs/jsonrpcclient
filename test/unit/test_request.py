@@ -24,51 +24,20 @@ class TestRequest(TestCase):
         # Start each test with id 1
         Request.id_iterator = itertools.count(1)
 
-    def test_method_only_requiring_response(self):
-        self.assertEqual(
-            {'jsonrpc': '2.0', 'method': 'go', 'id': 1},
-            Request('go', response=True)
-        )
-
-    def test_both_positional_and_keyword_requiring_response(self):
-        self.assertEqual(
-            {'jsonrpc': '2.0', 'method': 'go', 'params': ['positional', {'keyword': 'foo'}], 'id': 1},
-            Request('go', 'positional', keyword='foo', response=True)
-        )
-
-    def test_incremental_id(self):
-        self.assertEqual(
-            {'jsonrpc': '2.0', 'method': 'go', 'id': 1},
-            Request('go', response=True)
-        )
-        self.assertEqual(
-            {'jsonrpc': '2.0', 'method': 'go', 'id': 2},
-            Request('go', response=True)
-        )
-
-    def test_custom_iterator(self):
-        default_iterator = Request.id_iterator
-        Request.id_iterator = hex_iterator(10)
-        self.assertEqual(
-            {'jsonrpc': '2.0', 'method': 'go', 'id': 'a'},
-            Request('go', response=True)
-        )
-        # Restore default iterator
-        Request.id_iterator = default_iterator
-
-    def test_str(self):
-        self.assertEqual(
-            '{"jsonrpc": "2.0", "method": "get"}',
-            str(Request('get'))
-        )
-
-
-class TestNotificationRequest(TestCase):
+    def tearDown(self):
+        # Start each test with id 1
+        Request.id_iterator = itertools.count(1)
 
     def test_no_arguments(self):
         self.assertEqual(
             {'jsonrpc': '2.0', 'method': 'get'},
             Request('get')
+        )
+
+    def test_str(self):
+        self.assertEqual(
+            '{"jsonrpc": "2.0", "method": "get"}',
+            str(Request('get'))
         )
 
     def test_one_positional(self):
@@ -115,6 +84,29 @@ class TestNotificationRequest(TestCase):
         self.assertEqual(
             {'jsonrpc': '2.0', 'method': 'find', 'params': ['Foo', 42]},
             Request('find', ['Foo', 42])
+        )
+
+    def test_specified_id(self):
+        self.assertEqual(
+            {'jsonrpc': '2.0', 'method': 'get', 'id': 'id1'},
+            Request('get', request_id='id1')
+        )
+
+    def test_auto_iterating_id(self):
+        self.assertEqual(
+            {'jsonrpc': '2.0', 'method': 'go', 'id': 1},
+            Request('go', response=True)
+        )
+        self.assertEqual(
+            {'jsonrpc': '2.0', 'method': 'go', 'id': 2},
+            Request('go', response=True)
+        )
+
+    def test_custom_iterator(self):
+        Request.id_iterator = hex_iterator(10)
+        self.assertEqual(
+            {'jsonrpc': '2.0', 'method': 'go', 'id': 'a'},
+            Request('go', response=True)
         )
 
 

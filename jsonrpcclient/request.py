@@ -43,14 +43,19 @@ class Request(dict):
     id_iterator = itertools.count(1)
 
     def __init__(self, method, *args, **kwargs):
+        # 'request_id' means use the specified id
+        if kwargs.get('request_id'):
+            self['id'] = kwargs['request_id']
+            kwargs.pop('request_id')
+        # 'response' means use an auto-iterated id
+        elif kwargs.get('response'):
+            self['id'] = next(self.id_iterator)
+            kwargs.pop('response', None)
         # Start the basic request
         self['jsonrpc'] = '2.0'
         self['method'] = method
-        # Generate a unique id, if a response is expected
-        if kwargs.get('response'):
-            self['id'] = next(self.id_iterator)
-        kwargs.pop('response', None)
-        # Merge the positional and named arguments into one list
+        # Get the 'params' part
+        # Merge the positional and keyword arguments into one list
         params = list()
         if args:
             params.extend(args)
@@ -58,8 +63,9 @@ class Request(dict):
             params.append(kwargs)
         if params:
             # The 'params' can be either "by-position" (a list) or "by-name" (a
-            # dict). If there's only one list or dict in the params list, take it
-            # out of the enclosing list, ie. [] instead of [[]], {} instead of [{}].
+            # dict). If there's only one list or dict in the params list, take
+            # it out of the enclosing list, ie. [] instead of [[]], {} instead
+            # of [{}].
             if len(params) == 1 and (isinstance(params[0], dict) or \
                     isinstance(params[0], list)):
                 params = params[0]
