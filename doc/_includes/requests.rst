@@ -1,6 +1,6 @@
 Send a request::
 
-    >>> server.send({'jsonrpc': '2.0', 'method': 'cat', 'id': 1})
+    >>> server.send({'jsonrpc': '2.0', 'method': 'cat'})
 
 Send a batch of requests in one go::
 
