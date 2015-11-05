@@ -4,7 +4,8 @@ Recent Changes
 2.0.2 (2015-11-02)
 ------------------
 
-- server.request now must be passed ``response=True``.
+- ``server.notify()`` is deprecated, use server.request() instead. **If you need
+  a response, you must pass ``response=True`` or ``request_id=3``.**
 - Removed ``ReceivedNoResponse`` and ``UnwantedException``. The complexity of
   supporting them, (particularly ``ReceivedNoResponse``), outweighed their
   usefulness.
