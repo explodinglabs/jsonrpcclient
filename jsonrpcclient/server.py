@@ -81,7 +81,8 @@ class Server(with_metaclass(ABCMeta, object)):
                     raise exceptions.ParseResponseError()
             # Validate the response against the Response schema (raises
             # jsonschema.ValidationError if invalid)
-            self.validator.validate(response)
+            if self.validator:
+                self.validator.validate(response)
             if isinstance(response, list):
                 # For now, just return the whole response
                 return response

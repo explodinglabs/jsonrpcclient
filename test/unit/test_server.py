@@ -70,6 +70,11 @@ class TestProcessResponse(TestServer):
         with self.assertRaises(ValidationError):
             self.server._process_response(response)
 
+    def test_invalid_jsonrpc_no_validation(self):
+        Server.validator = None
+        response = {'json': '2.0'}
+        self.server._process_response(response)
+
     def test_error_response(self):
         response = {'jsonrpc': '2.0', 'error': {'code': -32000, 'message': 'Not Found'}, 'id': None}
         with self.assertRaises(exceptions.ReceivedErrorResponse) as e:
