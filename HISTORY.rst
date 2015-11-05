@@ -4,12 +4,12 @@ Recent Changes
 2.0.2 (2015-11-02)
 ------------------
 
-- ``server.notify()`` is deprecated, use server.request() instead. **If you need
-  a response, you must pass ``response=True`` or ``request_id=3``.**
+- ``server.notify()`` is deprecated. Use server.request() instead. **If you
+  want a response, you must pass ``response=True`` or ``request_id=1``.**
+- Many new ways to set the "id" part of the request.
 - Removed ``ReceivedNoResponse`` and ``UnwantedException``. The complexity of
   supporting them, (particularly ``ReceivedNoResponse``), outweighed their
   usefulness.
-- Alternative ways to generate the "id" part of the message.
 - Project hosting moved to `github <https://github.com/bcb/jsonrpcclient>`_.
 
 2.0.1 (2015-09-04)
