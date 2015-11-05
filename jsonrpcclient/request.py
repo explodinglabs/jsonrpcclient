@@ -67,14 +67,14 @@ class Request(with_metaclass(_RequestClassType, dict)):
     id_iterator = itertools.count(1)
 
     def __init__(self, method, *args, **kwargs):
+        # 'response' means use an auto-iterated id
+        if kwargs.get('response'):
+            self['id'] = next(self.id_iterator)
+        kwargs.pop('response', None)
         # 'request_id' means use the specified id
         if kwargs.get('request_id'):
             self['id'] = kwargs['request_id']
-            kwargs.pop('request_id')
-        # 'response' means use an auto-iterated id
-        elif kwargs.get('response'):
-            self['id'] = next(self.id_iterator)
-            kwargs.pop('response', None)
+        kwargs.pop('request_id', None)
         # Start the basic request
         self['jsonrpc'] = '2.0'
         self['method'] = method

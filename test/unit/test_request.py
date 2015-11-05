@@ -118,6 +118,23 @@ class TestRequest(TestCase):
             Request('go', response=True)
         )
 
+    def test_specified_id(self):
+        self.assertEqual(
+            {'jsonrpc': '2.0', 'method': 'get', 'id': 'id1'},
+            Request('get', request_id='id1')
+        )
+
+    def test_both_specified_and_auto_iterating_id(self):
+        # Specified id takes precedence over auto-iterating
+        self.assertEqual(
+            {'jsonrpc': '2.0', 'method': 'go', 'id': 'specified'},
+            Request('go', request_id='specified', response=True)
+        )
+        self.assertEqual(
+            {'jsonrpc': '2.0', 'method': 'go', 'id': 'specified'},
+            Request('go', response=True, request_id='specified')
+        )
+
     def test_custom_iterator(self):
         Request.id_iterator = hex_iterator(10)
         self.assertEqual(
