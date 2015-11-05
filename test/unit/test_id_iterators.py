@@ -28,3 +28,7 @@ class TestRandomIterator(TestCase):
     def test(self):
         i = random_iterator()
         self.assertTrue(re.match('^[0-9,a-z]{8}$', next(i)))
+
+
+if __name__ == '__main__':
+    main()
