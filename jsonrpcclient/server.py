@@ -16,10 +16,6 @@ from jsonrpcclient import exceptions
 from jsonrpcclient.request import Request
 
 
-JSON_VALIDATOR = jsonschema.Draft4Validator(json.loads(pkgutil.get_data(
-    __name__, 'response-schema.json').decode('utf-8')))
-
-
 class Server(with_metaclass(ABCMeta, object)):
     """Protocol-agnostic class representing the remote server. Subclasses should
     inherit and override ``send_message``.
@@ -30,6 +26,10 @@ class Server(with_metaclass(ABCMeta, object)):
     # Request and response logs
     request_log = logging.getLogger(__name__+'.request')
     response_log = logging.getLogger(__name__+'.response')
+
+    #: Validator
+    validator = jsonschema.Draft4Validator(json.loads(pkgutil.get_data(
+        __name__, 'response-schema.json').decode('utf-8')))
 
     def __init__(self, endpoint):
         #: Holds the server address
@@ -81,7 +81,7 @@ class Server(with_metaclass(ABCMeta, object)):
                     raise exceptions.ParseResponseError()
             # Validate the response against the Response schema (raises
             # jsonschema.ValidationError if invalid)
-            JSON_VALIDATOR.validate(response)
+            self.validator.validate(response)
             if isinstance(response, list):
                 # For now, just return the whole response
                 return response
