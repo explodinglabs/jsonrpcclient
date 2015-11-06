@@ -13,7 +13,7 @@ import jsonschema
 from future.utils import with_metaclass
 
 from jsonrpcclient import exceptions
-from jsonrpcclient.request import Request
+from jsonrpcclient.request import Notification, Request
 
 
 class Server(with_metaclass(ABCMeta, object)):
@@ -114,6 +114,16 @@ class Server(with_metaclass(ABCMeta, object)):
 
     # Alternate ways to send a request -----------
 
+    def notify(self, method_name, *args, **kwargs):
+        """Send a JSON-RPC request, without expecting a response.
+
+        :param method_name: The remote procedure's method name.
+        :param args: Positional arguments passed to the remote procedure.
+        :param kwargs: Keyword arguments passed to the remote procedure.
+        :return: The payload (i.e. the ``result`` part of the response.)
+        """
+        return self.send(Notification(method_name, *args, **kwargs))
+
     def request(self, method_name, *args, **kwargs):
         """Send a JSON-RPC request, and get a response.
 
@@ -124,19 +134,13 @@ class Server(with_metaclass(ABCMeta, object)):
         """
         return self.send(Request(method_name, *args, **kwargs))
 
-    def notify(self, method_name, *args, **kwargs):
-        """An alias for ``request()``. Deprecated - use ``request`` instead."""
-        return self.request(method_name, *args, **kwargs)
-
     def __getattr__(self, name):
         """This gives us an alternate way to make a request::
 
-            >>> server.cube(3, response=True)
+            >>> server.cube(3)
             27
 
-        That's the same as saying ``server.request('cube', 3)``. With this
-        usage, pass ``response=True`` to get a response; without that it's a
-        notification.
+        That's the same as saying ``server.request('cube', 3)``.
 
         Technique is explained here: http://code.activestate.com/recipes/307618/
         """
