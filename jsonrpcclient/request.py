@@ -27,36 +27,42 @@ def _sort_request(req):
 class _RequestClassType(type):
     """Request Metaclass.
 
-    Purpose of this is to be able to catch undefined attributes on the class.
+    Purpose of this is to catch undefined attributes on the class.
     """
 
     def __getattr__(cls, name):
         """This gives us an alternate way to make a request::
 
             >>> Request.cat()
-            {'jsonrpc': '2.0', 'method': 'cat'}
+            {'jsonrpc': '2.0', 'method': 'cat', 'id': 1}
 
-        That's the same as saying ``Request('cat')``. Technique is explained
-        here: http://code.activestate.com/recipes/307618/
+        That's the same as saying ``Request('cat')``. Technique is
+        explained here: http://code.activestate.com/recipes/307618/
         """
         def attr_handler(*args, **kwargs):
             """Return the request using the specified method name."""
-            if kwargs.get('response', False):
-                return Request(name, *args, **kwargs)
-            else:
-                return Request(name, *args, **kwargs)
+            return cls(name, *args, **kwargs)
         return attr_handler
 
 
-class Request(with_metaclass(_RequestClassType, dict)):
-    """Builds a JSON-RPC request::
+class Notification(with_metaclass(_RequestClassType, dict)):
+    """The `Request <api.html#request>`_ class makes it easy to form a JSON-RPC
+    request::
 
-        >>> Request('multiply', 5, 3, request_id=1)
-        {'jsonrpc': '2.0', 'method': 'cat', 'params': [5, 3], 'id': 1}
+        >>> from jsonrpcclient import Notification
+        >>> Notification('cat')
+        {'jsonrpc': '2.0', 'method': 'cat'}
 
-    Pass ``request_id=1`` to use an id of 1. Pass ``response=True`` to get an
-    auto-iterated id. If neither of those are passed, the request is a
-    notification, and is not expecting any response.
+    The first argument is the *method*; everything else is *arguments* to the
+    method::
+
+        >>> Notification('cat', 'Mittens', 5)
+        {'jsonrpc': '2.0', 'method': 'cat', params: ['Mittens', 5]}
+
+    Keyword arguments are also acceptable::
+
+        >>> Notification('cat', name='Mittens', age=5)
+        {'jsonrpc': '2.0', 'method': 'cat', 'params': {'name': 'Mittens', 'age': 5}}
 
     :param method: The method name.
     :param args: Positional arguments.
@@ -64,17 +70,7 @@ class Request(with_metaclass(_RequestClassType, dict)):
     :returns: The JSON-RPC request in dictionary format.
     """
 
-    id_iterator = itertools.count(1)
-
     def __init__(self, method, *args, **kwargs):
-        # 'response' means use an auto-iterated id
-        if kwargs.get('response'):
-            self['id'] = next(self.id_iterator)
-        kwargs.pop('response', None)
-        # 'request_id' means use the specified id
-        if kwargs.get('request_id'):
-            self['id'] = kwargs['request_id']
-        kwargs.pop('request_id', None)
         # Start the basic request
         self['jsonrpc'] = '2.0'
         self['method'] = method
@@ -99,3 +95,39 @@ class Request(with_metaclass(_RequestClassType, dict)):
     def __str__(self):
         """Wrapper around request, returning a string instead of a dict"""
         return json.dumps(_sort_request(self))
+
+
+class Request(Notification):
+    """Same as a notification, except we expect a response.
+
+    An auto-iterated id number is used::
+
+        >>> Request('cat')
+        {'jsonrpc': '2.0', 'method': 'cat', 'id': 1}
+        >>> Request('cat')
+        {'jsonrpc': '2.0', 'method': 'cat', 'id': 2}
+
+    Include a ``request_id`` to customize the ``id``::
+
+        >>> Request('cat', request_id='Request #1')
+        {'jsonrpc': '2.0', 'method': 'cat', 'id': 'Request #1'}
+
+    If you prefer, call the method directly on the ``Request`` class to get the
+    same result::
+
+        >>> Request.cat()
+        {'jsonrpc': '2.0', 'method': 'cat', 'id': 3}
+    """
+
+    id_iterator = itertools.count(1)
+
+    def __init__(self, method, *args, **kwargs):
+        # 'response' means use an auto-iterated id
+        #kwargs.pop('response', None)
+        # 'request_id' means use the specified id
+        if kwargs.get('request_id'):
+            self['id'] = kwargs['request_id']
+        else:
+            self['id'] = next(self.id_iterator)
+        kwargs.pop('request_id', None)
+        super(Request, self).__init__(method, *args, **kwargs)
