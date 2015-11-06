@@ -1,3 +1,6 @@
+.. rubric::
+    `jsonrpcclient <index.html>`_
+
 jsonrpcclient over HTTP
 ***********************
 
@@ -16,20 +19,9 @@ Usage
 Set the server details::
 
     >>> from jsonrpcclient.http_server import HTTPServer
-    >>> server = HTTPServer('http://example.com/api')
+    >>> server = HTTPServer('http://pets.com/api')
 
 .. include:: _includes/requests.rst
-
-Authentication
---------------
-
-To make authenticated requests, pass an ``auth`` argument to ``HTTPServer``::
-
-    >>> server = HTTPServer('http://example.com/api', auth=('user', 'pass'))
-
-For more authentication options, see the `requests module
-<http://docs.python-requests.org/en/latest/user/authentication/>`_ which
-handles the authentication.
 
 Headers
 -------
@@ -43,12 +35,23 @@ If no headers are given, the following headers are used::
     Content-Type: application/json
     Accept: application/json
 
+Authentication
+--------------
+
+To make authenticated requests, pass an ``auth`` argument to ``HTTPServer``::
+
+    >>> server = HTTPServer('http://example.com/api', auth=('user', 'pass'))
+
+For more authentication options, see the `requests module
+<http://docs.python-requests.org/en/latest/user/authentication/>`_ which
+handles the authentication.
+
 .. note::
 
     In addition to ``auth`` and ``headers``, other arguments can allow you to
     set the timeout, cookies, SSL verification and more. For the full list of
     options see the request method `here
-    <https://github.com/kennethreitz/requests/blob/master/requests/api.py>`_.
+    <https://github.com/kennethreitz/requests/blob/master/requests/api.py>`__.
 
 Exceptions
 ==========

@@ -5,7 +5,7 @@ from unittest import TestCase, main
 import itertools
 import json
 
-from jsonrpcclient.request import Request, _sort_request
+from jsonrpcclient.request import Notification, Request, _sort_request
 from jsonrpcclient.id_iterators import hex_iterator
 
 
@@ -18,6 +18,45 @@ class TestSortRequest(TestCase):
         )
 
 
+class TestNotification(TestCase):
+
+    def test(self):
+        self.assertEqual(
+            {'jsonrpc': '2.0', 'method': 'get'},
+            Notification('get')
+        )
+
+    def test_str(self):
+        self.assertEqual(
+            '{"jsonrpc": "2.0", "method": "get"}',
+            str(Notification('get'))
+        )
+
+    def test_method_name_directly(self):
+        self.assertEqual(
+            {'jsonrpc': '2.0', 'method': 'cat'},
+            Notification.cat()
+        )
+
+    def test_positional(self):
+        self.assertEqual(
+            {'jsonrpc': '2.0', 'method': 'sqrt', 'params': [1]},
+            Notification('sqrt', 1)
+        )
+
+    def test_keyword(self):
+        self.assertEqual(
+            {'jsonrpc': '2.0', 'method': 'find', 'params': {'name': 'Foo'}},
+            Notification('find', name='Foo')
+        )
+
+    def test_both_positional_and_keyword(self):
+        self.assertEqual(
+            {'jsonrpc': '2.0', 'method': 'find', 'params': ['Foo', {'age': 42}]},
+            Notification('find', 'Foo', age=42)
+        )
+
+
 class TestRequest(TestCase):
 
     def setUp(self):
@@ -25,122 +64,57 @@ class TestRequest(TestCase):
         Request.id_iterator = itertools.count(1)
 
     def tearDown(self):
-        # Start each test with id 1
+        # Restore default iterator
         Request.id_iterator = itertools.count(1)
 
     def test(self):
         self.assertEqual(
-            {'jsonrpc': '2.0', 'method': 'get'},
-            Request('get')
-        )
+            {'jsonrpc': '2.0', 'method': 'get', 'id': 1},
+            Request('get'))
 
     def test_str(self):
         self.assertEqual(
-            '{"jsonrpc": "2.0", "method": "get"}',
-            str(Request('get'))
-        )
+            '{"jsonrpc": "2.0", "method": "get", "id": 1}',
+            str(Request('get')))
 
     def test_method_name_directly(self):
         self.assertEqual(
-            {'jsonrpc': '2.0', 'method': 'cat'},
-            Request.cat()
-        )
-
-    def test_method_name_directly_custom_id(self):
-        self.assertEqual(
             {'jsonrpc': '2.0', 'method': 'cat', 'id': 1},
-            Request.cat(response=True)
-        )
-        self.assertEqual(
-            {'jsonrpc': '2.0', 'method': 'cat', 'id': 2},
-            Request.cat(response=True)
-        )
+            Request.cat())
 
-    def test_one_positional(self):
+    def test_positional(self):
         self.assertEqual(
-            {'jsonrpc': '2.0', 'method': 'sqrt', 'params': [1]},
-            Request('sqrt', 1)
-        )
+                {'jsonrpc': '2.0', 'method': 'sqrt', 'params': [1], 'id': 1},
+            Request('sqrt', 1))
 
-    def test_two_positionals(self):
+    def test_keyword(self):
         self.assertEqual(
-            {'jsonrpc': '2.0', 'method': 'add', 'params': [1, 2]},
-            Request('add', 1, 2)
-        )
-
-    def test_one_keyword(self):
-        self.assertEqual(
-            {'jsonrpc': '2.0', 'method': 'find', 'params': {'name': 'Foo'}},
-            Request('find', name='Foo')
-        )
-
-    def test_two_keywords(self):
-        """Note that keyword arguments are sorted in alphabetical order by the
-        keys. This is because they're not received in any order, so we sort
-        them, to be sure of *some* order
-        """
-        self.assertEqual(
-            {'jsonrpc': '2.0', 'method': 'find', 'params': {'age': 42, 'name': 'Foo'}},
-            Request('find', name='Foo', age=42)
-        )
-
-    def test_both_positional_and_keyword(self):
-        self.assertEqual(
-            {'jsonrpc': '2.0', 'method': 'find', 'params': ['Foo', {'age': 42}]},
-            Request('find', 'Foo', age=42)
-        )
-
-    def test_dict_params(self):
-        self.assertEqual(
-            {'jsonrpc': '2.0', 'method': 'find', 'params': {'age': 42, 'name': 'Foo'}},
-            Request('find', name='Foo', age=42)
-        )
-
-    def test_list_params(self):
-        self.assertEqual(
-            {'jsonrpc': '2.0', 'method': 'find', 'params': ['Foo', 42]},
-            Request('find', ['Foo', 42])
-        )
+            {'jsonrpc': '2.0', 'method': 'find', 'params': {'name': 'Foo'}, 'id': 1},
+            Request('find', name='Foo'))
 
     def test_specified_id(self):
         self.assertEqual(
-            {'jsonrpc': '2.0', 'method': 'get', 'id': 'id1'},
-            Request('get', request_id='id1')
-        )
+            {'jsonrpc': '2.0', 'method': 'get', 'id': 'Request #1'},
+            Request('get', request_id='Request #1'))
 
     def test_auto_iterating_id(self):
         self.assertEqual(
             {'jsonrpc': '2.0', 'method': 'go', 'id': 1},
-            Request('go', response=True)
-        )
+            Request('go'))
         self.assertEqual(
             {'jsonrpc': '2.0', 'method': 'go', 'id': 2},
-            Request('go', response=True)
-        )
+            Request('go'))
 
     def test_specified_id(self):
         self.assertEqual(
-            {'jsonrpc': '2.0', 'method': 'get', 'id': 'id1'},
-            Request('get', request_id='id1')
-        )
-
-    def test_both_specified_and_auto_iterating_id(self):
-        # Specified id takes precedence over auto-iterating
-        self.assertEqual(
-            {'jsonrpc': '2.0', 'method': 'go', 'id': 'specified'},
-            Request('go', request_id='specified', response=True)
-        )
-        self.assertEqual(
-            {'jsonrpc': '2.0', 'method': 'go', 'id': 'specified'},
-            Request('go', response=True, request_id='specified')
-        )
+            {'jsonrpc': '2.0', 'method': 'cat', 'id': 'Request 1'},
+            Request.cat(request_id='Request 1'))
 
     def test_custom_iterator(self):
         Request.id_iterator = hex_iterator(10)
         self.assertEqual(
             {'jsonrpc': '2.0', 'method': 'go', 'id': 'a'},
-            Request('go', response=True)
-        )
+            Request('go'))
 
 
 if __name__ == '__main__':

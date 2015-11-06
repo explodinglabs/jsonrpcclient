@@ -8,7 +8,7 @@ from 1, but the ids can be changed to different formats if you prefer::
     >>> from jsonrpcclient.request import Request
     >>> from jsonrpcclient.id_iterators import random_iterator
     >>> Request.id_iterator = random_iterator()
-    >>> Request('go', response=True)
+    >>> Request('go')
     {'jsonrpc': '2.0', 'method': 'get', 'id': 'fubui5e6'}
 """
 

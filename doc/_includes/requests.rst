@@ -1,67 +1,44 @@
-Send a request::
+.. _Request: api.html#request
 
-    >>> server.send({'jsonrpc': '2.0', 'method': 'cat'})
+Send a request with ``send()``::
 
-Send a list of requests (if the server supports batch calls)::
+    >>> server.send({'jsonrpc': '2.0', 'method': 'cat', 'id': 1})
+    --> {'jsonrpc': '2.0', 'method': 'cat', 'id': 1}
+
+Send a request with ``request()``::
+
+    >>> server.request('cat', name='Mittens')
+    --> {'jsonrpc': '2.0', 'method': 'cat', 'params': {'name': 'Mittens'}, 'id': 1}
+
+The return value is the ``result`` part of the JSON-RPC response, (i.e.  the
+payload).
+
+Use ``notify()`` if you're not interested in a response::
+
+    >>> server.notify('cat', name='Mittens')
+    --> {'jsonrpc': '2.0', 'method': 'cat', 'params': {'name': 'Mittens'}}
+
+``notify()`` and ``request()`` are wrappers around ``send(Notification())`` and
+``send(Request())``. Read the `API <Request_>`_ to learn more about making
+requests.
+
+Batch requests
+--------------
+
+Batch requests let you send many requests in one single message::
 
     >>> server.send([{'jsonrpc': '2.0', 'method': 'cat'}, {'jsonrpc': '2.0', 'method': 'dog'}])
 
-The Request class
------------------
-
-The Request class makes it easier to make JSON-RPC requests::
-
-    >>> from jsonrpcclient import Request
-    >>> Request('cat')
-    {'jsonrpc': '2.0', 'method': 'cat'}
-
-The first argument to ``Request()`` is the *method*; everything else is
-*arguments* to the method::
-
-    >>> Request('multiply', 5, 3)
-    {'jsonrpc': '2.0', 'method': 'multiply', params: [5, 3]}
-
-Keyword arguments are also acceptable::
-
-    >>> Request('cat', action='speak')
-    {'jsonrpc': '2.0', 'method': 'cat', 'params': {'action': 'speak'}}
-
-To get response back, specify a request id::
-
-    >>> Request('cat', request_id=1)
-    {'jsonrpc': '2.0', 'method': 'cat', id=1}
-
-Or use an auto-iterated id::
-
-    >>> Request('cat', response=True)
-    {'jsonrpc': '2.0', 'method': 'cat', id=1}
-    >>> Request('cat', response=True)
-    {'jsonrpc': '2.0', 'method': 'cat', id=2}
-
-If you prefer, call the method directly on the ``Request`` class::
-
-    >>> Request.cat()
-    {'jsonrpc': '2.0', 'method': 'cat'}
-    >>> Request.multiply(5, 3, response=True)
-    {'jsonrpc': '2.0', 'method': 'multiply', params: [5, 3], id=3}
-
-Back to sending requests...
----------------------------
-
-Send a request using the ``Request`` class::
-
-    >>> server.send(Request('cat'))
-
-Send a list of requests::
+Send multiple `Request`_ objects::
 
     >>> server.send([Request('cat'), Request('dog')])
 
-Send a request using a shorthand version::
+Using list comprehension to get the cube of ten numbers::
 
-    >>> server.request('cat') # short for server.send(Request('cat'))
+    >>> server.send([Request('cube', i) for i in range(10)])
 
-Shorter still, is to call the method directly on the ``Server`` object::
+Unlike a single request, batch requests return the full JSON-RPC response, i.e.
+a ``list`` containing one response object for every request (excluding
+notifications).
 
-    >>> server.cat() # short for server.send(Request('cat'))
-
-.. note:: ``notify()`` is deprecated. Use ``request()`` instead.
+.. note:: The server may not support batch requests.

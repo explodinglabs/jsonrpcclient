@@ -38,6 +38,30 @@ class TestLogging(TestServer):
         l.check(('jsonrpcclient.server.response', 'INFO', '{"jsonrpc": "2.0", "result": 5, "id": 1}'))
 
 
+class TestSend(TestServer):
+
+    def test(self):
+        self.assertEqual(15, self.server.send({'jsonrpc': '2.0', 'method': 'out', 'id': 1}))
+
+
+class TestRequest(TestServer):
+
+    def test(self):
+        self.assertEqual(15, self.server.request('multiply', 3, 5))
+
+
+class TestNotify(TestServer):
+
+    def test(self):
+        self.assertEqual(15, self.server.notify('multiply', 3, 5))
+
+
+class TestDirect(TestServer):
+
+    def test_alternate_usage(self):
+        self.assertEqual(15, self.server.multiply(3, 5))
+
+
 class TestProcessResponse(TestServer):
 
     def test_none(self):
@@ -104,19 +128,6 @@ class TestProcessResponse(TestServer):
             {"jsonrpc": "2.0", "result": null, "id": 2}, \
             {"jsonrpc": "2.0", "error": {"code": -32000, "message": "Not Found"}, "id": 3}]'
         self.assertEqual(json.loads(response), self.server._process_response(response))
-
-
-class TestAlternativeUsage(TestServer):
-
-    def test(self):
-        self.assertEqual(15, self.server.request('multiply', 3, 5, response=True))
-
-    def test_alternate_usage(self):
-        self.assertEqual(15, self.server.multiply(3, 5, response=True))
-
-    # Notify is deprecated, for now it's an alias of request()
-    def test(self):
-        self.server.notify('go')
 
 
 if __name__ == '__main__':

@@ -3,9 +3,11 @@ Recent Changes
 
 2.0.2 (2015-11-02)
 ------------------
-
-- ``server.notify()`` is deprecated. Use server.request() instead. **If you
-  want a response, you must pass ``response=True`` or ``request_id=1``.**
+- Send a raw JSON-RPC message with ``server.send()``.
+- Send multiple requests in one message with batch requests.
+- Using the method name directly on the server object, e.g. ``server.cat()``, is
+  now equal to ``server.request('cat')``. (Previously it was equal to
+  ``server.notify('cat')``.) I don't recommend using this method anyway.
 - Many new ways to set the "id" part of the request.
 - Removed ``ReceivedNoResponse`` and ``UnwantedException``. The complexity of
   supporting them, (particularly ``ReceivedNoResponse``), outweighed their
