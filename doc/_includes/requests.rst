@@ -10,16 +10,16 @@ Send a request with ``request()``::
     >>> server.request('cat', name='Mittens')
     --> {'jsonrpc': '2.0', 'method': 'cat', 'params': {'name': 'Mittens'}, 'id': 1}
 
-The return value is the ``result`` part of the JSON-RPC response, (i.e.  the
-payload).
+The return value is *payload* (the ``result`` part of the JSON-RPC response).
 
-Use ``notify()`` if you're not interested in a response::
+If you're not interested in a response, use ``notify()`` instead of ``request()``.
 
+..
     >>> server.notify('cat', name='Mittens')
     --> {'jsonrpc': '2.0', 'method': 'cat', 'params': {'name': 'Mittens'}}
 
-``notify()`` and ``request()`` are wrappers around ``send(Notification())`` and
-``send(Request())``. Read the `API <Request_>`_ to learn more about making
+``request()`` and ``notify()`` are wrappers around ``send(Request())`` and
+``send(Notification())``. Read the `API <Request_>`_ to learn more about making
 requests.
 
 Batch requests
