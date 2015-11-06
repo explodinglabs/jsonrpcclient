@@ -5,27 +5,28 @@ Send a request with ``send()``::
     >>> server.send({'jsonrpc': '2.0', 'method': 'cat', 'id': 1})
     --> {'jsonrpc': '2.0', 'method': 'cat', 'id': 1}
 
-Send a request with ``request()``::
+Sending a request is easier with ``request()``. It takes the ``method``, followed
+by the ``params``::
 
     >>> server.request('cat', name='Mittens')
     --> {'jsonrpc': '2.0', 'method': 'cat', 'params': {'name': 'Mittens'}, 'id': 1}
 
-The return value is *payload* (the ``result`` part of the JSON-RPC response).
-
-If you're not interested in a response, use ``notify()`` instead of ``request()``.
+The return value is *payload* (i.e., the ``result`` part of the `JSON-RPC
+response <http://www.jsonrpc.org/specification#response_object>`__). If you're
+not interested in a response, use ``notify()`` instead of ``request()``.
 
 ..
     >>> server.notify('cat', name='Mittens')
     --> {'jsonrpc': '2.0', 'method': 'cat', 'params': {'name': 'Mittens'}}
 
 ``request()`` and ``notify()`` are wrappers around ``send(Request())`` and
-``send(Notification())``. Read the `API <Request_>`_ to learn more about making
+``send(Notification())``. The `API <Request_>`_ has more informat about making
 requests.
 
 Batch requests
 --------------
 
-Batch requests let you send many requests in one single message::
+Batch requests send many requests in one message::
 
     >>> server.send([{'jsonrpc': '2.0', 'method': 'cat'}, {'jsonrpc': '2.0', 'method': 'dog'}])
 
