@@ -11,9 +11,8 @@ by the ``params``::
     >>> server.request('cat', name='Mittens')
     --> {'jsonrpc': '2.0', 'method': 'cat', 'params': {'name': 'Mittens'}, 'id': 1}
 
-The return value is *payload* (i.e., the ``result`` part of the `JSON-RPC
-response <http://www.jsonrpc.org/specification#response_object>`__). If you're
-not interested in a response, use ``notify()`` instead of ``request()``.
+If you're not interested in a response, use ``notify()`` instead of
+``request()``.
 
 ..
     >>> server.notify('cat', name='Mittens')
@@ -37,9 +36,5 @@ Send multiple `Request`_ objects::
 Using list comprehension to get the cube of ten numbers::
 
     >>> server.send([Request('cube', i) for i in range(10)])
-
-Unlike a single request, batch requests return the full JSON-RPC response, i.e.
-a ``list`` containing one response object for every request (excluding
-notifications).
 
 .. note:: The server may not support batch requests.
