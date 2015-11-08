@@ -1,6 +1,6 @@
 """
-Request
-*******
+Requests
+********
 """
 
 import itertools
@@ -46,8 +46,7 @@ class _RequestClassType(type):
 
 
 class Notification(with_metaclass(_RequestClassType, dict)):
-    """The `Request <api.html#request>`_ class makes it easy to form a JSON-RPC
-    request::
+    """This class makes it easy to form a JSON-RPC request::
 
         >>> from jsonrpcclient import Notification
         >>> Notification('cat')
@@ -62,6 +61,12 @@ class Notification(with_metaclass(_RequestClassType, dict)):
     Keyword arguments are also acceptable::
 
         >>> Notification('cat', name='Mittens', age=5)
+        {'jsonrpc': '2.0', 'method': 'cat', 'params': {'name': 'Mittens', 'age': 5}}
+
+    If you prefer, call the method as though it was a class attribute. It gets
+    the same result::
+
+        >>> Notification.cat(name='Mittens', age=5)
         {'jsonrpc': '2.0', 'method': 'cat', 'params': {'name': 'Mittens', 'age': 5}}
 
     :param method: The method name.
@@ -98,25 +103,27 @@ class Notification(with_metaclass(_RequestClassType, dict)):
 
 
 class Request(Notification):
-    """Same as a notification, except we expect a response.
-
-    An auto-iterated id number is used::
+    """This is the same as a Notification, but we want a response so the ``id``
+    property is included.
 
         >>> Request('cat')
         {'jsonrpc': '2.0', 'method': 'cat', 'id': 1}
+
+    An auto-iterated id number is used. If you run the same command again, you
+    get id 2::
+
         >>> Request('cat')
         {'jsonrpc': '2.0', 'method': 'cat', 'id': 2}
 
-    Include a ``request_id`` to customize the ``id``::
+    Include a ``request_id`` to specify the exact ``id`` to use::
 
         >>> Request('cat', request_id='Request #1')
         {'jsonrpc': '2.0', 'method': 'cat', 'id': 'Request #1'}
 
-    If you prefer, call the method directly on the ``Request`` class to get the
-    same result::
-
-        >>> Request.cat()
-        {'jsonrpc': '2.0', 'method': 'cat', 'id': 3}
+    :param method: The method name.
+    :param args: Positional arguments.
+    :param kwargs: Keyword arguments.
+    :returns: The JSON-RPC request in dictionary format.
     """
 
     id_iterator = itertools.count(1)
