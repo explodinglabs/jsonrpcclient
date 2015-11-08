@@ -1,3 +1,6 @@
+.. rubric::
+    `jsonrpcclient <index.html>`_
+
 jsonrpcclient over ZeroMQ
 *************************
 
