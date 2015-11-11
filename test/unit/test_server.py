@@ -63,6 +63,7 @@ class TestDirect(TestServer):
 
 
 class TestProcessResponse(TestServer):
+    # pylint: disable=protected-access
 
     def test_none(self):
         response = None

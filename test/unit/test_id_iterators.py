@@ -1,3 +1,6 @@
+"""test_id_iterators.py"""
+# pylint: disable=missing-docstring
+
 from unittest import TestCase, main
 import re
 from uuid import UUID
@@ -17,7 +20,7 @@ class TestHexIterator(TestCase):
 
 class TestUUIDIterator(TestCase):
 
-    def test(self):
+    def test(self): # pylint: disable=no-self-use
         i = uuid_iterator()
         # Raise ValueError if badly formed hexadecimal UUID string
         UUID(next(i), version=4)

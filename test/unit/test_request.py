@@ -84,18 +84,13 @@ class TestRequest(TestCase):
 
     def test_positional(self):
         self.assertEqual(
-                {'jsonrpc': '2.0', 'method': 'sqrt', 'params': [1], 'id': 1},
+            {'jsonrpc': '2.0', 'method': 'sqrt', 'params': [1], 'id': 1},
             Request('sqrt', 1))
 
     def test_keyword(self):
         self.assertEqual(
             {'jsonrpc': '2.0', 'method': 'find', 'params': {'name': 'Foo'}, 'id': 1},
             Request('find', name='Foo'))
-
-    def test_specified_id(self):
-        self.assertEqual(
-            {'jsonrpc': '2.0', 'method': 'get', 'id': 'Request #1'},
-            Request('get', request_id='Request #1'))
 
     def test_auto_iterating_id(self):
         self.assertEqual(
@@ -107,8 +102,8 @@ class TestRequest(TestCase):
 
     def test_specified_id(self):
         self.assertEqual(
-            {'jsonrpc': '2.0', 'method': 'cat', 'id': 'Request 1'},
-            Request.cat(request_id='Request 1'))
+            {'jsonrpc': '2.0', 'method': 'get', 'id': 'Request #1'},
+            Request('get', request_id='Request #1'))
 
     def test_custom_iterator(self):
         Request.id_iterator = hex_iterator(10)

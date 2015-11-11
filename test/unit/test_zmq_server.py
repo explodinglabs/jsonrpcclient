@@ -1,7 +1,6 @@
 """test_zmq_server.py"""
 #pylint:disable=missing-docstring,line-too-long
 
-import json
 from unittest import TestCase, main
 import itertools
 
@@ -25,7 +24,7 @@ class TestZMQServer(TestCase):
 
     @patch('zmq.Socket.send_string', Mock())
     @patch('zmq.Socket.recv', Mock())
-    def test_send_message(self):
+    def test_send_message(self): # pylint: disable=no-self-use
         server = ZMQServer('tcp://localhost:5555')
         server.send_message(str(Request('go')))
 
