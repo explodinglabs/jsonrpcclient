@@ -108,8 +108,16 @@ class Server(with_metaclass(ABCMeta, object)):
         """
 
     def send(self, request):
-        """Send a request or batch of requests."""
-        response = self.send_message(str(request))
+        """Send a request or batch of requests.
+
+        :param request:
+            The request to send. If a string, must be valid JSON (double quotes
+            around the identifiers!). Otherwise it must be a json serializable
+            object (list or dict).
+        """
+        if not isinstance(request, basestring):
+            request = json.dumps(request)
+        response = self.send_message(request)
         return self._process_response(response)
 
     # Alternate ways to send a request -----------
