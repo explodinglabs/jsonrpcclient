@@ -46,6 +46,7 @@ class _RequestClassType(type):
 
 
 class Notification(with_metaclass(_RequestClassType, dict)):
+    # pylint: disable=line-too-long
     """This class makes it easy to form a JSON-RPC request::
 
         >>> from jsonrpcclient import Notification

@@ -7,7 +7,7 @@ import json
 import pkgutil
 import logging
 from abc import ABCMeta, abstractmethod
-from past.builtins import basestring
+from past.builtins import basestring # pylint: disable=redefined-builtin
 
 import jsonschema
 from future.utils import with_metaclass
