@@ -19,6 +19,7 @@ def _sort_request(req):
     :param req: JSON-RPC request in dict format.
     :return: The same request, nicely sorted.
     """
+
     sort_order = ['jsonrpc', 'method', 'params', 'id']
     return OrderedDict(sorted(req.items(), key=lambda k: sort_order.index(
         k[0])))
