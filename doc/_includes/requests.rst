@@ -7,11 +7,11 @@ followed by the arguments to the method::
 
     >>> server.request('cat', name='Mittens')
 
-If you're not interested in a response, use ``notify()`` instead of
-``request()``.
-
 When sending a single request, the return value is the *payload* (the
 ``result`` part of the JSON-RPC response message).
+
+If you're not interested in a response, use ``notify()`` instead of
+``request()``.
 
 Batch requests
 --------------
@@ -29,6 +29,6 @@ Using list comprehension to get the cube of ten numbers::
     >>> server.send([Request('cube', i) for i in range(10)])
 
 Unlike single requests, batch requests return the whole JSON-RPC response
-object, i.e.  a list of responses for each request that had an ``id`` member.
+object, i.e. a list of responses for each request that had an ``id`` member.
 
 .. note:: The server may not support batch requests.

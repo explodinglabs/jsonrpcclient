@@ -1,20 +1,28 @@
 Recent Changes
 ==============
 
-2.0.2 (2015-11-02)
-------------------
-- Send a raw JSON-RPC message with ``server.send()``.
-- Send multiple requests in one message with batch requests.
+2.1.0 (16 Nov 2015)
+-------------------
+
+- Send `batch requests
+  <https://jsonrpcserver.readthedocs.org/http.html#batch-requests>`_.
+
+- Send a raw JSON-RPC message with `send()
+  <https://jsonrpcserver.readthedocs.org/http.html#usage>`_.
+
+- Configure the `id part of the request
+  <https://jsonrpcserver.readthedocs.org/api.html#id-iterators>`_.
+
 - Using the method name directly on the server object, e.g. ``server.cat()``, is
   now equal to ``server.request('cat')``. (Previously it was equal to
-  ``server.notify('cat')``.) I don't recommend using this method anyway.
-- Many new ways to set the "id" part of the request.
-- Removed ``ReceivedNoResponse`` and ``UnwantedException``. The complexity of
-  supporting them, (particularly ``ReceivedNoResponse``), outweighed their
-  usefulness.
-- Project hosting moved to `github <https://github.com/bcb/jsonrpcclient>`_.
+  ``server.notify('cat')``.)
 
-2.0.1 (2015-09-04)
+- Removed ``ReceivedNoResponse`` and ``UnwantedException`` exceptions. The
+  complexity of supporting them outweighed their usefulness.
+
+- Project hosting has moved to `github <https://github.com/bcb/jsonrpcclient>`_.
+
+2.0.1 (4 Sep 2015)
 ------------------
 
 A major update, which makes way for protocols other than just HTTP.
