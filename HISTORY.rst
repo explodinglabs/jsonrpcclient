@@ -5,13 +5,13 @@ Recent Changes
 -------------------
 
 - Send `batch requests
-  <https://jsonrpcserver.readthedocs.org/http.html#batch-requests>`_.
+  <https://jsonrpcclient.readthedocs.org/http.html#batch-requests>`_.
 
 - Send a raw JSON-RPC message with `send()
-  <https://jsonrpcserver.readthedocs.org/http.html#usage>`_.
+  <https://jsonrpcclient.readthedocs.org/http.html#usage>`_.
 
 - The ``id`` part of requests can be `configured
-  <https://jsonrpcserver.readthedocs.org/api.html#id-iterators>`_.
+  <https://jsonrpcclient.readthedocs.org/api.html#id-iterators>`_.
 
 - Using the method name directly on the server object, e.g. ``server.cat()``, is
   now equal to ``server.request('cat')``. (Previously it was equal to
