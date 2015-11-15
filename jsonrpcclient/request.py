@@ -68,8 +68,7 @@ class Notification(with_metaclass(_RequestClassType, dict)):
         >>> Notification('cat', name='Mittens', age=5)
         {'jsonrpc': '2.0', 'method': 'cat', 'params': {'name': 'Mittens', 'age': 5}}
 
-    If you prefer, call the method as though it was a class attribute. It gets
-    the same result::
+    If you prefer, call the method as though it was a class attribute::
 
         >>> Notification.cat(name='Mittens', age=5)
         {'jsonrpc': '2.0', 'method': 'cat', 'params': {'name': 'Mittens', 'age': 5}}
