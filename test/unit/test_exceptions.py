@@ -8,14 +8,6 @@ from jsonrpcclient import exceptions
 
 class TestExceptions(TestCase):
 
-    def test_ReceivedNoResponse(self):
-        with self.assertRaises(exceptions.ReceivedNoResponse):
-            raise exceptions.ReceivedNoResponse
-
-    def test_UnwantedResponse(self):
-        with self.assertRaises(exceptions.UnwantedResponse):
-            raise exceptions.UnwantedResponse
-
     def test_ParseResponseError(self):
         with self.assertRaises(exceptions.ParseResponseError):
             raise exceptions.ParseResponseError

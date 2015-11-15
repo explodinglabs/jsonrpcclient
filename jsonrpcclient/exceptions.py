@@ -21,22 +21,6 @@ class JsonRpcClientError(Exception):
     pass
 
 
-class ReceivedNoResponse(JsonRpcClientError):
-    """A response message was expected, but none was given."""
-
-    def __init__(self):
-        super(ReceivedNoResponse, self).__init__(
-            'No response was received')
-
-
-class UnwantedResponse(JsonRpcClientError):
-    """A response was not requested, but one was given anyway."""
-
-    def __init__(self):
-        super(UnwantedResponse, self).__init__(
-            'An unwanted response was given')
-
-
 class ParseResponseError(JsonRpcClientError):
     """The response was not valid JSON."""
 
