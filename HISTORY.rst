@@ -10,7 +10,7 @@ Recent Changes
 - Send a raw JSON-RPC message with `send()
   <https://jsonrpcserver.readthedocs.org/http.html#usage>`_.
 
-- Configure the `id part of the request
+- The ``id`` part of requests can be `configured
   <https://jsonrpcserver.readthedocs.org/api.html#id-iterators>`_.
 
 - Using the method name directly on the server object, e.g. ``server.cat()``, is
