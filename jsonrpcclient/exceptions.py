@@ -4,7 +4,8 @@ Exceptions
 
 These exceptions are raised when processing responses from the server. For
 example, if the response was garbage and could not be parsed,
-``ParseResponseError`` is raised.
+:class:`ParseResponseError <jsonrpcclient.exceptions.ParseResponseError>` is
+raised.
 
 To handle them, use a try-block when calling ``notify`` or ``request``::
 
