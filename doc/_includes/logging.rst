@@ -4,9 +4,9 @@ To see the JSON-RPC messages going back and forth, set the logging level to
     import logging
     logging.getLogger('jsonrpcclient').setLevel(logging.INFO)
 
-Then create a basic handler::
+Then add a basic handler::
 
-    logging.basicConfig() # Creates a StreamHandler with a default format
+    logging.getLogger('jsonrpcclient').addHandler(logging.StreamHandler())
 
 Or use custom handlers and formats::
 

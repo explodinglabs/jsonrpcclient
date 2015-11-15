@@ -46,7 +46,7 @@ def uuid_iterator():
 
 def random_iterator(length=8, chars=digits+ascii_lowercase):
     """A random string. Not unique, but has around 1 in a million chance of
-    collision (with default values).
+    collision with default values.
 
     e.g. 'fubui5e6'
 

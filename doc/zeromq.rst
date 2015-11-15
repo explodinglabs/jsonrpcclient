@@ -1,5 +1,4 @@
-.. rubric::
-    `jsonrpcclient <index.html>`_
+.. rubric:: :doc:`index`
 
 jsonrpcclient over ZeroMQ
 *************************
@@ -63,4 +62,4 @@ Examples
 - `ZeroMQ Client using PyZMQ
   <https://gist.github.com/bcb/1c74dfcd68b1649f58eb>`_
 
-`Back home <index.html>`_
+:doc:`Back home <index>`

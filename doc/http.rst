@@ -1,5 +1,4 @@
-.. rubric::
-    `jsonrpcclient <index.html>`_
+.. rubric:: :doc:`index`
 
 jsonrpcclient over HTTP
 ***********************
@@ -48,7 +47,7 @@ handles the authentication.
 
 .. note::
 
-    In addition to ``auth`` and ``headers``, other arguments can allow you to
+    In addition to headers and authentication, other arguments can allow you to
     set the timeout, cookies, SSL verification and more. For the full list of
     options see the request method `here
     <https://github.com/kennethreitz/requests/blob/master/requests/api.py>`__.
@@ -73,31 +72,17 @@ Logging
 
 The request format has these fields:
 
-%(endpoint)s
-    The server endpoint, eg. ``http://example.com/api``.
-
-%(http_headers)s
-    The full HTTP headers.
-
-%(message)s
-    The JSON request (the body).
+:%(endpoint)s: The server endpoint, eg. ``http://example.com/api``.
+:%(http_headers)s: The full HTTP headers.
+:%(message)s: The JSON request (the body).
 
 The response format has these fields:
 
-%(endpoint)s
-    The server endpoint, eg. ``http://example.com/api``.
-
-%(http_code)d
-    The HTTP status code received from the server, eg. ``400``.
-
-%(http_reason)s
-    The description of the status code, eg. ``BAD REQUEST``.
-
-%(http_headers)s
-    The full HTTP headers.
-
-%(message)s
-    The JSON response (the body).
+:%(endpoint)s: The server endpoint, eg. ``http://example.com/api``.
+:%(http_code)d: The HTTP status code received from the server, eg. ``400``.
+:%(http_reason)s: The description of the status code, eg. ``BAD REQUEST``.
+:%(http_headers)s: The full HTTP headers.
+:%(message)s: The JSON response (the body).
 
 Examples
 ========
@@ -105,4 +90,4 @@ Examples
 - `HTTP Client using Requests
   <https://gist.github.com/bcb/cb0c90fa74e83bce616c>`_
 
-`Back home <index.html>`_
+:doc:`Back home <index>`

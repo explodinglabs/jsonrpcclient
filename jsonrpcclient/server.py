@@ -24,10 +24,10 @@ class Server(with_metaclass(ABCMeta, object)):
     """
 
     # Request and response logs
-    request_log = logging.getLogger(__name__+'.request')
-    response_log = logging.getLogger(__name__+'.response')
+    __request_log = logging.getLogger(__name__+'.request')
+    __response_log = logging.getLogger(__name__+'.response')
 
-    #: Validator
+    #: Validator, set to None for no validation
     validator = jsonschema.Draft4Validator(json.loads(pkgutil.get_data(
         __name__, 'response-schema.json').decode('utf-8')))
 
@@ -37,7 +37,7 @@ class Server(with_metaclass(ABCMeta, object)):
 
     def log_request(self, request, extra=None):
         """Log the JSON-RPC request before sending. Should be called by
-        subclasses before sending.
+        subclasses in :meth:`send_message`, before sending.
 
         :param request: The JSON-RPC request string.
         :param extra: A dict of extra fields that may be logged.
@@ -46,11 +46,11 @@ class Server(with_metaclass(ABCMeta, object)):
             extra = {}
         # Add endpoint to list of info to include in log message
         extra.update({'endpoint': self.endpoint})
-        self.request_log.info(request, extra=extra)
+        self.__request_log.info(request, extra=extra)
 
     def log_response(self, response, extra=None):
         """Log the JSON-RPC response after sending. Should be called by
-        subclasses after sending.
+        subclasses in :meth:`send_message`, after receiving the response.
 
         :param response: The JSON-RPC response string.
         :param extra: A dict of extra fields that may be logged.
@@ -62,7 +62,7 @@ class Server(with_metaclass(ABCMeta, object)):
         # Clean up the response for logging
         response = response.replace("\n", '').replace('  ', ' ') \
                 .replace('{ ', '{')
-        self.response_log.info(response, extra=extra)
+        self.__response_log.info(response, extra=extra)
 
     def _process_response(self, response):
         """Processes the response and returns the 'result' portion if present.

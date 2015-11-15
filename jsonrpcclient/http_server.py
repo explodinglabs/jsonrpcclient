@@ -22,9 +22,8 @@ class HTTPServer(Server):
 
     # The default HTTP header, these are used if no other headers are specified
     DEFAULT_HTTP_HEADERS = {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-    }
+        'Content-Type': 'application/json', 'Accept':
+        'application/json'}
 
     def __init__(self, endpoint, **kwargs):
         super(HTTPServer, self).__init__(endpoint)
@@ -34,7 +33,7 @@ class HTTPServer(Server):
         kwargs.pop('headers')
 
     def send_message(self, request):
-        """Send the request to the server and return the response.
+        """Transport the message to the server and return the response.
 
         :param request: The JSON-RPC request string.
         :return: The response (a string for requests, None for notifications).
