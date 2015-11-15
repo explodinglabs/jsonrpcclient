@@ -1,7 +1,7 @@
 jsonrpcclient
 *************
 
-Send `JSON-RPC <http://www.jsonrpc.org/>`_ requests in Python 2.7 and 3.3+.
+Send JSON-RPC requests in Python 2.7 and 3.3+.
 
 .. sourcecode:: python
 

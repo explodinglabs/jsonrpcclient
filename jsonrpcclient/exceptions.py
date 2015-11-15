@@ -47,7 +47,7 @@ class ParseResponseError(JsonRpcClientError):
 class ReceivedErrorResponse(JsonRpcClientError):
     """Raised if a single JSON-RPC `error response object
     <http://www.jsonrpc.org/specification#error_object>`_ is received. *This is
-    not raised when there are multiple responses to a batch request.*
+    not raised for batch requests.*
 
     This error means one of two things:
 

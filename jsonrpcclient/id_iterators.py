@@ -2,14 +2,14 @@
 ID Iterators
 ************
 
-The default "id" part of a request is a decimal number which increments starting
-from 1, but the ids can be changed to different formats if you prefer::
+By default the request ``id`` is a decimal number which increments for each
+request. Use a different format by setting ``Request.id_iterator``::
 
     >>> from jsonrpcclient.request import Request
     >>> from jsonrpcclient.id_iterators import random_iterator
     >>> Request.id_iterator = random_iterator()
     >>> Request('go')
-    {'jsonrpc': '2.0', 'method': 'get', 'id': 'fubui5e6'}
+    {'jsonrpc': '2.0', 'method': 'go', 'id': 'fubui5e6'}
 """
 
 from uuid import uuid4
@@ -20,7 +20,7 @@ from random import choice
 def hex_iterator(start=1):
     """Incremental hexadecimal numbers.
 
-    e.g. '1', '2'..'8a2f', etc.
+    e.g. '1', '2' .. '9', 'a', 'b', etc.
 
     ::
 
@@ -46,7 +46,7 @@ def uuid_iterator():
 
 def random_iterator(length=8, chars=digits+ascii_lowercase):
     """A random string. Not unique, but has around 1 in a million chance of
-    collision (with default values).
+    collision with default values.
 
     e.g. 'fubui5e6'
 

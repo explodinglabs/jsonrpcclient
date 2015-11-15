@@ -1,6 +1,8 @@
 """
 Requests
 ********
+
+These classes make it easy to create JSON-RPC Request objects.
 """
 
 import itertools
@@ -48,7 +50,8 @@ class _RequestClassType(type):
 
 class Notification(with_metaclass(_RequestClassType, dict)):
     # pylint: disable=line-too-long
-    """This class makes it easy to form a JSON-RPC request::
+    """A JSON-RPC Request object, with no ``id`` member (meaning no payload data
+    is wanted)::
 
         >>> from jsonrpcclient import Notification
         >>> Notification('cat')
@@ -74,7 +77,7 @@ class Notification(with_metaclass(_RequestClassType, dict)):
     :param method: The method name.
     :param args: Positional arguments.
     :param kwargs: Keyword arguments.
-    :returns: The JSON-RPC request in dictionary format.
+    :returns: The JSON-RPC request in dictionary form.
     """
 
     def __init__(self, method, *args, **kwargs):
@@ -105,19 +108,18 @@ class Notification(with_metaclass(_RequestClassType, dict)):
 
 
 class Request(Notification):
-    """This is the same as a Notification, but we want a response so the ``id``
-    property is included.
+    """A JSON-RPC Request object, with an ``id`` member (meaning payload data is
+    wanted)::
 
         >>> Request('cat')
         {'jsonrpc': '2.0', 'method': 'cat', 'id': 1}
 
-    An auto-iterated id number is used. If you run the same command again, you
-    get id 2::
+    An auto-incremented ``id`` is used, so each request has a unique ``id``::
 
         >>> Request('cat')
         {'jsonrpc': '2.0', 'method': 'cat', 'id': 2}
 
-    Include a ``request_id`` to specify the exact ``id`` to use::
+    Use ``request_id`` to specify the ``id`` to use::
 
         >>> Request('cat', request_id='Request #1')
         {'jsonrpc': '2.0', 'method': 'cat', 'id': 'Request #1'}
@@ -125,7 +127,7 @@ class Request(Notification):
     :param method: The method name.
     :param args: Positional arguments.
     :param kwargs: Keyword arguments.
-    :returns: The JSON-RPC request in dictionary format.
+    :returns: The JSON-RPC request in dictionary form.
     """
 
     id_iterator = itertools.count(1)
