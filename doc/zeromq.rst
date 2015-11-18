@@ -42,19 +42,13 @@ Logging
 
 The request format has these fields:
 
-%(endpoint)s
-    The server endpoint, eg. ``http://localhost:5555``.
-
-%(message)s
-    The JSON request (the body).
+:endpoint: The server endpoint, eg. ``http://localhost:5555``.
+:message: The JSON request (the body).
 
 The response format has these fields:
 
-%(endpoint)s
-    The server endpoint, eg. ``http://localhost:5555``.
-
-%(message)s
-    The JSON response (the body).
+:endpoint: The server endpoint, eg. ``http://localhost:5555``.
+:message: The JSON response (the body).
 
 Examples
 ========

@@ -69,17 +69,17 @@ Logging
 
 The request format has these fields:
 
-:%(endpoint)s: The server endpoint, eg. ``http://example.com/api``.
-:%(http_headers)s: The full HTTP headers.
-:%(message)s: The JSON request (the body).
+:endpoint: The server endpoint, eg. ``http://example.com/api``.
+:http_headers: The full HTTP headers.
+:message: The JSON request (the body).
 
 The response format has these fields:
 
-:%(endpoint)s: The server endpoint, eg. ``http://example.com/api``.
-:%(http_code)d: The HTTP status code received from the server, eg. ``400``.
-:%(http_reason)s: The description of the status code, eg. ``BAD REQUEST``.
-:%(http_headers)s: The full HTTP headers.
-:%(message)s: The JSON response (the body).
+:endpoint: The server endpoint, eg. ``http://example.com/api``.
+:http_code: The HTTP status code received from the server, eg. ``400``.
+:http_reason: The description of the status code, eg. ``BAD REQUEST``.
+:http_headers: The full HTTP headers.
+:message: The JSON response (the body).
 
 Examples
 ========
