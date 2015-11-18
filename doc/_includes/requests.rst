@@ -7,8 +7,8 @@ followed by the arguments to the method::
 
     >>> server.request('cat', name='Mittens')
 
-When sending a single request, the return value is the *payload* (the
-``result`` part of the JSON-RPC response message).
+The return value is the *payload* (the ``result`` part of the JSON-RPC response
+message).
 
 If you're not interested in a response, use ``notify()`` instead of
 ``request()``.
