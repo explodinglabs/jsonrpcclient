@@ -1,3 +1,7 @@
-The jsonrpcclient library also raises exceptions, for example if the server
-responded with an error message. The full list of exceptions are `here
-<api.html#exceptions>`_.
+.. api.html#exceptions.ParseError
+.. http://python-jsonschema.readthedocs.org/en/latest/errors/#jsonschema.exceptions.ValidationError
+.. api.html#exceptions.ReceivedErrorResponse
+
+:jsonrpcclient.ParseError: Raised if the response is not valid JSON.
+:jsonschema.ValidationError: Raised if the response is not a valid JSON-RPC response.
+:jsonrpcclient.ReceivedErrorResponse: Raised if the server responded with an error message.

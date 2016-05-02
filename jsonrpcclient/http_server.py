@@ -37,6 +37,8 @@ class HTTPServer(Server):
 
         :param request: The JSON-RPC request string.
         :return: The response (a string for requests, None for notifications).
+        :raise requests.exceptions.RequestException:
+            Raised by the requests module in the event of a communications error.
         """
         # Prepare the session
         session = Session()

@@ -55,15 +55,12 @@ handles the authentication.
 Exceptions
 ==========
 
-In the event of a communications problem, the Requests module raises
-`requests.exceptions.RequestException <http://docs.python-requests.org/en/latest/user/quickstart/#errors-and-exceptions>`_::
-
-    try:
-        server.request('go')
-    except requests.exceptions.RequestException as e:
-        print(str(e))
+:requests.exceptions.RequestException:
+    If there was a problem transferring the message.
 
 .. include:: _includes/exceptions.rst
+
+.. <http://docs.python-requests.org/en/latest/user/quickstart/#errors-and-exceptions>`_
 
 Logging
 =======
