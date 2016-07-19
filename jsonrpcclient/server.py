@@ -69,8 +69,6 @@ class Server(with_metaclass(ABCMeta, object)):
 
         :param response: The JSON-RPC response string to process.
         :return: The response string, or None
-        :raise jsonschema.ValidationError:
-        :raise jsonrpcclient.JsonRpcClientError:
         """
         if response:
             if isinstance(response, basestring):
@@ -114,6 +112,15 @@ class Server(with_metaclass(ABCMeta, object)):
             The request to send. If a string, must be valid JSON (double quotes
             around the identifiers!). Otherwise it must be a json serializable
             object (list or dict).
+        :raise jsonrpcclient.ParseResponseError:
+            The response was not valid JSON. (`doc
+            <api.html#jsonrpcclient.exceptions.ParseResponseError>`__)
+        :raise jsonschema.ValidationError:
+            The response was not a valid JSON-RPC response. (`doc
+            <http://python-jsonschema.readthedocs.org/en/latest/errors/#jsonschema.exceptions.ValidationError>`__)
+        :raise jsonrpcclient.ReceivedErrorResponse:
+            The server responded with an error message. (`doc
+            <api.html#jsonrpcclient.exceptions.ReceivedErrorResponse>`__)
         """
         if not isinstance(request, basestring):
             request = json.dumps(request)
