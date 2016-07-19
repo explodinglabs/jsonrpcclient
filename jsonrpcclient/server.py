@@ -99,15 +99,16 @@ class Server(with_metaclass(ABCMeta, object)):
         return None
 
     @abstractmethod
-    def send_message(self, request):
-        """Send the RPC request to the server. Override this method in the
-        protocol-specific subclass, and return the response.
+    def send_message(self, request, **kwargs):
+        """Used internally - send the request to the server. Override this
+        method in the protocol-specific subclasses. Be sure to log both the
+        request and response, and return the response.
 
         :param request: A JSON-RPC request, in dict format.
         :return: The response (a string for requests, None for notifications).
         """
 
-    def send(self, request):
+    def send(self, request, **kwargs):
         """Send a request or batch of requests.
 
         :param request:
@@ -115,9 +116,11 @@ class Server(with_metaclass(ABCMeta, object)):
             around the identifiers!). Otherwise it must be a json serializable
             object (list or dict).
         """
+        # Convert request to a string
         if not isinstance(request, basestring):
             request = json.dumps(request)
-        response = self.send_message(request)
+        # Call internal method to transport the message
+        response = self.send_message(request, **kwargs)
         return self._process_response(response)
 
     # Alternate ways to send a request -----------
