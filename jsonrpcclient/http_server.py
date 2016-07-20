@@ -22,40 +22,33 @@ class HTTPServer(Server):
 
     # The default HTTP header
     DEFAULT_HTTP_HEADERS = {
-        'Content-Type': 'application/json', 'Accept':
-        'application/json'}
+        'Content-Type': 'application/json', 'Accept': 'application/json'}
 
-    def __init__(self, endpoint, **kwargs):
+    def __init__(self, endpoint):
         super(HTTPServer, self).__init__(endpoint)
-        # Set the default headers if none were passed
         self.session = Session()
-        self.request_args = {'headers': self.DEFAULT_HTTP_HEADERS}
-        print(self.request_args)
-        self.request_args.update(kwargs)
-        print(self.request_args)
+        self.session.headers.update(self.DEFAULT_HTTP_HEADERS)
 
-    def send_message(self, request, **kwargs):
+    def send_message(self, request, headers=None, files=None, params=None,
+            auth=None, cookies=None, **kwargs):
         """Transport the message to the server and return the response.
 
         :param request: The JSON-RPC request string.
-        :return: The response.
+        :return: The JSON-RPC response.
         :rtype: A string for requests, None for notifications.
         :raise requests.exceptions.RequestException:
             Raised by the requests module in the event of a communications error.
         """
-        # Settings to pass to Request(). Merge with global ones.
-        request_args = self.request_args.copy()
-        request_args.update(**kwargs)
-        # Prepare the request - we're using prepared requests because it gives
-        # more information for logging
+        # Prepare the request
         request = Request(method='POST', url=self.endpoint, data=request, \
-                **request_args)
+                headers=headers, files=files, params=params, auth=auth,
+                cookies=cookies)
         prepped = self.session.prepare_request(request)
         self.last_request = prepped
         # Log the request
         self.log_request(request, {'http_headers': prepped.headers})
         # Send the message
-        response = self.session.send(prepped)
+        response = self.session.send(prepped, **kwargs)
         # Log the response
         self.log_response(response.text, {'http_code': response.status_code, \
             'http_reason': response.reason, 'http_headers': response.headers})
