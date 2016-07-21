@@ -20,43 +20,37 @@ class HTTPServer(Server):
                    module.
     """
 
-    # The default HTTP header, these are used if no other headers are specified
-    DEFAULT_HTTP_HEADERS = {
-        'Content-Type': 'application/json', 'Accept':
-        'application/json'}
+    # The default HTTP header
+    __DEFAULT_HTTP_HEADERS__ = {
+        'Content-Type': 'application/json', 'Accept': 'application/json'}
 
-    def __init__(self, endpoint, **kwargs):
+    def __init__(self, endpoint):
         super(HTTPServer, self).__init__(endpoint)
-        kwargs.setdefault('headers', self.DEFAULT_HTTP_HEADERS)
-        self.headers = kwargs['headers']
-        self.requests_kwargs = kwargs
-        kwargs.pop('headers')
+        self.session = Session()
+        self.session.headers.update(self.__DEFAULT_HTTP_HEADERS__)
 
-    def send_message(self, request):
+    def _send_message(self, request, headers=None, files=None, params=None,
+            auth=None, cookies=None, **kwargs):
         """Transport the message to the server and return the response.
 
         :param request: The JSON-RPC request string.
-        :return: The response (a string for requests, None for notifications).
+        :return: The JSON-RPC response.
+        :rtype: A string for requests, None for notifications.
         :raise requests.exceptions.RequestException:
             Raised by the requests module in the event of a communications error.
         """
-        # Prepare the session
-        session = Session()
-        session_request = Request(method='POST', url=self.endpoint, \
-            headers=self.headers, data=request, **self.requests_kwargs)
-        prepared_request = session.prepare_request(session_request)
-        prepared_request.headers = dict(list(dict(
-            prepared_request.headers).items()) + list(self.headers.items()))
+        # Prepare the request
+        request = Request(method='POST', url=self.endpoint, data=request, \
+                headers=headers, files=files, params=params, auth=auth,
+                cookies=cookies)
+        prepped = self.session.prepare_request(request)
+        self.last_request = prepped
         # Log the request
-        self.log_request(request, {'http_headers': prepared_request.headers})
+        self._log_request(request, {'http_headers': prepped.headers})
         # Send the message
-        try:
-            response = session.send(prepared_request)
-        except RequestException:
-            session.close()
-            raise
-        session.close()
+        response = self.session.send(prepped, **kwargs)
         # Log the response
-        self.log_response(response.text, {'http_code': response.status_code, \
+        self._log_response(response.text, {'http_code': response.status_code, \
             'http_reason': response.reason, 'http_headers': response.headers})
+        self.last_response = response
         return response.text

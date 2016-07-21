@@ -18,7 +18,7 @@ from jsonrpcclient.request import Notification, Request
 
 class Server(with_metaclass(ABCMeta, object)):
     """Protocol-agnostic class representing the remote server. Subclasses should
-    inherit and override ``send_message``.
+    inherit and override ``_send_message``.
 
     :param endpoint: The server address.
     """
@@ -35,9 +35,9 @@ class Server(with_metaclass(ABCMeta, object)):
         #: Holds the server address
         self.endpoint = endpoint
 
-    def log_request(self, request, extra=None):
+    def _log_request(self, request, extra=None):
         """Log the JSON-RPC request before sending. Should be called by
-        subclasses in :meth:`send_message`, before sending.
+        subclasses in :meth:`_send_message`, before sending.
 
         :param request: The JSON-RPC request string.
         :param extra: A dict of extra fields that may be logged.
@@ -48,9 +48,9 @@ class Server(with_metaclass(ABCMeta, object)):
         extra.update({'endpoint': self.endpoint})
         self.__request_log.info(request, extra=extra)
 
-    def log_response(self, response, extra=None):
+    def _log_response(self, response, extra=None):
         """Log the JSON-RPC response after sending. Should be called by
-        subclasses in :meth:`send_message`, after receiving the response.
+        subclasses in :meth:`_send_message`, after receiving the response.
 
         :param response: The JSON-RPC response string.
         :param extra: A dict of extra fields that may be logged.
@@ -97,15 +97,16 @@ class Server(with_metaclass(ABCMeta, object)):
         return None
 
     @abstractmethod
-    def send_message(self, request):
-        """Send the RPC request to the server. Override this method in the
-        protocol-specific subclass, and return the response.
+    def _send_message(self, request, **kwargs):
+        """Used internally - send the request to the server. Override this
+        method in the protocol-specific subclasses. Be sure to log both the
+        request and response, and return the response.
 
         :param request: A JSON-RPC request, in dict format.
         :return: The response (a string for requests, None for notifications).
         """
 
-    def send(self, request):
+    def send(self, request, **kwargs):
         """Send a request or batch of requests.
 
         :param request:
@@ -122,9 +123,11 @@ class Server(with_metaclass(ABCMeta, object)):
             The server responded with an error message. (`doc
             <api.html#jsonrpcclient.exceptions.ReceivedErrorResponse>`__)
         """
+        # Convert request to a string
         if not isinstance(request, basestring):
             request = json.dumps(request)
-        response = self.send_message(request)
+        # Call internal method to transport the message
+        response = self._send_message(request, **kwargs)
         return self._process_response(response)
 
     # Alternate ways to send a request -----------
