@@ -55,8 +55,9 @@ parameters.
 Exceptions
 ==========
 
-:requests.exceptions.RequestException:
-    If there was a problem transferring the message.
+The Requests module raises a `requests.exceptions.RequestException
+<http://docs.python-requests.org/en/latest/api/#exceptions>`_ if there's a
+problem transferring the message.
 
 .. include:: _includes/exceptions.rst
 
