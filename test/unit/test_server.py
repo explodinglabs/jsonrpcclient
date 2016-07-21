@@ -14,7 +14,7 @@ from jsonrpcclient.server import Server
 
 class DummyServer(Server):
     """A dummy class for testing the abstract Server class"""
-    def send_message(self, request):
+    def _send_message(self, request):
         return '{"jsonrpc": "2.0", "result": 15, "id": 1}'
 
 
@@ -29,12 +29,12 @@ class TestLogging(TestServer):
 
     def test_request(self):
         with LogCapture() as l:
-            self.server.log_request('{"jsonrpc": "2.0", "method": "go"}')
+            self.server._log_request('{"jsonrpc": "2.0", "method": "go"}')
         l.check(('jsonrpcclient.server.request', 'INFO', '{"jsonrpc": "2.0", "method": "go"}'))
 
     def test_response(self):
         with LogCapture() as l:
-            self.server.log_response('{"jsonrpc": "2.0", "result": 5, "id": 1}')
+            self.server._log_response('{"jsonrpc": "2.0", "result": 5, "id": 1}')
         l.check(('jsonrpcclient.server.response', 'INFO', '{"jsonrpc": "2.0", "result": 5, "id": 1}'))
 
 

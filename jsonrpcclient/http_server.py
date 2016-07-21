@@ -29,7 +29,7 @@ class HTTPServer(Server):
         self.session = Session()
         self.session.headers.update(self.DEFAULT_HTTP_HEADERS)
 
-    def send_message(self, request, headers=None, files=None, params=None,
+    def _send_message(self, request, headers=None, files=None, params=None,
             auth=None, cookies=None, **kwargs):
         """Transport the message to the server and return the response.
 
@@ -46,11 +46,11 @@ class HTTPServer(Server):
         prepped = self.session.prepare_request(request)
         self.last_request = prepped
         # Log the request
-        self.log_request(request, {'http_headers': prepped.headers})
+        self._log_request(request, {'http_headers': prepped.headers})
         # Send the message
         response = self.session.send(prepped, **kwargs)
         # Log the response
-        self.log_response(response.text, {'http_code': response.status_code, \
+        self._log_response(response.text, {'http_code': response.status_code, \
             'http_reason': response.reason, 'http_headers': response.headers})
         self.last_response = response
         return response.text

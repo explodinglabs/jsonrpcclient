@@ -27,14 +27,14 @@ class ZMQServer(Server):
         self.socket = self.context.socket(socket_type)
         self.socket.connect(endpoint)
 
-    def send_message(self, request):
+    def _send_message(self, request):
         """Transport the message to the server and return the response.
 
         :param request: The JSON-RPC request string.
         :return: The response (a string for requests, None for notifications).
         """
-        self.log_request(request)
+        self._log_request(request)
         self.socket.send_string(request)
         response = self.socket.recv().decode('UTF-8')
-        self.log_response(response)
+        self._log_response(response)
         return response

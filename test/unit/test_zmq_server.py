@@ -26,7 +26,7 @@ class TestZMQServer(TestCase):
     @patch('zmq.Socket.recv', Mock())
     def test_send_message(self): # pylint: disable=no-self-use
         server = ZMQServer('tcp://localhost:5555')
-        server.send_message(str(Request('go')))
+        server._send_message(str(Request('go')))
 
     def test_send_message_with_connection_error(self):
         server = ZMQServer('tcp://localhost:5555')
@@ -35,7 +35,7 @@ class TestZMQServer(TestCase):
         server.socket.setsockopt(zmq.SNDTIMEO, 5)
         server.socket.setsockopt(zmq.LINGER, 5)
         with self.assertRaises(zmq.error.ZMQError):
-            server.send_message(str(Request('go')))
+            server._send_message(str(Request('go')))
 
 
 if __name__ == '__main__':

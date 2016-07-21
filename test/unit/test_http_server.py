@@ -46,7 +46,7 @@ class TestHTTPServer(TestCase):
         s.session.headers['Content-Type'] = 'application/json-rpc'
         req = Request('go')
         try:
-            s.send_message(req)
+            s._send_message(req)
         except(requests.exceptions.RequestException):
             pass
         # Header set by argument
@@ -60,12 +60,12 @@ class TestHTTPServer(TestCase):
     def test_init_custom_auth():
         HTTPServer('http://test/')
 
-    # send_message
+    # _send_message
     def test_send_message_body(self):
         s = HTTPServer('http://test/')
         req = Request('go')
         try:
-            s.send_message(req)
+            s._send_message(req)
         except(requests.exceptions.RequestException):
             pass
         self.assertEqual(urlencode(req), s.last_request.body)
@@ -73,7 +73,7 @@ class TestHTTPServer(TestCase):
     def test_send_message_with_connection_error(self):
         s = HTTPServer('http://test/')
         with self.assertRaises(requests.exceptions.RequestException):
-            s.send_message(Request('go'))
+            s._send_message(Request('go'))
 
     @responses.activate
     def test_send_message_with_invalid_request(self):
@@ -81,19 +81,19 @@ class TestHTTPServer(TestCase):
         # Impossible to pass an invalid dict, so just assume the exception was raised
         responses.add(responses.POST, 'http://test/', status=400, body=requests.exceptions.InvalidSchema())
         with self.assertRaises(requests.exceptions.InvalidSchema):
-            s.send_message(Request('go'))
+            s._send_message(Request('go'))
 
     @responses.activate
     def test_send_message_with_success_200(self):
         s = HTTPServer('http://test/')
         responses.add(responses.POST, 'http://test/', status=200, body='{"jsonrpc": "2.0", "result": 5, "id": 1}')
-        s.send_message(Request('go'))
+        s._send_message(Request('go'))
 
     def test_send_message_custom_headers(self):
         s = HTTPServer('http://test/')
         req = Request('go')
         try:
-            s.send_message(req, headers={'Content-Type': 'application/json-rpc'})
+            s._send_message(req, headers={'Content-Type': 'application/json-rpc'})
         except(requests.exceptions.RequestException):
             pass
         # Header set by argument
@@ -108,7 +108,7 @@ class TestHTTPServer(TestCase):
         s.session.headers['Content-Type'] = 'application/json-rpc'
         req = Request('go')
         try:
-            s.send_message(req, headers={'Accept': 'application/json-rpc'})
+            s._send_message(req, headers={'Accept': 'application/json-rpc'})
         except(requests.exceptions.RequestException):
             pass
         # Header set by argument
@@ -124,7 +124,7 @@ class TestHTTPServer(TestCase):
         s.session.verify = 'ca-cert'
         req = Request('go')
         try:
-            s.send_message(req)
+            s._send_message(req)
         except(requests.exceptions.RequestException):
             pass
         self.assertEqual('ca-cert', s.last_request.verify)
