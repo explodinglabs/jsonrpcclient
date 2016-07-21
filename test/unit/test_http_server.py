@@ -45,10 +45,8 @@ class TestHTTPServer(TestCase):
         s = HTTPServer('http://test/')
         s.session.headers['Content-Type'] = 'application/json-rpc'
         req = Request('go')
-        try:
+        with self.assertRaises(requests.exceptions.RequestException):
             s._send_message(req)
-        except(requests.exceptions.RequestException):
-            pass
         # Header set by argument
         self.assertEqual('application/json-rpc', s.last_request.headers['Content-Type'])
         # Header set by DEFAULT_HEADERS
@@ -64,10 +62,8 @@ class TestHTTPServer(TestCase):
     def test_send_message_body(self):
         s = HTTPServer('http://test/')
         req = Request('go')
-        try:
+        with self.assertRaises(requests.exceptions.RequestException):
             s._send_message(req)
-        except(requests.exceptions.RequestException):
-            pass
         self.assertEqual(urlencode(req), s.last_request.body)
 
     def test_send_message_with_connection_error(self):
@@ -92,10 +88,8 @@ class TestHTTPServer(TestCase):
     def test_send_message_custom_headers(self):
         s = HTTPServer('http://test/')
         req = Request('go')
-        try:
+        with self.assertRaises(requests.exceptions.RequestException):
             s._send_message(req, headers={'Content-Type': 'application/json-rpc'})
-        except(requests.exceptions.RequestException):
-            pass
         # Header set by argument
         self.assertEqual('application/json-rpc', s.last_request.headers['Content-Type'])
         # Header set by DEFAULT_HEADERS
@@ -107,10 +101,8 @@ class TestHTTPServer(TestCase):
         s = HTTPServer('http://test/')
         s.session.headers['Content-Type'] = 'application/json-rpc'
         req = Request('go')
-        try:
+        with self.assertRaises(requests.exceptions.RequestException):
             s._send_message(req, headers={'Accept': 'application/json-rpc'})
-        except(requests.exceptions.RequestException):
-            pass
         # Header set by argument
         self.assertEqual('application/json-rpc', s.last_request.headers['Content-Type'])
         # Header set by DEFAULT_HEADERS
@@ -123,12 +115,8 @@ class TestHTTPServer(TestCase):
         s.session.cert = '/path/to/cert'
         s.session.verify = 'ca-cert'
         req = Request('go')
-        try:
+        with self.assertRaises(requests.exceptions.RequestException):
             s._send_message(req)
-        except(requests.exceptions.RequestException):
-            pass
-        self.assertEqual('ca-cert', s.last_request.verify)
-        self.assertEqual('/path/to/cert', s.last_request.cert)
 
 
 if __name__ == '__main__':
