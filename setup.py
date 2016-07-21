@@ -22,7 +22,6 @@ setup(
     package_data={'jsonrpcclient': ['response-schema.json']},
     include_package_data=True,
     install_requires=['future', 'jsonschema'],
-    tests_require=['tox'],
     classifiers=[
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3.3',
