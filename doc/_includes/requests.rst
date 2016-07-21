@@ -16,8 +16,8 @@ message)::
 If you're not interested in a response, use ``notify()`` instead of
 ``request()``.
 
-Lower-Level methods
--------------------
+Lower-Level
+-----------
 
 Send your own message with ``send()``::
 
