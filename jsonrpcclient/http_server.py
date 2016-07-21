@@ -21,13 +21,13 @@ class HTTPServer(Server):
     """
 
     # The default HTTP header
-    DEFAULT_HTTP_HEADERS = {
+    __DEFAULT_HTTP_HEADERS__ = {
         'Content-Type': 'application/json', 'Accept': 'application/json'}
 
     def __init__(self, endpoint):
         super(HTTPServer, self).__init__(endpoint)
         self.session = Session()
-        self.session.headers.update(self.DEFAULT_HTTP_HEADERS)
+        self.session.headers.update(self.__DEFAULT_HTTP_HEADERS__)
 
     def _send_message(self, request, headers=None, files=None, params=None,
             auth=None, cookies=None, **kwargs):
