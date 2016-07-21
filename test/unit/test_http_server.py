@@ -1,5 +1,5 @@
 """test_http_server.py"""
-# pylint: disable=missing-docstring,line-too-long,too-many-public-methods
+# pylint: disable=missing-docstring,line-too-long,too-many-public-methods,protected-access
 
 from unittest import TestCase, main
 import itertools
@@ -79,8 +79,9 @@ class TestHTTPServer(TestCase):
         with self.assertRaises(requests.exceptions.InvalidSchema):
             s._send_message(Request('go'))
 
+    @staticmethod
     @responses.activate
-    def test_send_message_with_success_200(self):
+    def test_send_message_with_success_200():
         s = HTTPServer('http://test/')
         responses.add(responses.POST, 'http://test/', status=200, body='{"jsonrpc": "2.0", "result": 5, "id": 1}')
         s._send_message(Request('go'))

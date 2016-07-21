@@ -1,5 +1,5 @@
 """test_server.py"""
-# pylint: disable=missing-docstring,line-too-long
+# pylint: disable=missing-docstring,line-too-long,protected-access
 
 from unittest import TestCase, main
 import itertools

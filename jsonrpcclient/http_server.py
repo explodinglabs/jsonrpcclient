@@ -8,7 +8,6 @@ An HTTP server to communicate with, for example::
 """
 
 from requests import Request, Session
-from requests.exceptions import RequestException
 
 from jsonrpcclient.server import Server
 
@@ -28,21 +27,25 @@ class HTTPServer(Server):
         super(HTTPServer, self).__init__(endpoint)
         self.session = Session()
         self.session.headers.update(self.__DEFAULT_HTTP_HEADERS__)
+        self.last_request = None
+        self.last_response = None
 
-    def _send_message(self, request, headers=None, files=None, params=None,
-            auth=None, cookies=None, **kwargs):
+    def _send_message(
+            self, request, headers=None, files=None, params=None, auth=None,
+            cookies=None, **kwargs):
         """Transport the message to the server and return the response.
 
         :param request: The JSON-RPC request string.
         :return: The JSON-RPC response.
         :rtype: A string for requests, None for notifications.
         :raise requests.exceptions.RequestException:
-            Raised by the requests module in the event of a communications error.
+            Raised by the requests module in the event of a communications
+            error.
         """
         # Prepare the request
-        request = Request(method='POST', url=self.endpoint, data=request, \
-                headers=headers, files=files, params=params, auth=auth,
-                cookies=cookies)
+        request = Request(
+            method='POST', url=self.endpoint, data=request, headers=headers,
+            files=files, params=params, auth=auth, cookies=cookies)
         prepped = self.session.prepare_request(request)
         self.last_request = prepped
         # Log the request

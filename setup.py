@@ -1,11 +1,11 @@
 """setup.py"""
 
-from setuptools import setup
 from codecs import open as codecs_open
+
+from setuptools import setup
 
 with codecs_open('README.rst', 'r', 'utf-8') as f:
     readme = f.read()
-
 with codecs_open('HISTORY.rst', 'r', 'utf-8') as f:
     history = f.read()
 
