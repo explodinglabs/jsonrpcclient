@@ -45,7 +45,7 @@ With batch requests you can send multiple requests in a single message::
 
     >>> server.send([{'jsonrpc': '2.0', 'method': 'cat'}, {'jsonrpc': '2.0', 'method': 'dog'}])
 
-Send multiple :class:`~request.Request` Request objects::
+Send multiple :class:`~request.Request` objects::
 
     >>> server.send([Request('cat'), Request('dog')])
 

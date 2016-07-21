@@ -25,19 +25,19 @@ Set the server details::
 Configuration
 =============
 
-The `requests.Session
+The Requests module's `Session
 <http://docs.python-requests.org/en/master/api/#requests.Session>`_ is
-available so you can configure the Requests module.
+available so you can configure that before sending any requests.
 
-For example, for basic auth::
-
-    >>> server.session.auth = ('user', 'pass')
-
-SSL authentication::
+For example, for SSL authentication::
 
     >>> server.session.verify = '/path/to/cert'
 
-Customize the HTTP headers::
+Basic Auth::
+
+    >>> server.session.auth = ('user', 'pass')
+
+Custom HTTP headers::
 
     >>> server.session.headers.update({'Content-Type': 'application/json-rpc'})
 
@@ -48,16 +48,16 @@ when calling ``send``::
     >>> server.send(req, auth=('user', 'pass'))
     >>> server.send(req, headers={'Content-Type': 'application/json-rpc'})
 
-Any dictionaries passed to ``send`` in named arguments will be merged with the
-session-level values that are set. The method-level parameters override session
-parameters.
+As in the requests library, any dictionaries passed to ``send`` in named
+arguments will be merged with the session-level values that are set. The
+method-level parameters override session parameters.
 
 Exceptions
 ==========
 
 The Requests module raises a `requests.exceptions.RequestException
 <http://docs.python-requests.org/en/latest/api/#exceptions>`_ if there's a
-problem transferring the message.
+problem transferring the message. Other exceptions raised are:
 
 .. include:: _includes/exceptions.rst
 
