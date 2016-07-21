@@ -22,35 +22,35 @@ Set the server details::
 
 .. include:: _includes/requests.rst
 
-Headers
--------
+Configuration
+=============
 
-To customize the HTTP headers, pass a ``headers`` argument to ``HTTPServer``::
+The `requests.Session
+<http://docs.python-requests.org/en/master/api/#requests.Session>`_ is
+available so you can configure the Requests module.
 
-    >>> server = HTTPServer('http://example.com/api', headers={'Content-Type': 'application/json-rpc'})
+For example, for basic auth::
 
-If no headers are given, the following headers are used::
+    >>> server.session.auth = ('user', 'pass')
 
-    Content-Type: application/json
-    Accept: application/json
+SSL authentication::
 
-Authentication
---------------
+    >>> server.session.verify = '/path/to/cert'
 
-To make authenticated requests, pass an ``auth`` argument to ``HTTPServer``::
+Customize the HTTP headers::
 
-    >>> server = HTTPServer('http://example.com/api', auth=('user', 'pass'))
+    >>> server.session.headers.update({'Content-Type': 'application/json-rpc'})
 
-For more authentication options, see the `requests module
-<http://docs.python-requests.org/en/latest/user/authentication/>`_ which
-handles the authentication.
+You can also configure the `Request
+<http://docs.python-requests.org/en/master/api/#requests.Request>`_ when
+calling ``send``::
 
-.. note::
+    >>> server.send(req, auth=('user', 'pass'))
+    >>> server.send(req, headers={'Content-Type': 'application/json-rpc'})
 
-    In addition to headers and authentication, other arguments can allow you to
-    set the timeout, cookies, SSL verification and more. For the full list of
-    options see the request method `here
-    <https://github.com/kennethreitz/requests/blob/master/requests/api.py>`__.
+Any dictionaries passed to ``send`` in named arguments will be merged with the
+session-level values that are set. The method-level parameters override session
+parameters.
 
 Exceptions
 ==========
