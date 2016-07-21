@@ -42,8 +42,8 @@ Customize the HTTP headers::
     >>> server.session.headers.update({'Content-Type': 'application/json-rpc'})
 
 You can also configure the `Request
-<http://docs.python-requests.org/en/master/api/#requests.Request>`_ when
-calling ``send``::
+<http://docs.python-requests.org/en/master/api/#requests.Request>`_ options
+when calling ``send``::
 
     >>> server.send(req, auth=('user', 'pass'))
     >>> server.send(req, headers={'Content-Type': 'application/json-rpc'})
@@ -59,8 +59,6 @@ Exceptions
     If there was a problem transferring the message.
 
 .. include:: _includes/exceptions.rst
-
-.. <http://docs.python-requests.org/en/latest/user/quickstart/#errors-and-exceptions>`_
 
 Logging
 =======
