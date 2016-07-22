@@ -21,7 +21,7 @@ Lower-Level
 
 Send your own message with ``send()``::
 
-    >>> server.send({'jsonrpc': '2.0', 'method': 'cat', 'params': {'name': 'Mittens'}, 'id': 5})
+    >>> server.send({'jsonrpc': '2.0', 'method': 'ping'})
 
 A :class:`~request.Request` class is provided to simplify making a JSON-RPC
 message::
