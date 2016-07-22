@@ -27,8 +27,9 @@ class Server(with_metaclass(ABCMeta, object)):
     __request_log = logging.getLogger(__name__+'.request')
     __response_log = logging.getLogger(__name__+'.response')
 
-    #: Validator, set to None for no validation
-    validator = jsonschema.Draft4Validator(json.loads(pkgutil.get_data(
+    #: Validate the response message
+    validate = True
+    __validator = jsonschema.Draft4Validator(json.loads(pkgutil.get_data(
         __name__, 'response-schema.json').decode('utf-8')))
 
     def __init__(self, endpoint):
@@ -79,8 +80,8 @@ class Server(with_metaclass(ABCMeta, object)):
                     raise exceptions.ParseResponseError()
             # Validate the response against the Response schema (raises
             # jsonschema.ValidationError if invalid)
-            if self.validator:
-                self.validator.validate(response)
+            if self.validate:
+                self.__validator.validate(response)
             if isinstance(response, list):
                 # For now, just return the whole response
                 return response

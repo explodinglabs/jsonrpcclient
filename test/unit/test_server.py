@@ -96,7 +96,7 @@ class TestProcessResponse(TestServer):
             self.server._process_response(response)
 
     def test_invalid_jsonrpc_no_validation(self):
-        Server.validator = None
+        Server.validate = False
         response = {'json': '2.0'}
         self.server._process_response(response)
 
