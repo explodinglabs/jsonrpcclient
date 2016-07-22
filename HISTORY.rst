@@ -2,4 +2,4 @@
 ~~~~~~~~~~~~~~~~~~~~~
 
 - More flexible configuration of requests in `HTTPServer
-  <https://jsonrpcclient.readthedocs.io/api.html#httpserver>`_.
+  <https://jsonrpcclient.readthedocs.io/en/latest/api.html#httpserver>`_.
