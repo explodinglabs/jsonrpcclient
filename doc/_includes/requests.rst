@@ -13,13 +13,12 @@ message)::
     >>> response
     'meow'
 
-If you're not interested in a response, use ``notify()`` instead of
-``request()``.
+If you're not interested in a response, use ``notify`` instead of ``request``.
 
 Lower-Level
 -----------
 
-Send your own message with ``send()``::
+Send your own message with ``send``::
 
     >>> server.send({'jsonrpc': '2.0', 'method': 'ping'})
 
