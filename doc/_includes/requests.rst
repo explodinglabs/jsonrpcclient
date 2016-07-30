@@ -27,14 +27,14 @@ A :class:`~request.Request` class is provided to simplify making a JSON-RPC
 message::
 
     >>> from jsonrpcclient.request import Request
-    >>> Request('cat', name='Mittens', request_id=5)
-    {"jsonrpc": "2.0", "method": "cat", "params": {"name": "Mittens"}, "id": 5}
+    >>> Request('cat', name='Mittens')
+    {"jsonrpc": "2.0", "method": "cat", "params": {"name": "Mittens"}, "id": 1}
 
 Send a ``Request``::
 
-    >>> server.send(Request('cat', name='Mittens', request_id=5))
-    --> {"jsonrpc": "2.0", "method": "cat", "params": {"name": "Mittens"}, "id": 5}
-    <-- {"jsonrpc": "2.0", "result": "meow", "id": 5}
+    >>> server.send(Request('cat', name='Mittens'))
+    --> {"jsonrpc": "2.0", "method": "cat", "params": {"name": "Mittens"}, "id": 2}
+    <-- {"jsonrpc": "2.0", "result": "meow", "id": 2}
     'meow'
 
 There's also a :class:`~request.Notification` class if you don't need a response.
