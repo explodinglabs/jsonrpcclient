@@ -3,4 +3,5 @@
 :jsonschema.ValidationError:
     Raised if the response is valid JSON but not a valid JSON-RPC response.
 :jsonrpcclient.ReceivedErrorResponse:
-    Raised if the server responded with an error message.
+    Raised if the server responded with a valid JSON-RPC `error object
+    <http://www.jsonrpc.org/specification#error_object>`_.
