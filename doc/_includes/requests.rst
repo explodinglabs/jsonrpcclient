@@ -26,6 +26,7 @@ Send your own message with ``send()``::
 A :class:`~request.Request` class is provided to simplify making a JSON-RPC
 message::
 
+    >>> from jsonrpcclient.request import Request
     >>> Request('cat', name='Mittens', request_id=5)
     {"jsonrpc": "2.0", "method": "cat", "params": {"name": "Mittens"}, "id": 5}
 
