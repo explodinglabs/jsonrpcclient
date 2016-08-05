@@ -1,7 +1,7 @@
 jsonrpcclient
 *************
 
-Send JSON-RPC requests in Python 2.7 and 3.3+.
+Send `JSON-RPC <http://www.jsonrpc.org/>`__ requests in Python 2.7 and 3.3+.
 
 .. sourcecode:: python
 
@@ -12,4 +12,4 @@ Send JSON-RPC requests in Python 2.7 and 3.3+.
     'pong'
 
 Full documentation is at `jsonrpcclient.readthedocs.io
-<https://jsonrpcclient.readthedocs.io/>`_.
+<https://jsonrpcclient.readthedocs.io/>`__.
