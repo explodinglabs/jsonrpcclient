@@ -43,10 +43,10 @@ class HTTPServer(Server):
             error.
         """
         # Prepare the request
-        request = Request(
+        req = Request(
             method='POST', url=self.endpoint, data=request, headers=headers,
             files=files, params=params, auth=auth, cookies=cookies)
-        prepped = self.session.prepare_request(request)
+        prepped = self.session.prepare_request(req)
         self.last_request = prepped
         # Log the request
         self._log_request(request, {'http_headers': prepped.headers})
