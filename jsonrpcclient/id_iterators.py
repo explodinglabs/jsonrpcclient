@@ -1,8 +1,4 @@
-"""
-ID Iterators
-************
-
-By default the request ``id`` is a decimal number which increments for each
+"""By default the request ``id`` is a decimal number which increments for each
 request. Use a different format by setting ``Request.id_iterator``::
 
     >>> from jsonrpcclient.request import Request

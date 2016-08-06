@@ -1,8 +1,3 @@
-"""
-Server
-******
-"""
-
 import json
 import pkgutil
 import logging
@@ -111,7 +106,10 @@ class Server(with_metaclass(ABCMeta, object)):
         """
 
     def send(self, request, **kwargs):
-        """Send a request or batch of requests.
+        """Send a JSON-RPC message::
+
+            >>> server.send({'jsonrpc': '2.0', 'method': 'ping'})
+            --> {"jsonrpc": "2.0", "method": "ping"}
 
         :param request:
             The request to send. If a string, must be valid JSON (double quotes
@@ -147,7 +145,12 @@ class Server(with_metaclass(ABCMeta, object)):
         return self.send(Notification(method_name, *args, **kwargs))
 
     def request(self, method_name, *args, **kwargs):
-        """Send a JSON-RPC request, and get a response.
+        """Sends a request.
+
+            >>> server.request('cat', name='Mittens')
+            --> {"jsonrpc": "2.0", "method": "cat", "params": {"name": "Mittens"}, "id": 1}
+            <-- {"jsonrpc": "2.0", "result": "meow", "id": 1}
+            'meow'
 
         :param method_name: The remote procedure's method name.
         :param args: Positional arguments passed to the remote procedure.

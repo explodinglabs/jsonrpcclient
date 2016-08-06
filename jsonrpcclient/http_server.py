@@ -1,8 +1,4 @@
-"""
-HTTPServer
-**********
-
-An HTTP server to communicate with, for example::
+"""An HTTP server to communicate with, for example::
 
     HTTPServer('http://example.com/api').request('go')
 """
@@ -13,17 +9,17 @@ from jsonrpcclient.server import Server
 
 
 class HTTPServer(Server):
-    """
-    :param endpoint: The server address.
-    :param kwargs: HTTP headers and other options passed on to the requests
-                   module.
-    """
 
     # The default HTTP header
     __DEFAULT_HTTP_HEADERS__ = {
         'Content-Type': 'application/json', 'Accept': 'application/json'}
 
     def __init__(self, endpoint):
+        """
+        :param endpoint: The server address.
+        :param kwargs: HTTP headers and other options passed on to the requests
+                       module.
+        """
         super(HTTPServer, self).__init__(endpoint)
         self.session = Session()
         self.session.headers.update(self.__DEFAULT_HTTP_HEADERS__)

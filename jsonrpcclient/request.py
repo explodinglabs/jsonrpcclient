@@ -1,14 +1,10 @@
-"""
-Requests
-********
-
-These classes make it easy to create JSON-RPC Request objects.
-"""
+"""These classes make it easy to create JSON-RPC Request objects."""
 
 import itertools
 import json
 from collections import OrderedDict
 from future.utils import with_metaclass
+
 
 def _sort_request(req):
     """Sorts a JSON-RPC request dict returning a sorted OrderedDict, having no
@@ -107,25 +103,19 @@ class Notification(with_metaclass(_RequestClassType, dict)):
 
 
 class Request(Notification):
-    """A JSON-RPC Request object, with an ``id`` member (meaning payload data is
-    wanted)::
+    """Makes a JSON-RPC request object.
 
-        >>> Request('cat')
-        {'jsonrpc': '2.0', 'method': 'cat', 'id': 1}
+        >>> Request('cat', name='Mittens')
+        {'jsonrpc': '2.0', 'method': 'cat', {'params': {'name': 'Mittens'}, 'id': 1}
 
-    An auto-incremented ``id`` is used, so each request has a unique ``id``::
+    The ``id`` member is auto-incremented, unless you specify a ``request_id``::
 
-        >>> Request('cat')
-        {'jsonrpc': '2.0', 'method': 'cat', 'id': 2}
+        >>> Request('cat', request_id=99)
+        {'jsonrpc': '2.0', 'method': 'cat', 'id': 99}
 
-    Use ``request_id`` to specify the ``id`` to use::
-
-        >>> Request('cat', request_id='Request #1')
-        {'jsonrpc': '2.0', 'method': 'cat', 'id': 'Request #1'}
-
-    :param method: The method name.
-    :param args: Positional arguments.
-    :param kwargs: Keyword arguments.
+    :param method: The ``method`` name.
+    :param args: Positional arguments added to ``params``.
+    :param kwargs: Keyword arguments added to ``params``.
     :returns: The JSON-RPC request in dictionary form.
     """
 

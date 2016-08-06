@@ -1,24 +1,22 @@
 jsonrpcclient
 *************
 
-Send `JSON-RPC <http://www.jsonrpc.org/>`_ requests in Python 2.7 and 3.3+.
+Send `JSON-RPC <http://www.jsonrpc.org/>`__ requests in Python 2.7 and 3.3+.
 
-Guides
-======
+.. sourcecode:: sh
 
-.. toctree::
-    :maxdepth: 2
+    $ pip install jsonrpcclient requests
 
-    http
-    zeromq
-    api
+.. sourcecode:: python
 
-Links
-=====
+    >>> from jsonrpcclient.http_server import HTTPServer
+    >>> HTTPServer('http://pets.com').request('cat', name='Mittens')
+    --> {"jsonrpc": "2.0", "method": "cat", {"params": {"name": "Mittens"}, "id": 1}
+    <-- {"jsonrpc": "2.0", "result": "meow", "id": 1}
+    'meow'
 
-- `Github <https://github.com/bcb/jsonrpcclient>`_
-- `Issues <https://github.com/bcb/jsonrpcclient/issues>`_
-- `PyPi <https://pypi.python.org/pypi/jsonrpcclient>`_
-- `Twitter @bbmelb <https://twitter.com/bbmelb>`_
+For lower-level functions and configuration options, see the :doc:`guide`.
+
+Contribute on `Github <https://github.com/bcb/jsonrpcserver>`_.
 
 See also: `jsonrpcserver <https://jsonrpcserver.readthedocs.io/>`_
