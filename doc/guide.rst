@@ -3,6 +3,9 @@
 jsonrpcclient Guide
 *******************
 
+An explanation of the developer interface, as well as :mod:`configuration
+<config>`_ and some of the more advanced features of the library.
+
 Send
 ====
 
@@ -61,6 +64,37 @@ object, i.e. a list of responses for each request that had an ``id`` member.
 Configuration
 =============
 
-Config module
+.. automodule:: config
+
+ID Generators
+-------------
+
+.. automodule:: id_iterators
+
 Requests configuration
-Id configuration
+----------------------
+
+The `Requests
+<http://docs.python-requests.org/en/master/api/#requests.Session>`_ module’s
+Session is available so you can configure that before sending any requests.
+
+For example, for SSL authentication:
+
+    >>> server.session.verify = '/path/to/cert'
+
+Basic Auth:
+
+    >>> server.session.auth = ('user', 'pass')
+
+Custom HTTP headers:
+
+    >>> server.session.headers.update({'Content-Type': 'application/json-rpc'})
+
+You can also configure the Request options when calling send:
+
+>>> server.send(req, auth=('user', 'pass'))
+>>> server.send(req, headers={'Content-Type': 'application/json-rpc'})
+
+As in the requests library, any dictionaries passed to send in named arguments
+will be merged with the session-level values that are set. The method-level
+parameters override session parameters.

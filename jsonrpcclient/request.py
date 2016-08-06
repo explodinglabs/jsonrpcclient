@@ -108,7 +108,7 @@ class Request(Notification):
         >>> Request('cat', name='Mittens')
         {'jsonrpc': '2.0', 'method': 'cat', {'params': {'name': 'Mittens'}, 'id': 1}
 
-    The ``id`` member is auto-incremented, unless you specify a ``request_id``::
+    The ``id`` is auto-incremented, unless you specify a ``request_id``::
 
         >>> Request('cat', request_id=99)
         {'jsonrpc': '2.0', 'method': 'cat', 'id': 99}

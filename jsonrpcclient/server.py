@@ -115,15 +115,14 @@ class Server(with_metaclass(ABCMeta, object)):
             The request to send. If a string, must be valid JSON (double quotes
             around the identifiers!). Otherwise it must be a json serializable
             object (list or dict).
-        :raise jsonrpcclient.ParseResponseError:
-            The response was not valid JSON. (`doc
-            <api.html#jsonrpcclient.exceptions.ParseResponseError>`__)
-        :raise jsonschema.ValidationError:
-            The response was not a valid JSON-RPC response. (`doc
-            <http://python-jsonschema.readthedocs.org/en/latest/errors/#jsonschema.exceptions.ValidationError>`__)
-        :raise jsonrpcclient.ReceivedErrorResponse:
-            The server responded with an error message. (`doc
-            <api.html#jsonrpcclient.exceptions.ReceivedErrorResponse>`__)
+        :param kwargs: For HTTPServer, these are passed on to `requests send()
+            <http://docs.python-requests.org/en/master/api/#requests.adapters.HTTPAdapter.send>`_.
+        :raise ParseResponseError:
+            The response was not valid JSON.
+        :raise ValidationError:
+            The response was not a valid JSON-RPC response.
+        :raise ReceivedErrorResponse:
+            The server responded with an error message.
         """
         # Convert request to a string
         if not isinstance(request, basestring):
