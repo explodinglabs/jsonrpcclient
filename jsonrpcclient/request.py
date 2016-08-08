@@ -114,7 +114,11 @@ class Request(Notification):
     :param kwargs: Keyword arguments added to ``params``.
     :returns: The JSON-RPC request in dictionary form.
     """
-    id_iterator = itertools.count(1)
+    #: The ids are auto-incremented from 1, unless an id is specified in a
+    #: ``request_id`` keyword argument.
+    #: The ids attribute can be patched to give different id formats, (see
+    #: :mod:`config`).
+    ids = itertools.count(1)
 
     def __init__(self, method, *args, **kwargs):
         # 'response' means use an auto-iterated id
@@ -123,6 +127,6 @@ class Request(Notification):
         if kwargs.get('request_id'):
             self['id'] = kwargs['request_id']
         else:
-            self['id'] = next(self.id_iterator)
+            self['id'] = next(self.ids)
         kwargs.pop('request_id', None)
         super(Request, self).__init__(method, *args, **kwargs)

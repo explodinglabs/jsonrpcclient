@@ -6,7 +6,7 @@ import itertools
 import json
 
 from jsonrpcclient.request import Notification, Request, _sort_request
-from jsonrpcclient.id_iterators import hex_iterator
+from jsonrpcclient import ids
 
 
 class TestSortRequest(TestCase):
@@ -61,11 +61,11 @@ class TestRequest(TestCase):
 
     def setUp(self):
         # Start each test with id 1
-        Request.id_iterator = itertools.count(1)
+        Request.ids = itertools.count(1)
 
     def tearDown(self):
         # Restore default iterator
-        Request.id_iterator = itertools.count(1)
+        Request.ids = itertools.count(1)
 
     def test(self):
         self.assertEqual(
@@ -106,7 +106,7 @@ class TestRequest(TestCase):
             Request('get', request_id='Request #1'))
 
     def test_custom_iterator(self):
-        Request.id_iterator = hex_iterator(10)
+        Request.ids = ids.hex(10)
         self.assertEqual(
             {'jsonrpc': '2.0', 'method': 'go', 'id': 'a'},
             Request('go'))

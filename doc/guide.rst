@@ -67,10 +67,10 @@ Configuration
 
 .. automodule:: config
 
-ID Generators
--------------
+Request IDs
+-----------
 
-.. automodule:: id_iterators
+.. automodule:: ids
 
 Configuring the Requests library
 --------------------------------

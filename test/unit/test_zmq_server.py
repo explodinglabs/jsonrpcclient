@@ -7,16 +7,15 @@ import itertools
 import zmq
 from mock import patch, Mock
 
-from jsonrpcclient import request
-from jsonrpcclient.request import Request
+from jsonrpcclient import Request
 from jsonrpcclient.zmq_server import ZMQServer
 
 
 class TestZMQServer(TestCase):
 
     def setUp(self):
-        # Monkey patch id_iterator to ensure the request id is always 1
-        request.id_iterator = itertools.count(1)
+        # Patch Request.ids to ensure the request id is always 1
+        Request.ids = itertools.count(1)
 
     @staticmethod
     def test_instantiate():

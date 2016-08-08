@@ -13,16 +13,15 @@ except ImportError:
 import requests
 import responses
 
-from jsonrpcclient import request
-from jsonrpcclient.request import Request
+from jsonrpcclient import Request
 from jsonrpcclient.http_server import HTTPServer
 
 
 class TestHTTPServer(TestCase):
 
     def setUp(self):
-        # Monkey patch id_iterator to ensure the request id is always 1
-        request.id_iterator = itertools.count(1)
+        # Patch Request.ids to ensure the id is always 1
+        Request.id = itertools.count(1)
 
     @staticmethod
     def test_init_endpoint_only():
