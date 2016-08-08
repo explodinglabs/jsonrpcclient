@@ -1,10 +1,10 @@
 .. rubric:: :doc:`index`
 
-jsonrpcclient Guide
-*******************
+jsonrpcclient Developer Interface
+*********************************
 
-An explanation of the developer interface, as well as :mod:`configuration
-<config>`_ and some of the more advanced features of the library.
+An explanation of some of the more advanced features of the library, including
+usage and :mod:`configuration <config>`.
 
 Send
 ====
@@ -33,7 +33,7 @@ If you're not interested in a response, use ``Notification`` instead of
 Request method
 ==============
 
-This is just a wrapper around ``send(Request())``.
+This is the main public method. It's just a wrapper around ``send(Request())``.
 
 .. automethod:: server.Server.request
 
@@ -74,23 +74,23 @@ ID Generators
 Requests configuration
 ----------------------
 
-The `Requests
-<http://docs.python-requests.org/en/master/api/#requests.Session>`_ module’s
-Session is available so you can configure that before sending any requests.
+The Requests module’s `Session
+<http://docs.python-requests.org/en/master/api/#requests.Session>`_ is
+available so you can configure that before sending any requests.
 
-For example, for SSL authentication:
+For example, for SSL authentication::
 
     >>> server.session.verify = '/path/to/cert'
 
-Basic Auth:
+Basic Auth::
 
     >>> server.session.auth = ('user', 'pass')
 
-Custom HTTP headers:
+Custom HTTP headers::
 
     >>> server.session.headers.update({'Content-Type': 'application/json-rpc'})
 
-You can also configure the Request options when calling send:
+You can also configure the Request options when calling send::
 
 >>> server.send(req, auth=('user', 'pass'))
 >>> server.send(req, headers={'Content-Type': 'application/json-rpc'})

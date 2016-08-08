@@ -102,26 +102,32 @@ class Server(with_metaclass(ABCMeta, object)):
         request and response, and return the response.
 
         :param request: A JSON-RPC request, in dict format.
-        :return: The response (a string for requests, None for notifications).
+        :returns: The response (a string for requests, None for notifications).
         """
 
     def send(self, request, **kwargs):
         """Send a JSON-RPC message::
 
-            >>> server.send({'jsonrpc': '2.0', 'method': 'ping'})
-            --> {"jsonrpc": "2.0", "method": "ping"}
+            >>> server.send({'jsonrpc': '2.0', 'method': 'ping', 'id': 1})
+            --> {"jsonrpc": "2.0", "method": "ping", "id": 1}
 
-        :param request:
-            The request to send. If a string, must be valid JSON (double quotes
-            around the identifiers!). Otherwise it must be a json serializable
-            object (list or dict).
-        :param kwargs: For HTTPServer, these are passed on to `requests send()
+        :param request: The `JSON-RPC request object
+            <http://www.jsonrpc.org/specification#request_object>`_.
+        :type request: A `JSON serializable object
+            <https://docs.python.org/library/json.html#json-to-py-table>`_, or a
+            valid JSON string
+        :param kwargs: For HTTPServer, these are passed on to `requests.send()
             <http://docs.python-requests.org/en/master/api/#requests.adapters.HTTPAdapter.send>`_.
-        :raise ParseResponseError:
+        :returns: The payload (i.e. the ``result`` part of the response), or
+            None in the case of a Notification.
+        :rtype: A `JSON-decoded object
+            <https://docs.python.org/library/json.html#json-to-py-table>`_, or
+            None.
+        :raises ParseResponseError:
             The response was not valid JSON.
-        :raise ValidationError:
+        :raises ValidationError:
             The response was not a valid JSON-RPC response.
-        :raise ReceivedErrorResponse:
+        :raises ReceivedErrorResponse:
             The server responded with an error message.
         """
         # Convert request to a string
@@ -139,7 +145,7 @@ class Server(with_metaclass(ABCMeta, object)):
         :param method_name: The remote procedure's method name.
         :param args: Positional arguments passed to the remote procedure.
         :param kwargs: Keyword arguments passed to the remote procedure.
-        :return: The payload (i.e. the ``result`` part of the response.)
+        :return: The payload (i.e. the ``result`` part of the response).
         """
         return self.send(Notification(method_name, *args, **kwargs))
 
@@ -154,7 +160,7 @@ class Server(with_metaclass(ABCMeta, object)):
         :param method_name: The remote procedure's method name.
         :param args: Positional arguments passed to the remote procedure.
         :param kwargs: Keyword arguments passed to the remote procedure.
-        :return: The payload (i.e. the ``result`` part of the response.)
+        :return: The payload (i.e. the ``result`` part of the response).
         """
         return self.send(Request(method_name, *args, **kwargs))
 
