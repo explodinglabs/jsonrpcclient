@@ -8,7 +8,7 @@ import json
 from jsonschema import ValidationError
 from testfixtures import LogCapture
 
-from jsonrpcclient import Request, exceptions
+from jsonrpcclient import Request, config, exceptions
 from jsonrpcclient.server import Server
 
 
@@ -23,6 +23,9 @@ class TestServer(TestCase):
     def setUp(self):
         Request.id_iterator = itertools.count(1)
         self.server = DummyServer('http://non-existant:80/')
+
+    def tearDown(self):
+        config.validate = True
 
 
 class TestLogging(TestServer):
@@ -96,7 +99,7 @@ class TestProcessResponse(TestServer):
             self.server._process_response(response)
 
     def test_invalid_jsonrpc_no_validation(self):
-        Server.validate = False
+        config.validate = False
         response = {'json': '2.0'}
         self.server._process_response(response)
 

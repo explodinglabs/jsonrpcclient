@@ -7,7 +7,7 @@ from past.builtins import basestring # pylint: disable=redefined-builtin
 import jsonschema
 from future.utils import with_metaclass
 
-from jsonrpcclient import exceptions
+from jsonrpcclient import config, exceptions
 from jsonrpcclient.request import Notification, Request
 from jsonrpcclient.log import _log
 
@@ -24,7 +24,6 @@ class Server(with_metaclass(ABCMeta, object)):
     __response_log = logging.getLogger(__name__+'.response')
 
     #: Validate the response message
-    validate = True
     __validator = jsonschema.Draft4Validator(json.loads(pkgutil.get_data(
         __name__, 'response-schema.json').decode('utf-8')))
 
@@ -78,7 +77,7 @@ class Server(with_metaclass(ABCMeta, object)):
                     raise exceptions.ParseResponseError()
             # Validate the response against the Response schema (raises
             # jsonschema.ValidationError if invalid)
-            if self.validate:
+            if config.validate:
                 self.__validator.validate(response)
             if isinstance(response, list):
                 # For now, just return the whole response
