@@ -103,22 +103,17 @@ class Notification(with_metaclass(_RequestClassType, dict)):
 
 
 class Request(Notification):
-    """Makes a JSON-RPC request object.
+    """Create a JSON-RPC `request object
+    <http://www.jsonrpc.org/specification#request_object>`_.
 
         >>> Request('cat', name='Mittens')
-        {'jsonrpc': '2.0', 'method': 'cat', {'params': {'name': 'Mittens'}, 'id': 1}
-
-    The ``id`` is auto-incremented, unless you specify a ``request_id``::
-
-        >>> Request('cat', request_id=99)
-        {'jsonrpc': '2.0', 'method': 'cat', 'id': 99}
+        {'jsonrpc': '2.0', 'method': 'cat', {'params': {'name': 'Mittens'}}, 'id': 1}
 
     :param method: The ``method`` name.
     :param args: Positional arguments added to ``params``.
     :param kwargs: Keyword arguments added to ``params``.
     :returns: The JSON-RPC request in dictionary form.
     """
-
     id_iterator = itertools.count(1)
 
     def __init__(self, method, *args, **kwargs):

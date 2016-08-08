@@ -106,29 +106,31 @@ class Server(with_metaclass(ABCMeta, object)):
         """
 
     def send(self, request, **kwargs):
-        """Send a JSON-RPC message::
+        """Send a request, passing the whole JSON-RPC `request object
+        <http://www.jsonrpc.org/specification#request_object>`_.
+
 
             >>> server.send({'jsonrpc': '2.0', 'method': 'ping', 'id': 1})
             --> {"jsonrpc": "2.0", "method": "ping", "id": 1}
+            <-- {"jsonrpc": "2.0", "result": "pong", "id": 1}
+            'pong'
 
-        :param request: The `JSON-RPC request object
-            <http://www.jsonrpc.org/specification#request_object>`_.
-        :type request: A `JSON serializable object
-            <https://docs.python.org/library/json.html#json-to-py-table>`_, or a
-            valid JSON string
-        :param kwargs: For HTTPServer, these are passed on to `requests.send()
-            <http://docs.python-requests.org/en/master/api/#requests.adapters.HTTPAdapter.send>`_.
-        :returns: The payload (i.e. the ``result`` part of the response), or
-            None in the case of a Notification.
+        :param request: The JSON-RPC request.
+        :type request: string or a JSON serializable object
+        :param kwargs: For HTTPServer, these are passed on to
+            `requests.Session.send()
+            <http://docs.python-requests.org/en/master/api/#requests.Session.send>`_.
+        :returns: The payload (i.e. the ``result`` part of the response, or
+            ``None`` in the case of a Notification).
         :rtype: A `JSON-decoded object
-            <https://docs.python.org/library/json.html#json-to-py-table>`_, or
-            None.
+            <https://docs.python.org/library/json.html#json-to-py-table>`_.
         :raises ParseResponseError:
             The response was not valid JSON.
         :raises ValidationError:
-            The response was not a valid JSON-RPC response.
+            The response was valid JSON, but not valid JSON-RPC.
         :raises ReceivedErrorResponse:
-            The server responded with an error message.
+            The server responded with a JSON-RPC `error object
+            <http://www.jsonrpc.org/specification#error_object>`_.
         """
         # Convert request to a string
         if not isinstance(request, basestring):
@@ -150,7 +152,8 @@ class Server(with_metaclass(ABCMeta, object)):
         return self.send(Notification(method_name, *args, **kwargs))
 
     def request(self, method_name, *args, **kwargs):
-        """Sends a request.
+        """Send a request, by passing the method and arguments. This is the main
+        public method.
 
             >>> server.request('cat', name='Mittens')
             --> {"jsonrpc": "2.0", "method": "cat", "params": {"name": "Mittens"}, "id": 1}
