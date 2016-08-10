@@ -1,9 +1,11 @@
 """These classes make it easy to create JSON-RPC Request objects."""
 
-import itertools
+import sys
 import json
 from collections import OrderedDict
 from future.utils import with_metaclass
+
+from jsonrpcclient import config, ids
 
 
 def _sort_request(req):
@@ -111,22 +113,20 @@ class Request(Notification):
 
     :param method: The ``method`` name.
     :param args: Positional arguments added to ``params``.
-    :param kwargs: Keyword arguments added to ``params``.
+    :param kwargs: Keyword arguments added to ``params``. Use ``request_id=x``
+        to force the ``id`` to use.
     :returns: The JSON-RPC request in dictionary form.
     """
-    #: The ids are auto-incremented from 1, unless an id is specified in a
-    #: ``request_id`` keyword argument.
-    #: The ids attribute can be patched to give different id formats, (see
-    #: :mod:`config`).
-    ids = itertools.count(1)
+    id_iterator = None
 
     def __init__(self, method, *args, **kwargs):
-        # 'response' means use an auto-iterated id
-        #kwargs.pop('response', None)
-        # 'request_id' means use the specified id
-        if kwargs.get('request_id'):
-            self['id'] = kwargs['request_id']
-        else:
-            self['id'] = next(self.ids)
-        kwargs.pop('request_id', None)
+        # If 'request_id' is passed, use the specified id
+        if 'request_id' in kwargs:
+            self['id'] = kwargs.pop('request_id', None)
+        else: # Get the next id from the iterator
+            # Create the iterator if not yet created
+            if Request.id_iterator is None:
+                Request.id_iterator = ids.from_config(config.ids)
+            self['id'] = next(self.id_iterator)
+        # We call super last, after popping the request_id
         super(Request, self).__init__(method, *args, **kwargs)

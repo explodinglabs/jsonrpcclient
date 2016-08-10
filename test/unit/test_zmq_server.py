@@ -14,8 +14,8 @@ from jsonrpcclient.zmq_server import ZMQServer
 class TestZMQServer(TestCase):
 
     def setUp(self):
-        # Patch Request.ids to ensure the request id is always 1
-        Request.ids = itertools.count(1)
+        # Patch Request.id_iterator to ensure the request id is always 1
+        Request.id_iterator = itertools.count(1)
 
     @staticmethod
     def test_instantiate():

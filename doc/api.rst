@@ -3,9 +3,6 @@
 jsonrpcclient API
 *****************
 
-Some of the more advanced features of the library, including usage and
-:mod:`configuration <config>`.
-
 Request
 =======
 
@@ -22,7 +19,9 @@ Send
 Request class
 =============
 
->>> from jsonrpcclient import Request
+::
+
+    from jsonrpcclient import Request
 
 .. autoclass:: request.Request
 
@@ -36,8 +35,8 @@ Send a ``Request`` object::
 The :func:`~server.Server.request` method is a wrapper around
 ``send(Request())``.
 
-If you're not interested in a response, use ``Notification`` instead of
-``Request``.
+If you're not interested in a response, use the ``Notification`` class instead
+of ``Request``.
 
 Batch requests
 ==============
@@ -45,17 +44,17 @@ Batch requests
 This JSON-RPC feature allows you to send multiple requests in a single
 message::
 
-    >>> server.send([
-    ...     {'jsonrpc': '2.0', 'method': 'cat', 'id': 1}, \
-    ...     {'jsonrpc': '2.0', 'method': 'dog', 'id': 2}])
+    server.send([
+        {'jsonrpc': '2.0', 'method': 'cat', 'id': 1}, \
+        {'jsonrpc': '2.0', 'method': 'dog', 'id': 2}])
 
-Send multiple ``Request`` objects::
+Send multiple :class:`~request.Request` objects::
 
-    >>> server.send([Request('cat'), Request('dog')])
+    server.send([Request('cat'), Request('dog')])
 
 Using list comprehension to get the cube of ten numbers::
 
-    >>> server.send([Request('cube', i) for i in range(10)])
+    server.send([Request('cube', i) for i in range(10)])
 
 Unlike single requests, batch requests return the whole JSON-RPC response
 object - a list of responses for each request that had an ``id`` member.
@@ -67,34 +66,30 @@ Configuration
 
 .. automodule:: config
 
-Request IDs
------------
-
-.. automodule:: ids
-
 Configuring the Requests library
 --------------------------------
 
-The HTTPServer class makes use of python's Requests library. The `Session
+HTTPServer makes use of Kenneth Reitz's Requests library. The `Session
 <http://docs.python-requests.org/en/master/api/#requests.Session>`_ is
-available so you can configure that before sending any requests.
+available so you can configure it before sending any requests.
 
-For example, for SSL authentication::
+For example, Basic Auth::
 
-    >>> server.session.verify = '/path/to/certificate'
+    server.session.auth = ('user', 'pass')
 
-Basic Auth::
+SSL authentication::
 
-    >>> server.session.auth = ('user', 'pass')
+    server.session.verify = '/path/to/certificate'
 
 Custom HTTP headers::
 
-    >>> server.session.headers.update({'Content-Type': 'application/json-rpc'})
+    server.session.headers.update({'Content-Type': 'application/json-rpc'})
 
 You can also configure some Requests options when calling
 :func:`~server.Server.send`::
 
-    >>> server.send(req, verify=True, cert='/path/to/certificate')
+    server.send(req, verify=True, cert='/path/to/certificate', \
+        headers={'Content-Type': 'application/json-rpc'})
 
 As in the Requests library, any dictionaries passed to send in named arguments
 will be merged with the session-level values that are set. The method-level

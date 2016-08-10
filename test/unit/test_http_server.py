@@ -3,7 +3,6 @@
 
 from unittest import TestCase, main
 import itertools
-
 try:
     from urllib.parse import urlencode
 except ImportError:
@@ -20,8 +19,8 @@ from jsonrpcclient.http_server import HTTPServer
 class TestHTTPServer(TestCase):
 
     def setUp(self):
-        # Patch Request.ids to ensure the id is always 1
-        Request.id = itertools.count(1)
+        # Patch Request.id_iterator to ensure the id is always 1
+        Request.id_iterator = itertools.count(1)
 
     @staticmethod
     def test_init_endpoint_only():

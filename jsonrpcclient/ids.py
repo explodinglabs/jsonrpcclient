@@ -1,15 +1,18 @@
 """By default the request ``id`` is a decimal number which increments with each
-request. Use a different format by patching ``Request.ids``::
-
-    >>> from jsonrpcclient import Request, ids
-    >>> Request.ids = ids.random()
-    >>> Request('go')
-    {'jsonrpc': '2.0', 'method': 'go', 'id': 'fubui5e6'}
+request. See the :mod:`config` module.
 """
-from uuid import uuid4
+import itertools
 from string import digits, ascii_lowercase
 from random import choice
+from uuid import uuid4
 
+
+def decimal(start=1):
+    """Increments from ``start``, e.g. 1, 2, 3, .. 9, 10, 11, etc.
+
+    :param start: The first value to start with.
+    """
+    return itertools.count(start)
 
 def hex(start=1):
     """Incremental hexadecimal numbers. e.g. 1, 2, 3, .. 9, a, b, etc.
@@ -36,3 +39,20 @@ def uuid():
     """Unique uuid ids. e.g. '9bfe2c93-717e-4a45-b91b-55422c5af4ff'"""
     while True:
         yield str(uuid4())
+
+
+def from_config(setting):
+    """Returns an iterator, based on a configuration setting, such as
+    'decimal'
+    """
+    # Create iterator based on config setting
+    if setting == 'decimal':
+        return decimal()
+    elif setting == 'hex':
+        return hex()
+    elif setting == 'random':
+        return random()
+    elif setting == 'uuid':
+        return uuid()
+    else:
+        raise ValueError('Unknown ids config setting')
