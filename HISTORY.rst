@@ -1,3 +1,8 @@
+2.1.3 (August 10, 2016)
+~~~~~~~~~~~~~~~~~~~~~~
+
+- Simpler configuration of the id part of requests
+
 2.1.2 (August 8, 2016)
 ~~~~~~~~~~~~~~~~~~~~~~
 
