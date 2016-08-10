@@ -17,6 +17,6 @@ Send `JSON-RPC <http://www.jsonrpc.org/>`__ requests in Python 2.7 and 3.3+.
 
 For advanced usage and configuration, see the :doc:`api`.
 
-Contribute on `Github <https://github.com/bcb/jsonrpcserver>`_.
+Contribute on `Github <https://github.com/bcb/jsonrpcclient>`_.
 
 See also: `jsonrpcserver <https://jsonrpcserver.readthedocs.io/>`_
