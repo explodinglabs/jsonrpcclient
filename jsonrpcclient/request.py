@@ -1,6 +1,5 @@
 """These classes make it easy to create JSON-RPC Request objects."""
 
-import sys
 import json
 from collections import OrderedDict
 from future.utils import with_metaclass
