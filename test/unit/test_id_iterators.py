@@ -11,9 +11,9 @@ from jsonrpcclient import ids
 class TestHexIterator(TestCase):
 
     def test(self):
-        i = ids.hex()
+        i = ids.hexadecimal()
         self.assertEqual('1', next(i))
-        i = ids.hex(9)
+        i = ids.hexadecimal(9)
         self.assertEqual('9', next(i))
         self.assertEqual('a', next(i))
 

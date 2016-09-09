@@ -2,7 +2,6 @@
 # pylint: disable=missing-docstring,line-too-long
 
 from unittest import TestCase, main
-import itertools
 import json
 
 from jsonrpcclient.request import Notification, Request, _sort_request

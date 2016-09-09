@@ -21,11 +21,11 @@ setup(
     package_data={'jsonrpcclient': ['response-schema.json']},
     include_package_data=True,
     install_requires=['future', 'jsonschema'],
-    extras_require   = {
+    extras_require={
         'requests' : ['requests'],
         'zmq'      : ['pyzmq'],
         'tornado'  : ['tornado']
-      },
+    },
     classifiers=[
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3.3',

@@ -1,3 +1,5 @@
+"""Abstract class for various servers"""
+
 import json
 import pkgutil
 import logging
@@ -43,7 +45,7 @@ class Server(with_metaclass(ABCMeta, object)):
         # Add endpoint to list of info to include in log message
         extra.update({'endpoint': self.endpoint})
         _log(self.__request_log, 'info', request, fmt='--> %(message)s',
-                extra=extra)
+             extra=extra)
 
     def _log_response(self, response, extra=None):
         """Log the JSON-RPC response after sending. Should be called by
@@ -60,7 +62,7 @@ class Server(with_metaclass(ABCMeta, object)):
         response = response.replace("\n", '').replace('  ', ' ') \
                 .replace('{ ', '{')
         _log(self.__response_log, 'info', response, fmt='<-- %(message)s',
-                extra=extra)
+             extra=extra)
 
     def _process_response(self, response):
         """Processes the response and returns the 'result' portion if present.

@@ -14,7 +14,7 @@ def decimal(start=1):
     """
     return itertools.count(start)
 
-def hex(start=1):
+def hexadecimal(start=1):
     """Incremental hexadecimal numbers. e.g. 1, 2, 3, .. 9, a, b, etc.
 
     :param start: The first value to start with.
@@ -49,7 +49,7 @@ def from_config(setting):
     if setting == 'decimal':
         return decimal()
     elif setting == 'hex':
-        return hex()
+        return hexadecimal()
     elif setting == 'random':
         return random()
     elif setting == 'uuid':

@@ -2,7 +2,8 @@
 TornadoServer
 *************
 
-Represents an endpoint to communicate with using Tornado asynchronous HTTP client::
+Represents an endpoint to communicate with using Tornado asynchronous HTTP
+client::
 
     from tornado import gen, ioloop
 
@@ -35,7 +36,8 @@ class TornadoServer(Server):
     }
 
 
-    def __init__(self, endpoint, async_http_client_class=AsyncHTTPClient, **kwargs):
+    def __init__(self, endpoint, async_http_client_class=AsyncHTTPClient, \
+            **kwargs):
         super(TornadoServer, self).__init__(endpoint)
 
         self.http_client = async_http_client_class(**kwargs)
@@ -88,10 +90,9 @@ class TornadoServer(Server):
         headers = dict(self._default_headers)
         headers.update(kwargs.get('headers', {}))
 
-        future = self.http_client.fetch(self.endpoint, method='POST',
+        future = self.http_client.fetch(self.endpoint, method='POST', \
             body=request, headers=headers, **kwargs)
 
         future.add_done_callback(self._log_response_callback)
 
         return future
-

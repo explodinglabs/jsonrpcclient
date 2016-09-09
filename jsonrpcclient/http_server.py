@@ -1,6 +1,9 @@
 """An HTTP server to communicate with, for example::
 
     HTTPServer('http://example.com/api').request('go')
+
+Uses the Requests library.
+http://docs.python-requests.org/en/master/
 """
 
 from requests import Request, Session
@@ -9,6 +12,7 @@ from jsonrpcclient.server import Server
 
 
 class HTTPServer(Server):
+    """Defines an HTTP server"""
 
     # The default HTTP header
     __DEFAULT_HTTP_HEADERS__ = {
