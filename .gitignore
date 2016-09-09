@@ -2,3 +2,7 @@
 /.pydevproject
 /.settings/
 __pycache__
+/.coverage
+/.tox
+/dist
+*egg-info/
