@@ -1,3 +1,9 @@
+2.2.3 (Sep 13, 2016)
+~~~~~~~~~~~~~~~~~~~~
+
+- Rename "server" modules and classes to "client". The old names are
+  deprecated.
+
 2.2.2 (Sep 12, 2016)
 ~~~~~~~~~~~~~~~~~~~~
 
