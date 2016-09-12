@@ -6,10 +6,11 @@ def _configure_logger(logger, fmt):
     """Set up a logger, if no handler has been configured for it"""
     if logger.level == logging.NOTSET:
         logger.setLevel(logging.INFO)
-    if not logging.root.handlers:
+    if not logger.handlers:
         handler = logging.StreamHandler()
         handler.setFormatter(logging.Formatter(fmt=fmt))
         logger.addHandler(handler)
+        logger.propagate = False
 
 
 def _log(logger, level, message, *args, **kwargs):
