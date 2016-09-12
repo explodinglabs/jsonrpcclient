@@ -10,7 +10,6 @@ def _configure_logger(logger, fmt):
         handler = logging.StreamHandler()
         handler.setFormatter(logging.Formatter(fmt=fmt))
         logger.addHandler(handler)
-        logger.propagate = False
 
 
 def _log(logger, level, message, *args, **kwargs):
