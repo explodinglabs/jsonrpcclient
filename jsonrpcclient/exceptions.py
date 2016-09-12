@@ -10,7 +10,7 @@ raised.
 To handle them, use a try-block when calling ``notify`` or ``request``::
 
     try:
-        server.notify('go')
+        client.notify('go')
     except JsonRpcClientError as e:
         print(str(e))
 """
@@ -47,7 +47,7 @@ class ReceivedErrorResponse(JsonRpcClientError):
         from jsonrpcclient.exceptions import JsonRpcClientError, \\
             ReceivedErrorResponse
         try:
-            server.notify('go')
+            client.notify('go')
         except ReceivedErrorResponse as e:
             print(e.code, e.message, e.data)
         except JsonRpcClientError as e:

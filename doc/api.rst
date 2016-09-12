@@ -6,7 +6,7 @@ jsonrpcclient API
 Request
 =======
 
-.. automethod:: server.Server.request
+.. automethod:: client.Client.request
 
 If you're not interested in a response, use ``notify()`` instead of
 ``request()``.
@@ -14,7 +14,7 @@ If you're not interested in a response, use ``notify()`` instead of
 Send
 ====
 
-.. automethod:: server.Server.send
+.. automethod:: client.Client.send
 
 Request class
 =============
@@ -27,12 +27,12 @@ Request class
 
 Send a ``Request`` object::
 
-    >>> server.send(Request('ping'))
+    >>> client.send(Request('ping'))
     --> {"jsonrpc": "2.0", "method": "ping", "id": 1}
     <-- {"jsonrpc": "2.0", "result": "pong", "id": 1}
     'pong'
 
-The :func:`~server.Server.request` method is a wrapper around
+The :func:`~client.Client.request` method is a wrapper around
 ``send(Request())``.
 
 If you're not interested in a response, use the ``Notification`` class instead
@@ -44,17 +44,17 @@ Batch requests
 This JSON-RPC feature allows you to send multiple requests in a single
 message::
 
-    server.send([
+    client.send([
         {'jsonrpc': '2.0', 'method': 'cat', 'id': 1}, \
         {'jsonrpc': '2.0', 'method': 'dog', 'id': 2}])
 
 Send multiple :class:`~request.Request` objects::
 
-    server.send([Request('cat'), Request('dog')])
+    client.send([Request('cat'), Request('dog')])
 
 Using list comprehension to get the cube of ten numbers::
 
-    server.send([Request('cube', i) for i in range(10)])
+    client.send([Request('cube', i) for i in range(10)])
 
 Unlike single requests, batch requests return the whole JSON-RPC response
 object - a list of responses for each request that had an ``id`` member.
@@ -69,26 +69,26 @@ Configuration
 Configuring the Requests library
 --------------------------------
 
-HTTPServer makes use of Kenneth Reitz's Requests library. The `Session
+HTTPClient makes use of Kenneth Reitz's Requests library. The `Session
 <http://docs.python-requests.org/en/master/api/#requests.Session>`_ is
 available so you can configure it before sending any requests.
 
 For example, Basic Auth::
 
-    server.session.auth = ('user', 'pass')
+    client.session.auth = ('user', 'pass')
 
 SSL authentication::
 
-    server.session.verify = '/path/to/certificate'
+    client.session.verify = '/path/to/certificate'
 
 Custom HTTP headers::
 
-    server.session.headers.update({'Content-Type': 'application/json-rpc'})
+    client.session.headers.update({'Content-Type': 'application/json-rpc'})
 
 You can also configure some Requests options when calling
-:func:`~server.Server.send`::
+:func:`~client.Client.send`::
 
-    server.send(req, verify=True, cert='/path/to/certificate', \
+    client.send(req, verify=True, cert='/path/to/certificate', \
         headers={'Content-Type': 'application/json-rpc'})
 
 As in the Requests library, any dictionaries passed to send in named arguments

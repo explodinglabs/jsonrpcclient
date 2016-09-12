@@ -7,7 +7,7 @@ import itertools
 from tornado import testing, web, httpclient
 
 from jsonrpcclient import Request
-from jsonrpcclient.tornado_server import TornadoServer
+from jsonrpcclient.tornado_client import TornadoClient
 
 
 class EchoHandler(web.RequestHandler):
@@ -28,7 +28,7 @@ class FailureHandler(web.RequestHandler):
         raise web.HTTPError(request['params']['code'])
 
 
-class TestTornadoServer(testing.AsyncHTTPTestCase):
+class TestTornadoClient(testing.AsyncHTTPTestCase):
 
     def get_app(self):
         return web.Application([
@@ -37,14 +37,14 @@ class TestTornadoServer(testing.AsyncHTTPTestCase):
         ])
 
     def setUp(self):
-        super(TestTornadoServer, self).setUp()
+        super(TestTornadoClient, self).setUp()
 
         # Patch Request.id_iterator to ensure the id is always 1
         Request.id_iterator = itertools.count(1)
 
     @testing.gen_test
     def test_success(self):
-        testee = TornadoServer(self.get_url('/echo'))
+        testee = TornadoClient(self.get_url('/echo'))
         response = yield testee.some_method(1, [2], {'3': 4, '5': True, '6': None})
 
         self.assertEqual({
@@ -56,7 +56,7 @@ class TestTornadoServer(testing.AsyncHTTPTestCase):
 
     @testing.gen_test
     def test_failure(self):
-        testee = TornadoServer(self.get_url('/fail'))
+        testee = TornadoClient(self.get_url('/fail'))
         with self.assertRaises(httpclient.HTTPError) as ctx:
             yield testee.fail(code=500)
         self.assertEqual('HTTP 500: Internal Server Error', str(ctx.exception))

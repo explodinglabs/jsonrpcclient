@@ -1,4 +1,4 @@
-"""test_zmq_server.py"""
+"""test_zmq_client.py"""
 #pylint:disable=missing-docstring,line-too-long,protected-access
 
 from unittest import TestCase, main
@@ -8,10 +8,10 @@ import zmq
 from mock import patch, Mock
 
 from jsonrpcclient import Request
-from jsonrpcclient.zmq_server import ZMQServer
+from jsonrpcclient.zmq_client import ZMQClient
 
 
-class TestZMQServer(TestCase):
+class TestZMQClient(TestCase):
 
     def setUp(self):
         # Patch Request.id_iterator to ensure the request id is always 1
@@ -19,22 +19,22 @@ class TestZMQServer(TestCase):
 
     @staticmethod
     def test_instantiate():
-        ZMQServer('tcp://localhost:5555')
+        ZMQClient('tcp://localhost:5555')
 
     @patch('zmq.Socket.send_string', Mock())
     @patch('zmq.Socket.recv', Mock())
     def test_send_message(self): # pylint: disable=no-self-use
-        server = ZMQServer('tcp://localhost:5555')
-        server._send_message(str(Request('go')))
+        client = ZMQClient('tcp://localhost:5555')
+        client._send_message(str(Request('go')))
 
     def test_send_message_with_connection_error(self):
-        server = ZMQServer('tcp://localhost:5555')
+        client = ZMQClient('tcp://localhost:5555')
         # Set timeouts
-        server.socket.setsockopt(zmq.RCVTIMEO, 5)
-        server.socket.setsockopt(zmq.SNDTIMEO, 5)
-        server.socket.setsockopt(zmq.LINGER, 5)
+        client.socket.setsockopt(zmq.RCVTIMEO, 5)
+        client.socket.setsockopt(zmq.SNDTIMEO, 5)
+        client.socket.setsockopt(zmq.LINGER, 5)
         with self.assertRaises(zmq.error.ZMQError):
-            server._send_message(str(Request('go')))
+            client._send_message(str(Request('go')))
 
 
 if __name__ == '__main__':
