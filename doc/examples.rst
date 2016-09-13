@@ -9,8 +9,7 @@ protocols.
 Requests
 ========
 
-Uses Kenneth Reitz's `Requests <http://docs.python-requests.org/>`__
-library.
+Uses the `Requests <http://docs.python-requests.org/>`__ library.
 
 ::
 
@@ -40,6 +39,8 @@ Uses `pyzmq <https://pyzmq.readthedocs.io/>`__.
     --> {"jsonrpc": "2.0", "method": "ping", "id": 1}
     <-- {"jsonrpc": "2.0", "result": "pong", "id": 1}
     'pong'
+
+See `blog post <https://bcb.github.io/jsonrpc/pyzmq>`__.
 
 Tornado
 =======
@@ -75,3 +76,5 @@ request.
     INFO:jsonrpcclient.client.request:{"jsonrpc": "2.0", "method": "ping", "id": 1}
     INFO:jsonrpcclient.client.response:{"jsonrpc": "2.0", "result": "pong", "id": 1}
     pong
+
+See `blog post <https://bcb.github.io/jsonrpc/tornado>`__.
