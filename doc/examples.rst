@@ -6,6 +6,9 @@ jsonrpcclient Examples
 Sending JSON-RPC requests in Python using various frameworks and transport
 protocols.
 
+.. contents::
+    :local:
+
 Requests
 ========
 
@@ -22,25 +25,6 @@ Uses the `Requests <http://docs.python-requests.org/>`__ library.
     --> {"jsonrpc": "2.0", "method": "ping", "id": 1}
     <-- {"jsonrpc": "2.0", "result": "pong", "id": 1}
     'pong'
-
-ZeroMQ
-======
-
-Uses `pyzmq <https://pyzmq.readthedocs.io/>`__.
-
-::
-
-    $ pip install jsonrpcclient pyzmq
-
-::
-
-    >>> from jsonrpcclient.zmq_client import ZMQClient
-    >>> ZMQClient('tcp://localhost:5000').request('ping')
-    --> {"jsonrpc": "2.0", "method": "ping", "id": 1}
-    <-- {"jsonrpc": "2.0", "result": "pong", "id": 1}
-    'pong'
-
-See `blog post <https://bcb.github.io/jsonrpc/pyzmq>`__.
 
 Tornado
 =======
@@ -78,3 +62,22 @@ request.
     pong
 
 See `blog post <https://bcb.github.io/jsonrpc/tornado>`__.
+
+ZeroMQ
+======
+
+Uses `pyzmq <https://pyzmq.readthedocs.io/>`__.
+
+::
+
+    $ pip install jsonrpcclient pyzmq
+
+::
+
+    >>> from jsonrpcclient.zmq_client import ZMQClient
+    >>> ZMQClient('tcp://localhost:5000').request('ping')
+    --> {"jsonrpc": "2.0", "method": "ping", "id": 1}
+    <-- {"jsonrpc": "2.0", "result": "pong", "id": 1}
+    'pong'
+
+See `blog post <https://bcb.github.io/jsonrpc/pyzmq>`__.
