@@ -84,4 +84,4 @@ ZeroMQ server.
     <-- {"jsonrpc": "2.0", "result": "pong", "id": 1}
     'pong'
 
-See `blog post <https://bcb.github.io/jsonrpc/pyzmq>`__.
+See `blog post <https://bcb.github.io/jsonrpc/zeromq>`__.
