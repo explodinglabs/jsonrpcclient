@@ -12,7 +12,7 @@ protocols.
 Requests
 ========
 
-`HTTPClient` uses the `Requests <http://docs.python-requests.org/>`__ library.
+``HTTPClient`` uses the `Requests <http://docs.python-requests.org/>`__ library.
 
 ::
 
@@ -29,7 +29,7 @@ Requests
 Tornado
 =======
 
-`TornadoClient` uses `Tornado <http://www.tornadoweb.org/>`__ to send an
+``TornadoClient`` uses `Tornado <http://www.tornadoweb.org/>`__ to send an
 asynchronous request.
 
 ::
@@ -38,7 +38,7 @@ asynchronous request.
 
 ::
 
-    from tornado import gen, ioloop
+    from tornado import ioloop
     from jsonrpcclient.tornado_client import TornadoClient
 
     client = TornadoClient('http://localhost:5000/')
@@ -46,13 +46,16 @@ asynchronous request.
     def done_callback(future):
         print(future.result())
 
-    @gen.coroutine
-    def main():
+    async def main():
         future = client.request('ping')
         future.add_done_callback(done_callback)
-        yield(future)
+        await future
 
     io_loop = ioloop.IOLoop.current().run_sync(main)
+
+Note the ``async``/``await`` syntax requires Python 3.5+. Prior to that use
+``@gen.coroutine`` and ``yield``. (see `Tornado docs
+<http://tornado.readthedocs.io/en/stable/guide/coroutines.html#python-3-5-async-and-await>`__)
 
 ::
 
@@ -66,8 +69,8 @@ See `blog post <https://bcb.github.io/jsonrpc/tornado>`__.
 ZeroMQ
 ======
 
-`ZMQClient` uses `pyzmq <https://pyzmq.readthedocs.io/>`__ to communicate with
-a ZeroMQ server.
+``ZMQClient`` uses `pyzmq <https://pyzmq.readthedocs.io/>`__ for comms with a
+ZeroMQ server.
 
 ::
 
