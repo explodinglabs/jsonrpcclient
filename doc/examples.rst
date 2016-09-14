@@ -66,7 +66,8 @@ See `blog post <https://bcb.github.io/jsonrpc/tornado>`__.
 ZeroMQ
 ======
 
-`ZMQClient` uses `pyzmq <https://pyzmq.readthedocs.io/>`__.
+`ZMQClient` uses `pyzmq <https://pyzmq.readthedocs.io/>`__ to communicate with
+a ZeroMQ server.
 
 ::
 
