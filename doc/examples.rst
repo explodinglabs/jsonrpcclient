@@ -3,7 +3,7 @@
 jsonrpcclient Examples
 **********************
 
-Sending JSON-RPC requests in Python using various frameworks and transport
+Showing how to send JSON-RPC requests using various frameworks and transport
 protocols.
 
 .. contents::
