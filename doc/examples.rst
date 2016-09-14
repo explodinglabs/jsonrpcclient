@@ -12,7 +12,7 @@ protocols.
 Requests
 ========
 
-Uses the `Requests <http://docs.python-requests.org/>`__ library.
+`HTTPClient` uses the `Requests <http://docs.python-requests.org/>`__ library.
 
 ::
 
@@ -29,8 +29,8 @@ Uses the `Requests <http://docs.python-requests.org/>`__ library.
 Tornado
 =======
 
-`Tornado <http://www.tornadoweb.org/>`__ users can send an asynchronous
-request.
+`TornadoClient` uses `Tornado <http://www.tornadoweb.org/>`__ to send an
+asynchronous request.
 
 ::
 
@@ -66,7 +66,7 @@ See `blog post <https://bcb.github.io/jsonrpc/tornado>`__.
 ZeroMQ
 ======
 
-Uses `pyzmq <https://pyzmq.readthedocs.io/>`__.
+`ZMQClient` uses `pyzmq <https://pyzmq.readthedocs.io/>`__.
 
 ::
 
