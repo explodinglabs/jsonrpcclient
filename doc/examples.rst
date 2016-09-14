@@ -54,8 +54,8 @@ asynchronous request.
     io_loop = ioloop.IOLoop.current().run_sync(main)
 
 Note the ``async``/``await`` syntax requires Python 3.5+. Prior to that use
-``@gen.coroutine`` and ``yield``. (see `Tornado docs
-<http://tornado.readthedocs.io/en/stable/guide/coroutines.html#python-3-5-async-and-await>`__)
+`@gen.coroutine and yield
+<http://tornado.readthedocs.io/en/stable/guide/coroutines.html#python-3-5-async-and-await>`__.
 
 ::
 
