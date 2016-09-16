@@ -46,6 +46,7 @@ class TornadoClient(Client):
         future = Future()
 
         def process_response_callback(response_future):
+            """process_response callback"""
             try:
                 response = response_future.result()
                 result = super(TornadoClient, self)._process_response(
@@ -60,6 +61,7 @@ class TornadoClient(Client):
         return future
 
     def _log_response_callback(self, future):
+        """_log_response callback"""
         ex = future.exception()
         if ex:
             if isinstance(ex, HTTPError):

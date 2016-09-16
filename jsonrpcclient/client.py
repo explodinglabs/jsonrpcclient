@@ -140,8 +140,6 @@ class Client(with_metaclass(ABCMeta, object)):
         response = self._send_message(request, **kwargs)
         return self._process_response(response)
 
-    # Alternate ways to send a request -----------
-
     def notify(self, method_name, *args, **kwargs):
         """Send a JSON-RPC request, without expecting a response.
 
@@ -153,6 +151,7 @@ class Client(with_metaclass(ABCMeta, object)):
         return self.send(Notification(method_name, *args, **kwargs))
 
     def request(self, method_name, *args, **kwargs):
+        #:pylint:disable=line-too-long
         """Send a request, by passing the method and arguments. This is the main
         public method.
 
@@ -166,6 +165,7 @@ class Client(with_metaclass(ABCMeta, object)):
         :param kwargs: Keyword arguments passed to the remote procedure.
         :return: The payload (i.e. the ``result`` part of the response).
         """
+        #:pylint:enable=line-too-long
         return self.send(Request(method_name, *args, **kwargs))
 
     def __getattr__(self, name):

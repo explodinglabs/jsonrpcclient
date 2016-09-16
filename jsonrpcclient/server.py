@@ -1,8 +1,12 @@
 """Deprecated module, remove in version 3"""
-from warnings import warn
+from abc import abstractmethod
 
 from jsonrpcclient.client import Client
 
 
 class Server(Client):
-    pass
+    """Deprecate by subclassing"""
+
+    @abstractmethod
+    def _send_message(self, request, **kwargs):
+        """Must be overridden"""

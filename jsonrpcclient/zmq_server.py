@@ -7,4 +7,5 @@ from jsonrpcclient.zmq_client import ZMQClient
 warn('ZMQServer is deprecated, use ZMQClient', DeprecationWarning)
 
 class ZMQServer(ZMQClient):
+    """Deprecate by subclassing"""
     pass

@@ -7,4 +7,5 @@ from jsonrpcclient.http_client import HTTPClient
 warn('HTTPServer is deprecated, use HTTPClient', DeprecationWarning)
 
 class HTTPServer(HTTPClient):
+    """Deprecate by subclassing"""
     pass
