@@ -21,4 +21,4 @@ for transport, but more options are demonstrated on the :doc:`examples
 
 Contribute on `Github <https://github.com/bcb/jsonrpcclient>`__.
 
-See also: `jsonrpcserver.readthedocs.io <https://jsonrpcserver.readthedocs.io/>`__
+See also: `jsonrpcserver <https://jsonrpcserver.readthedocs.io/>`__
