@@ -96,7 +96,6 @@ class TestRequest(TestCase):
     def test_auto_iterating_id(self):
         self.assertEqual(
             {'jsonrpc': '2.0', 'method': 'go', 'id': 1}, Request('go'))
-        print(Request.id_iterator)
         self.assertEqual(
             {'jsonrpc': '2.0', 'method': 'go', 'id': 2}, Request('go'))
 

@@ -17,7 +17,7 @@ class EchoHandler(web.RequestHandler):
         self.finish({
             'id'      : 1,
             'jsonrpc' : '2.0',
-            'result'  : request
+            'result'  : [1, [2], {'3': 4, '5': True, '6': None}]
         })
 
 
@@ -46,13 +46,7 @@ class TestTornadoClient(testing.AsyncHTTPTestCase):
     def test_success(self):
         testee = TornadoClient(self.get_url('/echo'))
         response = yield testee.some_method(1, [2], {'3': 4, '5': True, '6': None})
-
-        self.assertEqual({
-            'id'      : 1,
-            'method'  : 'some_method',
-            'jsonrpc' : '2.0',
-            'params'  : [1, [2], {'3': 4, '6': None, '5': True}]
-        }, response)
+        self.assertEqual([1, [2], {'3': 4, '6': None, '5': True}], response)
 
     @testing.gen_test
     def test_failure(self):

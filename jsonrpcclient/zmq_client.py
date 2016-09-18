@@ -33,8 +33,6 @@ class ZMQClient(Client):
         :param request: The JSON-RPC request string.
         :return: The response (a string for requests, None for notifications).
         """
-        self._log_request(request)
         self.socket.send_string(request)
-        response = self.socket.recv().decode('UTF-8')
-        self._log_response(response)
-        return response
+        response = self.socket.recv()
+        return self._process_response(response.decode())

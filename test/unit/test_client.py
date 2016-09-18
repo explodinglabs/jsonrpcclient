@@ -15,7 +15,7 @@ from jsonrpcclient.client import Client
 class DummyClient(Client):
     """A dummy class for testing the abstract Client class"""
     def _send_message(self, request):
-        return '{"jsonrpc": "2.0", "result": 15, "id": 1}'
+        return 15
 
 
 class TestClient(TestCase):

@@ -15,7 +15,7 @@ class HTTPClient(Client):
     """Defines an HTTP client"""
 
     # The default HTTP header
-    __DEFAULT_HTTP_HEADERS__ = {
+    __DEFAULT_HEADERS = {
         'Content-Type': 'application/json', 'Accept': 'application/json'}
 
     def __init__(self, endpoint):
@@ -25,35 +25,52 @@ class HTTPClient(Client):
                        module.
         """
         super(HTTPClient, self).__init__(endpoint)
+        # Make use of Requests' sessions feature
         self.session = Session()
-        self.session.headers.update(self.__DEFAULT_HTTP_HEADERS__)
+        self.session.headers.update(self.__DEFAULT_HEADERS)
+        # Keep last request and response - don't use, will be removed in next
+        # major release
         self.last_request = None
         self.last_response = None
 
-    def _send_message(
-            self, request, headers=None, files=None, params=None, auth=None,
-            cookies=None, **kwargs):
+    def _prepare_request(self, request, headers=None, files=None,
+            params=None, auth=None, cookies=None, **kwargs):
+        """Prepare the request for sending.
+
+        :param request: The JSON-RPC request (a PreparedRequest object)
+        :param kwargs: Configuration for just this request
+        :return: None
+        """
+        # Use the Requests library to prepare the request based on the session
+        # configuration
+        r = Request(method='POST', url=self.endpoint, data=request,
+                    headers=headers, files=files, params=params, auth=auth,
+                    cookies=cookies)
+        request.prepped = self.session.prepare_request(r)
+        request.extras = {'http_headers': request.prepped.headers}
+
+    def _send_message(self, request, stream=False, timeout=None, verify=True,
+            cert=None, proxies=None, **kwargs):
         """Transport the message to the server and return the response.
 
         :param request: The JSON-RPC request string.
+        :param kwargs: Passed on to the requests lib's send function, for last
+            minute configuration
         :return: The JSON-RPC response.
         :rtype: A string for requests, None for notifications.
         :raise requests.exceptions.RequestException:
             Raised by the requests module in the event of a communications
             error.
         """
-        # Prepare the request
-        req = Request(
-            method='POST', url=self.endpoint, data=request, headers=headers,
-            files=files, params=params, auth=auth, cookies=cookies)
-        prepped = self.session.prepare_request(req)
-        self.last_request = prepped
-        # Log the request
-        self._log_request(request, {'http_headers': prepped.headers})
-        # Send the message
-        response = self.session.send(prepped, **kwargs)
-        # Log the response
-        self._log_response(response.text, {'http_code': response.status_code, \
-            'http_reason': response.reason, 'http_headers': response.headers})
+        # Keep last request - don't use, will be removed in next major release
+        self.last_request = request
+        # Send the message with Requests, passing any final config options
+        response = self.session.send(
+            request.prepped, stream=stream, timeout=timeout, verify=verify,
+            cert=cert, proxies=proxies)
+        # Keep last response - don't use, will be removed in next major release
         self.last_response = response
-        return response.text
+        # Give some extra information to include in the response log entry
+        return self._process_response(response.text, {
+            'http_code': response.status_code, 'http_reason': response.reason,
+            'http_headers': response.headers})
