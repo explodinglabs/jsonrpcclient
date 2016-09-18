@@ -43,15 +43,11 @@ asynchronous request.
 
     client = TornadoClient('http://localhost:5000/')
 
-    def done_callback(future):
-        print(future.result())
-
     async def main():
-        future = client.request('ping')
-        future.add_done_callback(done_callback)
-        await future
+        result = await client.request('ping')
+        print(result)
 
-    io_loop = ioloop.IOLoop.current().run_sync(main)
+    ioloop.IOLoop.current().run_sync(main)
 
 Note the ``async``/``await`` syntax requires Python 3.5+. Prior to that use
 `@gen.coroutine and yield
