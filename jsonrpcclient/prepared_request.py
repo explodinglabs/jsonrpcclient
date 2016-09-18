@@ -13,5 +13,7 @@ class PreparedRequest(str):
             return str.__new__(cls, request)
 
     def __init__(self, request):
-        #: Extra details used in log entry
-        self.extras = None
+        #: Extra details used in log entry, can be set by clients in
+        #: _prepare_request
+        self.log_extra = None
+        self.log_format = None

@@ -34,46 +34,47 @@ class Client(with_metaclass(ABCMeta, object)):
         #: Holds the server address
         self.endpoint = endpoint
 
-    def _log_request(self, request, extra=None):
+    def _log(self, message, extra, log, level, fmt):
+        if extra is None:
+            extra = {}
+        # Add the endpoint to the log entry
+        extra.update({'endpoint': self.endpoint})
+        # Clean up the message for logging
+        if isinstance(message, basestring):
+            message = message.replace("\n", '').replace('  ', ' ') \
+                .replace('{ ', '{')
+        _log(log, level, message, extra=extra, fmt=fmt)
+
+    def _log_request(self, request, extra=None, fmt=None):
         """Log the JSON-RPC request before sending. Should be called by
         subclasses in :meth:`_send_message`, before sending.
 
         :param request: The JSON-RPC request string.
         :param extra: A dict of extra fields that may be logged.
         """
-        if extra is None:
-            extra = {}
-        # Add endpoint to list of info to include in log message
-        extra.update({'endpoint': self.endpoint})
-        _log(self.__request_log, 'info', request, fmt='--> %(message)s',
-             extra=extra)
+        if not fmt:
+            fmt='--> %(message)s'
+        self._log(request, extra, self.__request_log, 'info', fmt)
 
-    def _log_response(self, response, extra=None):
+    def _log_response(self, response, extra=None, fmt=None):
         """Log the JSON-RPC response after sending. Should be called by
         subclasses in :meth:`_send_message`, after receiving the response.
 
         :param response: The JSON-RPC response string.
         :param extra: A dict of extra fields that may be logged.
         """
-        if extra is None:
-            extra = {}
-        # Add the endpoint to the log entry
-        extra.update({'endpoint': self.endpoint})
-        # Clean up the response for logging
-        if isinstance(response, basestring):
-            response = response.replace("\n", '').replace('  ', ' ') \
-                    .replace('{ ', '{')
-        _log(self.__response_log, 'info', response, fmt='<-- %(message)s',
-             extra=extra)
+        if not fmt:
+            fmt = '<-- %(message)s'
+        self._log(response, extra, self.__response_log, 'info', fmt)
 
     def _prepare_request(self, request, **kwargs):
         """Prepare the request if necessary. Subclasses can overload to modify
         the request, or to add extra info to the log entry (set the
-        extras attribute).
+        extra attribute).
         """
         pass
 
-    def _process_response(self, response, extras=None):
+    def _process_response(self, response, log_extra=None, log_format=None):
         """Processes the response and returns the 'result' portion if present.
 
         :param response: The JSON-RPC response string to process.
@@ -81,7 +82,7 @@ class Client(with_metaclass(ABCMeta, object)):
         """
         if response:
             # Log the response before processing it
-            self._log_response(response, extras)
+            self._log_response(response, log_extra, log_format)
             # If it's a json string, parse to object
             if isinstance(response, basestring):
                 try:
@@ -152,7 +153,7 @@ class Client(with_metaclass(ABCMeta, object)):
         # set the extra details to include in the log entry
         self._prepare_request(request, **kwargs)
         # Log the request
-        self._log_request(request, request.extras)
+        self._log_request(request, request.log_extra, request.log_format)
         # Call abstract method to transport the message, returning either the
         # processed response, or a future which promises to process eventually
         return self._send_message(request, **kwargs)
