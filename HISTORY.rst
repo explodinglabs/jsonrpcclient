@@ -1,3 +1,8 @@
+2.2.4 (Sep 19, 2016)
+~~~~~~~~~~~~~~~~~~~~
+
+- Internal refactoring, to make it easier to add clients.
+
 2.2.3 (Sep 13, 2016)
 ~~~~~~~~~~~~~~~~~~~~
 
