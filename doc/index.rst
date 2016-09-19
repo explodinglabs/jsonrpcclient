@@ -5,7 +5,7 @@ Send `JSON-RPC <http://www.jsonrpc.org/>`__ requests in Python 2.7 and 3.3+.
 
 .. sourcecode:: sh
 
-    $ pip install jsonrpcclient requests
+    $ pip install 'jsonrpcclient[requests]'
 
 .. sourcecode:: python
 
