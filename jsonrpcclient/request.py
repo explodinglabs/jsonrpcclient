@@ -79,8 +79,7 @@ class Notification(with_metaclass(_RequestClassType, dict)):
 
     def __init__(self, method, *args, **kwargs):
         # Start the basic request
-        self['jsonrpc'] = '2.0'
-        self['method'] = method
+        self.update(jsonrpc='2.0', method=method)
         # Get the 'params' part
         # Merge the positional and keyword arguments into one list
         params = list()
@@ -97,7 +96,7 @@ class Notification(with_metaclass(_RequestClassType, dict)):
                     isinstance(params[0], list)):
                 params = params[0]
             # Add the params to the request
-            self['params'] = params
+            self.update(params=params)
 
     def __str__(self):
         """Wrapper around request, returning a string instead of a dict"""
@@ -125,11 +124,12 @@ class Request(Notification):
     def __init__(self, method, *args, **kwargs):
         # If 'request_id' is passed, use the specified id
         if 'request_id' in kwargs:
-            self['id'] = kwargs.pop('request_id', None)
+            _id = kwargs.pop('request_id', None)
         else: # Get the next id from the iterator
             # Create the iterator if not yet created
             if Request.id_iterator is None:
                 Request.id_iterator = ids.from_config(config.ids)
-            self['id'] = next(self.id_iterator)
+            _id = next(self.id_iterator)
         # We call super last, after popping the request_id
         super(Request, self).__init__(method, *args, **kwargs)
+        self.update(id=_id)
