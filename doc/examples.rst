@@ -16,7 +16,7 @@ Requests
 
 ::
 
-    $ pip install jsonrpcclient requests
+    $ pip install 'jsonrpcclient[requests]'
 
 ::
 
@@ -34,7 +34,7 @@ asynchronous request.
 
 ::
 
-    $ pip install jsonrpcclient tornado
+    $ pip install 'jsonrpcclient[tornado]'
 
 ::
 
@@ -70,7 +70,7 @@ ZeroMQ server.
 
 ::
 
-    $ pip install jsonrpcclient pyzmq
+    $ pip install 'jsonrpcclient[pyzmq]'
 
 ::
 
