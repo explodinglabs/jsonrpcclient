@@ -23,18 +23,20 @@ class TestZMQClient(TestCase):
         ZMQClient('tcp://localhost:5555')
 
     @patch('zmq.Socket.send_string', Mock())
-    @patch('zmq.Socket.recv', Mock(side_effect = lambda: json.dumps({'jsonrpc':
-        '2.0', 'result': 99, 'id': 1}).encode('utf-8')))
+    @patch('zmq.Socket.recv', Mock(side_effect=lambda: json.dumps(
+        {'jsonrpc': '2.0', 'result': 99, 'id': 1}).encode('utf-8')))
     def test_send_message(self): # pylint: disable=no-self-use
         client = ZMQClient('tcp://localhost:5555')
         client._send_message(str(Request('go')))
 
-    def test_send_message_with_connection_error(self):
+    def test_send_message_conn_error(self):
         client = ZMQClient('tcp://localhost:5555')
         # Set timeouts
+        #pylint:disable=no-member
         client.socket.setsockopt(zmq.RCVTIMEO, 5)
         client.socket.setsockopt(zmq.SNDTIMEO, 5)
         client.socket.setsockopt(zmq.LINGER, 5)
+        #pylint:enable=no-member
         with self.assertRaises(zmq.error.ZMQError):
             client._send_message(str(Request('go')))
 

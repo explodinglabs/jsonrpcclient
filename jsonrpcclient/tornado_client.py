@@ -16,7 +16,7 @@ client::
 """
 from functools import partial
 
-from tornado.httpclient import AsyncHTTPClient, HTTPError
+from tornado.httpclient import AsyncHTTPClient
 from tornado.concurrent import Future
 
 from .client import Client

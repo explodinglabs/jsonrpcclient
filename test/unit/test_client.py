@@ -31,14 +31,14 @@ class TestClient(TestCase):
 class TestLogging(TestClient):
 
     def test_request(self):
-        with LogCapture() as l:
+        with LogCapture() as capture:
             self.client._log_request('{"jsonrpc": "2.0", "method": "go"}')
-        l.check(('jsonrpcclient.client.request', 'INFO', '{"jsonrpc": "2.0", "method": "go"}'))
+        capture.check(('jsonrpcclient.client.request', 'INFO', '{"jsonrpc": "2.0", "method": "go"}'))
 
     def test_response(self):
-        with LogCapture() as l:
+        with LogCapture() as capture:
             self.client._log_response('{"jsonrpc": "2.0", "result": 5, "id": 1}')
-        l.check(('jsonrpcclient.client.response', 'INFO', '{"jsonrpc": "2.0", "result": 5, "id": 1}'))
+        capture.check(('jsonrpcclient.client.response', 'INFO', '{"jsonrpc": "2.0", "result": 5, "id": 1}'))
 
 
 class TestSend(TestClient):
@@ -98,26 +98,26 @@ class TestProcessResponse(TestClient):
         with self.assertRaises(ValidationError):
             self.client._process_response(response)
 
-    def test_invalid_jsonrpc_no_validation(self):
+    def test_without_validation(self):
         config.validate = False
         response = {'json': '2.0'}
         self.client._process_response(response)
 
     def test_error_response(self):
         response = {'jsonrpc': '2.0', 'error': {'code': -32000, 'message': 'Not Found'}, 'id': None}
-        with self.assertRaises(exceptions.ReceivedErrorResponse) as e:
+        with self.assertRaises(exceptions.ReceivedErrorResponse) as ex:
             self.client._process_response(response)
-        self.assertEqual(e.exception.code, -32000)
-        self.assertEqual(e.exception.message, 'Not Found')
-        self.assertEqual(e.exception.data, None)
+        self.assertEqual(ex.exception.code, -32000)
+        self.assertEqual(ex.exception.message, 'Not Found')
+        self.assertEqual(ex.exception.data, None)
 
     def test_error_response_with_data(self):
         response = {'jsonrpc': '2.0', 'error': {'code': -32000, 'message': 'Not Found', 'data': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit'}, 'id': None}
-        with self.assertRaises(exceptions.ReceivedErrorResponse) as e:
+        with self.assertRaises(exceptions.ReceivedErrorResponse) as ex:
             self.client._process_response(response)
-        self.assertEqual(e.exception.code, -32000)
-        self.assertEqual(e.exception.message, 'Not Found')
-        self.assertEqual(e.exception.data, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit')
+        self.assertEqual(ex.exception.code, -32000)
+        self.assertEqual(ex.exception.message, 'Not Found')
+        self.assertEqual(ex.exception.data, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit')
 
     def test_batch(self):
         response = [

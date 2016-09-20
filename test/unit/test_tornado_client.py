@@ -12,8 +12,10 @@ from jsonrpcclient.tornado_client import TornadoClient
 
 class EchoHandler(web.RequestHandler):
 
+    def data_received(self, chunk):
+        pass
+
     def post(self):
-        request = json.loads(self.request.body.decode())
         self.finish({
             'id'      : 1,
             'jsonrpc' : '2.0',
@@ -22,6 +24,9 @@ class EchoHandler(web.RequestHandler):
 
 
 class FailureHandler(web.RequestHandler):
+
+    def data_received(self, chunk):
+        pass
 
     def post(self):
         request = json.loads(self.request.body.decode())

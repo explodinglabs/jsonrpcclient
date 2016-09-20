@@ -34,7 +34,7 @@ class TestNotification(TestCase):
     def test_method_name_directly(self):
         self.assertEqual(
             {'jsonrpc': '2.0', 'method': 'cat'},
-            Notification.cat()
+            Notification.cat() #pylint:disable=no-member
         )
 
     def test_positional(self):
@@ -49,7 +49,7 @@ class TestNotification(TestCase):
             Notification('find', name='Foo')
         )
 
-    def test_both_positional_and_keyword(self):
+    def test_both(self):
         self.assertEqual(
             {'jsonrpc': '2.0', 'method': 'find', 'params': ['Foo', {'age': 42}]},
             Notification('find', 'Foo', age=42)
@@ -81,7 +81,7 @@ class TestRequest(TestCase):
     def test_method_name_directly(self):
         self.assertEqual(
             {'jsonrpc': '2.0', 'method': 'cat', 'id': 1},
-            Request.cat())
+            Request.cat()) #pylint:disable=no-member
 
     def test_positional(self):
         self.assertEqual(

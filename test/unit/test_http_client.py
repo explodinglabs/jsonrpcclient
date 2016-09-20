@@ -3,11 +3,6 @@
 
 from unittest import TestCase, main
 import itertools
-try:
-    from urllib.parse import urlencode
-except ImportError:
-    # Python 2
-    from urllib import urlencode
 
 import requests
 import responses
@@ -45,85 +40,105 @@ class TestHTTPClient(TestCase):
         # Header set by Requests default_headers
         self.assertIn('Connection', client.session.headers)
 
-    def test_init_custom_headers_are_sent(self):
+    def test_send_custom_headers(self):
         client = HTTPClient('http://test/')
         client.session.headers['Content-Type'] = 'application/json-rpc'
         request = PreparedRequest(Request('go'))
         client._prepare_request(request)
         with self.assertRaises(requests.exceptions.RequestException):
             client._send_message(request)
+        #pylint:disable=no-member
         # Header set by argument
         self.assertEqual('application/json-rpc', request.prepped.headers['Content-Type'])
         # Header set by DEFAULT_HEADERS
         self.assertEqual('application/json', request.prepped.headers['Accept'])
         # Header set by Requests default_headers
         self.assertIn('Content-Length', request.prepped.headers)
+        #pylint:enable=no-member
 
     @staticmethod
     def test_init_custom_auth():
         HTTPClient('http://test/')
 
+class TestHTTPClientSendMessage(TestCase):
+
+    def setUp(self):
+        # Patch Request.id_iterator to ensure the id is always 1
+        Request.id_iterator = itertools.count(1)
+
     # _send_message
-    def test_send_message_body(self):
+    def test_body(self):
         client = HTTPClient('http://test/')
         request = PreparedRequest(Request('go'))
         client._prepare_request(request)
         with self.assertRaises(requests.exceptions.RequestException):
             client._send_message(request)
-        self.assertEqual(request, request.prepped.body)
+        self.assertEqual(request, request.prepped.body) #pylint:disable=no-member
 
-    def test_send_message_with_connection_error(self):
+    def test_connection_error(self):
         client = HTTPClient('http://test/')
         request = PreparedRequest(Request('go'))
         client._prepare_request(request)
         with self.assertRaises(requests.exceptions.RequestException):
             client._send_message(request)
 
+    #pylint:disable=no-member
     @responses.activate
-    def test_send_message_with_invalid_request(self):
+    def test_invalid_request(self):
         client = HTTPClient('http://test/')
         request = PreparedRequest(Request('go'))
         client._prepare_request(request)
         # Impossible to pass an invalid dict, so just assume the exception was raised
-        responses.add(responses.POST, 'http://test/', status=400, body=requests.exceptions.InvalidSchema())
+        responses.add(
+            responses.POST, 'http://test/', status=400,
+            body=requests.exceptions.InvalidSchema())
         with self.assertRaises(requests.exceptions.InvalidSchema):
             client._send_message(request)
+    #pylint:enable=no-member
 
+    #pylint:disable=no-member
     @staticmethod
-    @responses.activate
-    def test_send_message_with_success_200():
+    @responses.activate #pylint:disable=no-member
+    def test_success_200():
         client = HTTPClient('http://test/')
         request = PreparedRequest(Request('go'))
         client._prepare_request(request)
-        responses.add(responses.POST, 'http://test/', status=200, body='{"jsonrpc": "2.0", "result": 5, "id": 1}')
+        responses.add(
+            responses.POST, 'http://test/', status=200,
+            body='{"jsonrpc": "2.0", "result": 5, "id": 1}')
         client._send_message(request)
+    #pylint:enable=no-member
 
-    def test_send_message_custom_headers(self):
+    def test_custom_headers(self):
         client = HTTPClient('http://test/')
         request = PreparedRequest(Request('go'))
         client._prepare_request(request, headers={'Content-Type': 'application/json-rpc'})
         with self.assertRaises(requests.exceptions.RequestException):
             client._send_message(request)
+        #pylint:disable=no-member
         # Header set by argument
         self.assertEqual('application/json-rpc', request.prepped.headers['Content-Type'])
         # Header set by DEFAULT_HEADERS
         self.assertEqual('application/json', request.prepped.headers['Accept'])
         # Header set by Requests default_headers
         self.assertIn('Content-Length', request.prepped.headers)
+        #pylint:enable=no-member
 
-    def test_custom_headers_in_both_session_and_prepare_request(self):
+    def test_custom_headers_in_both(self):
         client = HTTPClient('http://test/')
         client.session.headers['Content-Type'] = 'application/json-rpc'
         request = PreparedRequest(Request('go'))
         client._prepare_request(request, headers={'Accept': 'application/json-rpc'})
         with self.assertRaises(requests.exceptions.RequestException):
             client._send_message(request)
+        #pylint:disable=no-member
         # Header set by argument
         self.assertEqual('application/json-rpc', request.prepped.headers['Content-Type'])
         # Header set by DEFAULT_HEADERS
         self.assertEqual('application/json-rpc', request.prepped.headers['Accept'])
         # Header set by Requests default_headers
         self.assertIn('Content-Length', request.prepped.headers)
+        #pylint:enable=no-member
 
     def test_ssl_verification(self):
         client = HTTPClient('https://test/')

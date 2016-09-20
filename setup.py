@@ -4,15 +4,15 @@ from codecs import open as codecs_open
 from setuptools import setup
 
 with codecs_open('README.rst', 'r', 'utf-8') as f:
-    readme = f.read()
+    __README = f.read()
 with codecs_open('HISTORY.rst', 'r', 'utf-8') as f:
-    history = f.read()
+    __HISTORY = f.read()
 
 setup(
     name='jsonrpcclient',
     version='2.2.4',
     description='Send JSON-RPC requests',
-    long_description=readme + '\n\n' + history,
+    long_description=__README+'\n\n'+__HISTORY,
     author='Beau Barker',
     author_email='beauinmelbourne@gmail.com',
     url='https://jsonrpcclient.readthedocs.io/',

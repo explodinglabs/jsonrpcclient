@@ -35,6 +35,7 @@ class Client(with_metaclass(ABCMeta, object)):
         self.endpoint = endpoint
 
     def _log(self, message, extra, log, level, fmt):
+        """Log a request or response"""
         if extra is None:
             extra = {}
         # Add the endpoint to the log entry
@@ -53,7 +54,7 @@ class Client(with_metaclass(ABCMeta, object)):
         :param extra: A dict of extra fields that may be logged.
         """
         if not fmt:
-            fmt='--> %(message)s'
+            fmt = '--> %(message)s'
         self._log(request, extra, self.__request_log, 'info', fmt)
 
     def _log_response(self, response, extra=None, fmt=None):

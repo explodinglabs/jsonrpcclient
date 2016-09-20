@@ -33,8 +33,8 @@ class HTTPClient(Client):
         self.last_request = None
         self.last_response = None
 
-    def _prepare_request(self, request, headers=None, files=None,
-            params=None, auth=None, cookies=None, **kwargs):
+    def _prepare_request(self, request, headers=None, files=None, params=None,
+                         auth=None, cookies=None, **kwargs):
         """Prepare the request for sending.
 
         :param request: The JSON-RPC request (a PreparedRequest object)
@@ -43,16 +43,16 @@ class HTTPClient(Client):
         """
         # Use the Requests library to prepare the request based on the session
         # configuration
-        r = Request(method='POST', url=self.endpoint, data=request,
-                    headers=headers, files=files, params=params, auth=auth,
-                    cookies=cookies)
-        request.prepped = self.session.prepare_request(r)
+        req = Request(method='POST', url=self.endpoint, data=request,
+                      headers=headers, files=files, params=params, auth=auth,
+                      cookies=cookies)
+        request.prepped = self.session.prepare_request(req)
         # Include the http headers in log extra. Will not have effect unless
         # user configures the log format
         request.log_extra = {'http_headers': request.prepped.headers}
 
     def _send_message(self, request, stream=False, timeout=None, verify=True,
-            cert=None, proxies=None, **kwargs):
+                      cert=None, proxies=None, **kwargs):
         """Transport the message to the server and return the response.
 
         :param request: The JSON-RPC request string.
@@ -75,5 +75,5 @@ class HTTPClient(Client):
         # Give some extra information to include in the response log entry
         return self._process_response(response.text, log_extra={
             'http_code': response.status_code, 'http_reason': response.reason,
-            'http_headers': response.headers},
+            'http_headers': response.headers}, \
             log_format='--> %(message)s (%(http_code)s %(http_reason)s)')
