@@ -34,5 +34,5 @@ class ZMQClient(Client):
         :return: The response (a string for requests, None for notifications).
         """
         self.socket.send_string(request)
-        response = self.socket.recv()
-        return self._process_response(response.decode())
+        response = self.socket.recv().decode()
+        return self._process_response(response)
