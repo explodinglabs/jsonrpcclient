@@ -22,9 +22,11 @@ setup(
     include_package_data=True,
     install_requires=['future', 'jsonschema'],
     extras_require={
-        'requests' : ['requests'],
-        'zmq'      : ['pyzmq'],
-        'tornado'  : ['tornado']
+        'requests': ['requests'],
+        'zmq': ['pyzmq'],
+        'tornado': ['tornado'],
+        'unittest': ['requests', 'pyzmq', 'tornado', 'responses', \
+            'testfixtures', 'mock']
     },
     classifiers=[
         'Programming Language :: Python :: 2.7',

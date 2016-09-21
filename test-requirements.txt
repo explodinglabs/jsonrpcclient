@@ -1,6 +1,0 @@
-requests
-pyzmq
-tornado
-responses
-testfixtures
-mock
