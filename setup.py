@@ -23,6 +23,7 @@ setup(
     install_requires=['future', 'jsonschema'],
     extras_require={
         'requests': ['requests'],
+        'requests_security': ['requests[security]'],
         'zmq': ['pyzmq'],
         'tornado': ['tornado'],
         'unittest': ['requests', 'pyzmq', 'tornado', 'responses', \
