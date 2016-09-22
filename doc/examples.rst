@@ -18,13 +18,7 @@ Requests
 
     $ pip install 'jsonrpcclient[requests]'
 
-::
-
-    >>> from jsonrpcclient.http_client import HTTPClient
-    >>> HTTPClient('http://localhost:5000/').request('ping')
-    --> {"jsonrpc": "2.0", "method": "ping", "id": 1}
-    <-- {"jsonrpc": "2.0", "result": "pong", "id": 1}
-    'pong'
+.. literalinclude:: ../examples/http_client.py
 
 Tornado
 =======
@@ -36,18 +30,7 @@ asynchronous request.
 
     $ pip install 'jsonrpcclient[tornado]'
 
-::
-
-    from tornado import ioloop
-    from jsonrpcclient.tornado_client import TornadoClient
-
-    client = TornadoClient('http://localhost:5000/')
-
-    async def main():
-        result = await client.request('ping')
-        print(result)
-
-    ioloop.IOLoop.current().run_sync(main)
+.. literalinclude:: ../examples/tornado_client.py
 
 Note the ``async``/``await`` syntax requires Python 3.5+. Prior to that use
 `@gen.coroutine and yield
@@ -72,12 +55,6 @@ ZeroMQ server.
 
     $ pip install 'jsonrpcclient[pyzmq]'
 
-::
-
-    >>> from jsonrpcclient.zmq_client import ZMQClient
-    >>> ZMQClient('tcp://localhost:5000').request('ping')
-    --> {"jsonrpc": "2.0", "method": "ping", "id": 1}
-    <-- {"jsonrpc": "2.0", "result": "pong", "id": 1}
-    'pong'
+.. literalinclude:: ../examples/zeromq_client.py
 
 See `blog post <https://bcb.github.io/jsonrpc/zeromq>`__.
