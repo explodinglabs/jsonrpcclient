@@ -4,6 +4,7 @@ from jsonrpcclient.tornado_client import TornadoClient
 client = TornadoClient('http://localhost:5000/')
 
 async def main():
-    print(await client.request('ping'))
+    response = await client.request('ping')
+    print(response)
 
 IOLoop.current().run_sync(main)
