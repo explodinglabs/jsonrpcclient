@@ -23,11 +23,11 @@ class Client(with_metaclass(ABCMeta, object)):
     """
 
     # Request and response logs
-    __request_log = logging.getLogger(__name__+'.request')
-    __response_log = logging.getLogger(__name__+'.response')
+    _request_log = logging.getLogger(__name__+'.request')
+    _response_log = logging.getLogger(__name__+'.response')
 
     #: Validate the response message
-    __validator = jsonschema.Draft4Validator(json.loads(pkgutil.get_data(
+    _validator = jsonschema.Draft4Validator(json.loads(pkgutil.get_data(
         __name__, 'response-schema.json').decode('utf-8')))
 
     def __init__(self, endpoint):
@@ -55,7 +55,7 @@ class Client(with_metaclass(ABCMeta, object)):
         """
         if not fmt:
             fmt = '--> %(message)s'
-        self._log(request, extra, self.__request_log, 'info', fmt)
+        self._log(request, extra, self._request_log, 'info', fmt)
 
     def _log_response(self, response, extra=None, fmt=None):
         """Log the JSON-RPC response after sending. Should be called by
@@ -66,7 +66,7 @@ class Client(with_metaclass(ABCMeta, object)):
         """
         if not fmt:
             fmt = '<-- %(message)s'
-        self._log(response, extra, self.__response_log, 'info', fmt)
+        self._log(response, extra, self._response_log, 'info', fmt)
 
     def _prepare_request(self, request, **kwargs):
         """Prepare the request if necessary. Subclasses can overload to modify
@@ -93,7 +93,7 @@ class Client(with_metaclass(ABCMeta, object)):
             # Validate the response against the Response schema (raises
             # jsonschema.ValidationError if invalid)
             if config.validate:
-                self.__validator.validate(response)
+                self._validator.validate(response)
             if isinstance(response, list):
                 # Batch request - just return the whole response
                 return response

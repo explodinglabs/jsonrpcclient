@@ -15,7 +15,7 @@ class HTTPClient(Client):
     """Defines an HTTP client"""
 
     # The default HTTP header
-    __DEFAULT_HEADERS = {
+    _DEFAULT_HEADERS = {
         'Content-Type': 'application/json', 'Accept': 'application/json'}
 
     def __init__(self, endpoint):
@@ -27,7 +27,7 @@ class HTTPClient(Client):
         super(HTTPClient, self).__init__(endpoint)
         # Make use of Requests' sessions feature
         self.session = Session()
-        self.session.headers.update(self.__DEFAULT_HEADERS)
+        self.session.headers.update(self._DEFAULT_HEADERS)
         # Keep last request and response - don't use, will be removed in next
         # major release
         self.last_request = None

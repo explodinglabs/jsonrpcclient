@@ -29,7 +29,7 @@ class TornadoClient(Client):
     :param kwargs: Keyword arguments to pass to the client initialiser.
     """
 
-    __DEFAULT_HEADERS = {
+    _DEFAULT_HEADERS = {
         'Content-Type' : 'application/json',
         'Accept'       : 'application/json'
     }
@@ -56,7 +56,7 @@ class TornadoClient(Client):
         :param kwargs: Keyword arguments to the Tornado request.
         :return: The response (a string for requests, None for notifications).
         """
-        headers = dict(self.__DEFAULT_HEADERS)
+        headers = dict(self._DEFAULT_HEADERS)
         headers.update(kwargs.get('headers', {}))
 
         future = Future()
