@@ -1,4 +1,4 @@
-from jsonrpcclient.zmq_client import ZMQClient
+from jsonrpcclient.zeromq_client import ZeroMQClient
 
-response = ZMQClient('tcp://localhost:5000').ping()
+response = ZeroMQClient('tcp://localhost:5000').ping()
 print(response)

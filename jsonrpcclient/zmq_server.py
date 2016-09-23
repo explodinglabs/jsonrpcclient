@@ -1,11 +1,11 @@
 """Deprecated module, remove in version 3"""
 from warnings import warn
 
-from jsonrpcclient.zmq_client import ZMQClient
+from jsonrpcclient.zeromq_client import ZeroMQClient
 
 
-warn('ZMQServer is deprecated, use ZMQClient', DeprecationWarning)
+warn('ZMQServer is deprecated, use ZeroMQClient', DeprecationWarning)
 
-class ZMQServer(ZMQClient):
+class ZMQServer(ZeroMQClient):
     """Deprecate by subclassing"""
     pass

@@ -48,8 +48,8 @@ See `blog post <https://bcb.github.io/jsonrpc/tornado>`__.
 ZeroMQ
 ======
 
-``ZMQClient`` uses `pyzmq <https://pyzmq.readthedocs.io/>`__ for comms with a
-ZeroMQ server.
+``ZeroMQClient`` uses `pyzmq <https://pyzmq.readthedocs.io/>`__ for comms with
+a ZeroMQ server.
 
 ::
 
