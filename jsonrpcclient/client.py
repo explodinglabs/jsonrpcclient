@@ -11,7 +11,7 @@ from future.utils import with_metaclass
 
 from jsonrpcclient import config, exceptions
 from jsonrpcclient.request import Notification, Request
-from jsonrpcclient.log import _log
+from jsonrpcclient.log import log_
 from jsonrpcclient.prepared_request import PreparedRequest
 
 
@@ -34,7 +34,7 @@ class Client(with_metaclass(ABCMeta, object)):
         #: Holds the server address
         self.endpoint = endpoint
 
-    def _log(self, message, extra, log, level, fmt):
+    def log_(self, message, extra, log, level, fmt):
         """Log a request or response"""
         if extra is None:
             extra = {}
@@ -44,7 +44,7 @@ class Client(with_metaclass(ABCMeta, object)):
         if isinstance(message, basestring):
             message = message.replace("\n", '').replace('  ', ' ') \
                 .replace('{ ', '{')
-        _log(log, level, message, extra=extra, fmt=fmt)
+        log_(log, level, message, extra=extra, fmt=fmt)
 
     def _log_request(self, request, extra=None, fmt=None):
         """Log the JSON-RPC request before sending. Should be called by
@@ -55,7 +55,7 @@ class Client(with_metaclass(ABCMeta, object)):
         """
         if not fmt:
             fmt = '--> %(message)s'
-        self._log(request, extra, self._request_log, 'info', fmt)
+        self.log_(request, extra, self._request_log, 'info', fmt)
 
     def _log_response(self, response, extra=None, fmt=None):
         """Log the JSON-RPC response after sending. Should be called by
@@ -66,7 +66,7 @@ class Client(with_metaclass(ABCMeta, object)):
         """
         if not fmt:
             fmt = '<-- %(message)s'
-        self._log(response, extra, self._response_log, 'info', fmt)
+        self.log_(response, extra, self._response_log, 'info', fmt)
 
     def _prepare_request(self, request, **kwargs):
         """Prepare the request if necessary. Subclasses can overload to modify
