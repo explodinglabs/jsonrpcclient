@@ -1,7 +1,7 @@
 """Deprecated module, remove in version 3"""
 from abc import abstractmethod
 
-from jsonrpcclient.client import Client
+from .client import Client
 
 
 class Server(Client):

@@ -9,10 +9,10 @@ from past.builtins import basestring #pylint:disable=redefined-builtin
 import jsonschema
 from future.utils import with_metaclass
 
-from jsonrpcclient import config, exceptions
-from jsonrpcclient.request import Notification, Request
-from jsonrpcclient.log import log_
-from jsonrpcclient.prepared_request import PreparedRequest
+from . import config, exceptions
+from .request import Notification, Request
+from .log import log_
+from .prepared_request import PreparedRequest
 
 
 class Client(with_metaclass(ABCMeta, object)):

@@ -8,7 +8,7 @@ http://docs.python-requests.org/en/master/
 
 from requests import Request, Session
 
-from jsonrpcclient.client import Client
+from .client import Client
 
 
 class HTTPClient(Client):

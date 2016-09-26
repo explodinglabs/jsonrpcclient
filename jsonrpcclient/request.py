@@ -4,7 +4,7 @@ import json
 from collections import OrderedDict
 from future.utils import with_metaclass
 
-from jsonrpcclient import config, ids
+from . import config, ids
 
 
 def _sort_request(req):
