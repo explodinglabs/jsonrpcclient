@@ -22,12 +22,14 @@ setup(
     include_package_data=True,
     install_requires=['future', 'jsonschema'],
     extras_require={
+        'aiohttp': ['aiohttp'],
         'requests': ['requests'],
         'requests_security': ['requests[security]'],
-        'zmq': ['pyzmq'],
         'tornado': ['tornado'],
         'unittest': ['requests', 'pyzmq', 'tornado', 'responses', \
             'testfixtures', 'mock']
+        'websockets': ['websockets'],
+        'zmq': ['pyzmq'],
     },
     classifiers=[
         'Programming Language :: Python :: 2.7',
