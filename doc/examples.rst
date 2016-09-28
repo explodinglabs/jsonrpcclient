@@ -9,6 +9,16 @@ protocols.
 .. contents::
     :local:
 
+aiohttp
+=======
+
+``aiohttpClient`` uses the `aiohttp <http://aiohttp.readthedocs.io/>`__
+library::
+
+    $ pip install 'jsonrpcclient[aiohttp]'
+
+.. literalinclude:: ../examples/aiohttp_client.py
+
 Requests
 ========
 
@@ -44,6 +54,16 @@ Note the ``async``/``await`` syntax requires Python 3.5+. Prior to that use
     pong
 
 See `blog post <https://bcb.github.io/jsonrpc/tornado>`__.
+
+Websockets
+==========
+
+``WebSocketsClient`` uses the `websockets <http://websockets.readthedocs.io/>`__
+library::
+
+    $ pip install 'jsonrpcclient[aiohttp]'
+
+.. literalinclude:: ../examples/aiohttp_client.py
 
 ZeroMQ
 ======
