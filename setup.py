@@ -27,7 +27,7 @@ setup(
         'requests_security': ['requests[security]'],
         'tornado': ['tornado'],
         'unittest': ['requests', 'pyzmq', 'tornado', 'responses', \
-            'testfixtures', 'mock']
+            'testfixtures', 'mock'],
         'websockets': ['websockets'],
         'zmq': ['pyzmq'],
     },
