@@ -6,7 +6,7 @@ jsonrpcclient API
 Request
 =======
 
-.. automethod:: client.Client.request
+.. automethod:: jsonrpcclient.client.Client.request
 
 If you're not interested in a response, use ``notify()`` instead of
 ``request()``.
@@ -14,7 +14,7 @@ If you're not interested in a response, use ``notify()`` instead of
 Send
 ====
 
-.. automethod:: client.Client.send
+.. automethod:: jsonrpcclient.client.Client.send
 
 Request class
 =============
@@ -23,7 +23,7 @@ Request class
 
     from jsonrpcclient import Request
 
-.. autoclass:: request.Request
+.. autoclass:: jsonrpcclient.request.Request
 
 Send a ``Request`` object::
 
@@ -32,7 +32,7 @@ Send a ``Request`` object::
     <-- {"jsonrpc": "2.0", "result": "pong", "id": 1}
     'pong'
 
-The :func:`~client.Client.request` method is a wrapper around
+The :func:`~jsonrpcclient.client.Client.request` method is a wrapper around
 ``send(Request())``.
 
 If you're not interested in a response, use the ``Notification`` class instead
@@ -48,7 +48,7 @@ message::
         {'jsonrpc': '2.0', 'method': 'cat', 'id': 1}, \
         {'jsonrpc': '2.0', 'method': 'dog', 'id': 2}])
 
-Send multiple :class:`~request.Request` objects::
+Send multiple :class:`~jsonrpcclient.request.Request` objects::
 
     client.send([Request('cat'), Request('dog')])
 
@@ -64,7 +64,7 @@ object - a list of responses for each request that had an ``id`` member.
 Configuration
 =============
 
-.. automodule:: config
+.. automodule:: jsonrpcclient.config
 
 Configuring the Requests library
 --------------------------------
@@ -86,7 +86,7 @@ Custom HTTP headers::
     client.session.headers.update({'Content-Type': 'application/json-rpc'})
 
 You can also configure some Requests options when calling
-:func:`~client.Client.send`::
+:func:`~jsonrpcclient.client.Client.send`::
 
     client.send(req, verify=True, cert='/path/to/certificate', \
         headers={'Content-Type': 'application/json-rpc'})
