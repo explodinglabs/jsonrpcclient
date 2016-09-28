@@ -1,6 +1,6 @@
-from .client import Client
+from .async_client import AsyncClient
 
-class WebSocketsClient(Client):
+class WebSocketsClient(AsyncClient):
     def __init__(self, ws):
         self.ws = ws
 

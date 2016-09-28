@@ -1,5 +1,6 @@
 from .client import Client
 from .request import Request, Notification
+from .prepared_request import PreparedRequest
 
 class AsyncClient(Client):
     async def send(self, request, **kwargs):
