@@ -104,7 +104,7 @@ class Notification(with_metaclass(_RequestClassType, dict)):
 
 
 class Request(Notification):
-    #:pylint:disable=line-too-long
+    #pylint:disable=line-too-long
     """Create a JSON-RPC `request object
     <http://www.jsonrpc.org/specification#request_object>`_.
 
@@ -117,7 +117,7 @@ class Request(Notification):
         to force the ``id`` to use.
     :returns: The JSON-RPC request in dictionary form.
     """
-    #:pylint:enable=line-too-long
+    #pylint:enable=line-too-long
 
     id_iterator = None
 
