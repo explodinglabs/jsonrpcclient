@@ -46,13 +46,6 @@ Note the ``async``/``await`` syntax requires Python 3.5+. Prior to that use
 `@gen.coroutine and yield
 <http://tornado.readthedocs.io/en/stable/guide/coroutines.html#python-3-5-async-and-await>`__.
 
-::
-
-    $ python client.py
-    INFO:jsonrpcclient.client.request:{"jsonrpc": "2.0", "method": "ping", "id": 1}
-    INFO:jsonrpcclient.client.response:{"jsonrpc": "2.0", "result": "pong", "id": 1}
-    pong
-
 See `blog post <https://bcb.github.io/jsonrpc/tornado>`__.
 
 Websockets
