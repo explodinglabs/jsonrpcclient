@@ -75,7 +75,7 @@ class Notification(with_metaclass(_RequestClassType, dict)):
     :param kwargs: Keyword arguments.
     :returns: The JSON-RPC request in dictionary form.
     """
-    #:pylint:enable=line-too-long
+    #pylint:enable=line-too-long
 
     def __init__(self, method, *args, **kwargs):
         # Start the basic request
