@@ -45,7 +45,7 @@ This JSON-RPC feature allows you to send multiple requests in a single
 message::
 
     client.send([
-        {'jsonrpc': '2.0', 'method': 'cat', 'id': 1}, \
+        {'jsonrpc': '2.0', 'method': 'cat', 'id': 1},
         {'jsonrpc': '2.0', 'method': 'dog', 'id': 2}])
 
 Send multiple :class:`~jsonrpcclient.request.Request` objects::
@@ -88,8 +88,8 @@ Custom HTTP headers::
 You can also configure some Requests options when calling
 :func:`~jsonrpcclient.client.Client.send`::
 
-    client.send(req, verify=True, cert='/path/to/certificate', \
-        headers={'Content-Type': 'application/json-rpc'})
+    client.send(req, verify=True, cert='/path/to/certificate',
+                headers={'Content-Type': 'application/json-rpc'})
 
 As in the Requests library, any dictionaries passed to send in named arguments
 will be merged with the session-level values that are set. The method-level
