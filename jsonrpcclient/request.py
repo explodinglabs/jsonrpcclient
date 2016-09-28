@@ -109,7 +109,7 @@ class Request(Notification):
     <http://www.jsonrpc.org/specification#request_object>`_.
 
         >>> Request('cat', name='Mittens')
-        {'jsonrpc': '2.0', 'method': 'cat', {'params': {'name': 'Mittens'}}, 'id': 1}
+        {'jsonrpc': '2.0', 'method': 'cat', 'params': {'name': 'Mittens'}, 'id': 1}
 
     :param method: The ``method`` name.
     :param args: Positional arguments added to ``params``.
