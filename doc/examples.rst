@@ -68,6 +68,8 @@ Websockets
 
 .. literalinclude:: ../examples/websockets_client.py
 
+See `blog post <https://bcb.github.io/jsonrpc/websockets>`__.
+
 ZeroMQ (async)
 --------------
 
