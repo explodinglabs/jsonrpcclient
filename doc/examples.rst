@@ -64,9 +64,9 @@ Websockets
 
 .. code-block:: sh
 
-    $ pip install 'jsonrpcclient[aiohttp]'
+    $ pip install 'jsonrpcclient[websockets]'
 
-.. literalinclude:: ../examples/aiohttp_client.py
+.. literalinclude:: ../examples/websockets_client.py
 
 ZeroMQ (async)
 --------------
