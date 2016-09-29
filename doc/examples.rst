@@ -75,6 +75,6 @@ ZeroMQ (async)
 
     $ pip install 'jsonrpcclient[pyzmq]'
 
-.. literalinclude:: ../examples/zeromq_client.py
+.. literalinclude:: ../examples/zeromq_async_client.py
 
 See `blog post <https://bcb.github.io/jsonrpc/zeromq>`__.

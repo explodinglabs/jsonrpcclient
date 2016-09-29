@@ -3,7 +3,8 @@ import zmq
 from jsonrpcclient.zeromq_async_client import ZeroMQAsyncClient
 
 async def main():
-    response = await ZeroMQAsyncClient('tcp://localhost:5000').request('ping')
+    client = ZeroMQAsyncClient('tcp://localhost:5000')
+    response = await client.request('ping')
     print(response)
 
 asyncio.set_event_loop(zmq.asyncio.ZMQEventLoop())
