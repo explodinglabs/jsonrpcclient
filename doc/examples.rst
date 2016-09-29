@@ -15,8 +15,6 @@ Synchronous
 Requests
 --------
 
-Uses `requests <http://docs.python-requests.org/>`__.
-
 .. code-block:: sh
 
     $ pip install 'jsonrpcclient[requests]'
@@ -25,8 +23,6 @@ Uses `requests <http://docs.python-requests.org/>`__.
 
 ZeroMQ
 ------
-
-Uses `pyzmq <https://pyzmq.readthedocs.io/>`__.
 
 .. code-block:: sh
 
@@ -44,8 +40,6 @@ These require Python 3.5+.
 aiohttp
 -------
 
-Uses `aiohttp <http://aiohttp.readthedocs.io/>`__.
-
 .. code-block:: sh
 
     $ pip install 'jsonrpcclient[aiohttp]'
@@ -56,8 +50,6 @@ See `blog post <https://bcb.github.io/jsonrpc/aiohttp>`__.
 
 Tornado
 -------
-
-Uses `Tornado <http://www.tornadoweb.org/>`__.
 
 .. code-block:: sh
 
@@ -70,8 +62,6 @@ See `blog post <https://bcb.github.io/jsonrpc/tornado>`__.
 Websockets
 ----------
 
-Uses `websockets <http://websockets.readthedocs.io/>`__.
-
 .. code-block:: sh
 
     $ pip install 'jsonrpcclient[aiohttp]'
@@ -80,8 +70,6 @@ Uses `websockets <http://websockets.readthedocs.io/>`__.
 
 ZeroMQ (async)
 --------------
-
-Uses `pyzmq <https://pyzmq.readthedocs.io/>`__.
 
 .. code-block:: sh
 
