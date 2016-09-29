@@ -3,8 +3,14 @@
 jsonrpcclient API
 *****************
 
+.. contents::
+    :local:
+
+Sending a request
+=================
+
 Request
-=======
+-------
 
 .. automethod:: jsonrpcclient.client.Client.request
 
@@ -12,16 +18,12 @@ If you're not interested in a response, use ``notify()`` instead of
 ``request()``.
 
 Send
-====
+----
 
 .. automethod:: jsonrpcclient.client.Client.send
 
-Request class
-=============
-
-::
-
-    from jsonrpcclient import Request
+The Request class
+=================
 
 .. autoclass:: jsonrpcclient.request.Request
 

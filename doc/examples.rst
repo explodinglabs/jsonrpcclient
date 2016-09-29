@@ -9,62 +9,81 @@ protocols.
 .. contents::
     :local:
 
-aiohttp
-=======
-
-``aiohttpClient`` uses the `aiohttp <http://aiohttp.readthedocs.io/>`__
-library::
-
-    $ pip install 'jsonrpcclient[aiohttp]'
-
-.. literalinclude:: ../examples/aiohttp_client.py
+Synchronous
+===========
 
 Requests
-========
+--------
 
-``HTTPClient`` uses the `Requests <http://docs.python-requests.org/>`__ library.
+Uses `requests <http://docs.python-requests.org/>`__.
 
-::
+.. code-block:: sh
 
     $ pip install 'jsonrpcclient[requests]'
 
 .. literalinclude:: ../examples/http_client.py
 
-Tornado
-=======
+ZeroMQ
+------
 
-``TornadoClient`` uses `Tornado <http://www.tornadoweb.org/>`__ to send an
-asynchronous request.
+Uses `pyzmq <https://pyzmq.readthedocs.io/>`__.
 
-::
+.. code-block:: sh
 
-    $ pip install 'jsonrpcclient[tornado]'
+    $ pip install 'jsonrpcclient[pyzmq]'
 
-.. literalinclude:: ../examples/tornado_client.py
+.. literalinclude:: ../examples/zeromq_client.py
 
-Note the ``async``/``await`` syntax requires Python 3.5+. Prior to that use
-`@gen.coroutine and yield
-<http://tornado.readthedocs.io/en/stable/guide/coroutines.html#python-3-5-async-and-await>`__.
+See `blog post <https://bcb.github.io/jsonrpc/zeromq>`__.
 
-See `blog post <https://bcb.github.io/jsonrpc/tornado>`__.
+Asynchronous
+============
 
-Websockets
-==========
+These require Python 3.5+.
 
-``WebSocketsClient`` uses the `websockets <http://websockets.readthedocs.io/>`__
-library::
+aiohttp
+-------
+
+Uses `aiohttp <http://aiohttp.readthedocs.io/>`__.
+
+.. code-block:: sh
 
     $ pip install 'jsonrpcclient[aiohttp]'
 
 .. literalinclude:: ../examples/aiohttp_client.py
 
-ZeroMQ
-======
+See `blog post <https://bcb.github.io/jsonrpc/aiohttp>`__.
 
-``ZeroMQClient`` uses `pyzmq <https://pyzmq.readthedocs.io/>`__ for comms with
-a ZeroMQ server.
+Tornado
+-------
 
-::
+Uses `Tornado <http://www.tornadoweb.org/>`__.
+
+.. code-block:: sh
+
+    $ pip install 'jsonrpcclient[tornado]'
+
+.. literalinclude:: ../examples/tornado_client.py
+
+See `blog post <https://bcb.github.io/jsonrpc/tornado>`__.
+
+Websockets
+----------
+
+Uses `websockets <http://websockets.readthedocs.io/>`__.
+
+.. code-block:: sh
+
+    $ pip install 'jsonrpcclient[aiohttp]'
+
+.. literalinclude:: ../examples/aiohttp_client.py
+
+ZeroMQ (async)
+--------------
+
+Uses `pyzmq <https://pyzmq.readthedocs.io/>`__.
+
+.. code-block:: sh
 
     $ pip install 'jsonrpcclient[pyzmq]'
 
