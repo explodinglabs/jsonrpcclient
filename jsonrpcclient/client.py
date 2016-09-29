@@ -124,25 +124,26 @@ class Client(with_metaclass(ABCMeta, object)):
         """Send a request, passing the whole JSON-RPC `request object
         <http://www.jsonrpc.org/specification#request_object>`_.
 
-            >>> client.send({'jsonrpc': '2.0', 'method': 'ping', 'id': 1})
+            >>> client.send('{"jsonrpc": "2.0", "method": "ping", "id": 1}')
             --> {"jsonrpc": "2.0", "method": "ping", "id": 1}
             <-- {"jsonrpc": "2.0", "result": "pong", "id": 1}
             'pong'
 
         :param request: The JSON-RPC request.
-        :type request: string or a JSON serializable object
+        :type request: JSON-encoded string or JSON serializable object
         :param kwargs: Clients can use these to configure an single request
             (separate to configuration of the whole session). For example,
             HTTPClient passes them on to `requests.Session.send()
             <http://docs.python-requests.org/en/master/api/#requests.Session.send>`_.
-        :returns: The payload (i.e. the ``result`` part of the response, or
-            ``None`` in the case of a Notification).
+        :returns: The payload, i.e. the ``result`` part of the response, or
+            ``None`` in the case of a Notification.
         :rtype: A `JSON-decoded object
             <https://docs.python.org/library/json.html#json-to-py-table>`_.
         :raises ParseResponseError:
             The response was not valid JSON.
         :raises ValidationError:
-            The response was valid JSON, but not valid JSON-RPC.
+            The response was valid JSON, but not a valid JSON-RPC response
+            object.
         :raises ReceivedErrorResponse:
             The server responded with a JSON-RPC `error object
             <http://www.jsonrpc.org/specification#error_object>`_.
@@ -171,7 +172,7 @@ class Client(with_metaclass(ABCMeta, object)):
 
     def request(self, method_name, *args, **kwargs):
         #:pylint:disable=line-too-long
-        """Send a request, by passing the method and arguments. This is the main
+        """Send a request by passing the method and arguments. This is the main
         public method.
 
             >>> client.request('cat', name='Mittens')

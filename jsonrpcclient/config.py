@@ -1,5 +1,6 @@
-"""Some options can be configured in the ``config`` module. Import it and modify
-the attributes, for example::
+"""Import ``config`` to configure, for example:
+
+::
 
     from jsonrpcclient import config
     config.validate = False

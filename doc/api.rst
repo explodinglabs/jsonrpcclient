@@ -6,8 +6,13 @@ jsonrpcclient API
 .. contents::
     :local:
 
-Sending a request
-=================
+Sending a JSON-RPC request
+==========================
+
+Send
+----
+
+.. automethod:: jsonrpcclient.client.Client.send
 
 Request
 -------
@@ -17,15 +22,11 @@ Request
 If you're not interested in a response, use ``notify()`` instead of
 ``request()``.
 
-Send
-----
-
-.. automethod:: jsonrpcclient.client.Client.send
-
 The Request class
 =================
 
 .. autoclass:: jsonrpcclient.request.Request
+    :exclude-members: id_iterator
 
 Send a ``Request`` object::
 
@@ -93,6 +94,6 @@ You can also configure some Requests options when calling
     client.send(req, verify=True, cert='/path/to/certificate',
                 headers={'Content-Type': 'application/json-rpc'})
 
-As in the Requests library, any dictionaries passed to send in named arguments
-will be merged with the session-level values that are set. The method-level
-parameters override session parameters.
+As in the Requests library, any dictionaries passed to ``send`` in named
+arguments will be merged with the session-level values that are set. The
+method-level parameters override session parameters.
