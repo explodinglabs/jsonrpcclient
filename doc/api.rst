@@ -6,8 +6,8 @@ jsonrpcclient API
 .. contents::
     :local:
 
-Sending a JSON-RPC request
-==========================
+Sending a request
+=================
 
 Send
 ----
