@@ -135,8 +135,8 @@ class Client(with_metaclass(ABCMeta, object)):
             (separate to configuration of the whole session). For example,
             HTTPClient passes them on to `requests.Session.send()
             <http://docs.python-requests.org/en/master/api/#requests.Session.send>`_.
-        :returns: The payload, i.e. the ``result`` part of the response, or
-            ``None`` in the case of a Notification.
+        :returns: The payload, i.e. the ``result`` part of the response, (or
+            ``None`` in the case of a Notification).
         :rtype: A `JSON-decoded object
             <https://docs.python.org/library/json.html#json-to-py-table>`_.
         :raises ParseResponseError:

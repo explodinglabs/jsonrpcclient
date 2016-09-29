@@ -12,12 +12,25 @@ Sending a request
 Send
 ----
 
-.. automethod:: jsonrpcclient.client.Client.send
+Send a request, passing the whole JSON-RPC request object::
+
+    >>> client.send('{"jsonrpc": "2.0", "method": "ping", "id": 1}')
+    --> {"jsonrpc": "2.0", "method": "ping", "id": 1}
+    <-- {"jsonrpc": "2.0", "result": "pong", "id": 1}
+    'pong'
 
 Request
 -------
 
-.. automethod:: jsonrpcclient.client.Client.request
+Send a request by passing the method and arguments. This is the main public
+method.
+
+::
+
+    >>> client.request('cat', name='Mittens')
+    --> {"jsonrpc": "2.0", "method": "cat", "params": {"name": "Mittens"}, "id": 1}
+    <-- {"jsonrpc": "2.0", "result": "meow", "id": 1}
+    'meow'
 
 If you're not interested in a response, use ``notify()`` instead of
 ``request()``.
@@ -25,8 +38,12 @@ If you're not interested in a response, use ``notify()`` instead of
 The Request class
 =================
 
-.. autoclass:: jsonrpcclient.request.Request
-    :exclude-members: id_iterator
+This class makes it easy to create a JSON-RPC `request object
+<http://www.jsonrpc.org/specification#request_object>`_::
+
+    >>> from jsonrpcclient.request import Request
+    >>> Request('cat', name='Mittens')
+    {'jsonrpc': '2.0', 'method': 'cat', 'params': {'name': 'Mittens'}, 'id': 1}
 
 Send a ``Request`` object::
 
@@ -35,8 +52,8 @@ Send a ``Request`` object::
     <-- {"jsonrpc": "2.0", "result": "pong", "id": 1}
     'pong'
 
-The :func:`~jsonrpcclient.client.Client.request` method is a wrapper around
-``send(Request())``.
+The :func:`~jsonrpcclient.client.Client.request` method above, is a wrapper
+around ``send(Request())``.
 
 If you're not interested in a response, use the ``Notification`` class instead
 of ``Request``.
