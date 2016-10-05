@@ -68,6 +68,7 @@ pre, code {
     background-color: inherit;
     font-family: 'Consolas', 'Menlo', 'Deja Vu Sans Mono', 'Bitstream Vera Sans Mono', monospace;
     line-height: 140%;
+    font-size: 0.9em;
 }
 
 pre {
@@ -77,4 +78,24 @@ pre {
     padding: 10px 20px;
     border: 0;
     font-size: 0.8em;
+    line-height: 140%;
+}
+
+div.body {
+    padding: 0;
+    margin: 0;
+}
+
+div.document {
+    width: 750px;
+}
+
+@media screen and (max-width: 600px) {
+    div.body {
+        padding-right: 20px;
+        padding-left: 20px;
+    }
+    div.document {
+        width: 100%;
+    }
 }
