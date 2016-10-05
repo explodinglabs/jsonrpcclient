@@ -1,3 +1,9 @@
+2.4.0 (Oct 5, 2016)
+~~~~~~~~~~~~~~~~~~~
+
+- Add asychronous Zeromq client, see `blog post
+  <https://bcb.github.io/jsonrpc/zeromq-async>`__
+
 2.3.0 (Sep 28, 2016)
 ~~~~~~~~~~~~~~~~~~~~
 
