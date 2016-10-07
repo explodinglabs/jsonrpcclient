@@ -57,8 +57,6 @@ Tornado
 
 .. literalinclude:: ../examples/tornado_client.py
 
-See `blog post <https://bcb.github.io/jsonrpc/tornado>`__.
-
 Websockets
 ----------
 
