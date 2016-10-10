@@ -76,4 +76,4 @@ class HTTPClient(Client):
         return self._process_response(response.text, log_extra={
             'http_code': response.status_code, 'http_reason': response.reason,
             'http_headers': response.headers}, \
-            log_format='--> %(message)s (%(http_code)s %(http_reason)s)')
+            log_format='<-- %(message)s (%(http_code)s %(http_reason)s)')
