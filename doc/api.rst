@@ -9,7 +9,7 @@ jsonrpcclient Guide
 Choose a client
 ===============
 
-To use the *requests* library to send JSON-RPC over HTTP, install it:
+To use the *requests* library to send a message over HTTP, install it:
 
 .. sourcecode:: sh
 
@@ -22,8 +22,8 @@ endpoint::
     >>> client = HTTPServer('http://cats.com') 
 
 There are other :doc:`options <examples>` available which use different
-transport protocols to send a message. For those you would import a different
-class. But the rest of the usage described below is the same for all clients.
+protocols to send a message. To use those you would import a different class,
+but the rest of the usage described below is the same for all clients.
 
 Sending a request
 =================
@@ -94,8 +94,9 @@ Using list comprehension to get the cube of ten numbers::
 
     client.send([Request('cube', i) for i in range(10)])
 
-Unlike single requests, batch requests return the whole JSON-RPC response
-object - a list of responses for each request that had an ``id`` member.
+Unlike single requests, batch requests return the whole JSON-RPC `batch
+response <http://www.jsonrpc.org/specification#batch>`__ - a list of responses
+for each request that had an ``id`` member.
 
 *The server may not support batch requests.*
 
