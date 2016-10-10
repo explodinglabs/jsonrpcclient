@@ -21,8 +21,9 @@ endpoint::
     >>> from jsonrpcclient.http_server import HTTPServer
     >>> client = HTTPServer('http://cats.com') 
 
-There are also other :doc:`transport options <examples>` available, but the
-following usage is the same for all of them.
+There are other :doc:`options <examples>` available which use different
+transport protocols to send a message. For those you would import a different
+class. But the rest of the usage described below is the same for all clients.
 
 Sending a request
 =================
