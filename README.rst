@@ -7,6 +7,9 @@ Send `JSON-RPC <http://www.jsonrpc.org/>`__ requests in Python 2.7 and 3.3+.
 
     >>> from jsonrpcclient.http_client import HTTPClient
     >>> HTTPClient('http://cats.com/').request('speak')
+
+.. sourcecode:: sh
+
     --> {"jsonrpc": "2.0", "method": "speak", "id": 1}
     <-- {"jsonrpc": "2.0", "result": "meow", "id": 1}
     'meow'
