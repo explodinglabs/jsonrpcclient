@@ -9,7 +9,7 @@ jsonrpcclient Guide
 Choose a client
 ===============
 
-To use the *requests* library to send a message over HTTP, install it:
+To use the *requests* library to send messages, install it:
 
 .. sourcecode:: sh
 
