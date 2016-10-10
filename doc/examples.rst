@@ -68,8 +68,8 @@ Websockets
 
 See `blog post <https://bcb.github.io/jsonrpc/websockets>`__.
 
-ZeroMQ (async)
---------------
+ZeroMQ (asynchronous)
+---------------------
 
 .. code-block:: sh
 

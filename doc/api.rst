@@ -1,10 +1,28 @@
 .. rubric:: :doc:`index`
 
-jsonrpcclient API
-*****************
+jsonrpcclient Guide
+*******************
 
 .. contents::
     :local:
+
+Choose a client
+===============
+
+To use the *requests* library to send JSON-RPC over HTTP, install it:
+
+.. sourcecode:: sh
+
+    $ pip install 'jsonrpcclient[requests]'
+
+Import the ``HTTPServer`` class and instantiate it, passing the server
+endpoint::
+
+    >>> from jsonrpcclient.http_server import HTTPServer
+    >>> client = HTTPServer('http://cats.com') 
+
+There are also other :doc:`transport options <examples>` available, but the
+following usage is the same for all of them.
 
 Sending a request
 =================
@@ -61,8 +79,7 @@ of ``Request``.
 Batch requests
 ==============
 
-This JSON-RPC feature allows you to send multiple requests in a single
-message::
+JSON-RPC allows you to send multiple requests in a single message::
 
     client.send([
         {'jsonrpc': '2.0', 'method': 'cat', 'id': 1},
