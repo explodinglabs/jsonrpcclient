@@ -9,21 +9,17 @@ jsonrpcclient Guide
 Installation
 ============
 
-Install jsonrpcclient with the *requests* library:
+Install the package with the *Requests* library (alternatively, see :doc:`other
+options<examples>`):
 
 .. sourcecode:: sh
 
     $ pip install 'jsonrpcclient[requests]'
 
-Import the ``HTTPClient`` class and instantiate it, passing the server
-endpoint::
+Import ``HTTPClient`` and instantiate it, passing the server endpoint::
 
     >>> from jsonrpcclient.http_client import HTTPClient
     >>> client = HTTPClient('http://cats.com')
-
-There are other :doc:`clients <examples>` available which use different
-protocols to send a message. Regardless of the client, the rest of the usage
-described below is the same.
 
 Sending a request
 =================
