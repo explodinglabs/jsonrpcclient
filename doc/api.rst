@@ -19,7 +19,7 @@ Import the ``HTTPClient`` class and instantiate it, passing the server
 endpoint::
 
     >>> from jsonrpcclient.http_client import HTTPClient
-    >>> client = HTTPClient('http://cats.com')
+    >>> client = HTTPClient('http://pets.com')
 
 There are other :doc:`clients <examples>` available which use different
 protocols to send a message. Regardless of the client, the rest of the usage
