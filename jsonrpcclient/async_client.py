@@ -1,8 +1,17 @@
+"""Abstract base class for asynchronous clients"""
+from abc import ABCMeta, abstractmethod
+
+from future.utils import with_metaclass
+
 from .client import Client
 from .request import Request, Notification
 from .prepared_request import PreparedRequest
 
-class AsyncClient(Client):
+class AsyncClient(with_metaclass(ABCMeta, Client)):
+    @abstractmethod
+    async def _send_message(self, request, **kwargs):
+        """Abstract"""
+
     async def send(self, request, **kwargs):
         request = PreparedRequest(request)
         self._prepare_request(request, **kwargs)
