@@ -78,9 +78,11 @@ Batch requests
 
 JSON-RPC allows you to send multiple requests in a single message::
 
-    client.send([
-        {'jsonrpc': '2.0', 'method': 'cat', 'id': 1},
-        {'jsonrpc': '2.0', 'method': 'dog', 'id': 2}])
+    req = '''[
+        {"jsonrpc": "2.0", "method": "cat", "id": 1},
+        {"jsonrpc": "2.0", "method": "dog", "id": 2}
+    ]'''
+    client.send(req)
 
 Send multiple :class:`~jsonrpcclient.request.Request` objects::
 
