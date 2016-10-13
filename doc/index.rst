@@ -16,7 +16,7 @@ Send `JSON-RPC <http://www.jsonrpc.org/>`__ requests in Python 2.7 and 3.3+.
     'meow'
 
 This example uses the *requests* library for sending, but more options are
-available. See :doc:`examples using various frameworks <examples>`, or read the
+available. See :doc:`examples in various frameworks <examples>`, or read the
 :doc:`guide to usage and configuration<api>`.
 
 Contribute on `Github <https://github.com/bcb/jsonrpcclient>`__.
