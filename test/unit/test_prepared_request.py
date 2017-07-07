@@ -1,8 +1,6 @@
 """test_request.py"""
-# pylint: disable=missing-docstring,line-too-long
-
 from unittest import TestCase, main
-from past.builtins import basestring #pylint:disable=redefined-builtin
+from past.builtins import basestring
 
 from jsonrpcclient.prepared_request import PreparedRequest
 
