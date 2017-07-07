@@ -1,3 +1,5 @@
+.. rubric:: `Beau Barker <https://bcb.github.io/>`__
+
 jsonrpcclient
 *************
 
@@ -16,8 +18,8 @@ Send `JSON-RPC <http://www.jsonrpc.org/>`__ requests in Python 2.7 and 3.3+.
     'meow'
 
 This example uses the *requests* library for sending, but more options are
-demonstrated on the :doc:`examples <examples>` page. There's also a guide for
-:doc:`advanced usage and configuration <api>`.
+available. See :doc:`examples in various frameworks <examples>`, or read the
+:doc:`guide to usage and configuration<api>`.
 
 Contribute on `Github <https://github.com/bcb/jsonrpcclient>`__.
 

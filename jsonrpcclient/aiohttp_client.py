@@ -1,14 +1,22 @@
-"""aiohttp client"""
-from .async_client import AsyncClient
+"""
+aiohttp client.
+
+http://aiohttp.readthedocs.io/
+"""
 import async_timeout
 
+from .async_client import AsyncClient
+
+
 class aiohttpClient(AsyncClient):
-    def __init__(self, session, url):
+    """TODO: rename aiohttpClient to AiohttpClient (breaking change)"""
+    def __init__(self, session, endpoint):
+        super(aiohttpClient, self).__init__(endpoint)
         self.session = session
-        self.url = url
 
     async def _send_message(self, request):
         with async_timeout.timeout(10):
-            async with self.session.post(self.url, data=request) as response:
+            async with self.session.post(
+                    self.endpoint, data=request) as response:
                 response = await response.text()
                 return self._process_response(response)

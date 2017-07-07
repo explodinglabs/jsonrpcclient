@@ -9,21 +9,17 @@ jsonrpcclient Guide
 Installation
 ============
 
-Install jsonrpcclient with the *requests* library:
+Install the package with the *Requests* library (alternatively, see :doc:`other
+options<examples>`):
 
 .. sourcecode:: sh
 
     $ pip install 'jsonrpcclient[requests]'
 
-Import the ``HTTPClient`` class and instantiate it, passing the server
-endpoint::
+Import ``HTTPClient`` and instantiate it, passing the server endpoint::
 
     >>> from jsonrpcclient.http_client import HTTPClient
     >>> client = HTTPClient('http://pets.com')
-
-There are other :doc:`clients <examples>` available which use different
-protocols to send a message. Regardless of the client, the rest of the usage
-described below is the same.
 
 Sending a request
 =================
@@ -82,9 +78,11 @@ Batch requests
 
 JSON-RPC allows you to send multiple requests in a single message::
 
-    client.send([
-        {'jsonrpc': '2.0', 'method': 'cat', 'id': 1},
-        {'jsonrpc': '2.0', 'method': 'dog', 'id': 2}])
+    req = '''[
+        {"jsonrpc": "2.0", "method": "cat", "id": 1},
+        {"jsonrpc": "2.0", "method": "dog", "id": 2}
+    ]'''
+    client.send(req)
 
 Send multiple :class:`~jsonrpcclient.request.Request` objects::
 

@@ -1,14 +1,23 @@
 """
 Asynchronous client.
 
-Base class for other asynchronous clients such as WebSockets, ZeroMQ and
-aiohttp.
+Abstract base class for other asynchronous clients such as WebSockets, ZeroMQ
+and aiohttp.
 """
+from abc import ABCMeta, abstractmethod
+
+from future.utils import with_metaclass
+
 from .client import Client
 from .request import Request, Notification
 from .prepared_request import PreparedRequest
 
-class AsyncClient(Client):
+
+class AsyncClient(with_metaclass(ABCMeta, Client)):
+    @abstractmethod
+    async def _send_message(self, request, **kwargs):
+        """(Abstract)"""
+
     async def send(self, request, **kwargs):
         request = PreparedRequest(request)
         self._prepare_request(request, **kwargs)

@@ -1,3 +1,8 @@
+2.4.2 (Oct 12, 2016)
+~~~~~~~~~~~~~~~~~~~~
+
+- Allow passing a list of strings to send()
+
 2.4.1 (Oct 6, 2016)
 ~~~~~~~~~~~~~~~~~~~
 
