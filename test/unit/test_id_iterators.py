@@ -1,6 +1,4 @@
 """test_ids.py"""
-# pylint: disable=missing-docstring
-
 from unittest import TestCase, main
 import re
 from uuid import UUID
@@ -9,7 +7,6 @@ from jsonrpcclient import ids
 
 
 class TestHexIterator(TestCase):
-
     def test(self):
         i = ids.hexadecimal()
         self.assertEqual('1', next(i))
@@ -19,15 +16,13 @@ class TestHexIterator(TestCase):
 
 
 class TestRandomIterator(TestCase):
-
     def test(self):
         i = ids.random()
         self.assertTrue(re.match('^[0-9,a-z]{8}$', next(i)))
 
 
 class TestUUIDIterator(TestCase):
-
-    def test(self): # pylint: disable=no-self-use
+    def test(self):
         i = ids.uuid()
         # Raise ValueError if badly formed hexadecimal UUID string
         UUID(next(i), version=4)

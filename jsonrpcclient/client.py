@@ -1,10 +1,9 @@
-"""Abstract class for various clients"""
-
+"""Abstract base class for various clients."""
 import json
 import pkgutil
 import logging
 from abc import ABCMeta, abstractmethod
-from past.builtins import basestring #pylint:disable=redefined-builtin
+from past.builtins import basestring
 
 import jsonschema
 from future.utils import with_metaclass
@@ -16,12 +15,13 @@ from .prepared_request import PreparedRequest
 
 
 class Client(with_metaclass(ABCMeta, object)):
-    """Protocol-agnostic base class the clients. Subclasses should inherit and
-    override ``_send_message``.
+    """
+    Protocol-agnostic base class for clients.
+
+    Subclasses should inherit and override ``_send_message``.
 
     :param endpoint: The server address.
     """
-
     # Request and response logs
     _request_log = logging.getLogger(__name__+'.request')
     _response_log = logging.getLogger(__name__+'.response')
@@ -47,8 +47,10 @@ class Client(with_metaclass(ABCMeta, object)):
         log_(log, level, message, extra=extra, fmt=fmt)
 
     def _log_request(self, request, extra=None, fmt=None):
-        """Log the JSON-RPC request before sending. Should be called by
-        subclasses in :meth:`_send_message`, before sending.
+        """
+        Log a request.
+
+        Should be called by subclasses in :meth:`_send_message`, before sending.
 
         :param request: The JSON-RPC request string.
         :param extra: A dict of extra fields that may be logged.
@@ -58,8 +60,11 @@ class Client(with_metaclass(ABCMeta, object)):
         self.log_(request, extra, self._request_log, 'info', fmt)
 
     def _log_response(self, response, extra=None, fmt=None):
-        """Log the JSON-RPC response after sending. Should be called by
-        subclasses in :meth:`_send_message`, after receiving the response.
+        """
+        Log a response.
+
+        Should be called by subclasses in :meth:`_send_message`, after receiving
+        the response.
 
         :param response: The JSON-RPC response string.
         :param extra: A dict of extra fields that may be logged.
@@ -69,14 +74,17 @@ class Client(with_metaclass(ABCMeta, object)):
         self.log_(response, extra, self._response_log, 'info', fmt)
 
     def _prepare_request(self, request, **kwargs):
-        """Prepare the request if necessary. Subclasses can overload to modify
-        the request, or to add extra info to the log entry (set the
-        extra attribute).
+        """
+        Prepare the request if necessary.
+
+        Subclasses can overload to modify the request, or to add extra info to
+        the log entry (set the extra attribute).
         """
         pass
 
     def _process_response(self, response, log_extra=None, log_format=None):
-        """Processes the response and returns the 'result' portion if present.
+        """
+        Process the response and return the 'result' portion if present.
 
         :param response: The JSON-RPC response string to process.
         :return: The response string, or None
@@ -111,8 +119,10 @@ class Client(with_metaclass(ABCMeta, object)):
 
     @abstractmethod
     def _send_message(self, request, **kwargs):
-        """Transport the request to the server. Override this method in the
-        protocol-specific subclasses.
+        """
+        Transport the request to the server.
+
+        Override this method in the protocol-specific subclasses.
 
         :param request: A JSON-RPC request, in dict format.
         :returns: The processed response - for requests, it will be the result
@@ -121,8 +131,8 @@ class Client(with_metaclass(ABCMeta, object)):
         """
 
     def send(self, request, **kwargs):
-        """Send a request, passing the whole JSON-RPC `request object
-        <http://www.jsonrpc.org/specification#request_object>`_.
+        """
+        Send a request, passing the whole JSON-RPC request object.
 
             >>> client.send('{"jsonrpc": "2.0", "method": "ping", "id": 1}')
             --> {"jsonrpc": "2.0", "method": "ping", "id": 1}
@@ -161,7 +171,8 @@ class Client(with_metaclass(ABCMeta, object)):
         return self._send_message(request, **kwargs)
 
     def notify(self, method_name, *args, **kwargs):
-        """Send a JSON-RPC request, without expecting a response.
+        """
+        Send a JSON-RPC request, without expecting a response.
 
         :param method_name: The remote procedure's method name.
         :param args: Positional arguments passed to the remote procedure.
@@ -171,9 +182,10 @@ class Client(with_metaclass(ABCMeta, object)):
         return self.send(Notification(method_name, *args, **kwargs))
 
     def request(self, method_name, *args, **kwargs):
-        #:pylint:disable=line-too-long
-        """Send a request by passing the method and arguments. This is the main
-        public method.
+        """
+        Send a request by passing the method and arguments.
+
+        This is the main public method.
 
             >>> client.request('cat', name='Mittens')
             --> {"jsonrpc": "2.0", "method": "cat", "params": {"name": "Mittens"}, "id": 1}
@@ -185,18 +197,16 @@ class Client(with_metaclass(ABCMeta, object)):
         :param kwargs: Keyword arguments passed to the remote procedure.
         :return: The payload (i.e. the ``result`` part of the response).
         """
-        #:pylint:enable=line-too-long
         return self.send(Request(method_name, *args, **kwargs))
 
     def __getattr__(self, name):
-        """This gives us an alternate way to make a request::
+        """
+        This gives us an alternate way to make a request::
 
             >>> client.cube(3)
             27
 
         That's the same as saying ``client.request('cube', 3)``.
-
-        Technique is explained here: http://code.activestate.com/recipes/307618/
         """
         def attr_handler(*args, **kwargs):
             """Call self.request from here"""

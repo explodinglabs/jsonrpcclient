@@ -1,5 +1,11 @@
-"""These classes make it easy to create JSON-RPC Request objects."""
+"""
+Classes to help create JSON-RPC Request objects.
 
+To create a request::
+
+    >>> Request('cat', name='Mittens')
+    {'jsonrpc': '2.0', 'method': 'cat', 'params': {'name': 'Mittens'}, 'id': 1}
+"""
 import json
 from collections import OrderedDict
 from future.utils import with_metaclass
@@ -8,8 +14,10 @@ from . import config, ids
 
 
 def _sort_request(req):
-    """Sorts a JSON-RPC request dict returning a sorted OrderedDict, having no
-    effect other than making it nicer to read.
+    """
+    Sort a JSON-RPC request dict.
+
+    This has no effect other than making the request nicer to read.
 
         >>> json.dumps(_sort_request(
         ...     {'id': 2, 'params': [2, 3], 'method': 'add', 'jsonrpc': '2.0'}))
@@ -18,16 +26,16 @@ def _sort_request(req):
     :param req: JSON-RPC request in dict format.
     :return: The same request, nicely sorted.
     """
-
     sort_order = ['jsonrpc', 'method', 'params', 'id']
     return OrderedDict(sorted(req.items(), key=lambda k: sort_order.index(
         k[0])))
 
 
 class _RequestClassType(type):
-    """Request Metaclass.
+    """
+    Request Metaclass.
 
-    Purpose of this is to catch undefined attributes on the class.
+    Catches undefined attributes on the class.
     """
 
     def __getattr__(cls, name):
@@ -46,11 +54,9 @@ class _RequestClassType(type):
 
 
 class Notification(with_metaclass(_RequestClassType, dict)):
-    # pylint: disable=line-too-long
-    """A JSON-RPC Request object, with no ``id`` member (meaning no payload data
-    is wanted)::
+    """
+    A request which does not expect a response.
 
-        >>> from jsonrpcclient import Notification
         >>> Notification('cat')
         {'jsonrpc': '2.0', 'method': 'cat'}
 
@@ -75,8 +81,6 @@ class Notification(with_metaclass(_RequestClassType, dict)):
     :param kwargs: Keyword arguments.
     :returns: The JSON-RPC request in dictionary form.
     """
-    #pylint:enable=line-too-long
-
     def __init__(self, method, *args, **kwargs):
         # Start the basic request
         self.update(jsonrpc='2.0', method=method)
@@ -104,8 +108,8 @@ class Notification(with_metaclass(_RequestClassType, dict)):
 
 
 class Request(Notification):
-    #pylint:disable=line-too-long
-    """Create a JSON-RPC `request object
+    """
+    Create a JSON-RPC `request object
     <http://www.jsonrpc.org/specification#request_object>`_.
 
         >>> Request('cat', name='Mittens')
@@ -117,8 +121,6 @@ class Request(Notification):
         to force the ``id`` to use.
     :returns: The JSON-RPC request in dictionary form.
     """
-    #pylint:enable=line-too-long
-
     id_iterator = None
 
     def __init__(self, method, *args, **kwargs):

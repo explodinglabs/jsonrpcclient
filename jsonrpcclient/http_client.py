@@ -1,9 +1,11 @@
-"""An HTTP client to communicate with, for example::
+"""
+An HTTP client.
+
+For example::
 
     HTTPClient('http://example.com/api').request('go')
 
-Uses the Requests library.
-http://docs.python-requests.org/en/master/
+Uses the `Requests <http://docs.python-requests.org/en/master/>`_ library.
 """
 
 from requests import Request, Session

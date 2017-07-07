@@ -1,3 +1,4 @@
+"""Websockets client."""
 from .async_client import AsyncClient
 
 class WebSocketsClient(AsyncClient):

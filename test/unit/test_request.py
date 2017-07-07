@@ -1,6 +1,4 @@
 """test_request.py"""
-# pylint: disable=missing-docstring,line-too-long
-
 from unittest import TestCase, main
 import json
 
@@ -34,7 +32,7 @@ class TestNotification(TestCase):
     def test_method_name_directly(self):
         self.assertEqual(
             {'jsonrpc': '2.0', 'method': 'cat'},
-            Notification.cat() #pylint:disable=no-member
+            Notification.cat()
         )
 
     def test_positional(self):
@@ -81,7 +79,7 @@ class TestRequest(TestCase):
     def test_method_name_directly(self):
         self.assertEqual(
             {'jsonrpc': '2.0', 'method': 'cat', 'id': 1},
-            Request.cat()) #pylint:disable=no-member
+            Request.cat())
 
     def test_positional(self):
         self.assertEqual(

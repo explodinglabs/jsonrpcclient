@@ -1,4 +1,8 @@
-"""Deprecated module, remove in version 3"""
+"""
+ZMQ Client.
+
+Deprecated module; use ZeroMQClient instead. Remove in version 3.
+"""
 from warnings import warn
 
 from .zeromq_client import ZeroMQClient

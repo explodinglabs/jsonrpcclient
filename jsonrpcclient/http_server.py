@@ -1,4 +1,8 @@
-"""Deprecated module, remove in version 3"""
+"""
+HTTPServer.
+
+Deprecated module; use HTTPClient instead. Remove in version 3.
+"""
 from warnings import warn
 
 from .http_client import HTTPClient

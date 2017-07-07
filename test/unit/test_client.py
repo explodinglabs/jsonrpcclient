@@ -1,6 +1,4 @@
 """test_client.py"""
-# pylint: disable=missing-docstring,line-too-long,protected-access
-
 from unittest import TestCase, main
 import itertools
 import json
@@ -19,7 +17,6 @@ class DummyClient(Client):
 
 
 class TestClient(TestCase):
-
     def setUp(self):
         Request.id_iterator = itertools.count(1)
         self.client = DummyClient('http://non-existant:80/')
@@ -29,7 +26,6 @@ class TestClient(TestCase):
 
 
 class TestLogging(TestClient):
-
     def test_request(self):
         with LogCapture() as capture:
             self.client._log_request('{"jsonrpc": "2.0", "method": "go"}')
@@ -42,32 +38,26 @@ class TestLogging(TestClient):
 
 
 class TestSend(TestClient):
-
     def test(self):
         self.assertEqual(15, self.client.send({'jsonrpc': '2.0', 'method': 'out', 'id': 1}))
 
 
 class TestRequest(TestClient):
-
     def test(self):
         self.assertEqual(15, self.client.request('multiply', 3, 5))
 
 
 class TestNotify(TestClient):
-
     def test(self):
         self.assertEqual(15, self.client.notify('multiply', 3, 5))
 
 
 class TestDirect(TestClient):
-
     def test_alternate_usage(self):
         self.assertEqual(15, self.client.multiply(3, 5))
 
 
 class TestProcessResponse(TestClient):
-    # pylint: disable=protected-access
-
     def test_none(self):
         response = None
         self.assertEqual(None, self.client._process_response(response))

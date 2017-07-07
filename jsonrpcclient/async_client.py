@@ -1,3 +1,9 @@
+"""
+Asynchronous client.
+
+Base class for other asynchronous clients such as WebSockets, ZeroMQ and
+aiohttp.
+"""
 from .client import Client
 from .request import Request, Notification
 from .prepared_request import PreparedRequest

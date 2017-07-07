@@ -1,3 +1,4 @@
+"""aiohttp client"""
 from .async_client import AsyncClient
 import async_timeout
 

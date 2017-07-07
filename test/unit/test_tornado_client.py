@@ -1,6 +1,4 @@
-'''Tornado client test case'''
-# pylint: disable=missing-docstring,line-too-long,too-many-public-methods,protected-access
-
+"""Tornado client test case"""
 import json
 import itertools
 
@@ -11,7 +9,6 @@ from jsonrpcclient.tornado_client import TornadoClient
 
 
 class EchoHandler(web.RequestHandler):
-
     def data_received(self, chunk):
         pass
 
@@ -24,7 +21,6 @@ class EchoHandler(web.RequestHandler):
 
 
 class FailureHandler(web.RequestHandler):
-
     def data_received(self, chunk):
         pass
 
@@ -34,7 +30,6 @@ class FailureHandler(web.RequestHandler):
 
 
 class TestTornadoClient(testing.AsyncHTTPTestCase):
-
     def get_app(self):
         return web.Application([
             ('/echo', EchoHandler),
@@ -43,7 +38,6 @@ class TestTornadoClient(testing.AsyncHTTPTestCase):
 
     def setUp(self):
         super(TestTornadoClient, self).setUp()
-
         # Patch Request.id_iterator to ensure the id is always 1
         Request.id_iterator = itertools.count(1)
 

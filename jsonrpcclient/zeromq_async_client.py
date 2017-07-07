@@ -1,3 +1,4 @@
+"""ZeroMQ Client"""
 import zmq
 import zmq.asyncio
 from .async_client import AsyncClient

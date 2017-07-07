@@ -1,9 +1,12 @@
-"""Prepared request"""
+"""Prepared request."""
 import json
-from past.builtins import basestring #pylint:disable=redefined-builtin
+from past.builtins import basestring
 
 class PreparedRequest(str):
-    """An object to validate and encapsulate a request before sending, which can
+    """
+    A prepared request.
+
+    An object to validate and encapsulate a request before sending, which can
     be passed around subsequent methods. Subclasses of Client can add to it, or
     set the log format/extra info to include.
     """

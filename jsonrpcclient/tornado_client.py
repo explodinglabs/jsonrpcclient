@@ -1,6 +1,6 @@
 """
-TornadoClient
-*************
+Tornado Client
+**************
 
 Represents an endpoint to communicate with using Tornado asynchronous HTTP
 client::
@@ -28,12 +28,9 @@ class TornadoClient(Client):
     :param async_http_client_class: Tornado asynchronous HTTP client class.
     :param kwargs: Keyword arguments to pass to the client initialiser.
     """
-
     _DEFAULT_HEADERS = {
-        'Content-Type' : 'application/json',
-        'Accept'       : 'application/json'
-    }
-
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'}
 
     def __init__(self, endpoint, async_http_client_class=AsyncHTTPClient, \
             **kwargs):
@@ -50,7 +47,8 @@ class TornadoClient(Client):
                 'http_headers' : response.headers}))
 
     def _send_message(self, request, **kwargs):
-        """Transport the message to the server and return the response.
+        """
+        Transport the message to the server and return the response.
 
         :param request: The JSON-RPC request string.
         :param kwargs: Keyword arguments to the Tornado request.

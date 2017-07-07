@@ -1,4 +1,8 @@
-"""Deprecated module, remove in version 3"""
+"""
+Tornado Server.
+
+Deprecated module; use TornadoClient instead. Remove in version 3.
+"""
 from warnings import warn
 
 from .tornado_client import TornadoClient

@@ -1,6 +1,4 @@
 """test_http_client.py"""
-# pylint: disable=missing-docstring,line-too-long,too-many-public-methods,protected-access
-
 from unittest import TestCase, main
 import itertools
 
@@ -13,7 +11,6 @@ from jsonrpcclient.http_client import HTTPClient
 
 
 class TestHTTPClient(TestCase):
-
     def setUp(self):
         # Patch Request.id_iterator to ensure the id is always 1
         Request.id_iterator = itertools.count(1)
@@ -47,14 +44,12 @@ class TestHTTPClient(TestCase):
         client._prepare_request(request)
         with self.assertRaises(requests.exceptions.RequestException):
             client._send_message(request)
-        #pylint:disable=no-member
         # Header set by argument
         self.assertEqual('application/json-rpc', request.prepped.headers['Content-Type'])
         # Header set by DEFAULT_HEADERS
         self.assertEqual('application/json', request.prepped.headers['Accept'])
         # Header set by Requests default_headers
         self.assertIn('Content-Length', request.prepped.headers)
-        #pylint:enable=no-member
 
     @staticmethod
     def test_init_custom_auth():
@@ -73,7 +68,7 @@ class TestHTTPClientSendMessage(TestCase):
         client._prepare_request(request)
         with self.assertRaises(requests.exceptions.RequestException):
             client._send_message(request)
-        self.assertEqual(request, request.prepped.body) #pylint:disable=no-member
+        self.assertEqual(request, request.prepped.body)
 
     def test_connection_error(self):
         client = HTTPClient('http://test/')
@@ -82,7 +77,6 @@ class TestHTTPClientSendMessage(TestCase):
         with self.assertRaises(requests.exceptions.RequestException):
             client._send_message(request)
 
-    #pylint:disable=no-member
     @responses.activate
     def test_invalid_request(self):
         client = HTTPClient('http://test/')
@@ -94,11 +88,9 @@ class TestHTTPClientSendMessage(TestCase):
             body=requests.exceptions.InvalidSchema())
         with self.assertRaises(requests.exceptions.InvalidSchema):
             client._send_message(request)
-    #pylint:enable=no-member
 
-    #pylint:disable=no-member
     @staticmethod
-    @responses.activate #pylint:disable=no-member
+    @responses.activate
     def test_success_200():
         client = HTTPClient('http://test/')
         request = PreparedRequest(Request('go'))
@@ -107,7 +99,6 @@ class TestHTTPClientSendMessage(TestCase):
             responses.POST, 'http://test/', status=200,
             body='{"jsonrpc": "2.0", "result": 5, "id": 1}')
         client._send_message(request)
-    #pylint:enable=no-member
 
     def test_custom_headers(self):
         client = HTTPClient('http://test/')
@@ -115,14 +106,12 @@ class TestHTTPClientSendMessage(TestCase):
         client._prepare_request(request, headers={'Content-Type': 'application/json-rpc'})
         with self.assertRaises(requests.exceptions.RequestException):
             client._send_message(request)
-        #pylint:disable=no-member
         # Header set by argument
         self.assertEqual('application/json-rpc', request.prepped.headers['Content-Type'])
         # Header set by DEFAULT_HEADERS
         self.assertEqual('application/json', request.prepped.headers['Accept'])
         # Header set by Requests default_headers
         self.assertIn('Content-Length', request.prepped.headers)
-        #pylint:enable=no-member
 
     def test_custom_headers_in_both(self):
         client = HTTPClient('http://test/')
@@ -131,14 +120,12 @@ class TestHTTPClientSendMessage(TestCase):
         client._prepare_request(request, headers={'Accept': 'application/json-rpc'})
         with self.assertRaises(requests.exceptions.RequestException):
             client._send_message(request)
-        #pylint:disable=no-member
         # Header set by argument
         self.assertEqual('application/json-rpc', request.prepped.headers['Content-Type'])
         # Header set by DEFAULT_HEADERS
         self.assertEqual('application/json-rpc', request.prepped.headers['Accept'])
         # Header set by Requests default_headers
         self.assertIn('Content-Length', request.prepped.headers)
-        #pylint:enable=no-member
 
     def test_ssl_verification(self):
         client = HTTPClient('https://test/')
