@@ -2,13 +2,13 @@
 import json
 from past.builtins import basestring
 
+
 class PreparedRequest(str):
     """
-    A prepared request.
+    Encapsulate and validate a request prior to sending.
 
-    An object to validate and encapsulate a request before sending, which can
-    be passed around subsequent methods. Subclasses of Client can add to it, or
-    set the log format/extra info to include.
+    This object can be passed around subsequent methods. Subclasses of Client
+    can add to it, or set the log format/extra info to include.
 
     Converts some non-string requests to string.
     """

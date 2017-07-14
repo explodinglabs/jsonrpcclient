@@ -1,17 +1,17 @@
 """Abstract base class for various clients."""
 import json
-import pkgutil
 import logging
+import pkgutil
 from abc import ABCMeta, abstractmethod
 from past.builtins import basestring
 
-import jsonschema
 from future.utils import with_metaclass
+import jsonschema
 
 from . import config, exceptions
-from .request import Notification, Request
 from .log import log_
 from .prepared_request import PreparedRequest
+from .request import Notification, Request
 
 
 class Client(with_metaclass(ABCMeta, object)):

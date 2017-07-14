@@ -7,7 +7,6 @@ For example::
 
 Uses the `Requests <http://docs.python-requests.org/en/master/>`_ library.
 """
-
 from requests import Request, Session
 
 from .client import Client
@@ -37,7 +36,8 @@ class HTTPClient(Client):
 
     def _prepare_request(self, request, headers=None, files=None, params=None,
                          auth=None, cookies=None, **kwargs):
-        """Prepare the request for sending.
+        """
+        Prepare the request for sending.
 
         :param request: The JSON-RPC request (a PreparedRequest object)
         :param kwargs: Configuration for just this request
@@ -55,7 +55,8 @@ class HTTPClient(Client):
 
     def _send_message(self, request, stream=False, timeout=None, verify=True,
                       cert=None, proxies=None, **kwargs):
-        """Transport the message to the server and return the response.
+        """
+        Transport the message to the server and return the response.
 
         :param request: The JSON-RPC request string.
         :param kwargs: Passed on to the requests lib's send function, for last

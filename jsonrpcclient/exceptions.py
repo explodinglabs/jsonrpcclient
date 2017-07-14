@@ -28,14 +28,16 @@ class ParseResponseError(JsonRpcClientError):
 
 
 class ReceivedErrorResponse(JsonRpcClientError):
-    """Raised if a single JSON-RPC `error response object
-    <http://www.jsonrpc.org/specification#error_object>`_ is received. *This is
-    not raised for batch requests.*
+    """
+    Raised if a single JSON-RPC `error response object
+    <http://www.jsonrpc.org/specification#error_object>`_ is received.
+
+    *This is not raised for batch requests.*
 
     This error means one of two things:
 
     1. There was a problem with the request.
-    2. There was a problem with the application at the receiving end.
+    2. There was a problem with on server end.
 
     To see information about the error, catch the exception:
 

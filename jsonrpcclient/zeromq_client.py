@@ -24,7 +24,8 @@ class ZeroMQClient(Client):
         self.socket.connect(endpoint)
 
     def _send_message(self, request):
-        """Transport the message to the server and return the response.
+        """
+        Transport the message to the server and return the response.
 
         :param request: The JSON-RPC request string.
         :return: The response (a string for requests, None for notifications).

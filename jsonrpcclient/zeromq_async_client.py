@@ -1,7 +1,9 @@
 """ZeroMQ Client"""
 import zmq
 import zmq.asyncio
+
 from .async_client import AsyncClient
+
 
 class ZeroMQAsyncClient(AsyncClient):
     def __init__(self, endpoint, socket_type=zmq.REQ):

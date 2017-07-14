@@ -5,8 +5,8 @@ By default the request ``id`` is a decimal number which increments with each
 request. See the :mod:`config` module.
 """
 import itertools
-from string import digits, ascii_lowercase
 from random import choice
+from string import digits, ascii_lowercase
 from uuid import uuid4
 
 
