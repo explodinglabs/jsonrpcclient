@@ -55,7 +55,7 @@ class TornadoClient(Client):
         :return: The response (a string for requests, None for notifications).
         """
         headers = dict(self._DEFAULT_HEADERS)
-        headers.update(kwargs.get('headers', {}))
+        headers.update(kwargs.pop('headers', {}))
 
         future = Future()
         self.http_client.fetch(
