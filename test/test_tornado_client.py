@@ -53,3 +53,11 @@ class TestTornadoClient(testing.AsyncHTTPTestCase):
         with self.assertRaises(httpclient.HTTPError) as ctx:
             yield testee.fail(code=500)
         self.assertEqual('HTTP 500: Internal Server Error', str(ctx.exception))
+
+    @testing.gen_test
+    def test_custom_headers(self):
+        testee = TornadoClient(self.get_url('/echo'))
+        response = yield testee.send(
+            Request('some_method', 1, [2], {'3': 4, '5': True, '6': None}),
+            headers={'foo': 'bar'})
+        self.assertEqual([1, [2], {'3': 4, '6': None, '5': True}], response)
