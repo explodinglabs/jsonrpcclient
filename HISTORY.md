@@ -1,3 +1,6 @@
+## 2.4.3 (Aug 8, 2017)
+- Fix custom headers in Tornado Client (#52)
+
 ## 2.4.2 (Oct 12, 2016)
 - Allow passing a list of strings to send()
 
@@ -5,8 +8,7 @@
 - Fix response log prefix
 
 ## 2.4.0 (Oct 5, 2016)
-- Add asychronous Zeromq client, see `blog post
-  <https://bcb.github.io/jsonrpc/zeromq-async>`__
+- Add asychronous Zeromq client, see [blog post](https://bcb.github.io/jsonrpc/zeromq-async)
 
 ## 2.3.0 (Sep 28, 2016)
 - Support websockets and aiohttp
