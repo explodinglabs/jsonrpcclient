@@ -1,1 +1,1 @@
-include README.rst HISTORY.rst jsonrpcclient/response-schema.json
+include README.md HISTORY.md jsonrpcclient/response-schema.json
