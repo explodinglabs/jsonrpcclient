@@ -1,4 +1,7 @@
 ## 2.4.3 (Aug 8, 2017)
+- Add convenience functions 'request' and 'notify' (#54)
+
+## 2.4.3 (Aug 8, 2017)
 - Fix custom headers in Tornado Client (#52)
 
 ## 2.4.2 (Oct 12, 2016)

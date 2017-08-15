@@ -16,13 +16,30 @@ options<examples>`):
 
     $ pip install 'jsonrpcclient[requests]'
 
-Import ``HTTPClient`` and instantiate it, passing the server endpoint::
+Sending a request
+=================
+
+If using HTTP, the easiest way to send a request is using the convenience
+methods::
+
+    >>> import jsonrpcclient
+    >>> jsonrpcclient.request('http://cats.com', 'speak')
+    'meow'
+
+The first argument is the endpoint, and the second argument is the method to
+call. Subsequent arguments are arguments to the method.
+
+Use ``notify`` instead of ``request`` to signify that no response is required::
+
+    >>> jsonrpcclient.notify('http://cats.com', 'speak')
+    >>>
+
+Alternatively, instantiate ``HTTPClient``, passing the server endpoint::
 
     >>> from jsonrpcclient.http_client import HTTPClient
     >>> client = HTTPClient('http://pets.com')
 
-Sending a request
-=================
+Then we can send multiple requests with the ``client`` object.
 
 Send
 ----
