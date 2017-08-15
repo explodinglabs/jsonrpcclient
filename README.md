@@ -3,12 +3,10 @@
 Send [JSON-RPC](http://www.jsonrpc.org/) requests in Python 2.7 and 3.3+.
 
 ```python
-from jsonrpcclient.http_client import HTTPClient
-HTTPClient('http://cats.com/').request('speak')
-```
-```sh
+>>> from jsonrpcclient.http_client import HTTPClient
+>>> HTTPClient('http://cats.com/').request('speak')
 --> {"jsonrpc": "2.0", "method": "speak", "id": 1}
-<-- {"jsonrpc": "2.0", "result": "meow", "id": 1}
+<-- {"jsonrpc": "2.0", "result": "meow", "id": 1} (200 OK)
 'meow'
 ```
 
