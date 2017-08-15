@@ -6,8 +6,8 @@ Send [JSON-RPC](http://www.jsonrpc.org/) requests in Python 2.7 and 3.3+.
 pip install jsonrpcclient[requests]
 ```
 ```python
->>> import jsonrpcclient
->>> jsonrpcclient.request('http://cats.com', 'speak')
+import jsonrpcclient
+jsonrpcclient.request('http://cats.com', 'speak')
 ```
 ```sh
 --> {"jsonrpc": "2.0", "method": "speak", "id": 1}
