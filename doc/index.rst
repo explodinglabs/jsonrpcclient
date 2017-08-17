@@ -14,7 +14,7 @@ Send `JSON-RPC <http://www.jsonrpc.org/>`__ requests in Python 2.7 and 3.3+.
     >>> import jsonrpcclient
     >>> jsonrpcclient.request('http://cats.com', 'speak')
     --> {"jsonrpc": "2.0", "method": "speak", "id": 1}
-    <-- {"jsonrpc": "2.0", "result": "meow", "id": 1}
+    <-- {"jsonrpc": "2.0", "result": "meow", "id": 1} (200 OK)
     'meow'
 
 This example uses the *requests* library for sending, but more options are
