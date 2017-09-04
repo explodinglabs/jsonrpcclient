@@ -60,8 +60,7 @@ class ReceivedErrorResponse(JsonRpcClientError):
         :param message: The JSON-RPC ``message`` value received.
         :param data: The JSON-RPC ``data`` value received.
         """
-        super(ReceivedErrorResponse, self).__init__('; '.join(
-            [item for item in [message, data] if item is not None]))
+        super(ReceivedErrorResponse, self).__init__(message)
         #: The JSON-RPC status code. (See `status codes
         #: <http://www.jsonrpc.org/specification#error_object>`_.)
         self.code = code

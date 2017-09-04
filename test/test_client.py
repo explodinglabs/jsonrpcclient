@@ -109,6 +109,19 @@ class TestProcessResponse(TestClient):
         self.assertEqual(ex.exception.message, 'Not Found')
         self.assertEqual(ex.exception.data, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit')
 
+    def test_error_response_with_nonstring_data(self):
+        """Reported in issue #56"""
+        response = {
+            'jsonrpc': '2.0',
+            'error': {'code': -32000, 'message': 'Not Found', 'data': {}},
+            'id': None
+        }
+        with self.assertRaises(exceptions.ReceivedErrorResponse) as ex:
+            self.client._process_response(response)
+        self.assertEqual(ex.exception.code, -32000)
+        self.assertEqual(ex.exception.message, 'Not Found')
+        self.assertEqual(ex.exception.data, {})
+
     def test_batch(self):
         response = [
             {'jsonrpc': '2.0', 'result': 5, 'id': 1},
