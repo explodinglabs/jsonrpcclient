@@ -1,4 +1,7 @@
-## 2.4.3 (Aug 8, 2017)
+## 2.5.1 (Sep 4, 2017)
+- Fix non-string exception 'data' value
+
+## 2.5.0 (Aug 8, 2017)
 - Add convenience functions 'request' and 'notify' (#54)
 
 ## 2.4.3 (Aug 8, 2017)
