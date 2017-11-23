@@ -107,7 +107,7 @@ class Client(with_metaclass(ABCMeta, object)):
                 return response
             else:
                 # If the response was "error", raise to ensure it's handled
-                if 'error' in response:
+                if 'error' in response and response['error'] is not None:
                     raise exceptions.ReceivedErrorResponse(
                         response['error'].get('code'),
                         response['error'].get('message'),
