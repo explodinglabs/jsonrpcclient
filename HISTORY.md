@@ -1,3 +1,6 @@
+## 2.5.2 (Nov 29, 2017)
+- Ignore empty error bodies
+
 ## 2.5.1 (Sep 4, 2017)
 - Fix non-string exception 'data' value
 
