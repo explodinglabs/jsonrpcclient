@@ -1,4 +1,3 @@
-"""__init__.py"""
 from .request import Request, Notification
 from .http_client import HTTPClient
 

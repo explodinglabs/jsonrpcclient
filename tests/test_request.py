@@ -1,5 +1,4 @@
-"""test_request.py"""
-from unittest import TestCase, main
+from unittest import TestCase
 import json
 
 from jsonrpcclient.request import Notification, Request, _sort_request
@@ -106,7 +105,3 @@ class TestRequest(TestCase):
         config.ids = 'random'
         req = Request('go')
         self.assertEqual(8, len(req['id']))
-
-
-if __name__ == '__main__':
-    main()

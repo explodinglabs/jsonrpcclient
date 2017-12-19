@@ -1,5 +1,4 @@
-"""test_client.py"""
-from unittest import TestCase, main
+from unittest import TestCase
 import itertools
 import json
 
@@ -135,7 +134,3 @@ class TestProcessResponse(TestClient):
             {"jsonrpc": "2.0", "result": null, "id": 2}, \
             {"jsonrpc": "2.0", "error": {"code": -32000, "message": "Not Found"}, "id": 3}]'
         self.assertEqual(json.loads(response), self.client._process_response(response))
-
-
-if __name__ == '__main__':
-    main()

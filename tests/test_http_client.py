@@ -1,5 +1,4 @@
-"""test_http_client.py"""
-from unittest import TestCase, main
+from unittest import TestCase
 import itertools
 
 import requests
@@ -135,7 +134,3 @@ class TestHTTPClientSendMessage(TestCase):
         client._prepare_request(request)
         with self.assertRaises(requests.exceptions.RequestException):
             client._send_message(request)
-
-
-if __name__ == '__main__':
-    main()

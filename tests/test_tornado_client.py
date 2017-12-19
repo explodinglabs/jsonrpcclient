@@ -1,4 +1,3 @@
-"""Tornado client test case"""
 import json
 import itertools
 

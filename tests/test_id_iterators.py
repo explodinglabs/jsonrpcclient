@@ -1,5 +1,4 @@
-"""test_ids.py"""
-from unittest import TestCase, main
+from unittest import TestCase
 import re
 from uuid import UUID
 
@@ -26,7 +25,3 @@ class TestUUIDIterator(TestCase):
         i = ids.uuid()
         # Raise ValueError if badly formed hexadecimal UUID string
         UUID(next(i), version=4)
-
-
-if __name__ == '__main__':
-    main()

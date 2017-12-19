@@ -1,5 +1,4 @@
-"""test_request.py"""
-from unittest import TestCase, main
+from unittest import TestCase
 from past.builtins import basestring
 
 from jsonrpcclient.prepared_request import PreparedRequest
@@ -34,7 +33,3 @@ class TestNew(TestCase):
         prepped = PreparedRequest(req)
         self.assertIsInstance(prepped, basestring)
         self.assertEqual(prepped, exp)
-
-
-if __name__ == '__main__':
-    main()

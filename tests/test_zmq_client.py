@@ -1,6 +1,5 @@
-"""test_zmq_client.py"""
 import json
-from unittest import TestCase, main
+from unittest import TestCase
 import itertools
 
 import zmq
@@ -34,7 +33,3 @@ class TestZMQClient(TestCase):
         client.socket.setsockopt(zmq.LINGER, 5)
         with self.assertRaises(zmq.error.ZMQError):
             client._send_message(str(Request('go')))
-
-
-if __name__ == '__main__':
-    main()
