@@ -1,6 +1,6 @@
+import itertools
 import json
 from unittest import TestCase
-import itertools
 
 import zmq
 from mock import patch, Mock
