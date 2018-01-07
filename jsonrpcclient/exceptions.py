@@ -44,8 +44,7 @@ class ReceivedErrorResponse(JsonRpcClientError):
     .. code-block:: python
         :emphasize-lines: 5-6
 
-        from jsonrpcclient.exceptions import JsonRpcClientError, \\
-            ReceivedErrorResponse
+        from jsonrpcclient.exceptions import JsonRpcClientError, ReceivedErrorResponse
         try:
             client.notify('go')
         except ReceivedErrorResponse as e:

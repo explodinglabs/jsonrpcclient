@@ -32,8 +32,8 @@ class TornadoClient(Client):
         'Content-Type': 'application/json',
         'Accept': 'application/json'}
 
-    def __init__(self, endpoint, async_http_client_class=AsyncHTTPClient, \
-            **kwargs):
+    def __init__(
+            self, endpoint, async_http_client_class=AsyncHTTPClient, **kwargs):
         super(TornadoClient, self).__init__(endpoint)
         self.http_client = async_http_client_class(**kwargs)
 
