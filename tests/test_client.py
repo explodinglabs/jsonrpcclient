@@ -129,8 +129,8 @@ class TestProcessResponse(TestClient):
         self.assertEqual(response, self.client._process_response(response))
 
     def test_batch_string(self):
-        response = '[ \
-            {"jsonrpc": "2.0", "result": 5, "id": 1}, \
-            {"jsonrpc": "2.0", "result": null, "id": 2}, \
-            {"jsonrpc": "2.0", "error": {"code": -32000, "message": "Not Found"}, "id": 3}]'
+        response = ('['
+            '{"jsonrpc": "2.0", "result": 5, "id": 1},'
+            '{"jsonrpc": "2.0", "result": null, "id": 2},'
+            '{"jsonrpc": "2.0", "error": {"code": -32000, "message": "Not Found"}, "id": 3}]')
         self.assertEqual(json.loads(response), self.client._process_response(response))
