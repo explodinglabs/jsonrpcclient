@@ -1,3 +1,5 @@
+![Coverage Status](https://coveralls.io/repos/github/bcb/jsonrpcclient/badge.svg?branch=master)
+
 # jsonrpcclient
 
 Send [JSON-RPC](http://www.jsonrpc.org/) requests in Python 2.7 and 3.3+.
