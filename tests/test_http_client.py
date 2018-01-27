@@ -40,9 +40,9 @@ class TestHTTPClient(TestCase):
         client = HTTPClient('http://test/')
         client.session.headers['Content-Type'] = 'application/json-rpc'
         request = PreparedRequest(Request('go'))
-        client._prepare_request(request)
+        client.prepare_request(request)
         with self.assertRaises(requests.exceptions.RequestException):
-            client._send_message(request)
+            client.send_message(request)
         # Header set by argument
         self.assertEqual('application/json-rpc', request.prepped.headers['Content-Type'])
         # Header set by DEFAULT_HEADERS
@@ -60,51 +60,51 @@ class TestHTTPClientSendMessage(TestCase):
         # Patch Request.id_iterator to ensure the id is always 1
         Request.id_iterator = itertools.count(1)
 
-    # _send_message
+    # send_message
     def test_body(self):
         client = HTTPClient('http://test/')
         request = PreparedRequest(Request('go'))
-        client._prepare_request(request)
+        client.prepare_request(request)
         with self.assertRaises(requests.exceptions.RequestException):
-            client._send_message(request)
+            client.send_message(request)
         self.assertEqual(request, request.prepped.body)
 
     def test_connection_error(self):
         client = HTTPClient('http://test/')
         request = PreparedRequest(Request('go'))
-        client._prepare_request(request)
+        client.prepare_request(request)
         with self.assertRaises(requests.exceptions.RequestException):
-            client._send_message(request)
+            client.send_message(request)
 
     @responses.activate
     def test_invalid_request(self):
         client = HTTPClient('http://test/')
         request = PreparedRequest(Request('go'))
-        client._prepare_request(request)
+        client.prepare_request(request)
         # Impossible to pass an invalid dict, so just assume the exception was raised
         responses.add(
             responses.POST, 'http://test/', status=400,
             body=requests.exceptions.InvalidSchema())
         with self.assertRaises(requests.exceptions.InvalidSchema):
-            client._send_message(request)
+            client.send_message(request)
 
     @staticmethod
     @responses.activate
     def test_success_200():
         client = HTTPClient('http://test/')
         request = PreparedRequest(Request('go'))
-        client._prepare_request(request)
+        client.prepare_request(request)
         responses.add(
             responses.POST, 'http://test/', status=200,
             body='{"jsonrpc": "2.0", "result": 5, "id": 1}')
-        client._send_message(request)
+        client.send_message(request)
 
     def test_custom_headers(self):
         client = HTTPClient('http://test/')
         request = PreparedRequest(Request('go'))
-        client._prepare_request(request, headers={'Content-Type': 'application/json-rpc'})
+        client.prepare_request(request, headers={'Content-Type': 'application/json-rpc'})
         with self.assertRaises(requests.exceptions.RequestException):
-            client._send_message(request)
+            client.send_message(request)
         # Header set by argument
         self.assertEqual('application/json-rpc', request.prepped.headers['Content-Type'])
         # Header set by DEFAULT_HEADERS
@@ -116,9 +116,9 @@ class TestHTTPClientSendMessage(TestCase):
         client = HTTPClient('http://test/')
         client.session.headers['Content-Type'] = 'application/json-rpc'
         request = PreparedRequest(Request('go'))
-        client._prepare_request(request, headers={'Accept': 'application/json-rpc'})
+        client.prepare_request(request, headers={'Accept': 'application/json-rpc'})
         with self.assertRaises(requests.exceptions.RequestException):
-            client._send_message(request)
+            client.send_message(request)
         # Header set by argument
         self.assertEqual('application/json-rpc', request.prepped.headers['Content-Type'])
         # Header set by DEFAULT_HEADERS
@@ -131,6 +131,6 @@ class TestHTTPClientSendMessage(TestCase):
         client.session.cert = '/path/to/cert'
         client.session.verify = 'ca-cert'
         request = PreparedRequest(Request('go'))
-        client._prepare_request(request)
+        client.prepare_request(request)
         with self.assertRaises(requests.exceptions.RequestException):
-            client._send_message(request)
+            client.send_message(request)

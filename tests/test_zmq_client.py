@@ -23,7 +23,7 @@ class TestZMQClient(TestCase):
         {'jsonrpc': '2.0', 'result': 99, 'id': 1}).encode('utf-8')))
     def test_send_message(self):
         client = ZMQClient('tcp://localhost:5555')
-        client._send_message(str(Request('go')))
+        client.send_message(str(Request('go')))
 
     def test_send_message_conn_error(self):
         client = ZMQClient('tcp://localhost:5555')
@@ -32,4 +32,4 @@ class TestZMQClient(TestCase):
         client.socket.setsockopt(zmq.SNDTIMEO, 5)
         client.socket.setsockopt(zmq.LINGER, 5)
         with self.assertRaises(zmq.error.ZMQError):
-            client._send_message(str(Request('go')))
+            client.send_message(str(Request('go')))

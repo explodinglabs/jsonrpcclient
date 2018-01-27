@@ -1,7 +1,7 @@
 from unittest import TestCase
 import json
 
-from jsonrpcclient.request import Notification, Request, _sort_request
+from jsonrpcclient.request import Notification, Request, sort_request
 from jsonrpcclient import config
 
 
@@ -10,7 +10,7 @@ class TestSortRequest(TestCase):
     def test(self):
         self.assertEqual(
             '{"jsonrpc": "2.0", "method": "add", "params": [2, 3], "id": 2}',
-            json.dumps(_sort_request({'id': 2, 'params': [2, 3], 'method': 'add', 'jsonrpc': '2.0'})),
+            json.dumps(sort_request({'id': 2, 'params': [2, 3], 'method': 'add', 'jsonrpc': '2.0'})),
         )
 
 

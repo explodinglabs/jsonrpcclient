@@ -28,7 +28,7 @@ class TornadoClient(Client):
     :param async_http_client_class: Tornado asynchronous HTTP client class.
     :param kwargs: Keyword arguments to pass to the client initialiser.
     """
-    _DEFAULT_HEADERS = {
+    DEFAULT_HEADERS = {
         'Content-Type': 'application/json',
         'Accept': 'application/json'}
 
@@ -42,11 +42,11 @@ class TornadoClient(Client):
         if response.error:
             future.set_exception(response.error)
         else:
-            future.set_result(self._process_response(response.body.decode(), {
+            future.set_result(self.process_response(response.body.decode(), {
                 'http_code': response.code, 'http_reason': response.reason,
                 'http_headers' : response.headers}))
 
-    def _send_message(self, request, **kwargs):
+    def send_message(self, request, **kwargs):
         """
         Transport the message to the server and return the response.
 
@@ -54,7 +54,7 @@ class TornadoClient(Client):
         :param kwargs: Keyword arguments to the Tornado request.
         :return: The response (a string for requests, None for notifications).
         """
-        headers = dict(self._DEFAULT_HEADERS)
+        headers = dict(self.DEFAULT_HEADERS)
         headers.update(kwargs.pop('headers', {}))
 
         future = Future()

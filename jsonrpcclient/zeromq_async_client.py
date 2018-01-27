@@ -12,7 +12,7 @@ class ZeroMQAsyncClient(AsyncClient):
         self.socket = self.context.socket(socket_type)
         self.socket.connect(endpoint)
 
-    async def _send_message(self, request, **kwargs):
+    async def send_message(self, request, **kwargs):
         await self.socket.send_multipart((request.encode(),))
         response = await self.socket.recv_multipart()
-        return self._process_response(response[0].decode())
+        return self.process_response(response[0].decode())

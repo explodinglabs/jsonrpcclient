@@ -23,7 +23,7 @@ class ZeroMQClient(Client):
         self.socket = self.context.socket(socket_type)
         self.socket.connect(endpoint)
 
-    def _send_message(self, request):
+    def send_message(self, request):
         """
         Transport the message to the server and return the response.
 
@@ -32,4 +32,4 @@ class ZeroMQClient(Client):
         """
         self.socket.send_string(request)
         response = self.socket.recv().decode()
-        return self._process_response(response)
+        return self.process_response(response)

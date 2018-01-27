@@ -16,7 +16,7 @@ class HTTPClient(Client):
     """Defines an HTTP client"""
 
     # The default HTTP header
-    _DEFAULT_HEADERS = {
+    DEFAULT_HEADERS = {
         'Content-Type': 'application/json', 'Accept': 'application/json'}
 
     def __init__(self, endpoint):
@@ -28,13 +28,13 @@ class HTTPClient(Client):
         super(HTTPClient, self).__init__(endpoint)
         # Make use of Requests' sessions feature
         self.session = Session()
-        self.session.headers.update(self._DEFAULT_HEADERS)
+        self.session.headers.update(self.DEFAULT_HEADERS)
         # Keep last request and response - don't use, will be removed in next
         # major release
         self.last_request = None
         self.last_response = None
 
-    def _prepare_request(self, request, headers=None, files=None, params=None,
+    def prepare_request(self, request, headers=None, files=None, params=None,
                          auth=None, cookies=None, **kwargs):
         """
         Prepare the request for sending.
@@ -53,7 +53,7 @@ class HTTPClient(Client):
         # user configures the log format
         request.log_extra = {'http_headers': request.prepped.headers}
 
-    def _send_message(self, request, stream=False, timeout=None, verify=True,
+    def send_message(self, request, stream=False, timeout=None, verify=True,
                       cert=None, proxies=None, **kwargs):
         """
         Transport the message to the server and return the response.
@@ -76,7 +76,7 @@ class HTTPClient(Client):
         # Keep last response - don't use, will be removed in next major release
         self.last_response = response
         # Give some extra information to include in the response log entry
-        return self._process_response(response.text, log_extra={
+        return self.process_response(response.text, log_extra={
             'http_code': response.status_code, 'http_reason': response.reason,
             'http_headers': response.headers}, \
             log_format='<-- %(message)s (%(http_code)s %(http_reason)s)')

@@ -11,7 +11,7 @@ from jsonrpcclient.client import Client
 
 class DummyClient(Client):
     """A dummy class for testing the abstract Client class"""
-    def _send_message(self, request):
+    def send_message(self, request):
         return 15
 
 
@@ -27,12 +27,12 @@ class TestClient(TestCase):
 class TestLogging(TestClient):
     def test_request(self):
         with LogCapture() as capture:
-            self.client._log_request('{"jsonrpc": "2.0", "method": "go"}')
+            self.client.log_request('{"jsonrpc": "2.0", "method": "go"}')
         capture.check(('jsonrpcclient.client.request', 'INFO', '{"jsonrpc": "2.0", "method": "go"}'))
 
     def test_response(self):
         with LogCapture() as capture:
-            self.client._log_response('{"jsonrpc": "2.0", "result": 5, "id": 1}')
+            self.client.log_response('{"jsonrpc": "2.0", "result": 5, "id": 1}')
         capture.check(('jsonrpcclient.client.response', 'INFO', '{"jsonrpc": "2.0", "result": 5, "id": 1}'))
 
 
@@ -59,43 +59,43 @@ class TestDirect(TestClient):
 class TestProcessResponse(TestClient):
     def test_none(self):
         response = None
-        self.assertEqual(None, self.client._process_response(response))
+        self.assertEqual(None, self.client.process_response(response))
 
     def test_empty_string(self):
         response = ''
-        self.assertEqual(None, self.client._process_response(response))
+        self.assertEqual(None, self.client.process_response(response))
 
     def test_valid_json(self):
         response = {'jsonrpc': '2.0', 'result': 5, 'id': 1}
-        self.assertEqual(5, self.client._process_response(response))
+        self.assertEqual(5, self.client.process_response(response))
 
     def test_valid_json_null_id(self):
         response = {'jsonrpc': '2.0', 'result': 5, 'id': None}
-        self.assertEqual(5, self.client._process_response(response))
+        self.assertEqual(5, self.client.process_response(response))
 
     def test_valid_string(self):
         response = '{"jsonrpc": "2.0", "result": 5, "id": 1}'
-        self.assertEqual(5, self.client._process_response(response))
+        self.assertEqual(5, self.client.process_response(response))
 
     def test_invalid_json(self):
         response = '{dodgy}'
         with self.assertRaises(exceptions.ParseResponseError):
-            self.client._process_response(response)
+            self.client.process_response(response)
 
     def test_invalid_jsonrpc(self):
         response = {'json': '2.0'}
         with self.assertRaises(ValidationError):
-            self.client._process_response(response)
+            self.client.process_response(response)
 
     def test_without_validation(self):
         config.validate = False
         response = {'json': '2.0'}
-        self.client._process_response(response)
+        self.client.process_response(response)
 
     def test_error_response(self):
         response = {'jsonrpc': '2.0', 'error': {'code': -32000, 'message': 'Not Found'}, 'id': None}
         with self.assertRaises(exceptions.ReceivedErrorResponse) as ex:
-            self.client._process_response(response)
+            self.client.process_response(response)
         self.assertEqual(ex.exception.code, -32000)
         self.assertEqual(ex.exception.message, 'Not Found')
         self.assertEqual(ex.exception.data, None)
@@ -103,7 +103,7 @@ class TestProcessResponse(TestClient):
     def test_error_response_with_data(self):
         response = {'jsonrpc': '2.0', 'error': {'code': -32000, 'message': 'Not Found', 'data': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit'}, 'id': None}
         with self.assertRaises(exceptions.ReceivedErrorResponse) as ex:
-            self.client._process_response(response)
+            self.client.process_response(response)
         self.assertEqual(ex.exception.code, -32000)
         self.assertEqual(ex.exception.message, 'Not Found')
         self.assertEqual(ex.exception.data, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit')
@@ -116,7 +116,7 @@ class TestProcessResponse(TestClient):
             'id': None
         }
         with self.assertRaises(exceptions.ReceivedErrorResponse) as ex:
-            self.client._process_response(response)
+            self.client.process_response(response)
         self.assertEqual(ex.exception.code, -32000)
         self.assertEqual(ex.exception.message, 'Not Found')
         self.assertEqual(ex.exception.data, {})
@@ -126,11 +126,11 @@ class TestProcessResponse(TestClient):
             {'jsonrpc': '2.0', 'result': 5, 'id': 1},
             {'jsonrpc': '2.0', 'result': None, 'id': 2},
             {'jsonrpc': '2.0', 'error': {'code': -32000, 'message': 'Not Found'}, 'id': 3}]
-        self.assertEqual(response, self.client._process_response(response))
+        self.assertEqual(response, self.client.process_response(response))
 
     def test_batch_string(self):
         response = ('['
             '{"jsonrpc": "2.0", "result": 5, "id": 1},'
             '{"jsonrpc": "2.0", "result": null, "id": 2},'
             '{"jsonrpc": "2.0", "error": {"code": -32000, "message": "Not Found"}, "id": 3}]')
-        self.assertEqual(json.loads(response), self.client._process_response(response))
+        self.assertEqual(json.loads(response), self.client.process_response(response))

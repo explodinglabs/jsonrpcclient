@@ -13,13 +13,13 @@ from future.utils import with_metaclass
 from . import config, ids
 
 
-def _sort_request(req):
+def sort_request(req):
     """
     Sort a JSON-RPC request dict.
 
     This has no effect other than making the request nicer to read.
 
-        >>> json.dumps(_sort_request(
+        >>> json.dumps(sort_request(
         ...     {'id': 2, 'params': [2, 3], 'method': 'add', 'jsonrpc': '2.0'}))
         '{"jsonrpc": "2.0", "method": "add", "params": [2, 3], "id": 2}'
 
@@ -104,7 +104,7 @@ class Notification(with_metaclass(_RequestClassType, dict)):
 
     def __str__(self):
         """Wrapper around request, returning a string instead of a dict"""
-        return json.dumps(_sort_request(self))
+        return json.dumps(sort_request(self))
 
 
 class Request(Notification):

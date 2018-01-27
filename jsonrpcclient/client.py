@@ -18,16 +18,16 @@ class Client(with_metaclass(ABCMeta, object)):
     """
     Protocol-agnostic base class for clients.
 
-    Subclasses should inherit and override ``_send_message``.
+    Subclasses should inherit and override ``send_message``.
 
     :param endpoint: The server address.
     """
     # Request and response logs
-    _request_log = logging.getLogger(__name__+'.request')
-    _response_log = logging.getLogger(__name__+'.response')
+    request_log = logging.getLogger(__name__+'.request')
+    response_log = logging.getLogger(__name__+'.response')
 
     #: Validate the response message
-    _validator = jsonschema.Draft4Validator(json.loads(pkgutil.get_data(
+    validator = jsonschema.Draft4Validator(json.loads(pkgutil.get_data(
         __name__, 'response-schema.json').decode('utf-8')))
 
     def __init__(self, endpoint):
@@ -46,24 +46,24 @@ class Client(with_metaclass(ABCMeta, object)):
                 .replace('{ ', '{')
         log_(log, level, message, extra=extra, fmt=fmt)
 
-    def _log_request(self, request, extra=None, fmt=None):
+    def log_request(self, request, extra=None, fmt=None):
         """
         Log a request.
 
-        Should be called by subclasses in :meth:`_send_message`, before sending.
+        Should be called by subclasses in :meth:`send_message`, before sending.
 
         :param request: The JSON-RPC request string.
         :param extra: A dict of extra fields that may be logged.
         """
         if not fmt:
             fmt = '--> %(message)s'
-        self.log_(request, extra, self._request_log, 'info', fmt)
+        self.log_(request, extra, self.request_log, 'info', fmt)
 
-    def _log_response(self, response, extra=None, fmt=None):
+    def log_response(self, response, extra=None, fmt=None):
         """
         Log a response.
 
-        Should be called by subclasses in :meth:`_send_message`, after receiving
+        Should be called by subclasses in :meth:`send_message`, after receiving
         the response.
 
         :param response: The JSON-RPC response string.
@@ -71,9 +71,9 @@ class Client(with_metaclass(ABCMeta, object)):
         """
         if not fmt:
             fmt = '<-- %(message)s'
-        self.log_(response, extra, self._response_log, 'info', fmt)
+        self.log_(response, extra, self.response_log, 'info', fmt)
 
-    def _prepare_request(self, request, **kwargs):
+    def prepare_request(self, request, **kwargs):
         """
         Prepare the request if necessary.
 
@@ -82,7 +82,7 @@ class Client(with_metaclass(ABCMeta, object)):
         """
         pass
 
-    def _process_response(self, response, log_extra=None, log_format=None):
+    def process_response(self, response, log_extra=None, log_format=None):
         """
         Process the response and return the 'result' portion if present.
 
@@ -91,7 +91,7 @@ class Client(with_metaclass(ABCMeta, object)):
         """
         if response:
             # Log the response before processing it
-            self._log_response(response, log_extra, log_format)
+            self.log_response(response, log_extra, log_format)
             # If it's a json string, parse to object
             if isinstance(response, basestring):
                 try:
@@ -101,7 +101,7 @@ class Client(with_metaclass(ABCMeta, object)):
             # Validate the response against the Response schema (raises
             # jsonschema.ValidationError if invalid)
             if config.validate:
-                self._validator.validate(response)
+                self.validator.validate(response)
             if isinstance(response, list):
                 # Batch request - just return the whole response
                 return response
@@ -118,7 +118,7 @@ class Client(with_metaclass(ABCMeta, object)):
         return None
 
     @abstractmethod
-    def _send_message(self, request, **kwargs):
+    def send_message(self, request, **kwargs):
         """
         Transport the request to the server.
 
@@ -163,12 +163,12 @@ class Client(with_metaclass(ABCMeta, object)):
         request = PreparedRequest(request)
         # Prepare request, subclasses can override to prepare the request, and
         # set the extra details to include in the log entry
-        self._prepare_request(request, **kwargs)
+        self.prepare_request(request, **kwargs)
         # Log the request
-        self._log_request(request, request.log_extra, request.log_format)
+        self.log_request(request, request.log_extra, request.log_format)
         # Call abstract method to transport the message, returning either the
         # processed response, or a future which promises to process eventually
-        return self._send_message(request, **kwargs)
+        return self.send_message(request, **kwargs)
 
     def notify(self, method_name, *args, **kwargs):
         """
