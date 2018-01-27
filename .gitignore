@@ -1,8 +1,7 @@
-/.project
-/.pydevproject
-/.settings/
-__pycache__
-/.coverage
-/.tox
-/dist
-*egg-info/
+.gitignore
+.coverage
+.coveralls.yml
+.tox
+.travis.yml
+*egg-info
+dist
