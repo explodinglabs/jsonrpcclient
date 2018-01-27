@@ -9,13 +9,13 @@ from jsonrpcclient.http_client import HTTPClient
 
 
 logo = """   ""
-   88 ,adPPYba,  ,adPPYba,  8b,dPPYba,    8b,dPPYba, 8b,dPPYba,   ,adPPYba,
-   88 I8[    "" a8"     "8a 88P'   `"8a   88P'   "Y8 88P'    "8a a8"     ""
-   88  `"Y8ba,  8b       d8 88       88   88         88       d8 8b
-   88 aa    ]8I "8a,   ,a8" 88       88   88         88b,   ,a8" "8a,   ,aa
-   88 `"YbbdP"'  `"YbbdP"'  88       88   88         88`YbbdP"'   `"Ybbd8"'
-  ,88                                                88
-888P"        %(prog)s, version %(version)s            88"""
+   88 ,adPPYba,  ,adPPYba,  8b,dPPYba,  8b,dPPYba, 8b,dPPYba,   ,adPPYba,
+   88 I8[    "" a8"     "8a 88P'   `"8a 88P'   "Y8 88P'    "8a a8"     ""
+   88  `"Y8ba,  8b       d8 88       88 88         88       d8 8b
+   88 aa    ]8I "8a,   ,a8" 88       88 88         88b,   ,a8" "8a,   ,aa
+   88 `"YbbdP"'  `"YbbdP"'  88       88 88         88`YbbdP"'   `"Ybbd8"'
+  ,88                                              88
+888P"        %(prog)s, version %(version)s          88"""
 version = pkg_resources.require('jsonrpcclient')[0].version
 
 
