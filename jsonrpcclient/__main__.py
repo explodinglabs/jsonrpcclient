@@ -1,4 +1,5 @@
 #/usr/bin/env python
+import sys
 import pkg_resources
 
 import click
@@ -6,6 +7,7 @@ import click
 from jsonrpcclient import request, notify
 from jsonrpcclient.request import Request, Notification
 from jsonrpcclient.http_client import HTTPClient
+from jsonrpcclient.exceptions import JsonRpcClientError
 
 
 version = pkg_resources.require('jsonrpcclient')[0].version
@@ -22,6 +24,7 @@ def main(context, method, request_type, id, send):
     """
     Create a JSON-RPC request.
     """
+    exit_status = 0
     # Extract the jsonrpc arguments
     positional = [a for a in context.args if '=' not in a]
     named = {a.split('=')[0]: a.split('=')[1] for a in context.args if '=' in a}
@@ -32,11 +35,18 @@ def main(context, method, request_type, id, send):
         req = Request(method, request_id=id, *positional, **named)
     # Sending?
     if send:
-        response = HTTPClient(send).send(req)
-        click.echo(response)
+        client = HTTPClient(send)
+        try:
+            response = client.send(req)
+        except JsonRpcClientError as e:
+            click.echo(str(e), err=True)
+            exit_status = 1
+        else:
+            click.echo(response)
     # Otherwise, simply output the JSON-RPC request.
     else:
         click.echo(str(req))
+    sys.exit(exit_status)
 
 
 if __name__ == '__main__':
