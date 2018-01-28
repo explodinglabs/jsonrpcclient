@@ -8,14 +8,6 @@ from jsonrpcclient.request import Request, Notification
 from jsonrpcclient.http_client import HTTPClient
 
 
-logo = """   ""
-   88 ,adPPYba,  ,adPPYba,  8b,dPPYba,  8b,dPPYba, 8b,dPPYba,   ,adPPYba,
-   88 I8[    "" a8"     "8a 88P'   `"8a 88P'   "Y8 88P'    "8a a8"     ""
-   88  `"Y8ba,  8b       d8 88       88 88         88       d8 8b
-   88 aa    ]8I "8a,   ,a8" 88       88 88         88b,   ,a8" "8a,   ,aa
-   88 `"YbbdP"'  `"YbbdP"'  88       88 88         88`YbbdP"'   `"Ybbd8"'
-  ,88                                              88
-888P"        %(prog)s, version %(version)s          88"""
 version = pkg_resources.require('jsonrpcclient')[0].version
 
 
@@ -23,7 +15,7 @@ version = pkg_resources.require('jsonrpcclient')[0].version
 @click.option('--id', default=1, help='Set the id for a request.')
 @click.option('--notify', 'request_type', flag_value='notify', help='Indicates that no response is expected.')
 @click.option('--send', help='URL to send request to. (requires the Requests library)')
-@click.version_option(prog_name='jsonrpcclient', version=version, message=logo)
+@click.version_option(prog_name='jsonrpcclient', version=version)
 @click.argument('method', required=True, metavar='METHOD [PARAMS]...')
 @click.pass_context
 def main(context, method, request_type, id, send):
