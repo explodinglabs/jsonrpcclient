@@ -53,7 +53,7 @@ class HTTPClient(Client):
         # user configures the log format
         request.log_extra = {'http_headers': request.prepped.headers}
 
-    def send_message(self, request, stream=False, timeout=None, verify=True,
+    def send_message(self, request, stream=None, timeout=None, verify=None,
                       cert=None, proxies=None, **kwargs):
         """
         Transport the message to the server and return the response.
@@ -67,6 +67,11 @@ class HTTPClient(Client):
             Raised by the requests module in the event of a communications
             error.
         """
+        # Set default values
+        if stream is None:
+            stream = False
+        if verify is None:
+            verify = True
         # Keep last request - don't use, will be removed in next major release
         self.last_request = request
         # Send the message with Requests, passing any final config options
