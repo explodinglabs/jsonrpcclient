@@ -34,8 +34,7 @@ class HTTPClient(Client):
         self.last_request = None
         self.last_response = None
 
-    def prepare_request(self, request, headers=None, files=None, params=None,
-                         auth=None, cookies=None, **kwargs):
+    def prepare_request(self, request, **kwargs):
         """
         Prepare the request for sending.
 
@@ -45,39 +44,29 @@ class HTTPClient(Client):
         """
         # Use the Requests library to prepare the request based on the session
         # configuration
-        req = Request(method='POST', url=self.endpoint, data=request,
-                      headers=headers, files=files, params=params, auth=auth,
-                      cookies=cookies)
+        req = Request(method='POST', url=self.endpoint, data=request, **kwargs)
         request.prepped = self.session.prepare_request(req)
         # Include the http headers in log extra. Will not have effect unless
         # user configures the log format
         request.log_extra = {'http_headers': request.prepped.headers}
 
-    def send_message(self, request, stream=None, timeout=None, verify=None,
-                      cert=None, proxies=None, **kwargs):
+    def send_message(self, request, **kwargs):
         """
         Transport the message to the server and return the response.
 
         :param request: The JSON-RPC request string.
         :param kwargs: Passed on to the requests lib's send function, for last
-            minute configuration
+            minute configuration (Optional)
         :return: The JSON-RPC response.
         :rtype: A string for requests, None for notifications.
         :raise requests.exceptions.RequestException:
             Raised by the requests module in the event of a communications
             error.
         """
-        # Set default values
-        if stream is None:
-            stream = False
-        if verify is None:
-            verify = True
         # Keep last request - don't use, will be removed in next major release
         self.last_request = request
         # Send the message with Requests, passing any final config options
-        response = self.session.send(
-            request.prepped, stream=stream, timeout=timeout, verify=verify,
-            cert=cert, proxies=proxies)
+        response = self.session.send(request.prepped, **kwargs)
         # Keep last response - don't use, will be removed in next major release
         self.last_response = response
         # Give some extra information to include in the response log entry

@@ -132,5 +132,5 @@ class TestHTTPClientSendMessage(TestCase):
         client.session.verify = 'ca-cert'
         request = PreparedRequest(Request('go'))
         client.prepare_request(request)
-        with self.assertRaises(requests.exceptions.RequestException):
+        with self.assertRaises(OSError): # Invalid certificate
             client.send_message(request)
