@@ -29,6 +29,8 @@ class HTTPClient(Client):
         # Make use of Requests' sessions feature
         self.session = Session()
         self.session.headers.update(self.DEFAULT_HEADERS)
+        # Set default to verify SSL CERT
+        self.session.verify = True
         # Keep last request and response - don't use, will be removed in next
         # major release
         self.last_request = None
@@ -71,7 +73,7 @@ class HTTPClient(Client):
         if stream is None:
             stream = False
         if verify is None:
-            verify = True
+            verify = self.session.verify
         # Keep last request - don't use, will be removed in next major release
         self.last_request = request
         # Send the message with Requests, passing any final config options
