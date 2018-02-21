@@ -163,7 +163,7 @@ class Client(with_metaclass(ABCMeta, object)):
         request = PreparedRequest(request)
         # Prepare request, subclasses can override to prepare the request, and
         # set the extra details to include in the log entry
-        self.prepare_request(request, **kwargs)
+        self.prepare_request(request)
         # Log the request
         self.log_request(request, request.log_extra, request.log_format)
         # Call abstract method to transport the message, returning either the
