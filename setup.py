@@ -1,12 +1,11 @@
 """setup.py"""
-
 from codecs import open as codecs_open
 from setuptools import setup
 
 with codecs_open('README.md', 'r', 'utf-8') as f:
-    __README = f.read()
+    README = f.read()
 with codecs_open('HISTORY.md', 'r', 'utf-8') as f:
-    __HISTORY = f.read()
+    HISTORY = f.read()
 
 setup(
     author='Beau Barker',
@@ -33,7 +32,8 @@ setup(
     include_package_data=True,
     install_requires=['future==0.16.0', 'jsonschema==2.6.0', 'click==6.7'],
     license='MIT',
-    long_description=__README+'\n\n'+__HISTORY,
+    long_description=README+'\n\n'+HISTORY,
+    long_description_content_type='text/markdown',
     name='jsonrpcclient',
     package_data={'jsonrpcclient': ['response-schema.json']},
     packages=['jsonrpcclient'],
