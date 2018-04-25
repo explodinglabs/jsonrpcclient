@@ -2,6 +2,8 @@
 
 # jsonrpcclient
 
+[![Join the chat at https://gitter.im/bcb/jsonrpcclient](https://badges.gitter.im/bcb/jsonrpcclient.svg)](https://gitter.im/bcb/jsonrpcclient?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Send [JSON-RPC](http://www.jsonrpc.org/) requests in Python 2.7 and 3.3+.
 
 ```sh
