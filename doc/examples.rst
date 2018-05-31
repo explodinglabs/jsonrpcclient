@@ -17,7 +17,7 @@ Requests
 
 .. code-block:: sh
 
-    $ pip install 'jsonrpcclient[requests]'
+    $ pip install "jsonrpcclient[requests]"
 
 .. literalinclude:: ../examples/http_client.py
 

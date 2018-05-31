@@ -14,7 +14,7 @@ options<examples>`):
 
 .. sourcecode:: sh
 
-    $ pip install 'jsonrpcclient[requests]'
+    $ pip install "jsonrpcclient[requests]"
 
 Sending a request
 =================
