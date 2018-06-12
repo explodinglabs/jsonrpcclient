@@ -120,6 +120,12 @@ Configuration
 
 .. automodule:: jsonrpcclient.config
 
+To disable the package's logging:
+
+    import logging
+    logging.getLogger("jsonrpcclient.client.request").setLevel(logging.WARNING)
+    logging.getLogger("jsonrpcclient.client.response").setLevel(logging.WARNING)
+
 Configuring the Requests library
 --------------------------------
 
