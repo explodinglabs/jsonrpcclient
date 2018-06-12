@@ -1,3 +1,7 @@
+## 2.6.0 (Jun 13, 2018)
+- Add command-line interface, see `jsonrpc --help` (#62)
+- Fix configuring requests lib (#65)
+
 ## 2.5.2 (Nov 29, 2017)
 - Ignore empty error bodies
 
