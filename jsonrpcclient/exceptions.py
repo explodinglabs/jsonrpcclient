@@ -15,16 +15,18 @@ To handle them, use a try-block when calling ``notify`` or ``request``::
         print(str(e))
 """
 
+
 class JsonRpcClientError(Exception):
     """Base class for the other exceptions."""
+
     pass
 
 
 class ParseResponseError(JsonRpcClientError):
     """The response was not valid JSON."""
+
     def __init__(self):
-        super(ParseResponseError, self).__init__(
-            'The response was not valid JSON')
+        super(ParseResponseError, self).__init__("The response was not valid JSON")
 
 
 class ReceivedErrorResponse(JsonRpcClientError):

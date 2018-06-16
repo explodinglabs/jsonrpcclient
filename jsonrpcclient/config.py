@@ -8,7 +8,7 @@ Import this module to to configure, for example::
 """
 #: Configure the ``id`` part of requests. Can be "decimal", "hex", "random" or
 #: "uuid".
-ids = 'decimal'
+ids = "decimal"
 
 #: Validate responses against the JSON-RPC schema. Disable to speed up
 #: processing.

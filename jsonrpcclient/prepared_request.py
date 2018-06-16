@@ -12,11 +12,13 @@ class PreparedRequest(str):
 
     Converts some non-string requests to string.
     """
+
     def __new__(cls, request):
         # Convert a list of strings, to one string
-        if isinstance(request, list) and all(isinstance(i, basestring) for i in
-                                             request):
-            request = '[{}]'.format(', '.join(request))
+        if isinstance(request, list) and all(
+            isinstance(i, basestring) for i in request
+        ):
+            request = "[{}]".format(", ".join(request))
         # Convert a json-serializable object (dict or list) to a string
         if not isinstance(request, basestring):
             request = json.dumps(request)

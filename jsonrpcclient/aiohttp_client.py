@@ -10,6 +10,7 @@ from .async_client import AsyncClient
 
 class aiohttpClient(AsyncClient):
     """TODO: rename aiohttpClient to AiohttpClient"""
+
     def __init__(self, session, endpoint):
         super(aiohttpClient, self).__init__(endpoint)
         self.session = session

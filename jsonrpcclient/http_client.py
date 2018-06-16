@@ -16,8 +16,7 @@ class HTTPClient(Client):
     """Defines an HTTP client"""
 
     # The default HTTP header
-    DEFAULT_HEADERS = {
-        'Content-Type': 'application/json', 'Accept': 'application/json'}
+    DEFAULT_HEADERS = {"Content-Type": "application/json", "Accept": "application/json"}
 
     def __init__(self, endpoint):
         """
@@ -44,11 +43,11 @@ class HTTPClient(Client):
         """
         # Use the Requests library to prepare the request based on the session
         # configuration
-        req = Request(method='POST', url=self.endpoint, data=request, **kwargs)
+        req = Request(method="POST", url=self.endpoint, data=request, **kwargs)
         request.prepped = self.session.prepare_request(req)
         # Include the http headers in log extra. Will not have effect unless
         # user configures the log format
-        request.log_extra = {'http_headers': request.prepped.headers}
+        request.log_extra = {"http_headers": request.prepped.headers}
 
     def send_message(self, request, **kwargs):
         """
@@ -70,7 +69,12 @@ class HTTPClient(Client):
         # Keep last response - don't use, will be removed in next major release
         self.last_response = response
         # Give some extra information to include in the response log entry
-        return self.process_response(response.text, log_extra={
-            'http_code': response.status_code, 'http_reason': response.reason,
-            'http_headers': response.headers}, \
-            log_format='<-- %(message)s (%(http_code)s %(http_reason)s)')
+        return self.process_response(
+            response.text,
+            log_extra={
+                "http_code": response.status_code,
+                "http_reason": response.reason,
+                "http_headers": response.headers,
+            },
+            log_format="<-- %(message)s (%(http_code)s %(http_reason)s)",
+        )

@@ -28,12 +28,10 @@ class TornadoClient(Client):
     :param async_http_client_class: Tornado asynchronous HTTP client class.
     :param kwargs: Keyword arguments to pass to the client initialiser.
     """
-    DEFAULT_HEADERS = {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'}
 
-    def __init__(
-            self, endpoint, async_http_client_class=AsyncHTTPClient, **kwargs):
+    DEFAULT_HEADERS = {"Content-Type": "application/json", "Accept": "application/json"}
+
+    def __init__(self, endpoint, async_http_client_class=AsyncHTTPClient, **kwargs):
         super(TornadoClient, self).__init__(endpoint)
         self.http_client = async_http_client_class(**kwargs)
 
@@ -42,9 +40,16 @@ class TornadoClient(Client):
         if response.error:
             future.set_exception(response.error)
         else:
-            future.set_result(self.process_response(response.body.decode(), {
-                'http_code': response.code, 'http_reason': response.reason,
-                'http_headers' : response.headers}))
+            future.set_result(
+                self.process_response(
+                    response.body.decode(),
+                    {
+                        "http_code": response.code,
+                        "http_reason": response.reason,
+                        "http_headers": response.headers,
+                    },
+                )
+            )
 
     def send_message(self, request, **kwargs):
         """
@@ -55,10 +60,15 @@ class TornadoClient(Client):
         :return: The response (a string for requests, None for notifications).
         """
         headers = dict(self.DEFAULT_HEADERS)
-        headers.update(kwargs.pop('headers', {}))
+        headers.update(kwargs.pop("headers", {}))
 
         future = Future()
         self.http_client.fetch(
-            self.endpoint, method='POST', body=request, headers=headers,
-            callback=partial(self._request_sent, future), **kwargs)
+            self.endpoint,
+            method="POST",
+            body=request,
+            headers=headers,
+            callback=partial(self._request_sent, future),
+            **kwargs
+        )
         return future

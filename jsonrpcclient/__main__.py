@@ -1,4 +1,4 @@
-#/usr/bin/env python
+# /usr/bin/env python
 import sys
 import pkg_resources
 
@@ -10,15 +10,22 @@ from jsonrpcclient.http_client import HTTPClient
 from jsonrpcclient.exceptions import JsonRpcClientError
 
 
-version = pkg_resources.require('jsonrpcclient')[0].version
+version = pkg_resources.require("jsonrpcclient")[0].version
 
 
-@click.command(context_settings={'ignore_unknown_options': True, 'allow_extra_args': True})
-@click.option('--id', default=1, help='Set the id for a request.')
-@click.option('--notify', 'request_type', flag_value='notify', help='Indicates that no response is expected.')
-@click.option('--send', help='URL to send request to. (requires the Requests library)')
-@click.version_option(prog_name='jsonrpcclient', version=version)
-@click.argument('method', required=True, metavar='METHOD [PARAMS]...')
+@click.command(
+    context_settings={"ignore_unknown_options": True, "allow_extra_args": True}
+)
+@click.option("--id", default=1, help="Set the id for a request.")
+@click.option(
+    "--notify",
+    "request_type",
+    flag_value="notify",
+    help="Indicates that no response is expected.",
+)
+@click.option("--send", help="URL to send request to. (requires the Requests library)")
+@click.version_option(prog_name="jsonrpcclient", version=version)
+@click.argument("method", required=True, metavar="METHOD [PARAMS]...")
 @click.pass_context
 def main(context, method, request_type, id, send):
     """
@@ -26,10 +33,10 @@ def main(context, method, request_type, id, send):
     """
     exit_status = 0
     # Extract the jsonrpc arguments
-    positional = [a for a in context.args if '=' not in a]
-    named = {a.split('=')[0]: a.split('=')[1] for a in context.args if '=' in a}
+    positional = [a for a in context.args if "=" not in a]
+    named = {a.split("=")[0]: a.split("=")[1] for a in context.args if "=" in a}
     # Create the request
-    if request_type == 'notify':
+    if request_type == "notify":
         req = Notification(method, *positional, **named)
     else:
         req = Request(method, request_id=id, *positional, **named)
@@ -49,5 +56,5 @@ def main(context, method, request_type, id, send):
     sys.exit(exit_status)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

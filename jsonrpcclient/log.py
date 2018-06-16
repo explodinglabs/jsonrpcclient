@@ -14,6 +14,6 @@ def configure_logger(logger, fmt):
 
 def log_(logger, level, message, *args, **kwargs):
     """Configure before logging."""
-    fmt = kwargs.pop('fmt', '%(message)s')
+    fmt = kwargs.pop("fmt", "%(message)s")
     configure_logger(logger, fmt)
     getattr(logger, level)(message, *args, **kwargs)

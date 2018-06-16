@@ -22,13 +22,15 @@ class Client(with_metaclass(ABCMeta, object)):
 
     :param endpoint: The server address.
     """
+
     # Request and response logs
-    request_log = logging.getLogger(__name__+'.request')
-    response_log = logging.getLogger(__name__+'.response')
+    request_log = logging.getLogger(__name__ + ".request")
+    response_log = logging.getLogger(__name__ + ".response")
 
     #: Validate the response message
-    validator = jsonschema.Draft4Validator(json.loads(pkgutil.get_data(
-        __name__, 'response-schema.json').decode('utf-8')))
+    validator = jsonschema.Draft4Validator(
+        json.loads(pkgutil.get_data(__name__, "response-schema.json").decode("utf-8"))
+    )
 
     def __init__(self, endpoint):
         #: Holds the server address
@@ -39,11 +41,10 @@ class Client(with_metaclass(ABCMeta, object)):
         if extra is None:
             extra = {}
         # Add the endpoint to the log entry
-        extra.update({'endpoint': self.endpoint})
+        extra.update({"endpoint": self.endpoint})
         # Clean up the message for logging
         if isinstance(message, basestring):
-            message = message.replace("\n", '').replace('  ', ' ') \
-                .replace('{ ', '{')
+            message = message.replace("\n", "").replace("  ", " ").replace("{ ", "{")
         log_(log, level, message, extra=extra, fmt=fmt)
 
     def log_request(self, request, extra=None, fmt=None):
@@ -56,8 +57,8 @@ class Client(with_metaclass(ABCMeta, object)):
         :param extra: A dict of extra fields that may be logged.
         """
         if not fmt:
-            fmt = '--> %(message)s'
-        self.log_(request, extra, self.request_log, 'info', fmt)
+            fmt = "--> %(message)s"
+        self.log_(request, extra, self.request_log, "info", fmt)
 
     def log_response(self, response, extra=None, fmt=None):
         """
@@ -70,8 +71,8 @@ class Client(with_metaclass(ABCMeta, object)):
         :param extra: A dict of extra fields that may be logged.
         """
         if not fmt:
-            fmt = '<-- %(message)s'
-        self.log_(response, extra, self.response_log, 'info', fmt)
+            fmt = "<-- %(message)s"
+        self.log_(response, extra, self.response_log, "info", fmt)
 
     def prepare_request(self, request, **kwargs):
         """
@@ -107,13 +108,14 @@ class Client(with_metaclass(ABCMeta, object)):
                 return response
             else:
                 # If the response was "error", raise to ensure it's handled
-                if 'error' in response and response['error'] is not None:
+                if "error" in response and response["error"] is not None:
                     raise exceptions.ReceivedErrorResponse(
-                        response['error'].get('code'),
-                        response['error'].get('message'),
-                        response['error'].get('data'))
+                        response["error"].get("code"),
+                        response["error"].get("message"),
+                        response["error"].get("data"),
+                    )
                 # All was successful, return just the result part
-                return response.get('result')
+                return response.get("result")
         # No response was given
         return None
 
@@ -208,7 +210,9 @@ class Client(with_metaclass(ABCMeta, object)):
 
         That's the same as saying ``client.request('cube', 3)``.
         """
+
         def attr_handler(*args, **kwargs):
             """Call self.request from here"""
             return self.request(name, *args, **kwargs)
+
         return attr_handler

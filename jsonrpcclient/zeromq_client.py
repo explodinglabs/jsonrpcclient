@@ -17,6 +17,7 @@ class ZeroMQClient(Client):
     :param endpoint: The server address.
     :param socket_type: The zeromq `socket type`_. Default is *zmq.REQ*.
     """
+
     def __init__(self, endpoint, socket_type=zmq.REQ):
         super(ZeroMQClient, self).__init__(endpoint)
         self.context = zmq.Context()

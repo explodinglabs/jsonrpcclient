@@ -20,6 +20,7 @@ def decimal(start=1):
     """
     return itertools.count(start)
 
+
 def hexadecimal(start=1):
     """
     Incremental hexadecimal numbers.
@@ -29,11 +30,11 @@ def hexadecimal(start=1):
     :param start: The first value to start with.
     """
     while True:
-        yield '%x' % start
+        yield "%x" % start
         start += 1
 
 
-def random(length=8, chars=digits+ascii_lowercase):
+def random(length=8, chars=digits + ascii_lowercase):
     """
     A random string.
 
@@ -44,7 +45,7 @@ def random(length=8, chars=digits+ascii_lowercase):
     :param chars: The characters to randomly choose from.
     """
     while True:
-        yield ''.join([choice(chars) for _ in range(length)])
+        yield "".join([choice(chars) for _ in range(length)])
 
 
 def uuid():
@@ -66,13 +67,13 @@ def from_config(setting):
     :param setting: The configuration setting describing the generator to use.
     """
     # Create iterator based on config setting
-    if setting == 'decimal':
+    if setting == "decimal":
         return decimal()
-    elif setting == 'hex':
+    elif setting == "hex":
         return hexadecimal()
-    elif setting == 'random':
+    elif setting == "random":
         return random()
-    elif setting == 'uuid':
+    elif setting == "uuid":
         return uuid()
     else:
-        raise ValueError('Unknown ids config setting')
+        raise ValueError("Unknown ids config setting")

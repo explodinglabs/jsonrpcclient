@@ -26,9 +26,8 @@ def sort_request(req):
     :param req: JSON-RPC request in dict format.
     :return: The same request, nicely sorted.
     """
-    sort_order = ['jsonrpc', 'method', 'params', 'id']
-    return OrderedDict(sorted(req.items(), key=lambda k: sort_order.index(
-        k[0])))
+    sort_order = ["jsonrpc", "method", "params", "id"]
+    return OrderedDict(sorted(req.items(), key=lambda k: sort_order.index(k[0])))
 
 
 class _RequestClassType(type):
@@ -47,9 +46,11 @@ class _RequestClassType(type):
         That's the same as saying ``Request('cat')``. Technique is
         explained here: http://code.activestate.com/recipes/307618/
         """
+
         def attr_handler(*args, **kwargs):
             """Return the request using the specified method name."""
             return cls(name, *args, **kwargs)
+
         return attr_handler
 
 
@@ -81,9 +82,10 @@ class Notification(with_metaclass(_RequestClassType, dict)):
     :param kwargs: Keyword arguments.
     :returns: The JSON-RPC request in dictionary form.
     """
+
     def __init__(self, method, *args, **kwargs):
         # Start the basic request
-        self.update(jsonrpc='2.0', method=method)
+        self.update(jsonrpc="2.0", method=method)
         # Get the 'params' part
         # Merge the positional and keyword arguments into one list
         params = list()
@@ -96,8 +98,9 @@ class Notification(with_metaclass(_RequestClassType, dict)):
             # dict). If there's only one list or dict in the params list, take
             # it out of the enclosing list, ie. [] instead of [[]], {} instead
             # of [{}].
-            if len(params) == 1 and (isinstance(params[0], dict) or \
-                    isinstance(params[0], list)):
+            if len(params) == 1 and (
+                isinstance(params[0], dict) or isinstance(params[0], list)
+            ):
                 params = params[0]
             # Add the params to the request
             self.update(params=params)
@@ -121,13 +124,14 @@ class Request(Notification):
         to force the ``id`` to use.
     :returns: The JSON-RPC request in dictionary form.
     """
+
     id_iterator = None
 
     def __init__(self, method, *args, **kwargs):
         # If 'request_id' is passed, use the specified id
-        if 'request_id' in kwargs:
-            _id = kwargs.pop('request_id', None)
-        else: # Get the next id from the iterator
+        if "request_id" in kwargs:
+            _id = kwargs.pop("request_id", None)
+        else:  # Get the next id from the iterator
             # Create the iterator if not yet created
             if Request.id_iterator is None:
                 Request.id_iterator = ids.from_config(config.ids)
