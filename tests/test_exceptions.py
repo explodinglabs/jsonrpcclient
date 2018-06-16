@@ -10,4 +10,4 @@ class TestExceptions(TestCase):
 
     def test_received_error_response(self):
         with self.assertRaises(exceptions.ReceivedErrorResponse):
-            raise exceptions.ReceivedErrorResponse(1, 'foo', 'bar')
+            raise exceptions.ReceivedErrorResponse(1, "foo", "bar")

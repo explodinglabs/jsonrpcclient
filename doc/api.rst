@@ -154,3 +154,11 @@ You can also configure some Requests options when calling
 As in the Requests library, any dictionaries passed to ``send`` in named
 arguments will be merged with the session-level values that are set. The
 method-level parameters override session parameters.
+
+Testing
+=======
+
+.. code-block:: python
+
+    pip install "jsonrpcclient[unittest]"
+    python -m unittest discover
