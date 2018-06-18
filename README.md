@@ -1,5 +1,5 @@
-![Coverage Status](https://coveralls.io/repos/github/bcb/jsonrpcclient/badge.svg?branch=master)
 ![PyPI](https://img.shields.io/pypi/v/jsonrpcclient.svg)
+![Coverage Status](https://coveralls.io/repos/github/bcb/jsonrpcclient/badge.svg?branch=master)
 
 # jsonrpcclient
 
