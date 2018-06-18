@@ -1,3 +1,5 @@
+# jsonrpcclient Change Log
+
 ## 2.6.0 (Jun 13, 2018)
 - Add command-line interface, see `jsonrpc --help` (#62)
 - Fix configuring requests lib (#65)

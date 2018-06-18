@@ -4,8 +4,8 @@ from setuptools import setup
 
 with codecs_open('README.md', 'r', 'utf-8') as f:
     README = f.read()
-with codecs_open('HISTORY.md', 'r', 'utf-8') as f:
-    HISTORY = f.read()
+with codecs_open('CHANGELOG.md', 'r', 'utf-8') as f:
+    CHANGELOG = f.read()
 
 setup(
     author='Beau Barker',
@@ -32,7 +32,7 @@ setup(
     include_package_data=True,
     install_requires=['future==0.16.0', 'jsonschema==2.6.0', 'click==6.7'],
     license='MIT',
-    long_description=README+'\n\n'+HISTORY,
+    long_description=README,
     long_description_content_type='text/markdown',
     name='jsonrpcclient',
     package_data={'jsonrpcclient': ['response-schema.json']},
