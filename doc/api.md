@@ -2,6 +2,8 @@
 
 # jsonrpcclient Guide
 
+This library allows you to call remote procedures.
+
 ## Installation
 
 Install the package with the *Requests* library (alternatively, see [other
