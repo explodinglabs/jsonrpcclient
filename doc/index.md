@@ -8,7 +8,7 @@ $ pip install "jsonrpcclient[requests]"
 
 ```python
 >>> import jsonrpcclient
->>> jsonrpcclient.request('http://cats.com', 'speak')
+>>> jsonrpcclient.request("http://cats.com", "speak")
 --> {"jsonrpc": "2.0", "method": "speak", "id": 1}
 <-- {"jsonrpc": "2.0", "result": "meow", "id": 1} (200 OK)
 'meow'

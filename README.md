@@ -11,7 +11,7 @@ pip install "jsonrpcclient[requests]"
 
 ```python
 import jsonrpcclient
-jsonrpcclient.request('http://cats.com', 'speak')
+jsonrpcclient.request("http://cats.com", "speak")
 ```
 
 Full documentation is at [jsonrpcclient.readthedocs.io](https://jsonrpcclient.readthedocs.io/).

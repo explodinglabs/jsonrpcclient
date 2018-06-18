@@ -31,6 +31,8 @@ Use `notify` instead of `request` to signify that no response is required:
 
 ```python
 >>> jsonrpcclient.notify('http://cats.com', 'speak')
+--> {"jsonrpc": "2.0", "method": "speak"}
+<--
 >>>
 ```
 
