@@ -4,8 +4,6 @@ from setuptools import setup
 
 with codecs_open('README.md', 'r', 'utf-8') as f:
     README = f.read()
-with codecs_open('CHANGELOG.md', 'r', 'utf-8') as f:
-    CHANGELOG = f.read()
 
 setup(
     author='Beau Barker',
