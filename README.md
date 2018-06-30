@@ -16,11 +16,11 @@ jsonrpcclient.request("http://cats.com", "speak")
 
 Full documentation is at [jsonrpcclient.readthedocs.io](https://jsonrpcclient.readthedocs.io/).
 
-See also: [jsonrpcserver](https://github.com/bcb/jsonrpcserver)
-
 ## Testing
 
 ```sh
 pip install "jsonrpcclient[unittest]"
 python -m unittest discover
 ```
+
+See also: [jsonrpcserver](https://github.com/bcb/jsonrpcserver)
