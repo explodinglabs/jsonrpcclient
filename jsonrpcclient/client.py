@@ -36,7 +36,7 @@ class Client(with_metaclass(ABCMeta, object)):
         #: Holds the server address
         self.endpoint = endpoint
 
-    def log_(self, message, extra, log, level, fmt):
+    def log_(self, message, extra, log, level, fmt, trim):
         """Log a request or response"""
         if extra is None:
             extra = {}
@@ -45,9 +45,9 @@ class Client(with_metaclass(ABCMeta, object)):
         # Clean up the message for logging
         if isinstance(message, basestring):
             message = message.replace("\n", "").replace("  ", " ").replace("{ ", "{")
-        log_(log, level, message, extra=extra, fmt=fmt)
+        log_(log, level, message, extra=extra, fmt=fmt, trim=trim)
 
-    def log_request(self, request, extra=None, fmt=None):
+    def log_request(self, request, extra=None, fmt=None, trim=False):
         """
         Log a request.
 
@@ -58,9 +58,9 @@ class Client(with_metaclass(ABCMeta, object)):
         """
         if not fmt:
             fmt = "--> %(message)s"
-        self.log_(request, extra, self.request_log, "info", fmt)
+        self.log_(request, extra, self.request_log, "info", fmt, trim)
 
-    def log_response(self, response, extra=None, fmt=None):
+    def log_response(self, response, extra=None, fmt=None, trim=False):
         """
         Log a response.
 
@@ -72,7 +72,7 @@ class Client(with_metaclass(ABCMeta, object)):
         """
         if not fmt:
             fmt = "<-- %(message)s"
-        self.log_(response, extra, self.response_log, "info", fmt)
+        self.log_(response, extra, self.response_log, "info", fmt, trim)
 
     def prepare_request(self, request, **kwargs):
         """
@@ -92,7 +92,7 @@ class Client(with_metaclass(ABCMeta, object)):
         """
         if response:
             # Log the response before processing it
-            self.log_response(response, log_extra, log_format)
+            self.log_response(response, log_extra, log_format, config.trim_log_values)
             # If it's a json string, parse to object
             if isinstance(response, basestring):
                 try:
@@ -167,7 +167,7 @@ class Client(with_metaclass(ABCMeta, object)):
         # set the extra details to include in the log entry
         self.prepare_request(request)
         # Log the request
-        self.log_request(request, request.log_extra, request.log_format)
+        self.log_request(request, request.log_extra, request.log_format, config.trim_log_values)
         # Call abstract method to transport the message, returning either the
         # processed response, or a future which promises to process eventually
         return self.send_message(request, **kwargs)

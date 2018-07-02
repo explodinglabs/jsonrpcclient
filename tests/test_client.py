@@ -49,6 +49,52 @@ class TestLogging(TestClient):
             )
         )
 
+    def test_request_trim(self):
+        blahs = "blah" * 100
+        with LogCapture() as capture:
+            self.client.log_request('{"jsonrpc": "2.0", "method": "go", "params": {"blah": "%s"}}' % (blahs,), trim=True)
+        capture.check(
+            (
+                "jsonrpcclient.client.request",
+                "INFO",
+                '{"jsonrpc": "2.0", "method": "go", "params": {"blah": "blahblahbl...ahblahblah"}}',
+            )
+        )
+
+    def test_response_trim(self):
+        blahs = "blah" * 100
+        with LogCapture() as capture:
+            self.client.log_response('{"jsonrpc": "2.0", "result": "%s", "id": 1}' % (blahs,), trim=True)
+        capture.check(
+            (
+                "jsonrpcclient.client.response",
+                "INFO",
+                '{"jsonrpc": "2.0", "result": "blahblahbl...ahblahblah", "id": 1}',
+            )
+        )
+
+    def test_trim_message(self):
+        import json
+        from jsonrpcclient.log import trim_message
+
+        # test string abbreviation
+        message = trim_message("blah" * 100)
+        self.assertIn('...', message)
+        # test list abbreviation
+        message = trim_message(json.dumps({"list": [0] * 100}))
+        self.assertIn('...', message)
+        # test nested abbreviation
+        message = trim_message(json.dumps({
+            "obj": {
+                "list": [0] * 100,
+                "string": "blah" * 100,
+                "obj2": {
+                    "string2": "blah" * 100,
+                }
+            }
+        }))
+        self.assertIn('...', json.loads(message)['obj']['obj2']['string2'])
+
 
 class TestSend(TestClient):
     @patch("jsonrpcclient.client.Client.request_log")
