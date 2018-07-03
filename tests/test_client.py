@@ -11,25 +11,16 @@ from jsonrpcclient.client import Client
 
 
 class DummyClient(Client):
-    """A dummy class for testing the abstract Client class"""
+    """A dummy client for testing the abstract Client class"""
 
     def send_message(self, request):
         return 15
 
 
-class TestClient(TestCase):
-    def setUp(self):
-        Request.id_iterator = itertools.count(1)
-
-    def tearDown(self):
-        config.validate = True
-
-
-class TestLogging(TestClient):
-    def test_request(self, *_):
-        client = DummyClient("foo")
+class TestLogRequest(TestCase):
+    def test(self, *_):
         with LogCapture() as capture:
-            client.log_request('{"jsonrpc": "2.0", "method": "go"}')
+            DummyClient("foo").log_request('{"jsonrpc": "2.0", "method": "go"}')
         capture.check(
             (
                 "jsonrpcclient.client.request",
@@ -38,27 +29,10 @@ class TestLogging(TestClient):
             )
         )
 
-    def test_response(self):
-        client = DummyClient("foo")
+    def test_trimmed(self):
+        req = '{"jsonrpc": "2.0", "method": "go", "params": {"blah": "%s"}}' % ("blah" * 100,)
         with LogCapture() as capture:
-            client.log_response('{"jsonrpc": "2.0", "result": 5, "id": 1}')
-        capture.check(
-            (
-                "jsonrpcclient.client.response",
-                "INFO",
-                '{"jsonrpc": "2.0", "result": 5, "id": 1}',
-            )
-        )
-
-    def test_request_trim(self):
-        blahs = "blah" * 100
-        client = DummyClient("foo")
-        with LogCapture() as capture:
-            client.log_request(
-                '{"jsonrpc": "2.0", "method": "go", "params": {"blah": "%s"}}'
-                % (blahs,),
-                trim=True,
-            )
+            DummyClient("foo").log_request(req, trim=True)
         capture.check(
             (
                 "jsonrpcclient.client.request",
@@ -67,13 +41,23 @@ class TestLogging(TestClient):
             )
         )
 
-    def test_response_trim(self):
-        blahs = "blah" * 100
-        client = DummyClient("foo")
+
+class TestLogResponse(TestCase):
+    def test(self):
         with LogCapture() as capture:
-            client.log_response(
-                '{"jsonrpc": "2.0", "result": "%s", "id": 1}' % (blahs,), trim=True
+            DummyClient("foo").log_response('{"jsonrpc": "2.0", "result": 5, "id": 1}')
+        capture.check(
+            (
+                "jsonrpcclient.client.response",
+                "INFO",
+                '{"jsonrpc": "2.0", "result": 5, "id": 1}',
             )
+        )
+
+    def test_trimmed(self):
+        req = '{"jsonrpc": "2.0", "result": "%s", "id": 1}' % ("blah" * 100,)
+        with LogCapture() as capture:
+            DummyClient("foo").log_response(req, trim=True)
         capture.check(
             (
                 "jsonrpcclient.client.response",
@@ -82,60 +66,36 @@ class TestLogging(TestClient):
             )
         )
 
-    def test_trim_message(self):
-        import json
-        from jsonrpcclient.log import trim_message
 
-        # test string abbreviation
-        message = trim_message("blah" * 100)
-        self.assertIn("...", message)
-        # test list abbreviation
-        message = trim_message(json.dumps({"list": [0] * 100}))
-        self.assertIn("...", message)
-        # test nested abbreviation
-        message = trim_message(
-            json.dumps(
-                {
-                    "obj": {
-                        "list": [0] * 100,
-                        "string": "blah" * 100,
-                        "obj2": {"string2": "blah" * 100},
-                    }
-                }
-            )
-        )
-        self.assertIn("...", json.loads(message)["obj"]["obj2"]["string2"])
-
-
-class TestSend(TestClient):
+class TestSend(TestCase):
     @patch("jsonrpcclient.client.Client.request_log")
     def test(self, *_):
         result = DummyClient("foo").send({"jsonrpc": "2.0", "method": "out", "id": 1})
         self.assertEqual(result, 15)
 
 
-class TestRequest(TestClient):
+class TestRequest(TestCase):
     @patch("jsonrpcclient.client.Client.request_log")
     def test(self, *_):
         result = DummyClient("foo").request("multiply", 3, 5)
         self.assertEqual(result, 15)
 
 
-class TestNotify(TestClient):
+class TestNotify(TestCase):
     @patch("jsonrpcclient.client.Client.request_log")
     def test(self, *_):
         result = DummyClient("foo").notify("multiply", 3, 5)
         self.assertEqual(result, 15)
 
 
-class TestDirect(TestClient):
+class TestDirect(TestCase):
     @patch("jsonrpcclient.client.Client.request_log")
     def test_alternate_usage(self, *_):
         result = DummyClient("foo").multiply(3, 5)
         self.assertEqual(result, 15)
 
 
-class TestProcessResponse(TestClient):
+class TestProcessResponse(TestCase):
     @patch("jsonrpcclient.client.Client.request_log")
     def test_none(self, *_):
         result = DummyClient("foo").process_response(None)
@@ -181,6 +141,7 @@ class TestProcessResponse(TestClient):
         config.validate = False
         # Should not raise exception
         DummyClient("foo").process_response({"json": "2.0"})
+        config.validate = True
 
     @patch("jsonrpcclient.client.Client.response_log")
     def test_error_response(self, *_):
