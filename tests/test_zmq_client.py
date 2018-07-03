@@ -11,8 +11,8 @@ from jsonrpcclient.zmq_client import ZMQClient
 
 class TestZMQClient(TestCase):
     def setUp(self):
-        # Patch Request.id_iterator to ensure the request id is always 1
-        Request.id_iterator = itertools.count(1)
+        # Patch Request.id_generator to ensure the request id is always 1
+        Request.id_generator = itertools.count(1)
 
     def test_instantiate(self):
         ZMQClient("tcp://localhost:5555")

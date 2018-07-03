@@ -31,9 +31,9 @@ class TornadoClient(Client):
 
     DEFAULT_HEADERS = {"Content-Type": "application/json", "Accept": "application/json"}
 
-    def __init__(self, endpoint, async_http_client_class=AsyncHTTPClient, **kwargs):
-        super(TornadoClient, self).__init__(endpoint)
-        self.http_client = async_http_client_class(**kwargs)
+    def __init__(self, *args, async_http_client=None, **kwargs):
+        super(TornadoClient, self).__init__(*args, **kwargs)
+        self.http_client = async_http_client or AsyncHTTPClient()
 
     def _request_sent(self, future, response):
         """Callback when request has been sent"""

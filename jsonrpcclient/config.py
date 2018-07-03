@@ -13,6 +13,3 @@ ids = "decimal"
 #: Validate responses against the JSON-RPC schema. Disable to speed up
 #: processing.
 validate = True
-
-#: Log abbreviated versions of requests and responses
-trim_log_values = False

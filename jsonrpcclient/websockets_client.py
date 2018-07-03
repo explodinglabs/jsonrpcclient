@@ -7,8 +7,14 @@ from .async_client import AsyncClient
 
 
 class WebSocketsClient(AsyncClient):
-    def __init__(self, socket):
-        super(WebSocketsClient, self).__init__(None)
+    def __init__(self, socket, *args, **kwargs):
+        """
+        :param endpoint:
+        :param socket_type:
+        :param *args: Passed through to Client class.
+        :param **kwargs: Passed through to Client class.
+        """
+        super(WebSocketsClient, self).__init__(*args, **kwargs)
         self.socket = socket
 
     async def send_message(self, request, **kwargs):

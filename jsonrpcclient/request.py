@@ -125,17 +125,15 @@ class Request(Notification):
     :returns: The JSON-RPC request in dictionary form.
     """
 
-    id_iterator = None
+    # TODO: Replace this with a default generator (decimals).
+    id_generator = ids.from_config(config.ids)
 
-    def __init__(self, method, *args, **kwargs):
+    def __init__(self, method, *args, id_generator=None, **kwargs):
         # If 'request_id' is passed, use the specified id
         if "request_id" in kwargs:
-            _id = kwargs.pop("request_id", None)
-        else:  # Get the next id from the iterator
-            # Create the iterator if not yet created
-            if Request.id_iterator is None:
-                Request.id_iterator = ids.from_config(config.ids)
-            _id = next(self.id_iterator)
+            id_ = kwargs.pop("request_id", None)
+        else:  # Get the next id from the generator
+            id_ = next(id_generator or self.id_generator)
         # We call super last, after popping the request_id
         super(Request, self).__init__(method, *args, **kwargs)
-        self.update(id=_id)
+        self.update(id=id_)

@@ -37,8 +37,8 @@ class TestTornadoClient(testing.AsyncHTTPTestCase):
 
     def setUp(self):
         super(TestTornadoClient, self).setUp()
-        # Patch Request.id_iterator to ensure the id is always 1
-        Request.id_iterator = itertools.count(1)
+        # Patch Request.id_generator to ensure the id is always 1
+        Request.id_generator = itertools.count(1)
 
     @patch("jsonrpcclient.client.Client.request_log")
     @patch("jsonrpcclient.client.Client.response_log")

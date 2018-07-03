@@ -2,6 +2,7 @@ from unittest import TestCase
 import json
 
 from jsonrpcclient.request import Notification, Request, sort_request
+from jsonrpcclient import ids
 from jsonrpcclient import config
 
 
@@ -50,12 +51,12 @@ class TestNotification(TestCase):
 class TestRequest(TestCase):
     def setUp(self):
         # Start each test with id 1
-        Request.id_iterator = None
+        Request.id_generator = ids.decimal()
         config.ids = "decimal"
 
     def tearDown(self):
         # Restore default iterator
-        Request.id_iterator = None
+        Request.id_generator = ids.decimal()
         config.ids = "decimal"
 
     def test(self):
@@ -93,5 +94,6 @@ class TestRequest(TestCase):
 
     def test_custom_iterator(self):
         config.ids = "random"
+        Request.id_generator = ids.random()
         req = Request("go")
         self.assertEqual(8, len(req["id"]))

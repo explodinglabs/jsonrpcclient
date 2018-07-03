@@ -12,8 +12,8 @@ from jsonrpcclient.http_client import HTTPClient
 
 class TestHTTPClient(TestCase):
     def setUp(self):
-        # Patch Request.id_iterator to ensure the id is always 1
-        Request.id_iterator = itertools.count(1)
+        # Patch Request.id_generator to ensure the id is always 1
+        Request.id_generator = itertools.count(1)
 
     @staticmethod
     def test_init_endpoint_only():

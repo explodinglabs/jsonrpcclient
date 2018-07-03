@@ -18,13 +18,12 @@ class HTTPClient(Client):
     # The default HTTP header
     DEFAULT_HEADERS = {"Content-Type": "application/json", "Accept": "application/json"}
 
-    def __init__(self, endpoint):
+    def __init__(self, *args, **kwargs):
         """
         :param endpoint: The server address.
-        :param kwargs: HTTP headers and other options passed on to the requests
-                       module.
+        :param **kwargs: Pased through to the Client class.
         """
-        super(HTTPClient, self).__init__(endpoint)
+        super(HTTPClient, self).__init__(*args, **kwargs)
         # Make use of Requests' sessions feature
         self.session = Session()
         self.session.headers.update(self.DEFAULT_HEADERS)

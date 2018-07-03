@@ -17,22 +17,18 @@ class DummyClient(Client):
         return 15
 
 
-class TestLogRequest(TestCase):
+class TestSend(TestCase):
+    @patch("jsonrpcclient.client.Client.request_log")
     def test(self, *_):
-        with LogCapture() as capture:
-            DummyClient("foo").log_request('{"jsonrpc": "2.0", "method": "go"}')
-        capture.check(
-            (
-                "jsonrpcclient.client.request",
-                "INFO",
-                '{"jsonrpc": "2.0", "method": "go"}',
-            )
-        )
+        result = DummyClient("foo").send({"jsonrpc": "2.0", "method": "out", "id": 1})
+        self.assertEqual(result, 15)
 
-    def test_trimmed(self):
-        req = '{"jsonrpc": "2.0", "method": "go", "params": {"blah": "%s"}}' % ("blah" * 100,)
+    def test_trim_log_values(self):
+        req = '{"jsonrpc": "2.0", "method": "go", "params": {"blah": "%s"}}' % (
+            "blah" * 100,
+        )
         with LogCapture() as capture:
-            DummyClient("foo").log_request(req, trim=True)
+            DummyClient("foo", trim_log_values=True).send(req)
         capture.check(
             (
                 "jsonrpcclient.client.request",
@@ -40,38 +36,6 @@ class TestLogRequest(TestCase):
                 '{"jsonrpc": "2.0", "method": "go", "params": {"blah": "blahblahbl...ahblahblah"}}',
             )
         )
-
-
-class TestLogResponse(TestCase):
-    def test(self):
-        with LogCapture() as capture:
-            DummyClient("foo").log_response('{"jsonrpc": "2.0", "result": 5, "id": 1}')
-        capture.check(
-            (
-                "jsonrpcclient.client.response",
-                "INFO",
-                '{"jsonrpc": "2.0", "result": 5, "id": 1}',
-            )
-        )
-
-    def test_trimmed(self):
-        req = '{"jsonrpc": "2.0", "result": "%s", "id": 1}' % ("blah" * 100,)
-        with LogCapture() as capture:
-            DummyClient("foo").log_response(req, trim=True)
-        capture.check(
-            (
-                "jsonrpcclient.client.response",
-                "INFO",
-                '{"jsonrpc": "2.0", "result": "blahblahbl...ahblahblah", "id": 1}',
-            )
-        )
-
-
-class TestSend(TestCase):
-    @patch("jsonrpcclient.client.Client.request_log")
-    def test(self, *_):
-        result = DummyClient("foo").send({"jsonrpc": "2.0", "method": "out", "id": 1})
-        self.assertEqual(result, 15)
 
 
 class TestRequest(TestCase):
@@ -213,3 +177,55 @@ class TestProcessResponse(TestCase):
         )
         result = DummyClient("foo").process_response(response)
         self.assertEqual(result, json.loads(response))
+
+
+class TestLogRequest(TestCase):
+    def test(self, *_):
+        with LogCapture() as capture:
+            DummyClient("foo").log_request('{"jsonrpc": "2.0", "method": "go"}')
+        capture.check(
+            (
+                "jsonrpcclient.client.request",
+                "INFO",
+                '{"jsonrpc": "2.0", "method": "go"}',
+            )
+        )
+
+    def test_trimmed(self):
+        req = '{"jsonrpc": "2.0", "method": "go", "params": {"blah": "%s"}}' % (
+            "blah" * 100,
+        )
+        with LogCapture() as capture:
+            DummyClient("foo").log_request(req, trim=True)
+        capture.check(
+            (
+                "jsonrpcclient.client.request",
+                "INFO",
+                '{"jsonrpc": "2.0", "method": "go", "params": {"blah": "blahblahbl...ahblahblah"}}',
+            )
+        )
+
+
+class TestLogResponse(TestCase):
+    def test(self):
+        with LogCapture() as capture:
+            DummyClient("foo").log_response('{"jsonrpc": "2.0", "result": 5, "id": 1}')
+        capture.check(
+            (
+                "jsonrpcclient.client.response",
+                "INFO",
+                '{"jsonrpc": "2.0", "result": 5, "id": 1}',
+            )
+        )
+
+    def test_trimmed(self):
+        req = '{"jsonrpc": "2.0", "result": "%s", "id": 1}' % ("blah" * 100,)
+        with LogCapture() as capture:
+            DummyClient("foo").log_response(req, trim=True)
+        capture.check(
+            (
+                "jsonrpcclient.client.response",
+                "INFO",
+                '{"jsonrpc": "2.0", "result": "blahblahbl...ahblahblah", "id": 1}',
+            )
+        )

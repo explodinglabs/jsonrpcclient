@@ -8,7 +8,7 @@ from past.builtins import basestring
 from future.utils import with_metaclass
 import jsonschema
 
-from . import config, exceptions
+from . import config, exceptions, ids
 from .log import log_
 from .prepared_request import PreparedRequest
 from .request import Notification, Request
@@ -32,9 +32,20 @@ class Client(with_metaclass(ABCMeta, object)):
         json.loads(pkgutil.get_data(__name__, "response-schema.json").decode("utf-8"))
     )
 
-    def __init__(self, endpoint):
-        #: Holds the server address
+    def __init__(
+        self, endpoint, id_generator=None, trim_log_values=False, validate=None
+    ):
+        """
+        :param endpoint: Holds the server address.
+        :param trim_log_values: Log abbreviated versions of requests and responses
+        :param validate: Validate responses against the JSON-RPC schema.
+        """
         self.endpoint = endpoint
+        self.id_generator = id_generator
+        self.trim_log_values = trim_log_values
+        # The following supports the config module, which will be removed in the next
+        # major release, replaced with default values in the method signature.
+        self.validate = validate if validate is not None else config.validate
 
     def log_(self, message, extra, log, level, fmt, trim):
         """Log a request or response"""
@@ -92,7 +103,9 @@ class Client(with_metaclass(ABCMeta, object)):
         """
         if response:
             # Log the response before processing it
-            self.log_response(response, log_extra, log_format, config.trim_log_values)
+            self.log_response(
+                response, log_extra, log_format, trim=self.trim_log_values
+            )
             # If it's a json string, parse to object
             if isinstance(response, basestring):
                 try:
@@ -101,7 +114,7 @@ class Client(with_metaclass(ABCMeta, object)):
                     raise exceptions.ParseResponseError()
             # Validate the response against the Response schema (raises
             # jsonschema.ValidationError if invalid)
-            if config.validate:
+            if self.validate:
                 self.validator.validate(response)
             if isinstance(response, list):
                 # Batch request - just return the whole response
@@ -167,7 +180,9 @@ class Client(with_metaclass(ABCMeta, object)):
         # set the extra details to include in the log entry
         self.prepare_request(request)
         # Log the request
-        self.log_request(request, request.log_extra, request.log_format, config.trim_log_values)
+        self.log_request(
+            request, request.log_extra, request.log_format, trim=self.trim_log_values
+        )
         # Call abstract method to transport the message, returning either the
         # processed response, or a future which promises to process eventually
         return self.send_message(request, **kwargs)
@@ -199,7 +214,9 @@ class Client(with_metaclass(ABCMeta, object)):
         :param kwargs: Keyword arguments passed to the remote procedure.
         :return: The payload (i.e. the ``result`` part of the response).
         """
-        return self.send(Request(method_name, *args, **kwargs))
+        return self.send(
+            Request(method_name, *args, id_generator=self.id_generator, **kwargs)
+        )
 
     def __getattr__(self, name):
         """

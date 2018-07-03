@@ -6,8 +6,14 @@ from .async_client import AsyncClient
 
 
 class ZeroMQAsyncClient(AsyncClient):
-    def __init__(self, endpoint, socket_type=zmq.REQ):
-        super(ZeroMQAsyncClient, self).__init__(endpoint)
+    """
+    :param endpoint:
+    :param socket_type:
+    :param *args: Passed through to Client class.
+    :param **kwargs: Passed through to Client class.
+    """
+    def __init__(self, endpoint, *args, socket_type=zmq.REQ, **kwargs):
+        super(ZeroMQAsyncClient, self).__init__(endpoint, *args, **kwargs)
         self.context = zmq.asyncio.Context()
         self.socket = self.context.socket(socket_type)
         self.socket.connect(endpoint)
