@@ -127,21 +127,40 @@ each request that had an `id` member.
 
 ## Configuration
 
-Import the config module to to configure, for example:
+Most public methods can take the following optional parameters:
 
+**id_generator**
+
+Specifies a generator which will be used to create the "id" part of the
+JSON-RPC request. Some built-in options are in the ids module: decimal,
+hexadecimal, random and uuid. Default is *ids.decimal()*.
+
+Example:
 ```python
-from jsonrpcclient import config
-config.validate = False
-config.ids = "hex"
+>>> from jsonrpcclient import request, ids
+>>> random_ids = ids.random()
+>>> request("http://localhost:5000", "ping", id_generator=random_ids)
+--> {"jsonrpc": "2.0", "method": "ping", "id": "9zo2a2xb"}
 ```
 
-To disable logging:
+**request_id**
 
+Specifies the "id" part of the JSON-RPC request. Default is *None*, which calls
+`next()` on the last id generator that was used.
+
+Example:
 ```python
-import logging
-logging.getLogger("jsonrpcclient.client.request").setLevel(logging.WARNING)
-logging.getLogger("jsonrpcclient.client.response").setLevel(logging.WARNING)
+>>> request("http://localhost:5000", "ping", request_id="foo")
+--> {"jsonrpc": "2.0", "method": "ping", "id": "foo"}
 ```
+
+**trim_log_values**
+
+Show abbreviated requests and responses in logs. Default is *False*.
+
+**validate_against_schema**
+
+Validate responses against the JSON-RPC schema. Default is *True*.
 
 ### Configuring the Requests library
 
@@ -177,3 +196,13 @@ client.send(req, verify=True, cert='/path/to/certificate',
 As in the Requests library, any dictionaries passed to `send` in named
 arguments will be merged with the session-level values that are set. The
 method-level parameters override session parameters.
+
+## Disable logging
+
+To disable logging:
+
+```python
+import logging
+logging.getLogger("jsonrpcclient.client.request").setLevel(logging.WARNING)
+logging.getLogger("jsonrpcclient.client.response").setLevel(logging.WARNING)
+```
