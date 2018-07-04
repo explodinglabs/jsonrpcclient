@@ -33,19 +33,27 @@ class Client(with_metaclass(ABCMeta, object)):
     )
 
     def __init__(
-        self, endpoint, id_generator=None, trim_log_values=False, validate=None
+        self,
+        endpoint,
+        id_generator=None,
+        trim_log_values=False,
+        validate_against_schema=None,
     ):
         """
         :param endpoint: Holds the server address.
         :param trim_log_values: Log abbreviated versions of requests and responses
-        :param validate: Validate responses against the JSON-RPC schema.
+        :param validate_against_schema: Validate responses against the JSON-RPC schema.
         """
         self.endpoint = endpoint
         self.id_generator = id_generator
         self.trim_log_values = trim_log_values
         # The following supports the config module, which will be removed in the next
         # major release, replaced with default values in the method signature.
-        self.validate = validate if validate is not None else config.validate
+        self.validate_against_schema = (
+            validate_against_schema
+            if validate_against_schema is not None
+            else config.validate
+        )
 
     def log_(self, message, extra, log, level, fmt, trim):
         """Log a request or response"""
@@ -114,7 +122,7 @@ class Client(with_metaclass(ABCMeta, object)):
                     raise exceptions.ParseResponseError()
             # Validate the response against the Response schema (raises
             # jsonschema.ValidationError if invalid)
-            if self.validate:
+            if self.validate_against_schema:
                 self.validator.validate(response)
             if isinstance(response, list):
                 # Batch request - just return the whole response
