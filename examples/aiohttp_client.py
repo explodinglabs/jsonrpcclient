@@ -1,6 +1,6 @@
 import aiohttp
 import asyncio
-from jsonrpcclient.aiohttp_client import AioHTTPClient
+from jsonrpcclient.aiohttp_client import AiohttpClient
 
 async def main(loop):
     async with aiohttp.ClientSession(loop=loop) as session:
