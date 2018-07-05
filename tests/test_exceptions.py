@@ -9,5 +9,5 @@ class TestExceptions(TestCase):
             raise exceptions.ParseResponseError
 
     def test_received_error_response(self):
-        with self.assertRaises(exceptions.ReceivedErrorResponse):
-            raise exceptions.ReceivedErrorResponse(1, "foo", "bar")
+        with self.assertRaises(exceptions.ReceivedErrorResponseError):
+            raise exceptions.ReceivedErrorResponseError(1, "foo", "bar")

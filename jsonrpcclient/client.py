@@ -125,7 +125,7 @@ class Client(with_metaclass(ABCMeta, object)):
             else:
                 # If the response was "error", raise to ensure it's handled
                 if "error" in response and response["error"] is not None:
-                    raise exceptions.ReceivedErrorResponse(
+                    raise exceptions.ReceivedErrorResponseError(
                         response["error"].get("code"),
                         response["error"].get("message"),
                         response["error"].get("data"),
@@ -172,7 +172,7 @@ class Client(with_metaclass(ABCMeta, object)):
         :raises ValidationError:
             The response was valid JSON, but not a valid JSON-RPC response
             object.
-        :raises ReceivedErrorResponse:
+        :raises ReceivedErrorResponseError:
             The server responded with a JSON-RPC `error object
             <http://www.jsonrpc.org/specification#error_object>`_.
         """

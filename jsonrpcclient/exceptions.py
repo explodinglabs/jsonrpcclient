@@ -29,7 +29,7 @@ class ParseResponseError(JsonRpcClientError):
         super(ParseResponseError, self).__init__("The response was not valid JSON")
 
 
-class ReceivedErrorResponse(JsonRpcClientError):
+class ReceivedErrorResponseError(JsonRpcClientError):
     """
     Raised if a single JSON-RPC `error response object
     <http://www.jsonrpc.org/specification#error_object>`_ is received.
@@ -46,10 +46,10 @@ class ReceivedErrorResponse(JsonRpcClientError):
     .. code-block:: python
         :emphasize-lines: 5-6
 
-        from jsonrpcclient.exceptions import JsonRpcClientError, ReceivedErrorResponse
+        from jsonrpcclient.exceptions import JsonRpcClientError, ReceivedErrorResponseError
         try:
             client.notify('go')
-        except ReceivedErrorResponse as e:
+        except ReceivedErrorResponseError as e:
             print(e.code, e.message, e.data)
         except JsonRpcClientError as e:
             print(str(e))
@@ -61,7 +61,7 @@ class ReceivedErrorResponse(JsonRpcClientError):
         :param message: The JSON-RPC ``message`` value received.
         :param data: The JSON-RPC ``data`` value received.
         """
-        super(ReceivedErrorResponse, self).__init__(message)
+        super(ReceivedErrorResponseError, self).__init__(message)
         #: The JSON-RPC status code. (See `status codes
         #: <http://www.jsonrpc.org/specification#error_object>`_.)
         self.code = code

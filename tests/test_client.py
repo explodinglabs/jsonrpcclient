@@ -114,7 +114,7 @@ class TestProcessResponse(TestCase):
             "error": {"code": -32000, "message": "Not Found"},
             "id": None,
         }
-        with self.assertRaises(exceptions.ReceivedErrorResponse) as ex:
+        with self.assertRaises(exceptions.ReceivedErrorResponseError) as ex:
             DummyClient("foo").process_response(response)
         self.assertEqual(ex.exception.code, -32000)
         self.assertEqual(ex.exception.message, "Not Found")
@@ -131,7 +131,7 @@ class TestProcessResponse(TestCase):
             },
             "id": None,
         }
-        with self.assertRaises(exceptions.ReceivedErrorResponse) as ex:
+        with self.assertRaises(exceptions.ReceivedErrorResponseError) as ex:
             DummyClient("foo").process_response(response)
         self.assertEqual(ex.exception.code, -32000)
         self.assertEqual(ex.exception.message, "Not Found")
@@ -147,7 +147,7 @@ class TestProcessResponse(TestCase):
             "error": {"code": -32000, "message": "Not Found", "data": {}},
             "id": None,
         }
-        with self.assertRaises(exceptions.ReceivedErrorResponse) as ex:
+        with self.assertRaises(exceptions.ReceivedErrorResponseError) as ex:
             DummyClient("foo").process_response(response)
         self.assertEqual(ex.exception.code, -32000)
         self.assertEqual(ex.exception.message, "Not Found")
