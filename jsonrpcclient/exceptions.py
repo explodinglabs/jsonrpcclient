@@ -46,7 +46,8 @@ class ReceivedErrorResponseError(JsonRpcClientError):
     .. code-block:: python
         :emphasize-lines: 5-6
 
-        from jsonrpcclient.exceptions import JsonRpcClientError, ReceivedErrorResponseError
+        from jsonrpcclient.exceptions import (
+            JsonRpcClientError, ReceivedErrorResponseError)
         try:
             client.notify('go')
         except ReceivedErrorResponseError as e:
@@ -69,3 +70,11 @@ class ReceivedErrorResponseError(JsonRpcClientError):
         self.message = message
         #: Extra information about the error, if given.
         self.data = data
+
+
+class ReceivedNon2xxResponseError(JsonRpcClientError):
+    """The response was not valid JSON."""
+
+    def __init__(self, status_code):
+        super().__init__("Received {} status code".format(status_code))
+        self.code = status_code

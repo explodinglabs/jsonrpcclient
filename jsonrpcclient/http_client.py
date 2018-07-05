@@ -10,6 +10,7 @@ Uses the `Requests <http://docs.python-requests.org/en/master/>`_ library.
 from requests import Request, Session
 
 from .client import Client
+from .exceptions import ReceivedNon2xxResponseError
 
 
 class HTTPClient(Client):
@@ -59,6 +60,8 @@ class HTTPClient(Client):
         """
         # Send the message with Requests, passing any final config options
         response = self.session.send(request.prepped, **kwargs)
+        if not 200 <= response.status_code <= 299:
+            raise ReceivedNon2xxResponseError(response.status_code)
         # Give some extra information to include in the response log entry
         return self.process_response(
             response.text,
