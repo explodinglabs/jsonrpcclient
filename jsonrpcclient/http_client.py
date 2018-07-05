@@ -73,7 +73,6 @@ class HTTPClient(Client):
             log_extra={
                 "http_code": response.status_code,
                 "http_reason": response.reason,
-                "http_headers": response.headers,
             },
             log_format="<-- %(message)s (%(http_code)s %(http_reason)s)",
         )
