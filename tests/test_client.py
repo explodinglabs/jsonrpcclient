@@ -6,7 +6,7 @@ import json
 from jsonschema import ValidationError
 from testfixtures import LogCapture
 
-from jsonrpcclient import Request, config, exceptions
+from jsonrpcclient import Request, exceptions
 from jsonrpcclient.client import Client
 
 
@@ -102,10 +102,10 @@ class TestProcessResponse(TestCase):
 
     @patch("jsonrpcclient.client.Client.response_log")
     def test_without_validation(self, *_):
-        config.validate = False
         # Should not raise exception
-        DummyClient("foo").process_response({"json": "2.0"})
-        config.validate = True
+        DummyClient("foo", validate_against_schema=False).process_response(
+            {"json": "2.0"}
+        )
 
     @patch("jsonrpcclient.client.Client.response_log")
     def test_error_response(self, *_):

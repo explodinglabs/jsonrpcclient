@@ -10,7 +10,7 @@ import json
 from collections import OrderedDict
 from future.utils import with_metaclass
 
-from . import config, ids
+from . import ids
 
 
 def sort_request(req):
@@ -125,8 +125,7 @@ class Request(Notification):
     :returns: The JSON-RPC request in dictionary form.
     """
 
-    # TODO: Replace this with a default generator (decimals).
-    id_generator = ids.from_config(config.ids)
+    id_generator = ids.decimal()
 
     def __init__(self, method, *args, id_generator=None, **kwargs):
         # If 'request_id' is passed, use the specified id

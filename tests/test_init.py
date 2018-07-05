@@ -54,9 +54,6 @@ class TestRequest(TestCase):
         ),
     )
     def test_id_generator(self, *_):
-        # Set id type in config to decimal
-        import jsonrpcclient.config
-        jsonrpcclient.config.ids = "decimal"
         with LogCapture() as capture:
             result = request("http://foo", "foo", id_generator=ids.random())
         capture.check(

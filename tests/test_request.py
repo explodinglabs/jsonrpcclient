@@ -3,7 +3,6 @@ import json
 
 from jsonrpcclient.request import Notification, Request, sort_request
 from jsonrpcclient import ids
-from jsonrpcclient import config
 
 
 class TestSortRequest(TestCase):
@@ -50,14 +49,8 @@ class TestNotification(TestCase):
 
 class TestRequest(TestCase):
     def setUp(self):
-        # Start each test with id 1
+        # Reset the id generator, to start the ids at 1
         Request.id_generator = ids.decimal()
-        config.ids = "decimal"
-
-    def tearDown(self):
-        # Restore default iterator
-        Request.id_generator = ids.decimal()
-        config.ids = "decimal"
 
     def test(self):
         self.assertEqual({"jsonrpc": "2.0", "method": "get", "id": 1}, Request("get"))
@@ -93,7 +86,5 @@ class TestRequest(TestCase):
         )
 
     def test_custom_iterator(self):
-        config.ids = "random"
-        Request.id_generator = ids.random()
-        req = Request("go")
+        req = Request("go", id_generator = ids.random())
         self.assertEqual(8, len(req["id"]))
