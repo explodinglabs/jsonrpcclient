@@ -27,10 +27,6 @@ class HTTPClient(Client):
         # Make use of Requests' sessions feature
         self.session = Session()
         self.session.headers.update(self.DEFAULT_HEADERS)
-        # Keep last request and response - don't use, will be removed in next
-        # major release
-        self.last_request = None
-        self.last_response = None
 
     def prepare_request(self, request, **kwargs):
         """
@@ -61,12 +57,8 @@ class HTTPClient(Client):
             Raised by the requests module in the event of a communications
             error.
         """
-        # Keep last request - don't use, will be removed in next major release
-        self.last_request = request
         # Send the message with Requests, passing any final config options
         response = self.session.send(request.prepped, **kwargs)
-        # Keep last response - don't use, will be removed in next major release
-        self.last_response = response
         # Give some extra information to include in the response log entry
         return self.process_response(
             response.text,
