@@ -9,8 +9,8 @@ Uses the `Requests <http://docs.python-requests.org/en/master/>`_ library.
 """
 from requests import Request, Session
 
-from .client import Client
-from .exceptions import ReceivedNon2xxResponseError
+from ..client import Client
+from ..exceptions import ReceivedNon2xxResponseError
 
 
 class HTTPClient(Client):

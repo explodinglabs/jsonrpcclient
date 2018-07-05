@@ -39,7 +39,7 @@ Use `notify` instead of `request` to signify that no response is required:
 Alternatively, instantiate `HTTPClient`, passing the server endpoint:
 
 ```python
->>> from jsonrpcclient.http_client import HTTPClient
+>>> from jsonrpcclient.clients.http_client import HTTPClient
 >>> client = HTTPClient('http://pets.com')
 ```
 

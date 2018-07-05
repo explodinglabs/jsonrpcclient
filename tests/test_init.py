@@ -18,7 +18,7 @@ class TestRequest(TestCase):
 
     @patch("jsonrpcclient.client.Client.response_log")
     @patch(
-        "jsonrpcclient.http_client.Session.send",
+        "jsonrpcclient.clients.http_client.Session.send",
         return_value=Resp(
             text='{"jsonrpc": "2.0", "result": true, "id": 1}',
             reason="foo",
@@ -45,7 +45,7 @@ class TestRequest(TestCase):
 
     @patch("jsonrpcclient.client.Client.response_log")
     @patch(
-        "jsonrpcclient.http_client.Session.send",
+        "jsonrpcclient.clients.http_client.Session.send",
         return_value=Resp(
             text='{"jsonrpc": "2.0", "result": true, "id": 1}',
             reason="foo",
@@ -74,7 +74,7 @@ class TestNotify(TestCase):
 
     @patch("jsonrpcclient.client.Client.response_log")
     @patch(
-        "jsonrpcclient.http_client.Session.send",
+        "jsonrpcclient.clients.http_client.Session.send",
         return_value=Resp(text="", reason="foo", headers="foo", status_code=200),
     )
     def test_trim_log_values(self, *_):

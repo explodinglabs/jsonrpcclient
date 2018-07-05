@@ -5,8 +5,8 @@ http://aiohttp.readthedocs.io/
 """
 import async_timeout
 
-from .async_client import AsyncClient
-from .exceptions import ReceivedNon2xxResponseError
+from ..async_client import AsyncClient
+from ..exceptions import ReceivedNon2xxResponseError
 
 
 class AiohttpClient(AsyncClient):
@@ -19,8 +19,8 @@ class AiohttpClient(AsyncClient):
     async def send_message(self, request):
         with async_timeout.timeout(10):
             async with self.session.post(self.endpoint, data=request) as response:
-                if not 200 <= response.status_code <= 299:
-                    raise ReceivedNon2xxResponseError(response.status_code)
+                if not 200 <= response.status <= 299:
+                    raise ReceivedNon2xxResponseError(response.status)
                 return self.process_response(
                     await response.text(),
                     log_extra={

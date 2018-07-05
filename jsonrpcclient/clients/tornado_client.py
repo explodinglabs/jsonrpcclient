@@ -18,8 +18,8 @@ from functools import partial
 
 from tornado.httpclient import AsyncHTTPClient
 
-from .async_client import AsyncClient
-from .exceptions import ReceivedNon2xxResponseError
+from ..async_client import AsyncClient
+from ..exceptions import ReceivedNon2xxResponseError
 
 
 class TornadoClient(AsyncClient):
@@ -50,7 +50,7 @@ class TornadoClient(AsyncClient):
             self.endpoint, method="POST", body=request, headers=headers, **kwargs
         )
 
-        if not 200 <= response.status_code <= 299:
+        if not 200 <= response.code <= 299:
             raise ReceivedNon2xxResponseError(response.status_code)
 
         # Note: Tornado adds it's own logger handlers, so the following log format isn't

@@ -1,5 +1,5 @@
 from tornado.ioloop import IOLoop
-from jsonrpcclient.tornado_client import TornadoClient
+from jsonrpcclient.clients.tornado_client import TornadoClient
 
 client = TornadoClient('http://localhost:5000/')
 

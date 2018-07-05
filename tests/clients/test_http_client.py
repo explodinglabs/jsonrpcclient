@@ -7,7 +7,7 @@ import responses
 
 from jsonrpcclient.request import Request
 from jsonrpcclient.prepared_request import PreparedRequest
-from jsonrpcclient.http_client import HTTPClient
+from jsonrpcclient.clients.http_client import HTTPClient
 
 
 class TestHTTPClient(TestCase):

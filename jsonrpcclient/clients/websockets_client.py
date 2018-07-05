@@ -3,7 +3,7 @@ Websockets client.
 
 http://websockets.readthedocs.io/
 """
-from .async_client import AsyncClient
+from ..async_client import AsyncClient
 
 
 class WebSocketsClient(AsyncClient):

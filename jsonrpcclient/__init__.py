@@ -1,5 +1,5 @@
 from .request import Request, Notification
-from .http_client import HTTPClient
+from .clients.http_client import HTTPClient
 
 
 def notify(

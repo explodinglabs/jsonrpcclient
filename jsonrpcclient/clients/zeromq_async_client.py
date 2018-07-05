@@ -2,7 +2,7 @@
 import zmq
 import zmq.asyncio
 
-from .async_client import AsyncClient
+from ..async_client import AsyncClient
 
 
 class ZeroMQAsyncClient(AsyncClient):

@@ -6,7 +6,7 @@ import zmq
 from mock import patch, Mock
 
 from jsonrpcclient import Request
-from jsonrpcclient.zmq_client import ZMQClient
+from jsonrpcclient.clients.zmq_client import ZMQClient
 
 
 class TestZMQClient(TestCase):

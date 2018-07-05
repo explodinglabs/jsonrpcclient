@@ -1,6 +1,6 @@
 import asyncio
 import zmq
-from jsonrpcclient.zeromq_async_client import ZeroMQAsyncClient
+from jsonrpcclient.clients.zeromq_async_client import ZeroMQAsyncClient
 
 async def main():
     client = ZeroMQAsyncClient('tcp://localhost:5000')
