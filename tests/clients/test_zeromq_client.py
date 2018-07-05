@@ -6,16 +6,16 @@ import zmq
 from mock import patch, Mock
 
 from jsonrpcclient import Request
-from jsonrpcclient.clients.zmq_client import ZMQClient
+from jsonrpcclient.clients.zeromq_client import ZeroMQClient
 
 
-class TestZMQClient(TestCase):
+class TestZeroMQClient(TestCase):
     def setUp(self):
         # Patch Request.id_generator to ensure the request id is always 1
         Request.id_generator = itertools.count(1)
 
     def test_instantiate(self):
-        ZMQClient("tcp://localhost:5555")
+        ZeroMQClient("tcp://localhost:5555")
 
     @patch("zmq.Socket.send_string", Mock())
     @patch(
@@ -28,11 +28,11 @@ class TestZMQClient(TestCase):
     )
     @patch("jsonrpcclient.client.Client.response_log")
     def test_send_message(self, *_):
-        client = ZMQClient("tcp://localhost:5555")
+        client = ZeroMQClient("tcp://localhost:5555")
         client.send_message(str(Request("go")))
 
     def test_send_message_conn_error(self):
-        client = ZMQClient("tcp://localhost:5555")
+        client = ZeroMQClient("tcp://localhost:5555")
         # Set timeouts
         client.socket.setsockopt(zmq.RCVTIMEO, 5)
         client.socket.setsockopt(zmq.SNDTIMEO, 5)
