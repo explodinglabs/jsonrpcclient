@@ -13,7 +13,7 @@ class AiohttpClient(AsyncClient):
     """TODO: rename AiohttpClient to AiohttpClient"""
 
     def __init__(self, session, endpoint):
-        super(AiohttpClient, self).__init__(endpoint)
+        super().__init__(endpoint)
         self.session = session
 
     async def send_message(self, request):

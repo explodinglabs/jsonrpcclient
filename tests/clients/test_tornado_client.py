@@ -36,7 +36,7 @@ class TestTornadoClient(testing.AsyncHTTPTestCase):
         return web.Application([("/echo", EchoHandler), ("/fail", FailureHandler)])
 
     def setUp(self):
-        super(TestTornadoClient, self).setUp()
+        super().setUp()
         # Patch Request.id_generator to ensure the id is always 1
         Request.id_generator = itertools.count(1)
 

@@ -14,7 +14,7 @@ class WebSocketsClient(AsyncClient):
         :param *args: Passed through to Client class.
         :param **kwargs: Passed through to Client class.
         """
-        super(WebSocketsClient, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.socket = socket
 
     async def send_message(self, request, **kwargs):

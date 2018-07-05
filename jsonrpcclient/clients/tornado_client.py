@@ -32,7 +32,7 @@ class TornadoClient(AsyncClient):
     DEFAULT_HEADERS = {"Content-Type": "application/json", "Accept": "application/json"}
 
     def __init__(self, *args, async_http_client=None, **kwargs):
-        super(TornadoClient, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.http_client = async_http_client or AsyncHTTPClient()
 
     async def send_message(self, request, **kwargs):

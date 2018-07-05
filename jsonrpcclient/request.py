@@ -134,5 +134,5 @@ class Request(Notification):
         else:  # Get the next id from the generator
             id_ = next(id_generator or self.id_generator)
         # We call super last, after popping the request_id
-        super(Request, self).__init__(method, *args, **kwargs)
+        super().__init__(method, *args, **kwargs)
         self.update(id=id_)

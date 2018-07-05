@@ -24,7 +24,7 @@ class HTTPClient(Client):
         :param endpoint: The server address.
         :param **kwargs: Pased through to the Client class.
         """
-        super(HTTPClient, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         # Make use of Requests' sessions feature
         self.session = Session()
         self.session.headers.update(self.DEFAULT_HEADERS)
