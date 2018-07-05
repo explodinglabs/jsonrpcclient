@@ -17,12 +17,11 @@ client::
 from functools import partial
 
 from tornado.httpclient import AsyncHTTPClient
-from tornado.concurrent import Future
 
-from .client import Client
+from .async_client import AsyncClient
 
 
-class TornadoClient(Client):
+class TornadoClient(AsyncClient):
     """
     :param endpoint: The server address.
     :param async_http_client_class: Tornado asynchronous HTTP client class.
@@ -35,23 +34,7 @@ class TornadoClient(Client):
         super(TornadoClient, self).__init__(*args, **kwargs)
         self.http_client = async_http_client or AsyncHTTPClient()
 
-    def _request_sent(self, future, response):
-        """Callback when request has been sent"""
-        if response.error:
-            future.set_exception(response.error)
-        else:
-            future.set_result(
-                self.process_response(
-                    response.body.decode(),
-                    {
-                        "http_code": response.code,
-                        "http_reason": response.reason,
-                        "http_headers": response.headers,
-                    },
-                )
-            )
-
-    def send_message(self, request, **kwargs):
+    async def send_message(self, request, **kwargs):
         """
         Transport the message to the server and return the response.
 
@@ -62,13 +45,14 @@ class TornadoClient(Client):
         headers = dict(self.DEFAULT_HEADERS)
         headers.update(kwargs.pop("headers", {}))
 
-        future = Future()
-        self.http_client.fetch(
-            self.endpoint,
-            method="POST",
-            body=request,
-            headers=headers,
-            callback=partial(self._request_sent, future),
-            **kwargs
+        response = await self.http_client.fetch(
+            self.endpoint, method="POST", body=request, headers=headers, **kwargs
         )
-        return future
+
+        # Note: Tornado adds it's own logger handlers, so the following log format isn't
+        # used, unless Tornado's handlers are disabled.
+        return self.process_response(
+            response.body.decode(),
+            log_extra={"http_code": response.code, "http_reason": response.reason},
+            log_format="<-- %(message)s (%(http_code)s %(http_reason)s)",
+        )
