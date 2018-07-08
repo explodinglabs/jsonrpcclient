@@ -6,7 +6,7 @@
 - Remove jsonrpcclient.request. Import jsonrpcclient.clients.http_client.request instead.
 - Remove jsonrpcclient.Request and Notification. Import
   jsonrpcclient.request.Request and Notification instead.
-- Change code python 3 style, remove future and past.builtins. Change super
+- Change code to python 3 style: remove future and past.builtins. Change super
   calls to just super(). Change basestring to str. (#71)
 - Move all client modules into a `clients` subpackage. Import from
   jsonrpcclient.clients. (#83)
