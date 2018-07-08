@@ -4,10 +4,9 @@ import pkg_resources
 
 import click
 
-from jsonrpcclient import request, notify
 from jsonrpcclient.request import Request, Notification
 from jsonrpcclient.exceptions import JsonRpcClientError
-from jsonrpcclient.clients.http_client import HTTPClient
+from jsonrpcclient.clients.http_client import HTTPClient, request, notify
 
 
 version = pkg_resources.require("jsonrpcclient")[0].version
