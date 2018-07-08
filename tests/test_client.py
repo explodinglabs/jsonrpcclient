@@ -6,7 +6,8 @@ import json
 from jsonschema import ValidationError
 from testfixtures import LogCapture
 
-from jsonrpcclient import Request, exceptions
+from jsonrpcclient import exceptions
+from jsonrpcclient.request import Request
 from jsonrpcclient.client import Client
 
 

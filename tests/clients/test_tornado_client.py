@@ -4,7 +4,7 @@ from unittest.mock import patch
 
 from tornado import testing, web, httpclient
 
-from jsonrpcclient import Request
+from jsonrpcclient.request import Request
 from jsonrpcclient.clients.tornado_client import TornadoClient
 
 

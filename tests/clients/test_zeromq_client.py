@@ -5,7 +5,7 @@ from unittest import TestCase
 import zmq
 from mock import patch, Mock
 
-from jsonrpcclient import Request
+from jsonrpcclient.request import Request
 from jsonrpcclient.clients.zeromq_client import ZeroMQClient
 
 
