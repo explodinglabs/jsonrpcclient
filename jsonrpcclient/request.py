@@ -8,7 +8,6 @@ To create a request::
 """
 import json
 from collections import OrderedDict
-from future.utils import with_metaclass
 
 from . import ids
 
@@ -54,7 +53,7 @@ class _RequestClassType(type):
         return attr_handler
 
 
-class Notification(with_metaclass(_RequestClassType, dict)):
+class Notification(dict, metaclass=_RequestClassType):
     """
     A request which does not expect a response.
 

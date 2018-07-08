@@ -3,9 +3,7 @@ import json
 import logging
 import pkgutil
 from abc import ABCMeta, abstractmethod
-from past.builtins import basestring
 
-from future.utils import with_metaclass
 import jsonschema
 
 from . import exceptions, ids
@@ -14,7 +12,7 @@ from .prepared_request import PreparedRequest
 from .request import Notification, Request
 
 
-class Client(with_metaclass(ABCMeta, object)):
+class Client(metaclass=ABCMeta):
     """
     Protocol-agnostic base class for clients.
 
@@ -57,7 +55,7 @@ class Client(with_metaclass(ABCMeta, object)):
         # Add the endpoint to the log entry
         extra.update({"endpoint": self.endpoint})
         # Clean up the message for logging
-        if isinstance(message, basestring):
+        if isinstance(message, str):
             message = message.replace("\n", "").replace("  ", " ").replace("{ ", "{")
         log_(log, level, message, extra=extra, fmt=fmt, trim=trim)
 
@@ -110,7 +108,7 @@ class Client(with_metaclass(ABCMeta, object)):
                 response, log_extra, log_format, trim=self.trim_log_values
             )
             # If it's a json string, parse to object
-            if isinstance(response, basestring):
+            if isinstance(response, str):
                 try:
                     response = json.loads(response)
                 except ValueError:

@@ -1,6 +1,5 @@
 """Prepared request."""
 import json
-from past.builtins import basestring
 
 
 class PreparedRequest(str):
@@ -16,14 +15,14 @@ class PreparedRequest(str):
     def __new__(cls, request):
         # Convert a list of strings, to one string
         if isinstance(request, list) and all(
-            isinstance(i, basestring) for i in request
+            isinstance(i, str) for i in request
         ):
             request = "[{}]".format(", ".join(request))
         # Convert a json-serializable object (dict or list) to a string
-        if not isinstance(request, basestring):
+        if not isinstance(request, str):
             request = json.dumps(request)
         # Should end up with a string
-        assert isinstance(request, basestring)
+        assert isinstance(request, str)
         return str.__new__(cls, request)
 
     def __init__(self, request):
