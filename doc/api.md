@@ -13,14 +13,20 @@ options](examples.html)):
 $ pip install "jsonrpcclient[requests]"
 ```
 
+For Python versions 2.7-3.4, install a 2.x version.
+
+```sh
+$ pip install "jsonrpcclient[requests]"==2.* # 2.\* works in my shell
+```
+
 ## Sending a request
 
 If using HTTP, the easiest way to send a request is using the convenience
 methods:
 
 ```python
->>> import jsonrpcclient
->>> jsonrpcclient.request('http://cats.com', 'speak')
+>>> from jsonrpcclient.clients import http_client
+>>> http_client.request("http://cats.com", "speak")
 'meow'
 ```
 
@@ -30,7 +36,7 @@ call. Subsequent arguments are arguments to the method.
 Use `notify` instead of `request` to signify that no response is required:
 
 ```python
->>> jsonrpcclient.notify('http://cats.com', 'speak')
+>>> http_client.notify('http://cats.com', 'speak')
 --> {"jsonrpc": "2.0", "method": "speak"}
 <--
 >>>
@@ -137,9 +143,9 @@ hexadecimal, random and uuid. Default is *ids.decimal()*.
 
 Example:
 ```python
->>> from jsonrpcclient import request, ids
+>>> from jsonrpcclient import ids
 >>> random_ids = ids.random()
->>> request("http://localhost:5000", "ping", id_generator=random_ids)
+>>> client.request("ping", id_generator=random_ids)
 --> {"jsonrpc": "2.0", "method": "ping", "id": "9zo2a2xb"}
 ```
 
