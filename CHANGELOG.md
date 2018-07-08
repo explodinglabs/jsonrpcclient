@@ -1,7 +1,25 @@
 # jsonrpcclient Change Log
 
-## 2.6.1 (Jul 4, 2018)
-- Add new params to configure the client, these replace the config module.
+## 3.0.0 (Jul 8, 2018)
+This version supports Python 3.5+ only. Users of Python versions below 3.5
+should continue to use the 2.x releases.
+
+Changes:
+
+- Change super calls to just super() (py3 style). (#71)
+- Move clients into a `clients` subpackage. (#83)
+- Remove zmq_client module, use zeromq_client instead. (#84)
+- HTTP clients raise an exception on non-200 status code response. (#67)
+- By convention, all Python exceptions should be named ending with "Error".
+      Rename ReceivedErrorResponse to RecievedErrorResponseError. (#82)
+- Remove HTTPClient.last_request and last_response, they weren't used. (#27)
+- Update the Tornado client to subclass AsyncClient. (#44)
+- Remove headers from http_client's log entries, they weren't used.
+- Include http status code and reason in aiohttp log entries.
+- Rename aiohttpClient to AiohttpClient.
+- Remove the `*_server.py` files, which were deprecated. (#79)
+- Remove the config module. Add new params to configure the client, these
+      replace the config module. (#46)
 
 ## 2.6.0 (Jun 13, 2018)
 - Add command-line interface, see `jsonrpc --help` (#62)

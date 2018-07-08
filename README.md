@@ -10,8 +10,8 @@ pip install "jsonrpcclient[requests]"
 ```
 
 ```python
-import jsonrpcclient
-jsonrpcclient.request("http://cats.com", "speak")
+from jsonrpcclient.clients import http_client
+http_client.request("http://cats.com", "speak")
 ```
 
 Full documentation is at [jsonrpcclient.readthedocs.io](https://jsonrpcclient.readthedocs.io/).
