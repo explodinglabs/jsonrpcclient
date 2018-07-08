@@ -1,13 +1,11 @@
 # jsonrpcclient Change Log
 
 ## 3.0.0 (Jul 8, 2018)
-This version supports Python 3.5+ only. Users of Python versions below 3.5
-should continue to use the 2.x releases.
-
-Changes:
-
-- No longer importing Request and Notification in jsonrpcclient.__init__.
-  Import them from the module, jsonrpcclient.request.
+- The 3.x releases will be for Python 3.5+ only.
+- Remove the need for requests library to be installed, if not using it. (
+- Remove jsonrpcclient.request. Import jsonrpcclient.clients.http_client.request instead.
+- Remove jsonrpcclient.Request and Notification. Import
+  jsonrpcclient.request.Request and Notification instead.
 - Change code python 3 style, remove future and past.builtins. Change super
   calls to just super(). Change basestring to str. (#71)
 - Move all client modules into a `clients` subpackage. Import from
