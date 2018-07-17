@@ -1,16 +1,26 @@
 import json
-from unittest import TestCase
-from jsonrpcclient.log import trim_message
+import logging
+from unittest.mock import patch, Mock
+from jsonrpcclient.log import configure_logger, trim_message
 
 
-class TestTrim(TestCase):
+class TestConfigureLogger():
+    def test(self):
+        configure_logger(Mock(level=logging.NOTSET), "%s")
+
+    @patch("jsonrpcclient.log.logging.root.handlers", None)
+    def test_no_handlers(self, *_):
+        configure_logger(Mock(level=logging.NOTSET, handlers=None), "%s")
+
+
+class TestTrimMessage():
     def test_string_abbreviation(self):
         message = trim_message("blah" * 100)
-        self.assertIn("...", message)
+        assert "..." in message
 
     def test_list_abbreviation(self):
         message = trim_message(json.dumps({"list": [0] * 100}))
-        self.assertIn("...", message)
+        assert "..." in message
 
     def test_nested_abbreviation(self):
         message = trim_message(
@@ -24,4 +34,4 @@ class TestTrim(TestCase):
                 }
             )
         )
-        self.assertIn("...", json.loads(message)["obj"]["obj2"]["string2"])
+        assert "..." in json.loads(message)["obj"]["obj2"]["string2"]

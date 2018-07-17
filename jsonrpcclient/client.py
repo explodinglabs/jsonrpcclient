@@ -6,7 +6,7 @@ from abc import ABCMeta, abstractmethod
 
 import jsonschema
 
-from . import exceptions, ids
+from . import exceptions
 from .log import log_
 from .prepared_request import PreparedRequest
 from .request import Notification, Request

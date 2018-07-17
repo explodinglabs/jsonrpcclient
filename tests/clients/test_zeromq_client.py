@@ -1,6 +1,6 @@
 import itertools
 import json
-from unittest import TestCase
+import pytest
 
 import zmq
 from mock import patch, Mock
@@ -9,8 +9,8 @@ from jsonrpcclient.request import Request
 from jsonrpcclient.clients.zeromq_client import ZeroMQClient
 
 
-class TestZeroMQClient(TestCase):
-    def setUp(self):
+class TestZeroMQClient():
+    def setup_method(self):
         # Patch Request.id_generator to ensure the request id is always 1
         Request.id_generator = itertools.count(1)
 
@@ -37,5 +37,5 @@ class TestZeroMQClient(TestCase):
         client.socket.setsockopt(zmq.RCVTIMEO, 5)
         client.socket.setsockopt(zmq.SNDTIMEO, 5)
         client.socket.setsockopt(zmq.LINGER, 5)
-        with self.assertRaises(zmq.error.ZMQError):
+        with pytest.raises(zmq.error.ZMQError):
             client.send_message(str(Request("go")))

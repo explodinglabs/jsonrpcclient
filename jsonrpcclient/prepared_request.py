@@ -6,17 +6,15 @@ class PreparedRequest(str):
     """
     Encapsulate and validate a request prior to sending.
 
-    This object can be passed around subsequent methods. Subclasses of Client
-    can add to it, or set the log format/extra info to include.
+    This object can be passed around subsequent methods. Subclasses of Client can add to
+    it, or set the log format/extra info to include.
 
     Converts some non-string requests to string.
     """
 
     def __new__(cls, request):
         # Convert a list of strings, to one string
-        if isinstance(request, list) and all(
-            isinstance(i, str) for i in request
-        ):
+        if isinstance(request, list) and all(isinstance(i, str) for i in request):
             request = "[{}]".format(", ".join(request))
         # Convert a json-serializable object (dict or list) to a string
         if not isinstance(request, str):

@@ -138,13 +138,13 @@ Most public methods can take the following optional parameters:
 **id_generator**
 
 Specifies a generator which will be used to create the "id" part of the
-JSON-RPC request. Some built-in options are in the ids module: decimal,
-hexadecimal, random and uuid. Default is *ids.decimal()*.
+JSON-RPC request. Some built-in options are in the id_generators module:
+decimal, hexadecimal, random and uuid. Default is *id_generators.decimal()*.
 
 Example:
 ```python
->>> from jsonrpcclient import ids
->>> random_ids = ids.random()
+>>> from jsonrpcclient import id_generators
+>>> random_ids = id_generators.random()
 >>> client.request("ping", id_generator=random_ids)
 --> {"jsonrpc": "2.0", "method": "ping", "id": "9zo2a2xb"}
 ```

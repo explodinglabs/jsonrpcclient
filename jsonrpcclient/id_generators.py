@@ -56,24 +56,3 @@ def uuid():
     """
     while True:
         yield str(uuid4())
-
-
-def from_config(setting):
-    """
-    Returns an iterator, based on a configuration setting.
-
-    For example, the setting 'decimal' returns the decimal id generator.
-
-    :param setting: The configuration setting describing the generator to use.
-    """
-    # Create iterator based on config setting
-    if setting == "decimal":
-        return decimal()
-    elif setting == "hex":
-        return hexadecimal()
-    elif setting == "random":
-        return random()
-    elif setting == "uuid":
-        return uuid()
-    else:
-        raise ValueError("Unknown ids config setting")

@@ -1,6 +1,5 @@
 """
-Exceptions
-**********
+Exceptions.
 
 These exceptions are raised when processing responses from the server. For
 example, if the response was garbage and could not be parsed,

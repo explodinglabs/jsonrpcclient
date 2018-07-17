@@ -12,8 +12,8 @@ class ZeroMQAsyncClient(AsyncClient):
     :param *args: Passed through to Client class.
     :param **kwargs: Passed through to Client class.
     """
-    def __init__(self, endpoint, *args, socket_type=zmq.REQ, **kwargs):
-        super().__init__(endpoint, *args, **kwargs)
+    def __init__(self, *args, socket_type=zmq.REQ, **kwargs):
+        super().__init__(*args, **kwargs)
         self.context = zmq.asyncio.Context()
         self.socket = self.context.socket(socket_type)
         self.socket.connect(endpoint)

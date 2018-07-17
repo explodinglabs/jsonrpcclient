@@ -1,10 +1,11 @@
 import json
 import itertools
-from unittest.mock import patch
+from unittest.mock import patch, Mock
 
 from tornado import testing, web, httpclient
 
 from jsonrpcclient.request import Request
+from jsonrpcclient.exceptions import ReceivedNon2xxResponseError
 from jsonrpcclient.clients.tornado_client import TornadoClient
 
 
@@ -31,38 +32,29 @@ class FailureHandler(web.RequestHandler):
         raise web.HTTPError(request["params"]["code"])
 
 
-class TestTornadoClient(testing.AsyncHTTPTestCase):
-    def get_app(self):
-        return web.Application([("/echo", EchoHandler), ("/fail", FailureHandler)])
-
-    def setUp(self):
-        super().setUp()
+class Test(testing.AsyncHTTPTestCase):
+    def setup_method(self, *_):
         # Patch Request.id_generator to ensure the id is always 1
         Request.id_generator = itertools.count(1)
+
+    def get_app(self):
+        return web.Application([("/echo", EchoHandler), ("/fail", FailureHandler)])
 
     @patch("jsonrpcclient.client.Client.request_log")
     @patch("jsonrpcclient.client.Client.response_log")
     @testing.gen_test
-    def test_success(self, *_):
-        client = TornadoClient(self.get_url("/echo"))
-        response = yield client.some_method(1, [2], {"3": 4, "5": True, "6": None})
-        self.assertEqual([1, [2], {"3": 4, "6": None, "5": True}], response)
-
-    @patch("jsonrpcclient.client.Client.request_log")
-    @testing.gen_test
-    def test_failure(self, *_):
-        client = TornadoClient(self.get_url("/fail"))
-        with self.assertRaises(httpclient.HTTPError) as ctx:
-            yield client.fail(code=500)
-        self.assertEqual("HTTP 500: Internal Server Error", str(ctx.exception))
+    def test_request(self, *_):
+        result = yield TornadoClient(self.get_url("/echo")).request(
+            "some_method", 1, [2], {"3": 4, "5": True, "6": None}
+        )
+        assert result == [1, [2], {"3": 4, "6": None, "5": True}]
 
     @patch("jsonrpcclient.client.Client.request_log")
     @patch("jsonrpcclient.client.Client.response_log")
     @testing.gen_test
     def test_custom_headers(self, *_):
-        client = TornadoClient(self.get_url("/echo"))
-        response = yield client.send(
+        result = yield TornadoClient(self.get_url("/echo")).send(
             Request("some_method", 1, [2], {"3": 4, "5": True, "6": None}),
             headers={"foo": "bar"},
         )
-        self.assertEqual([1, [2], {"3": 4, "6": None, "5": True}], response)
+        assert result == [1, [2], {"3": 4, "6": None, "5": True}]

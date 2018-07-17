@@ -1,7 +1,7 @@
-from unittest import TestCase
-from unittest.mock import patch
 import itertools
 import json
+import pytest
+from unittest.mock import patch
 
 from jsonschema import ValidationError
 from testfixtures import LogCapture
@@ -11,18 +11,21 @@ from jsonrpcclient.request import Request
 from jsonrpcclient.client import Client
 
 
+SENTINEL = object()
+
+
 class DummyClient(Client):
     """A dummy client for testing the abstract Client class"""
 
     def send_message(self, request):
-        return 15
+        return SENTINEL
 
 
-class TestSend(TestCase):
+class TestSend():
     @patch("jsonrpcclient.client.Client.request_log")
     def test(self, *_):
         result = DummyClient("foo").send({"jsonrpc": "2.0", "method": "out", "id": 1})
-        self.assertEqual(result, 15)
+        assert result == SENTINEL
 
     def test_trim_log_values(self):
         req = '{"jsonrpc": "2.0", "method": "go", "params": {"blah": "%s"}}' % (
@@ -39,66 +42,69 @@ class TestSend(TestCase):
         )
 
 
-class TestRequest(TestCase):
+class TestRequest():
     @patch("jsonrpcclient.client.Client.request_log")
     def test(self, *_):
         result = DummyClient("foo").request("multiply", 3, 5)
-        self.assertEqual(result, 15)
+        assert result == SENTINEL
 
 
-class TestNotify(TestCase):
+class TestNotify():
     @patch("jsonrpcclient.client.Client.request_log")
     def test(self, *_):
         result = DummyClient("foo").notify("multiply", 3, 5)
-        self.assertEqual(result, 15)
+        assert result == SENTINEL
 
 
-class TestDirect(TestCase):
+class TestDirect():
     @patch("jsonrpcclient.client.Client.request_log")
     def test_alternate_usage(self, *_):
         result = DummyClient("foo").multiply(3, 5)
-        self.assertEqual(result, 15)
+        assert result == SENTINEL
 
 
-class TestProcessResponse(TestCase):
+class TestProcessResponse():
+    def setup_method(self):
+        pass
+
     @patch("jsonrpcclient.client.Client.request_log")
     def test_none(self, *_):
         result = DummyClient("foo").process_response(None)
-        self.assertEqual(result, None)
+        assert result == None
 
     def test_empty_string(self):
         result = DummyClient("foo").process_response("")
-        self.assertEqual(result, None)
+        assert result == None
 
     @patch("jsonrpcclient.client.Client.response_log")
     def test_valid_json(self, *_):
         result = DummyClient("foo").process_response(
             {"jsonrpc": "2.0", "result": 5, "id": 1}
         )
-        self.assertEqual(result, 5)
+        assert result == 5
 
     @patch("jsonrpcclient.client.Client.response_log")
     def test_valid_json_null_id(self, *_):
         result = DummyClient("foo").process_response(
             {"jsonrpc": "2.0", "result": 5, "id": None}
         )
-        self.assertEqual(result, 5)
+        assert result == 5
 
     @patch("jsonrpcclient.client.Client.response_log")
     def test_valid_string(self, *_):
         result = DummyClient("foo").process_response(
             '{"jsonrpc": "2.0", "result": 5, "id": 1}'
         )
-        self.assertEqual(result, 5)
+        assert result == 5
 
     @patch("jsonrpcclient.client.Client.response_log")
     def test_invalid_json(self, *_):
-        with self.assertRaises(exceptions.ParseResponseError):
+        with pytest.raises(exceptions.ParseResponseError):
             DummyClient("foo").process_response("{dodgy}")
 
     @patch("jsonrpcclient.client.Client.response_log")
     def test_invalid_jsonrpc(self, *_):
-        with self.assertRaises(ValidationError):
+        with pytest.raises(ValidationError):
             DummyClient("foo").process_response({"json": "2.0"})
 
     @patch("jsonrpcclient.client.Client.response_log")
@@ -115,11 +121,11 @@ class TestProcessResponse(TestCase):
             "error": {"code": -32000, "message": "Not Found"},
             "id": None,
         }
-        with self.assertRaises(exceptions.ReceivedErrorResponseError) as ex:
+        with pytest.raises(exceptions.ReceivedErrorResponseError) as exc:
             DummyClient("foo").process_response(response)
-        self.assertEqual(ex.exception.code, -32000)
-        self.assertEqual(ex.exception.message, "Not Found")
-        self.assertEqual(ex.exception.data, None)
+        assert exc.value.code == -32000
+        assert exc.value.message == "Not Found"
+        assert exc.value.data == None
 
     @patch("jsonrpcclient.client.Client.response_log")
     def test_error_response_with_data(self, *_):
@@ -132,13 +138,11 @@ class TestProcessResponse(TestCase):
             },
             "id": None,
         }
-        with self.assertRaises(exceptions.ReceivedErrorResponseError) as ex:
+        with pytest.raises(exceptions.ReceivedErrorResponseError) as exc:
             DummyClient("foo").process_response(response)
-        self.assertEqual(ex.exception.code, -32000)
-        self.assertEqual(ex.exception.message, "Not Found")
-        self.assertEqual(
-            ex.exception.data, "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
-        )
+        assert exc.value.code == -32000
+        assert exc.value.message == "Not Found"
+        assert exc.value.data == "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
 
     @patch("jsonrpcclient.client.Client.response_log")
     def test_error_response_with_nonstring_data(self, *_):
@@ -148,11 +152,11 @@ class TestProcessResponse(TestCase):
             "error": {"code": -32000, "message": "Not Found", "data": {}},
             "id": None,
         }
-        with self.assertRaises(exceptions.ReceivedErrorResponseError) as ex:
+        with pytest.raises(exceptions.ReceivedErrorResponseError) as exc:
             DummyClient("foo").process_response(response)
-        self.assertEqual(ex.exception.code, -32000)
-        self.assertEqual(ex.exception.message, "Not Found")
-        self.assertEqual(ex.exception.data, {})
+        assert exc.value.code == -32000
+        assert exc.value.message == "Not Found"
+        assert exc.value.data == {}
 
     @patch("jsonrpcclient.client.Client.response_log")
     def test_batch(self, *_):
@@ -166,7 +170,7 @@ class TestProcessResponse(TestCase):
             },
         ]
         result = DummyClient("foo").process_response(response)
-        self.assertEqual(result, response)
+        assert result == response
 
     @patch("jsonrpcclient.client.Client.response_log")
     def test_batch_string(self, *_):
@@ -177,10 +181,10 @@ class TestProcessResponse(TestCase):
             '{"jsonrpc": "2.0", "error": {"code": -32000, "message": "Not Found"}, "id": 3}]'
         )
         result = DummyClient("foo").process_response(response)
-        self.assertEqual(result, json.loads(response))
+        assert result == json.loads(response)
 
 
-class TestLogRequest(TestCase):
+class TestLogRequest():
     def test(self, *_):
         with LogCapture() as capture:
             DummyClient("foo").log_request('{"jsonrpc": "2.0", "method": "go"}')
@@ -207,7 +211,7 @@ class TestLogRequest(TestCase):
         )
 
 
-class TestLogResponse(TestCase):
+class TestLogResponse():
     def test(self):
         with LogCapture() as capture:
             DummyClient("foo").log_response('{"jsonrpc": "2.0", "result": 5, "id": 1}')

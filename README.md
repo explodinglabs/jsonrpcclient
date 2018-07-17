@@ -20,7 +20,7 @@ Full documentation is at [jsonrpcclient.readthedocs.io](https://jsonrpcclient.re
 
 ```sh
 pip install "jsonrpcclient[unittest]"
-python -m unittest discover
+pytest
 ```
 
 See also: [jsonrpcserver](https://github.com/bcb/jsonrpcserver)

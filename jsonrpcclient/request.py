@@ -9,7 +9,7 @@ To create a request::
 import json
 from collections import OrderedDict
 
-from . import ids
+from . import id_generators
 
 
 def sort_request(req):
@@ -124,7 +124,7 @@ class Request(Notification):
     :returns: The JSON-RPC request in dictionary form.
     """
 
-    id_generator = ids.decimal()
+    id_generator = id_generators.decimal()
 
     def __init__(self, method, *args, id_generator=None, **kwargs):
         # If 'request_id' is passed, use the specified id

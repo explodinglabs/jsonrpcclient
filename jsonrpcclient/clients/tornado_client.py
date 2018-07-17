@@ -14,26 +14,23 @@ client::
 
     ioloop.IOLoop.instance().run_sync(test)
 """
-from functools import partial
-
 from tornado.httpclient import AsyncHTTPClient
 
 from ..async_client import AsyncClient
-from ..exceptions import ReceivedNon2xxResponseError
 
 
 class TornadoClient(AsyncClient):
     """
     :param endpoint: The server address.
-    :param async_http_client_class: Tornado asynchronous HTTP client class.
+    :param client: Tornado asynchronous HTTP client.
     :param kwargs: Keyword arguments to pass to the client initialiser.
     """
 
     DEFAULT_HEADERS = {"Content-Type": "application/json", "Accept": "application/json"}
 
-    def __init__(self, *args, async_http_client=None, **kwargs):
+    def __init__(self, *args, client=None, **kwargs):
         super().__init__(*args, **kwargs)
-        self.http_client = async_http_client or AsyncHTTPClient()
+        self.client = client or AsyncHTTPClient()
 
     async def send_message(self, request, **kwargs):
         """
@@ -46,12 +43,12 @@ class TornadoClient(AsyncClient):
         headers = dict(self.DEFAULT_HEADERS)
         headers.update(kwargs.pop("headers", {}))
 
-        response = await self.http_client.fetch(
+        response = await self.client.fetch(
             self.endpoint, method="POST", body=request, headers=headers, **kwargs
         )
 
-        if not 200 <= response.code <= 299:
-            raise ReceivedNon2xxResponseError(response.status_code)
+        # Note: Tornado raises its own HTTP response status code exceptions, so no need
+        # to raise ReceivedNon2xxResponseError here.
 
         # Note: Tornado adds it's own logger handlers, so the following log format isn't
         # used, unless Tornado's handlers are disabled.

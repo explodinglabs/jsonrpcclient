@@ -1,5 +1,5 @@
 import itertools
-from unittest import TestCase
+import pytest
 from unittest.mock import patch
 from collections import namedtuple
 from testfixtures import LogCapture, StringComparison
@@ -7,14 +7,15 @@ from testfixtures import LogCapture, StringComparison
 import requests
 import responses
 
-from jsonrpcclient import ids
+from jsonrpcclient import id_generators
+from jsonrpcclient.exceptions import ReceivedNon2xxResponseError
 from jsonrpcclient.request import Request
 from jsonrpcclient.prepared_request import PreparedRequest
 from jsonrpcclient.clients.http_client import HTTPClient, request, notify
 
 
-class TestHTTPClient(TestCase):
-    def setUp(self):
+class TestHTTPClient():
+    def setup_method(self):
         # Patch Request.id_generator to ensure the id is always 1
         Request.id_generator = itertools.count(1)
 
@@ -25,61 +26,47 @@ class TestHTTPClient(TestCase):
     def test_init_default_headers(self):
         client = HTTPClient("http://test/")
         # Default headers
-        self.assertEqual("application/json", client.session.headers["Content-Type"])
-        self.assertEqual("application/json", client.session.headers["Accept"])
+        assert client.session.headers["Content-Type"] == "application/json"
+        assert client.session.headers["Accept"] == "application/json"
         # Ensure the Requests default_headers are also there
-        self.assertIn("Connection", client.session.headers)
+        assert "Connection" in client.session.headers
 
     def test_init_custom_headers(self):
         client = HTTPClient("http://test/")
         client.session.headers["Content-Type"] = "application/json-rpc"
         # Header set by argument
-        self.assertEqual("application/json-rpc", client.session.headers["Content-Type"])
+        assert client.session.headers["Content-Type"] == "application/json-rpc"
         # Header set by DEFAULT_HEADERS
-        self.assertEqual("application/json", client.session.headers["Accept"])
+        assert client.session.headers["Accept"] == "application/json"
         # Header set by Requests default_headers
-        self.assertIn("Connection", client.session.headers)
-
-    def test_send_custom_headers(self):
-        client = HTTPClient("http://test/")
-        client.session.headers["Content-Type"] = "application/json-rpc"
-        request = PreparedRequest(Request("go"))
-        client.prepare_request(request)
-        with self.assertRaises(requests.exceptions.RequestException):
-            client.send_message(request)
-        # Header set by argument
-        self.assertEqual(
-            "application/json-rpc", request.prepped.headers["Content-Type"]
-        )
-        # Header set by DEFAULT_HEADERS
-        self.assertEqual("application/json", request.prepped.headers["Accept"])
-        # Header set by Requests default_headers
-        self.assertIn("Content-Length", request.prepped.headers)
+        assert "Connection" in client.session.headers
 
     @staticmethod
     def test_init_custom_auth():
         HTTPClient("http://test/")
 
 
-class TestHTTPClientSendMessage(TestCase):
-    def setUp(self):
+class TestHTTPClientSendMessage():
+    def setup_method(self):
         # Patch Request.id_iterator to ensure the id is always 1
         Request.id_iterator = itertools.count(1)
 
     # send_message
+    @responses.activate
     def test_body(self):
         client = HTTPClient("http://test/")
         request = PreparedRequest(Request("go"))
         client.prepare_request(request)
-        with self.assertRaises(requests.exceptions.RequestException):
+        with pytest.raises(requests.exceptions.RequestException):
             client.send_message(request)
-        self.assertEqual(request, request.prepped.body)
+        assert request.prepped.body == request
 
+    @responses.activate
     def test_connection_error(self):
         client = HTTPClient("http://test/")
         request = PreparedRequest(Request("go"))
         client.prepare_request(request)
-        with self.assertRaises(requests.exceptions.RequestException):
+        with pytest.raises(requests.exceptions.RequestException):
             client.send_message(request)
 
     @responses.activate
@@ -94,8 +81,14 @@ class TestHTTPClientSendMessage(TestCase):
             status=400,
             body=requests.exceptions.InvalidSchema(),
         )
-        with self.assertRaises(requests.exceptions.InvalidSchema):
+        with pytest.raises(requests.exceptions.InvalidSchema):
             client.send_message(request)
+
+    @responses.activate
+    def test_non_2xx_response_error(self):
+        responses.add(responses.POST, "http://test/", status=404)
+        with pytest.raises(ReceivedNon2xxResponseError):
+            HTTPClient("http://test/").request("go")
 
     @staticmethod
     @responses.activate
@@ -112,38 +105,36 @@ class TestHTTPClientSendMessage(TestCase):
         )
         client.send_message(request)
 
+    @responses.activate
     def test_custom_headers(self):
         client = HTTPClient("http://test/")
         request = PreparedRequest(Request("go"))
         client.prepare_request(
             request, headers={"Content-Type": "application/json-rpc"}
         )
-        with self.assertRaises(requests.exceptions.RequestException):
+        with pytest.raises(requests.exceptions.RequestException):
             client.send_message(request)
         # Header set by argument
-        self.assertEqual(
-            "application/json-rpc", request.prepped.headers["Content-Type"]
-        )
+        assert request.prepped.headers["Content-Type"] == "application/json-rpc"
         # Header set by DEFAULT_HEADERS
-        self.assertEqual("application/json", request.prepped.headers["Accept"])
+        assert request.prepped.headers["Accept"] == "application/json"
         # Header set by Requests default_headers
-        self.assertIn("Content-Length", request.prepped.headers)
+        assert "Content-Length" in request.prepped.headers
 
+    @responses.activate
     def test_custom_headers_in_both(self):
         client = HTTPClient("http://test/")
         client.session.headers["Content-Type"] = "application/json-rpc"
         request = PreparedRequest(Request("go"))
         client.prepare_request(request, headers={"Accept": "application/json-rpc"})
-        with self.assertRaises(requests.exceptions.RequestException):
+        with pytest.raises(requests.exceptions.RequestException):
             client.send_message(request)
         # Header set by argument
-        self.assertEqual(
-            "application/json-rpc", request.prepped.headers["Content-Type"]
-        )
+        assert request.prepped.headers["Content-Type"] == "application/json-rpc"
         # Header set by DEFAULT_HEADERS
-        self.assertEqual("application/json-rpc", request.prepped.headers["Accept"])
+        assert request.prepped.headers["Accept"] == "application/json-rpc"
         # Header set by Requests default_headers
-        self.assertIn("Content-Length", request.prepped.headers)
+        assert "Content-Length" in request.prepped.headers
 
     def test_ssl_verification(self):
         client = HTTPClient("https://test/")
@@ -151,19 +142,21 @@ class TestHTTPClientSendMessage(TestCase):
         client.session.verify = "ca-cert"
         request = PreparedRequest(Request("go"))
         client.prepare_request(request)
-        with self.assertRaises(OSError):  # Invalid certificate
+        with pytest.raises(OSError):  # Invalid certificate
             client.send_message(request)
 
 
 Resp = namedtuple("Response", ("text", "reason", "headers", "status_code"))
 
 
-class TestRequest(TestCase):
+class TestRequest():
     @patch("jsonrpcclient.client.Client.request_log")
-    @patch("jsonrpcclient.clients.http_client.HTTPClient.send_message", return_value="bar")
+    @patch(
+        "jsonrpcclient.clients.http_client.HTTPClient.send_message", return_value="bar"
+    )
     def test(self, *_):
         result = request("http://foo", "foo")
-        self.assertEqual(result, "bar")
+        assert result == "bar"
 
     @patch("jsonrpcclient.client.Client.response_log")
     @patch(
@@ -204,7 +197,7 @@ class TestRequest(TestCase):
     )
     def test_id_generator(self, *_):
         with LogCapture() as capture:
-            result = request("http://foo", "foo", id_generator=ids.random())
+            result = request("http://foo", "foo", id_generator=id_generators.random())
         capture.check(
             (
                 "jsonrpcclient.client.request",
@@ -216,12 +209,14 @@ class TestRequest(TestCase):
         )
 
 
-class TestNotify(TestCase):
+class TestNotify():
     @patch("jsonrpcclient.client.Client.request_log")
-    @patch("jsonrpcclient.clients.http_client.HTTPClient.send_message", return_value="bar")
+    @patch(
+        "jsonrpcclient.clients.http_client.HTTPClient.send_message", return_value="bar"
+    )
     def test(self, *_):
         result = notify("http://foo", "foo")
-        self.assertEqual(result, "bar")
+        assert result == "bar"
 
     @patch("jsonrpcclient.client.Client.response_log")
     @patch(

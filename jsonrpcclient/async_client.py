@@ -1,8 +1,7 @@
 """
 Asynchronous client.
 
-Abstract base class for other asynchronous clients such as WebSockets, ZeroMQ
-and aiohttp.
+Abstract base class for other asynchronous clients such as aiohttp, WebSockets & ZeroMQ.
 """
 from abc import ABCMeta, abstractmethod
 
