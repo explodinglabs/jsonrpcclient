@@ -1,6 +1,6 @@
 # jsonrpcclient Change Log
 
-## 3.0.0 (Jul 8, 2018)
+## 3.0.0 (Coming soon, now in master branch)
 - The 3.x releases will be for Python 3.5+ only.
 - Remove the need for requests library to be installed, if not using it. (#85)
 - Remove jsonrpcclient.request. Import jsonrpcclient.clients.http_client.request instead.
