@@ -1,6 +1,8 @@
 ![PyPI](https://img.shields.io/pypi/v/jsonrpcclient.svg)
 ![Coverage Status](https://coveralls.io/repos/github/bcb/jsonrpcclient/badge.svg?branch=master)
 
+*Version 3 coming soon, see [changelog](https://github.com/bcb/jsonrpcclient/blob/master/CHANGELOG.md).*
+
 # jsonrpcclient
 
 Send [JSON-RPC](http://www.jsonrpc.org/) requests in Python.
