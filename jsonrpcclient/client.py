@@ -1,15 +1,13 @@
 """Abstract base class for various clients."""
 import colorlog  # type: ignore
 import json
-import logging
 from abc import ABCMeta, abstractmethod
 from typing import Any, Callable, Dict, Iterator, List, Optional, Union
 
-from . import exceptions
 from .log import log_
+from .parse import parse
 from .request import Notification, Request
 from .response import Response
-from .parse import parse
 
 
 request_log = colorlog.getLogger(__name__ + ".request")
@@ -20,9 +18,7 @@ class Client(metaclass=ABCMeta):
     """
     Protocol-agnostic base class for clients.
 
-    Subclasses should inherit and override ``send_message``.
-
-    :param endpoint: The server address.
+    Subclasses should inherit and override `send_message`.
     """
 
     def __init__(

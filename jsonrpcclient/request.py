@@ -8,7 +8,7 @@ To create a request::
 """
 import json
 from collections import OrderedDict
-from typing import Any, Callable, Dict, Iterator, List, Union
+from typing import Any, Callable, Dict, Iterator, List
 
 from . import id_generators
 

@@ -9,7 +9,7 @@ Uses the `Requests <http://docs.python-requests.org/en/master/>`_ library.
 """
 from typing import Any, Iterable
 
-from requests import Request, Session
+from requests import Session
 
 from ..client import Client
 from ..exceptions import ReceivedNon2xxResponseError

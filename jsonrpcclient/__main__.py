@@ -1,7 +1,7 @@
 # /usr/bin/env python
 import sys
 import pkg_resources
-from typing import Any, Optional, Iterator
+from typing import Any
 
 import click
 
