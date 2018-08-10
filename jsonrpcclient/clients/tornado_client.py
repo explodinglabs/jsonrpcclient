@@ -3,16 +3,7 @@ Tornado Client
 **************
 
 Represents an endpoint to communicate with using Tornado asynchronous HTTP
-client::
-
-    from tornado import ioloop
-
-    async def test():
-        client = TornadoClient('http://example.com/api')
-        result = await yield client.some_method(42)
-        print(result)
-
-    ioloop.IOLoop.instance().run_sync(test)
+client.
 """
 from tornado.httpclient import AsyncHTTPClient
 
@@ -24,10 +15,6 @@ class TornadoClient(AsyncClient):
     """
     Note: Tornado raises its own HTTP response status code exceptions, so there's no
     need to raise ReceivedNon2xxResponseError.
-
-    :param endpoint: The server address.
-    :param client: Tornado asynchronous HTTP client.
-    :param kwargs: Keyword arguments to pass to the client initialiser.
     """
 
     DEFAULT_HEADERS = {"Content-Type": "application/json", "Accept": "application/json"}
@@ -49,13 +36,6 @@ class TornadoClient(AsyncClient):
         )
 
     async def send_message(self, request, **kwargs):
-        """
-        Transport the message to the server and return the response.
-
-        :param request: The JSON-RPC request string.
-        :param kwargs: Keyword arguments to the Tornado request.
-        :return: The response (a string for requests, None for notifications).
-        """
         headers = dict(self.DEFAULT_HEADERS)
         headers.update(kwargs.pop("headers", {}))
 
