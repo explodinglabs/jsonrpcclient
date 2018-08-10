@@ -9,7 +9,8 @@ A ZeroMQ client to send requests::
 
 import zmq
 
-from jsonrpcclient.client import Client
+from ..client import Client
+from ..response import Response
 
 
 class ZeroMQClient(Client):
