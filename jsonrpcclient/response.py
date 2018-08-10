@@ -1,4 +1,5 @@
-from typing import Any
+from typing import Any, List, Optional, Union
+
 from .parse import JSONRPCResponse
 
 
@@ -17,14 +18,17 @@ class Response:
         """
         self.text = text
         self.raw = raw
-        self.data = None
+        self.data = (
+            None
+        )  # type: Optional[Union[JSONRPCResponse, List[JSONRPCResponse]]]
 
-    def total_results(self, *, ok: bool =True) -> int:
+    def total_results(self, *, ok: bool = True) -> int:
         if isinstance(self.data, list):
-            return sum([1 for d in self.data if d.ok==ok])
+            return sum([1 for d in self.data if d.ok == ok])
         elif isinstance(self.data, JSONRPCResponse):
-            return int(self.data.ok==ok)
+            return int(self.data.ok == ok)
         else:
+            # The data hasn't been parsed yet, the data attribute has not been set.
             return 0
 
     def __repr__(self) -> str:

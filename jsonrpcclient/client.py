@@ -1,5 +1,5 @@
 """Abstract base class for various clients."""
-import colorlog
+import colorlog  # type: ignore
 import json
 import logging
 from abc import ABCMeta, abstractmethod

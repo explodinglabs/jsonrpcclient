@@ -2,7 +2,7 @@
 import json
 import logging
 from typing import List, Dict, Optional, Union, Any, cast
-import colorlog
+import colorlog  # type: ignore
 
 
 def configure_logger(logger: logging.Logger, fmt: str) -> None:
