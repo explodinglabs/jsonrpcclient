@@ -9,6 +9,7 @@ from . import exceptions
 from .log import log_
 from .request import Notification, Request
 from .response import Response
+from .parse import parse
 
 
 request_log = colorlog.getLogger(__name__ + ".request")
@@ -46,7 +47,7 @@ class Client(metaclass=ABCMeta):
         self,
         request: str,
         fmt: str = "%(log_color)s\u27f6 %(message)s",
-        trim: Optional[bool] = None,
+        trim: bool = False,
         **kwargs: Any
     ) -> None:
         """
@@ -54,8 +55,6 @@ class Client(metaclass=ABCMeta):
 
         :param request: The JSON-RPC request string.
         """
-        if trim is None:
-            trim = self.trim_log_values
         return log_(request, request_log, fmt=fmt, trim=trim, **kwargs)
 
     def log_response(
@@ -73,8 +72,6 @@ class Client(metaclass=ABCMeta):
 
         :param response: Response object.
         """
-        if trim is None:
-            trim = self.trim_log_values
         return log_(response.text, response_log, fmt=fmt, trim=trim, **kwargs)
 
     @abstractmethod
@@ -132,7 +129,9 @@ class Client(metaclass=ABCMeta):
         response = self.send_message(request_text, **kwargs)
         self.log_response(response, trim=trim_log_values)
         self.validate_response(response)
-        response.parse(validate_against_schema=self.validate_against_schema)
+        response.data = parse(
+            response.text, validate_against_schema=self.validate_against_schema
+        )
         return response
 
     def notify(

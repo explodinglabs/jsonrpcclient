@@ -58,7 +58,7 @@ class TestSendMessage:
             status=200,
             body='{"jsonrpc": "2.0", "result": 5, "id": 1}',
         )
-        HTTPClient("http://foo").send_message(Request("foo"))
+        HTTPClient("http://foo").send_message(str(Request("foo")))
 
     @responses.activate
     def test_non_2xx_response_error(self):

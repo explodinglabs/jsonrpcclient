@@ -44,21 +44,6 @@ class TestLogRequest:
             )
         )
 
-    def test_trim_passed_to_client(self):
-        """Pass trim=True to the Client class"""
-        req = '{"jsonrpc": "2.0", "method": "go", "params": {"blah": "%s"}}' % (
-            "blah" * 100,
-        )
-        with LogCapture() as capture:
-            DummyClient("foo", trim_log_values=True).log_request(req)
-        capture.check(
-            (
-                "jsonrpcclient.client.request",
-                "INFO",
-                StringComparison(r".*blahblahbl...ahblahblah.*"),
-            )
-        )
-
     def test_untrimmed(self):
         """Should not trim"""
         req = '{"jsonrpc": "2.0", "method": "go", "params": {"blah": "%s"}}' % (
@@ -98,6 +83,19 @@ class TestLogResponse:
                 "jsonrpcclient.client.response",
                 "INFO",
                 StringComparison(r".*blahblahbl...ahblahblah.*"),
+            )
+        )
+
+    def test_untrimmed(self):
+        """Should not trim"""
+        res = '{"jsonrpc": "2.0", "result": {"blah": "%s"}}' % ("blah" * 100,)
+        with LogCapture() as capture:
+            DummyClient("foo").log_response(Response(res))
+        capture.check(
+            (
+                "jsonrpcclient.client.response",
+                "INFO",
+                StringComparison(r".*" + "blah" * 100 + ".*"),
             )
         )
 
