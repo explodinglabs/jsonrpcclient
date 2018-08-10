@@ -7,6 +7,8 @@ For example::
 
 Uses the `Requests <http://docs.python-requests.org/en/master/>`_ library.
 """
+from typing import Any, Iterable
+
 from requests import Request, Session
 
 from ..client import Client
@@ -20,7 +22,7 @@ class HTTPClient(Client):
     # The default HTTP header
     DEFAULT_HEADERS = {"Content-Type": "application/json", "Accept": "application/json"}
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         """
         :param endpoint: The server address.
         :param **kwargs: Pased through to the Client class.
@@ -30,33 +32,37 @@ class HTTPClient(Client):
         self.session = Session()
         self.session.headers.update(self.DEFAULT_HEADERS)
 
-    def log_response(self, response):
+    def log_response(
+        self, response: Response, fmt: str = None, trim: bool = False, **kwargs: Any
+    ) -> None:
         super().log_response(
             response,
-            fmt="<-- %(message)s (%(http_code)s %(http_reason)s)",
             extra={
-                "http_code": response.raw.status_code,
-                "http_reason": response.raw.reason,
+                "http_code": response.raw.status_code,  # type: ignore
+                "http_reason": response.raw.reason,  # type: ignore
             },
+            fmt="<-- %(message)s (%(http_code)s %(http_reason)s)",
+            trim=trim,
+            **kwargs
         )
 
-    def validate_response(self, response):
-        if not 200 <= response.raw.status_code <= 299:
-            raise ReceivedNon2xxResponseError(response.raw.status_code)
+    def validate_response(self, response: Response) -> None:
+        if not 200 <= response.raw.status_code <= 299:  # type: ignore
+            raise ReceivedNon2xxResponseError(response.raw.status_code)  # type: ignore
 
-    def send_message(self, request, **kwargs):
-        response = self.session.post(self.endpoint, data=request, **kwargs)
+    def send_message(self, request: str, **kwargs: Any) -> Response:
+        response = self.session.post(self.endpoint, data=request.encode(), **kwargs)
         return Response(response.text, raw=response)
 
 
 def notify(
-    endpoint,
-    method,
-    *args,
-    trim_log_values=False,
-    validate_against_schema=True,
-    **kwargs
-):
+    endpoint: str,
+    method: str,
+    *args: Any,
+    trim_log_values: bool = False,
+    validate_against_schema: bool = True,
+    **kwargs: Any
+) -> Response:
     """
     Convenience function - instantiates and executes a HTTPClient to perform a request,
     then throws it away.
@@ -69,14 +75,14 @@ def notify(
 
 
 def request(
-    endpoint,
-    method,
-    *args,
-    id_generator=None,
-    trim_log_values=False,
-    validate_against_schema=True,
-    **kwargs
-):
+    endpoint: str,
+    method: str,
+    *args: Any,
+    id_generator: Iterable[Any] = None,
+    trim_log_values: bool = False,
+    validate_against_schema: bool = True,
+    **kwargs: Any
+) -> Response:
     """
     Convenience function - instantiates and executes a HTTPClient to perform a request,
     then throws it away.

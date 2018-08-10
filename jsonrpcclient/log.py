@@ -1,9 +1,10 @@
 """Logging"""
 import json
 import logging
+from typing import List, Dict, Optional, Union, Any, cast
 
 
-def configure_logger(logger, fmt):
+def configure_logger(logger: logging.Logger, fmt: str) -> None:
     """
     Set up a logger, if no handler has been configured for it.
 
@@ -17,7 +18,7 @@ def configure_logger(logger, fmt):
         logger.addHandler(handler)
 
 
-def _trim_string(message):
+def _trim_string(message: str) -> str:
     longest_string = 30
 
     if len(message) > longest_string:
@@ -28,7 +29,7 @@ def _trim_string(message):
     return message
 
 
-def _trim_values(message_obj):
+def _trim_dict(message_obj: Dict[str, Any]) -> Dict[str, Any]:
     result = {}
     longest_list = 30
     for k, val in message_obj.items():
@@ -37,15 +38,23 @@ def _trim_values(message_obj):
         elif isinstance(val, list) and len(val) > longest_list:
             prefix_len = int(longest_list / 3)
             suffix_len = prefix_len
-            result[k] = val[:prefix_len] + ["..."] + val[-suffix_len:]
+            result[k] = cast(str, val[:prefix_len] + ["..."] + val[-suffix_len:])
         elif isinstance(val, dict):
-            result[k] = _trim_values(val)
+            result[k] = cast(str, _trim_values(val))
         else:
             result[k] = val
     return result
 
 
-def trim_message(message):
+def _trim_values(message_obj: Union[Dict, List]) -> Union[Dict, List]:
+    # Batch?
+    if isinstance(message_obj, list):
+        return [_trim_dict(i) for i in message_obj]
+    else:
+        return _trim_dict(message_obj)
+
+
+def trim_message(message: str) -> str:
     try:
         message_obj = json.loads(message)
         return json.dumps(_trim_values(message_obj))
@@ -53,7 +62,14 @@ def trim_message(message):
         return _trim_string(str(message))
 
 
-def log_(message, logger, level="info", extra=None, fmt="%(message)s", trim=False):
+def log_(
+    message: str,
+    logger: logging.Logger,
+    level: str = "info",
+    extra: Optional[Dict] = None,
+    fmt: str = "%(message)s",
+    trim: bool = False,
+) -> None:
     """
     Log a request or response
 

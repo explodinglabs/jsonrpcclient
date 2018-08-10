@@ -24,13 +24,13 @@ class JsonRpcClientError(Exception):
 class ParseResponseError(JsonRpcClientError):
     """The response was not valid JSON."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("The response was not valid JSON")
 
 
 class ReceivedNon2xxResponseError(JsonRpcClientError):
     """The response was not valid JSON."""
 
-    def __init__(self, status_code):
+    def __init__(self, status_code: int) -> None:
         super().__init__("Received {} status code".format(status_code))
         self.code = status_code

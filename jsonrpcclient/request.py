@@ -8,11 +8,12 @@ To create a request::
 """
 import json
 from collections import OrderedDict
+from typing import Any, Callable, Dict, Iterator, List, Union
 
 from . import id_generators
 
 
-def sort_request(req):
+def sort_request(req: Dict[str, Any]) -> OrderedDict:
     """
     Sort a JSON-RPC request dict.
 
@@ -36,7 +37,7 @@ class _RequestClassType(type):
     Catches undefined attributes on the class.
     """
 
-    def __getattr__(cls, name):
+    def __getattr__(cls, name: str) -> Callable:
         """
         This gives us an alternate way to make a request::
 
@@ -47,14 +48,14 @@ class _RequestClassType(type):
         explained here: http://code.activestate.com/recipes/307618/
         """
 
-        def attr_handler(*args, **kwargs):
+        def attr_handler(*args: Any, **kwargs: Any) -> Request:
             """Return the request using the specified method name."""
             return cls(name, *args, **kwargs)
 
         return attr_handler
 
 
-class Notification(dict, metaclass=_RequestClassType):
+class Notification(dict, metaclass=_RequestClassType):  # type: ignore
     """
     A request which does not expect a response.
 
@@ -83,29 +84,29 @@ class Notification(dict, metaclass=_RequestClassType):
     :returns: The JSON-RPC request in dictionary form.
     """
 
-    def __init__(self, method, *args, **kwargs):
+    def __init__(self, method: str, *args: Any, **kwargs: Any) -> None:
         # Start the basic request
         self.update(jsonrpc="2.0", method=method)
-        # Get the 'params' part
-        # Merge the positional and keyword arguments into one list
-        params = list()
+        # Build the 'params' part. Merge the positional and keyword arguments into one
+        # list.
+        params_list = [] # type: List
         if args:
-            params.extend(args)
+            params_list.extend(args)
         if kwargs:
-            params.append(kwargs)
-        if params:
-            # The 'params' can be either "by-position" (a list) or "by-name" (a
-            # dict). If there's only one list or dict in the params list, take
-            # it out of the enclosing list, ie. [] instead of [[]], {} instead
-            # of [{}].
-            if len(params) == 1 and (
-                isinstance(params[0], dict) or isinstance(params[0], list)
+            params_list.append(kwargs)
+        # Add the params to self.
+        if params_list:
+            # The 'params' can be either "by-position" (a list) or "by-name" (a dict).
+            # If there's only one list or dict in the params list, take it out of the
+            # enclosing list, ie. [] instead of [[]], {} instead of [{}].
+            if len(params_list) == 1 and (
+                isinstance(params_list[0], dict) or isinstance(params_list[0], list)
             ):
-                params = params[0]
-            # Add the params to the request
-            self.update(params=params)
+                self.update(params=params_list[0])
+            else:
+                self.update(params=params_list)
 
-    def __str__(self):
+    def __str__(self) -> str:
         """Wrapper around request, returning a string instead of a dict"""
         return json.dumps(sort_request(self))
 
@@ -127,7 +128,9 @@ class Request(Notification):
 
     id_generator = id_generators.decimal()
 
-    def __init__(self, method, *args, id_generator=None, **kwargs):
+    def __init__(
+        self, method: str, *args: Any, id_generator: Iterator[Any] = None, **kwargs: Any
+    ) -> None:
         # If 'request_id' is passed, use the specified id
         if "request_id" in kwargs:
             id_ = kwargs.pop("request_id", None)

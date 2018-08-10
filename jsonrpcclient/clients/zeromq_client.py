@@ -6,8 +6,8 @@ A ZeroMQ client to send requests::
 
     ZMQClient('tcp://hostname:5555').request('go')
 """
-
-import zmq
+import zmq  # type: ignore
+from typing import Any
 
 from ..client import Client
 from ..response import Response
@@ -21,13 +21,15 @@ class ZeroMQClient(Client):
     :param **kwargs: Passed through to Client class.
     """
 
-    def __init__(self, endpoint, *args, socket_type=zmq.REQ, **kwargs):
+    def __init__(
+        self, endpoint: str, *args: Any, socket_type: int = zmq.REQ, **kwargs: Any
+    ) -> None:
         super().__init__(endpoint, *args, **kwargs)
         self.context = zmq.Context()
         self.socket = self.context.socket(socket_type)
         self.socket.connect(endpoint)
 
-    def send_message(self, request):
+    def send_message(self, request: str, **kwargs: Any) -> Response:
         """
         Transport the message to the server and return the response.
 

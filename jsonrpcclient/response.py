@@ -1,78 +1,14 @@
 import json
 import logging
+from pkg_resources import resource_string
+from typing import Any, Optional, Dict, Union, List
 
-import jsonschema
-import pkgutil
+import jsonschema  # type: ignore
 
 from . import exceptions
 
 
-response_schema = json.loads(pkgutil.get_data(__name__, "response-schema.json"))
-
-
-def parse(response_text, validate_against_schema=True):
-    """
-    Parses response text, returning JSONRPCResponse objects.
-
-    :type response_text: String.
-    :raises ParseResponseError: The response was not valid JSON.
-    :raises ValidationError: The response was not a valid JSON-RPC response object.
-    """
-    if response_text:
-        # If a string, ensure it's json-decodable
-        try:
-            decoded = json.loads(response_text)
-        except ValueError:
-            raise exceptions.ParseResponseError()
-        # Validate the response against the Response schema (raises
-        # jsonschema.ValidationError if invalid)
-        if validate_against_schema:
-            jsonschema.validate(decoded, response_schema)
-
-        # Return a Response object, or a list of Responses in the case of a batch
-        # request.
-        if isinstance(decoded, list):
-            return [JSONRPCResponse(decoded) for r in decoded]
-        else:
-            return JSONRPCResponse(decoded)
-    else:
-        return JSONRPCResponse(None)
-
-
-class Response:
-    """
-    Wraps a response from any client.
-
-    >>> Response(response.text, raw=response)
-    """
-
-    def __init__(self, text, raw=None):
-        """
-        :param text: The response string.
-        :param raw: The client's own response object. Gives the user access to the
-            client framework. (optional)
-        """
-        self.text = text
-        self.raw = raw
-        self.data = None
-
-    @property
-    def total(self):
-        if isinstance(self.data, list):
-            return len(self.data)
-        elif isinstance(self.data, JSONRPCResponse):
-            return 1
-        else:
-            return 0
-
-    def __repr__(self):
-        return "<Response(text=%s bytes, data=%d objects>" % (
-            len(self.text) if self.text else "None",
-            self.total,
-        )
-
-    def parse(self, validate_against_schema=True):
-        self.data = parse(self.text, validate_against_schema=validate_against_schema)
+response_schema = json.loads(resource_string(__name__, "response-schema.json").decode())
 
 
 class JSONRPCResponse:
@@ -90,12 +26,12 @@ class JSONRPCResponse:
 
     def __init__(
         self,
-        response,
-        validate_against_schema=True,
-        log_extra=None,
-        log_format=None,
-        trim_log_values=False,
-    ):
+        response: Optional[Dict],
+        validate_against_schema: bool = True,
+        log_extra: Optional[Dict] = None,
+        log_format: Optional[str] = None,
+        trim_log_values: bool = False,
+    ) -> None:
         """
         Provides attributes representing the response.
 
@@ -120,10 +56,77 @@ class JSONRPCResponse:
             self.id = None
             self.result = None
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         if self.ok:
             return "<JSONRPCResponse(id={}, result={})>".format(self.id, self.result)
         else:
             return '<JSONRPCResponse(id={}, message="{}")>'.format(
                 self.id, self.message
             )
+
+
+def parse(
+    response_text: str, validate_against_schema: bool = True
+) -> Union[JSONRPCResponse, List[JSONRPCResponse]]:
+    """
+    Parses response text, returning JSONRPCResponse objects.
+
+    :type response_text: String.
+    :raises ParseResponseError: The response was not valid JSON.
+    :raises ValidationError: The response was not a valid JSON-RPC response object.
+    """
+    if response_text:
+        # If a string, ensure it's json-decodable
+        try:
+            decoded = json.loads(response_text)
+        except ValueError:
+            raise exceptions.ParseResponseError()
+        # Validate the response against the Response schema (raises
+        # jsonschema.ValidationError if invalid)
+        if validate_against_schema:
+            jsonschema.validate(decoded, response_schema)
+
+        # Return a Response object, or a list of Responses in the case of a batch
+        # request.
+        if isinstance(decoded, list):
+            return [JSONRPCResponse(r) for r in decoded]
+        else:
+            return JSONRPCResponse(decoded)
+    else:
+        return JSONRPCResponse(None)
+
+
+class Response:
+    """
+    Wraps a response from any client.
+
+    >>> Response(response.text, raw=response)
+    """
+
+    def __init__(self, text: str, raw: Any = None) -> None:
+        """
+        :param text: The response string.
+        :param raw: The client's own response object. Gives the user access to the
+            client framework. (optional)
+        """
+        self.text = text
+        self.raw = raw
+        #self.data = None
+
+    @property
+    def total(self) -> int:
+        if isinstance(self.data, list):
+            return len(self.data)
+        elif isinstance(self.data, JSONRPCResponse):
+            return 1
+        else:
+            return 0
+
+    def __repr__(self) -> str:
+        return "<Response(text=%s bytes, data=%d objects>" % (
+            len(self.text) if self.text else "None",
+            self.total,
+        )
+
+    def parse(self, validate_against_schema: bool = True) -> None:
+        self.data = parse(self.text, validate_against_schema=validate_against_schema)

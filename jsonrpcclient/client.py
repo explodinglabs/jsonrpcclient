@@ -2,7 +2,7 @@
 import json
 import logging
 from abc import ABCMeta, abstractmethod
-
+from typing import Any, Callable, Dict, Iterator, List, Union
 
 from . import exceptions
 from .log import log_
@@ -25,11 +25,11 @@ class Client(metaclass=ABCMeta):
 
     def __init__(
         self,
-        endpoint,
-        id_generator=None,
-        trim_log_values=False,
-        validate_against_schema=True,
-    ):
+        endpoint: str,
+        id_generator: Iterator[Any] = None,
+        trim_log_values: bool = False,
+        validate_against_schema: bool = True,
+    ) -> None:
         """
         :param endpoint: Holds the server address.
         :param id_generator: 
@@ -41,7 +41,13 @@ class Client(metaclass=ABCMeta):
         self.trim_log_values = trim_log_values
         self.validate_against_schema = validate_against_schema
 
-    def log_request(self, request, fmt="--> %(message)s", trim=None, **kwargs):
+    def log_request(
+        self,
+        request: str,
+        fmt: str = "--> %(message)s",
+        trim: bool = None,
+        **kwargs: Any
+    ) -> None:
         """
         Log a request.
 
@@ -50,7 +56,13 @@ class Client(metaclass=ABCMeta):
         trim = trim or self.trim_log_values
         return log_(request, request_log, fmt=fmt, trim=trim, **kwargs)
 
-    def log_response(self, response, fmt="<-- %(message)s", trim=None, **kwargs):
+    def log_response(
+        self,
+        response: Response,
+        fmt: str = "<-- %(message)s",
+        trim: bool = False,
+        **kwargs: Any
+    ) -> None:
         """
         Log a response.
 
@@ -63,32 +75,33 @@ class Client(metaclass=ABCMeta):
         return log_(response.text, response_log, fmt=fmt, trim=trim, **kwargs)
 
     @abstractmethod
-    def send_message(self, request, **kwargs):
+    def send_message(self, request: str, **kwargs: Any) -> Response:
         """
         Transport the request to the server.
 
         Override this method in the protocol-specific subclasses.
 
-        :param request: A JSON-RPC request, in dict format.
-        :returns: The processed response - for requests, it will be the result
-        part of the response, None for notifications, or an entire jsonrpc
-        response for batch requests.
+        :param request: A JSON-RPC request.
+        :returns: Response object.
         """
 
-    def validate_response(self, response):
-        """Can be overridden to validate the response"""
+    def validate_response(self, response: Response) -> None:
+        """
+        Can be overridden for custom validation of the response.
+
+        Raise an exception to fail validation.
+        """
         pass
 
-    def send(self, request, **kwargs):
+    def send(self, request: Union[str, Dict, List], **kwargs: Any) -> Response:
         """
         Send a request, passing the whole JSON-RPC request object.
+
+        After sending, logs, validates and parses.
 
         >>> client.send('{"jsonrpc": "2.0", "method": "ping", "id": 1}')
         --> {"jsonrpc": "2.0", "method": "ping", "id": 1}
         <-- {"jsonrpc": "2.0", "result": "pong", "id": 1}
-        'pong'
-
-        Also logs and validates
 
         :param request: The JSON-RPC request.
         :type request: Either a JSON-encoded string or a Request/Notification object.
@@ -101,18 +114,18 @@ class Client(metaclass=ABCMeta):
             in the case of a Notification.
         """
         # Convert to string
-        if isinstance(request, Notification):  # Includes Requests
-            request = str(request)
-        elif not isinstance(request, str):
-            request = json.dumps(request)
-        self.log_request(request)
-        response = self.send_message(request, **kwargs)
+        if isinstance(request, str):
+            request_text = request
+        else:
+            request_text = json.dumps(request)
+        self.log_request(request_text)
+        response = self.send_message(request_text, **kwargs)
         self.log_response(response)
         self.validate_response(response)
         response.parse(validate_against_schema=self.validate_against_schema)
         return response
 
-    def notify(self, method_name, *args, **kwargs):
+    def notify(self, method_name: str, *args: Any, **kwargs: Any) -> Response:
         """
         Send a JSON-RPC request, without expecting a response.
 
@@ -123,7 +136,7 @@ class Client(metaclass=ABCMeta):
         """
         return self.send(Notification(method_name, *args, **kwargs))
 
-    def request(self, method_name, *args, **kwargs):
+    def request(self, method_name: str, *args: Any, **kwargs: Any) -> Response:
         """
         Send a request by passing the method and arguments.
 
@@ -143,7 +156,7 @@ class Client(metaclass=ABCMeta):
             Request(method_name, *args, id_generator=self.id_generator, **kwargs)
         )
 
-    def __getattr__(self, name):
+    def __getattr__(self, name: str) -> Callable:
         """
         This gives us an alternate way to make a request::
 
@@ -153,7 +166,7 @@ class Client(metaclass=ABCMeta):
         That's the same as saying ``client.request("cube", 3)``.
         """
 
-        def attr_handler(*args, **kwargs):
+        def attr_handler(*args: Any, **kwargs: Any) -> Response:
             """Call self.request from here"""
             return self.request(name, *args, **kwargs)
 

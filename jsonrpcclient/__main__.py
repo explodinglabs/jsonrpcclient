@@ -1,6 +1,7 @@
 # /usr/bin/env python
 import sys
 import pkg_resources
+from typing import Any, Optional, Iterator
 
 import click
 
@@ -26,7 +27,9 @@ version = pkg_resources.require("jsonrpcclient")[0].version
 @click.version_option(prog_name="jsonrpcclient", version=version)
 @click.argument("method", required=True, metavar="METHOD [PARAMS]...")
 @click.pass_context
-def main(context, method, request_type, id, send):
+def main(
+    context: click.core.Context, method: str, request_type: str, id: Any, send: bool
+) -> None:
     """
     Create a JSON-RPC request.
     """
@@ -38,7 +41,7 @@ def main(context, method, request_type, id, send):
     if request_type == "notify":
         req = Notification(method, *positional, **named)
     else:
-        req = Request(method, request_id=id, *positional, **named)
+        req = Request(method, *positional, request_id=id, **named) # type: ignore
     # Sending?
     if send:
         client = HTTPClient(send)
@@ -48,7 +51,7 @@ def main(context, method, request_type, id, send):
             click.echo(str(e), err=True)
             exit_status = 1
         else:
-            click.echo(response)
+            click.echo(response.text)
     # Otherwise, simply output the JSON-RPC request.
     else:
         click.echo(str(req))

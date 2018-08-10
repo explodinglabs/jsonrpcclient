@@ -5,7 +5,10 @@ Tornado Client
 Represents an endpoint to communicate with using Tornado asynchronous HTTP
 client.
 """
-from tornado.httpclient import AsyncHTTPClient
+from typing import Any
+
+from tornado.httpclient import AsyncHTTPClient  # type: ignore
+from typing import Optional
 
 from ..async_client import AsyncClient
 from ..response import Response
@@ -19,23 +22,31 @@ class TornadoClient(AsyncClient):
 
     DEFAULT_HEADERS = {"Content-Type": "application/json", "Accept": "application/json"}
 
-    def __init__(self, *args, client=None, **kwargs):
+    def __init__(
+        self, *args: Any, client: Optional[AsyncHTTPClient] = None, **kwargs: Any
+    ) -> None:
         super().__init__(*args, **kwargs)
         self.client = client or AsyncHTTPClient()
 
-    def log_response(self, response):
-        # Note: Tornado adds it's own logger handlers, so the following log format isn't
-        # used, unless Tornado's handlers are disabled.
+    def log_response(
+        self, response: Response, fmt: str = None, trim: bool = False, **kwargs: Any
+    ) -> None:
+        # Note: Tornado adds it's own log handlers, so the following log format isn't
+        # used unless Tornado's handlers are disabled.
         super().log_response(
             response,
-            fmt="<-- %(message)s (%(http_code)s %(http_reason)s)",
             extra={
-                "http_code": response.raw.code,
-                "http_reason": response.raw.reason,
+                "http_code": response.raw.code,  # type: ignore
+                "http_reason": response.raw.reason,  # type: ignore
             },
+            fmt="<-- %(message)s (%(http_code)s %(http_reason)s)",
+            trim=trim,
+            **kwargs,
         )
 
-    async def send_message(self, request, **kwargs):
+    async def send_message(  # type: ignore
+        self, request: str, **kwargs: Any
+    ) -> Response:
         headers = dict(self.DEFAULT_HEADERS)
         headers.update(kwargs.pop("headers", {}))
 

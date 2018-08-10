@@ -1,6 +1,8 @@
 """ZeroMQ Client"""
-import zmq
-import zmq.asyncio
+from typing import Any
+
+import zmq  # type: ignore
+import zmq.asyncio  # type: ignore
 
 from ..async_client import AsyncClient
 from ..response import Response
@@ -13,13 +15,16 @@ class ZeroMQAsyncClient(AsyncClient):
     :param *args: Passed through to Client class.
     :param **kwargs: Passed through to Client class.
     """
-    def __init__(self, *args, socket_type=zmq.REQ, **kwargs):
+
+    def __init__(
+        self, endpoint: str, *args: Any, socket_type: int = zmq.REQ, **kwargs: Any
+    ) -> None:
         super().__init__(*args, **kwargs)
         self.context = zmq.asyncio.Context()
         self.socket = self.context.socket(socket_type)
         self.socket.connect(endpoint)
 
-    async def send_message(self, request, **kwargs):
+    async def send_message(self, request: str, **kwargs: Any) -> Response:  # type: ignore
         await self.socket.send_multipart((request.encode(),))
         response = await self.socket.recv_multipart()
         return Response(response[0].decode(), raw=response)

@@ -8,9 +8,10 @@ import itertools
 from random import choice
 from string import digits, ascii_lowercase
 from uuid import uuid4
+from typing import Iterator
 
 
-def decimal(start=1):
+def decimal(start: int = 1) -> Iterator[int]:
     """
     Increments from ``start``.
 
@@ -21,7 +22,7 @@ def decimal(start=1):
     return itertools.count(start)
 
 
-def hexadecimal(start=1):
+def hexadecimal(start: int = 1) -> Iterator[str]:
     """
     Incremental hexadecimal numbers.
 
@@ -34,7 +35,7 @@ def hexadecimal(start=1):
         start += 1
 
 
-def random(length=8, chars=digits + ascii_lowercase):
+def random(length: int = 8, chars: str = digits + ascii_lowercase) -> Iterator[str]:
     """
     A random string.
 
@@ -48,7 +49,7 @@ def random(length=8, chars=digits + ascii_lowercase):
         yield "".join([choice(chars) for _ in range(length)])
 
 
-def uuid():
+def uuid() -> Iterator[str]:
     """
     Unique uuid ids.
 
