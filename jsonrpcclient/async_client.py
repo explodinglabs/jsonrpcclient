@@ -7,19 +7,26 @@ from abc import ABCMeta, abstractmethod
 
 from .client import Client
 from .request import Request, Notification
-from .prepared_request import PreparedRequest
+from .response import Response
 
 
 class AsyncClient(Client, metaclass=ABCMeta):
     @abstractmethod
     async def send_message(self, request, **kwargs):
-        """(Abstract)"""
+        """Override to transport the request"""
 
     async def send(self, request, **kwargs):
-        request = PreparedRequest(request)
-        self.prepare_request(request, **kwargs)
-        self.log_request(request, request.log_extra, request.log_format)
-        return await self.send_message(request, **kwargs)
+        # Convert to string
+        if isinstance(request, Notification):  # Includes Requests
+            request = str(request)
+        elif not isinstance(request, str):
+            request = json.dumps(request)
+        self.log_request(request)
+        response = await self.send_message(request, **kwargs)
+        self.log_response(response)
+        self.validate_response(response)
+        response.parse(validate_against_schema=self.validate_against_schema)
+        return response
 
     async def notify(self, method_name, *args, **kwargs):
         return await self.send(Notification(method_name, *args, **kwargs))

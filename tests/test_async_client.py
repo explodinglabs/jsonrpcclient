@@ -1,10 +1,12 @@
 import pytest
+
 from jsonrpcclient.async_client import AsyncClient
+from jsonrpcclient.response import Response
 
 
 class DummyClient(AsyncClient):
     async def send_message(self, request, **kwargs):
-        pass
+        return Response(None)
 
 
 class Test():

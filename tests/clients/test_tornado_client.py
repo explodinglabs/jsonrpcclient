@@ -40,21 +40,21 @@ class Test(testing.AsyncHTTPTestCase):
     def get_app(self):
         return web.Application([("/echo", EchoHandler), ("/fail", FailureHandler)])
 
-    @patch("jsonrpcclient.client.Client.request_log")
-    @patch("jsonrpcclient.client.Client.response_log")
+    @patch("jsonrpcclient.client.request_log")
+    @patch("jsonrpcclient.client.response_log")
     @testing.gen_test
     def test_request(self, *_):
-        result = yield TornadoClient(self.get_url("/echo")).request(
-            "some_method", 1, [2], {"3": 4, "5": True, "6": None}
+        response = yield TornadoClient(self.get_url("/echo")).request(
+            "foo", 1, [2], {"3": 4, "5": True, "6": None}
         )
-        assert result == [1, [2], {"3": 4, "6": None, "5": True}]
+        assert response.data.result == [1, [2], {"3": 4, "6": None, "5": True}]
 
-    @patch("jsonrpcclient.client.Client.request_log")
-    @patch("jsonrpcclient.client.Client.response_log")
+    @patch("jsonrpcclient.client.request_log")
+    @patch("jsonrpcclient.client.response_log")
     @testing.gen_test
     def test_custom_headers(self, *_):
-        result = yield TornadoClient(self.get_url("/echo")).send(
-            Request("some_method", 1, [2], {"3": 4, "5": True, "6": None}),
+        response = yield TornadoClient(self.get_url("/echo")).send(
+            Request("foo", 1, [2], {"3": 4, "5": True, "6": None}),
             headers={"foo": "bar"},
         )
-        assert result == [1, [2], {"3": 4, "6": None, "5": True}]
+        assert response.data.result == [1, [2], {"3": 4, "6": None, "5": True}]

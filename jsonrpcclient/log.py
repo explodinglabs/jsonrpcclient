@@ -53,13 +53,18 @@ def trim_message(message):
         return _trim_string(str(message))
 
 
-def log_(logger, level, message, *args, **kwargs):
+def log_(message, logger, level="info", extra=None, fmt="%(message)s", trim=False):
     """
-    Log a message.
+    Log a request or response
+
+    :param message: JSON-RPC request or response string.
     """
-    fmt = kwargs.pop("fmt", "%(message)s")
-    trim = kwargs.pop("trim", False)
+    if extra is None:
+        extra = {}
+    # Clean up the message for logging
+    if message:
+        message = message.replace("\n", "").replace("  ", " ").replace("{ ", "{")
     if trim:
         message = trim_message(message)
     configure_logger(logger, fmt)
-    getattr(logger, level)(message, *args, **kwargs)
+    getattr(logger, level)(message, extra=extra)

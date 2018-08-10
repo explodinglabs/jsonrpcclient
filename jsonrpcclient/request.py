@@ -37,7 +37,8 @@ class _RequestClassType(type):
     """
 
     def __getattr__(cls, name):
-        """This gives us an alternate way to make a request::
+        """
+        This gives us an alternate way to make a request::
 
             >>> Request.cat()
             {'jsonrpc': '2.0', 'method': 'cat', 'id': 1}

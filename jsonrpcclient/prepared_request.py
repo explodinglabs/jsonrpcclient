@@ -25,7 +25,6 @@ class PreparedRequest(str):
 
     def __init__(self, request):
         super().__init__()
-        #: Extra details used in log entry, can be set by clients in
-        #: prepare_request
+        #: Extra details used in log entry, can be set by clients in prepare_request
         self.log_extra = None
         self.log_format = None

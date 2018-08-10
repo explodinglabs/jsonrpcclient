@@ -34,5 +34,4 @@ class ZeroMQClient(Client):
         :return: The response (a string for requests, None for notifications).
         """
         self.socket.send_string(request)
-        response = self.socket.recv().decode()
-        return self.process_response(response)
+        return self.socket.recv().decode()

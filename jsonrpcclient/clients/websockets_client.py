@@ -19,5 +19,4 @@ class WebSocketsClient(AsyncClient):
 
     async def send_message(self, request, **kwargs):
         await self.socket.send(request)
-        response = await self.socket.recv()
-        return self.process_response(response)
+        return await self.socket.recv()

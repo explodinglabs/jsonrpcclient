@@ -26,7 +26,7 @@ class TestZeroMQClient():
             ).encode("utf-8")
         ),
     )
-    @patch("jsonrpcclient.client.Client.response_log")
+    @patch("jsonrpcclient.client.response_log")
     def test_send_message(self, *_):
         client = ZeroMQClient("tcp://localhost:5555")
         client.send_message(str(Request("go")))
