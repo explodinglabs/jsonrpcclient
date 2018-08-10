@@ -117,7 +117,7 @@ class TestRequest:
             (
                 "jsonrpcclient.client.request",
                 "INFO",
-                '{"jsonrpc": "2.0", "method": "foo", "params": {"blah": "blahblahbl...ahblahblah"}, "id": 1}',
+                StringComparison(r".*blahblahbl...ahblahblah.*"),
             )
         )
 
@@ -138,9 +138,7 @@ class TestRequest:
             (
                 "jsonrpcclient.client.request",
                 "INFO",
-                StringComparison(
-                    r'{"jsonrpc": "2.0", "method": "foo", "id": "[a-z0-9]{8}"'
-                ),
+                StringComparison(r'.*"id": "[a-z0-9]{8}".*'),
             )
         )
 
@@ -174,6 +172,6 @@ class TestNotify:
             (
                 "jsonrpcclient.client.request",
                 "INFO",
-                '{"jsonrpc": "2.0", "method": "foo", "params": {"blah": "blahblahbl...ahblahblah"}}',
+                StringComparison(r'.*"blahblahbl...ahblahblah".*'),
             )
         )

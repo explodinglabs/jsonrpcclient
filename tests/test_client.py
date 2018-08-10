@@ -3,7 +3,7 @@ import json
 import pytest
 from unittest.mock import patch
 
-from testfixtures import LogCapture
+from testfixtures import LogCapture, StringComparison
 
 from jsonrpcclient import exceptions
 from jsonrpcclient.request import Request
@@ -40,7 +40,7 @@ class TestLogRequest:
             (
                 "jsonrpcclient.client.request",
                 "INFO",
-                '{"jsonrpc": "2.0", "method": "go", "params": {"blah": "blahblahbl...ahblahblah"}}',
+                StringComparison(r".*blahblahbl...ahblahblah.*"),
             )
         )
 
@@ -55,7 +55,7 @@ class TestLogRequest:
             (
                 "jsonrpcclient.client.request",
                 "INFO",
-                '{"jsonrpc": "2.0", "method": "go", "params": {"blah": "blahblahbl...ahblahblah"}}',
+                StringComparison(r".*blahblahbl...ahblahblah.*"),
             )
         )
 
@@ -70,7 +70,7 @@ class TestLogRequest:
             (
                 "jsonrpcclient.client.request",
                 "INFO",
-                '{"jsonrpc": "2.0", "method": "go", "params": {"blah": "%s"}}' % ("blah" * 100),
+                StringComparison(r".*" + "blah" * 100 + ".*"),
             )
         )
 
@@ -78,7 +78,9 @@ class TestLogRequest:
 class TestLogResponse:
     def test(self):
         with LogCapture() as capture:
-            DummyClient("foo").log_response(Response('{"jsonrpc": "2.0", "result": 5, "id": 1}'))
+            DummyClient("foo").log_response(
+                Response('{"jsonrpc": "2.0", "result": 5, "id": 1}')
+            )
         capture.check(
             (
                 "jsonrpcclient.client.response",
@@ -95,7 +97,7 @@ class TestLogResponse:
             (
                 "jsonrpcclient.client.response",
                 "INFO",
-                '{"jsonrpc": "2.0", "result": "blahblahbl...ahblahblah", "id": 1}',
+                StringComparison(r".*blahblahbl...ahblahblah.*"),
             )
         )
 
@@ -103,7 +105,9 @@ class TestLogResponse:
 class TestSend:
     @patch("jsonrpcclient.client.request_log")
     def test_json_encoded(self, *_):
-        response = DummyClient("foo").send('{"jsonrpc": "2.0", "method": "foo", "id": 1}')
+        response = DummyClient("foo").send(
+            '{"jsonrpc": "2.0", "method": "foo", "id": 1}'
+        )
         assert response.data.result == 1
 
     @patch("jsonrpcclient.client.request_log")
