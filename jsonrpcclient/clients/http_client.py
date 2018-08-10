@@ -45,17 +45,6 @@ class HTTPClient(Client):
             raise ReceivedNon2xxResponseError(response.raw.status_code)
 
     def send_message(self, request, **kwargs):
-        """
-        Transport the message to the server and return the response.
-
-        :param request: The JSON-RPC request string.
-        :param kwargs: Passed on to the requests lib's send function, for last minute
-            configuration (Optional)
-        :return: The JSON-RPC response.
-        :rtype: A string for requests, None for notifications.
-        :raise requests.exceptions.RequestException:
-            Raised by the requests module in the event of a communications error.
-        """
         response = self.session.post(self.endpoint, data=request, **kwargs)
         return Response(response.text, raw=response)
 

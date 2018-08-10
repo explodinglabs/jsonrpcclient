@@ -4,6 +4,7 @@ Websockets client.
 http://websockets.readthedocs.io/
 """
 from ..async_client import AsyncClient
+from ..response import Response
 
 
 class WebSocketsClient(AsyncClient):
@@ -19,4 +20,5 @@ class WebSocketsClient(AsyncClient):
 
     async def send_message(self, request, **kwargs):
         await self.socket.send(request)
-        return await self.socket.recv()
+        response_text = await self.socket.recv()
+        return Response(response_text)

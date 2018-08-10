@@ -3,6 +3,7 @@ import zmq
 import zmq.asyncio
 
 from ..async_client import AsyncClient
+from ..response import Response
 
 
 class ZeroMQAsyncClient(AsyncClient):
@@ -21,4 +22,4 @@ class ZeroMQAsyncClient(AsyncClient):
     async def send_message(self, request, **kwargs):
         await self.socket.send_multipart((request.encode(),))
         response = await self.socket.recv_multipart()
-        return response[0].decode()
+        return Response(response[0].decode(), raw=response)
