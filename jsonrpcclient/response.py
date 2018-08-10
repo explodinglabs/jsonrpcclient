@@ -111,22 +111,22 @@ class Response:
         """
         self.text = text
         self.raw = raw
-        #self.data = None
 
-    @property
-    def total(self) -> int:
+    def total_results(self, *, ok: bool =True) -> int:
         if isinstance(self.data, list):
-            return len(self.data)
+            return sum([1 for d in self.data if d.ok==ok])
         elif isinstance(self.data, JSONRPCResponse):
-            return 1
+            return int(self.data.ok==ok)
         else:
             return 0
 
     def __repr__(self) -> str:
-        return "<Response(text=%s bytes, data=%d objects>" % (
-            len(self.text) if self.text else "None",
-            self.total,
-        )
+        total_ok = self.total_results(ok=True)
+        total_errors = self.total_results(ok=False)
+        if total_errors:
+            return "<Response[{} ok, {} errors]>".format(total_ok, total_errors)
+        else:
+            return "<Response[{}]>".format(total_ok)
 
     def parse(self, validate_against_schema: bool = True) -> None:
         self.data = parse(self.text, validate_against_schema=validate_against_schema)

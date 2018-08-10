@@ -1,8 +1,9 @@
 """Abstract base class for various clients."""
+import colorlog
 import json
 import logging
 from abc import ABCMeta, abstractmethod
-from typing import Any, Callable, Dict, Iterator, List, Union
+from typing import Any, Callable, Dict, Iterator, List, Optional, Union
 
 from . import exceptions
 from .log import log_
@@ -10,8 +11,8 @@ from .request import Notification, Request
 from .response import Response
 
 
-request_log = logging.getLogger(__name__ + ".request")
-response_log = logging.getLogger(__name__ + ".response")
+request_log = colorlog.getLogger(__name__ + ".request")
+response_log = colorlog.getLogger(__name__ + ".response")
 
 
 class Client(metaclass=ABCMeta):
@@ -44,8 +45,8 @@ class Client(metaclass=ABCMeta):
     def log_request(
         self,
         request: str,
-        fmt: str = "--> %(message)s",
-        trim: bool = None,
+        fmt: str = "%(log_color)s\u27f6 %(message)s",
+        trim: Optional[bool] = None,
         **kwargs: Any
     ) -> None:
         """
@@ -53,13 +54,14 @@ class Client(metaclass=ABCMeta):
 
         :param request: The JSON-RPC request string.
         """
-        trim = trim or self.trim_log_values
+        if trim is None:
+            trim = self.trim_log_values
         return log_(request, request_log, fmt=fmt, trim=trim, **kwargs)
 
     def log_response(
         self,
         response: Response,
-        fmt: str = "<-- %(message)s",
+        fmt: str = "%(asctime)s %(levelname)s \u27f5 %(message)s",
         trim: bool = False,
         **kwargs: Any
     ) -> None:
@@ -71,7 +73,8 @@ class Client(metaclass=ABCMeta):
 
         :param response: Response object.
         """
-        trim = trim or self.trim_log_values
+        if trim is None:
+            trim = self.trim_log_values
         return log_(response.text, response_log, fmt=fmt, trim=trim, **kwargs)
 
     @abstractmethod
@@ -93,7 +96,12 @@ class Client(metaclass=ABCMeta):
         """
         pass
 
-    def send(self, request: Union[str, Dict, List], **kwargs: Any) -> Response:
+    def send(
+        self,
+        request: Union[str, Dict, List],
+        trim_log_values: Optional[bool] = None,
+        **kwargs: Any
+    ) -> Response:
         """
         Send a request, passing the whole JSON-RPC request object.
 
@@ -113,19 +121,27 @@ class Client(metaclass=ABCMeta):
             <https://docs.python.org/library/json.html#json-to-py-table>`_, or NoneType
             in the case of a Notification.
         """
+        if trim_log_values is None:
+            trim_log_values = self.trim_log_values
         # Convert to string
         if isinstance(request, str):
             request_text = request
         else:
             request_text = json.dumps(request)
-        self.log_request(request_text)
+        self.log_request(request_text, trim=trim_log_values)
         response = self.send_message(request_text, **kwargs)
-        self.log_response(response)
+        self.log_response(response, trim=trim_log_values)
         self.validate_response(response)
         response.parse(validate_against_schema=self.validate_against_schema)
         return response
 
-    def notify(self, method_name: str, *args: Any, **kwargs: Any) -> Response:
+    def notify(
+        self,
+        method_name: str,
+        *args: Any,
+        trim_log_values: Optional[bool] = None,
+        **kwargs: Any
+    ) -> Response:
         """
         Send a JSON-RPC request, without expecting a response.
 
@@ -134,26 +150,37 @@ class Client(metaclass=ABCMeta):
         :param kwargs: Keyword arguments passed to the remote procedure.
         :return: The payload (i.e. the ``result`` part of the response).
         """
-        return self.send(Notification(method_name, *args, **kwargs))
+        if trim_log_values is None:
+            trim_log_values = self.trim_log_values
+        return self.send(
+            Notification(method_name, *args, **kwargs), trim_log_values=trim_log_values
+        )
 
-    def request(self, method_name: str, *args: Any, **kwargs: Any) -> Response:
+    def request(
+        self,
+        method_name: str,
+        *args: Any,
+        trim_log_values: Optional[bool] = None,
+        **kwargs: Any
+    ) -> Response:
         """
         Send a request by passing the method and arguments.
 
-        This is the main public method.
-
-            >>> client.request('cat', name='Mittens')
-            --> {"jsonrpc": "2.0", "method": "cat", "params": {"name": "Mittens"}, "id": 1}
-            <-- {"jsonrpc": "2.0", "result": "meow", "id": 1}
-            'meow'
+        >>> client.request('cat', name='Mittens')
+        --> {"jsonrpc": "2.0", "method": "cat", "params": {"name": "Mittens"}, "id": 1}
+        <-- {"jsonrpc": "2.0", "result": "meow", "id": 1}
+        'meow'
 
         :param method_name: The remote procedure's method name.
         :param args: Positional arguments passed to the remote procedure.
         :param kwargs: Keyword arguments passed to the remote procedure.
         :return: The payload (i.e. the ``result`` part of the response).
         """
+        if trim_log_values is None:
+            trim_log_values = self.trim_log_values
         return self.send(
-            Request(method_name, *args, id_generator=self.id_generator, **kwargs)
+            Request(method_name, *args, id_generator=self.id_generator, **kwargs),
+            trim_log_values=trim_log_values,
         )
 
     def __getattr__(self, name: str) -> Callable:

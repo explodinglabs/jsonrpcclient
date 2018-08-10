@@ -41,7 +41,7 @@ class HTTPClient(Client):
                 "http_code": response.raw.status_code,  # type: ignore
                 "http_reason": response.raw.reason,  # type: ignore
             },
-            fmt="<-- %(message)s (%(http_code)s %(http_reason)s)",
+            fmt="%(log_color)s\u27f5 %(message)s (%(http_code)s %(http_reason)s)",
             trim=trim,
             **kwargs
         )

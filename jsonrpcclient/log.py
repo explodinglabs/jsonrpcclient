@@ -2,6 +2,7 @@
 import json
 import logging
 from typing import List, Dict, Optional, Union, Any, cast
+import colorlog
 
 
 def configure_logger(logger: logging.Logger, fmt: str) -> None:
@@ -13,8 +14,8 @@ def configure_logger(logger: logging.Logger, fmt: str) -> None:
     if logger.level == logging.NOTSET:
         logger.setLevel(logging.INFO)
     if not logging.root.handlers and not logger.handlers:
-        handler = logging.StreamHandler()
-        handler.setFormatter(logging.Formatter(fmt=fmt))
+        handler = colorlog.StreamHandler()
+        handler.setFormatter(colorlog.ColoredFormatter(fmt=fmt))
         logger.addHandler(handler)
 
 
