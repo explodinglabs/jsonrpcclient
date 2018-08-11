@@ -203,12 +203,20 @@ As in the Requests library, any dictionaries passed to `send` in named
 arguments will be merged with the session-level values that are set. The
 method-level parameters override session parameters.
 
-## Disable logging
+## Enable the JSON-RPC log messages
 
-To disable logging:
+Messages are logged on the debug log level:
+
+```
+>>> response = client.request("ping")
+⟶ {"jsonrpc": "2.0", "method": "ping", "id": 4}
+⟵ {"jsonrpc": "2.0", "result": "pong", "id": 4} (200 OK)
+```
+
+To enable the log messages:
 
 ```python
 import logging
-logging.getLogger("jsonrpcclient.client.request").setLevel(logging.WARNING)
-logging.getLogger("jsonrpcclient.client.response").setLevel(logging.WARNING)
+logging.getLogger("jsonrpcclient.client.request").setLevel(logging.DEBUG)
+logging.getLogger("jsonrpcclient.client.response").setLevel(logging.DEBUG)
 ```

@@ -51,7 +51,7 @@ class Client(metaclass=ABCMeta):
 
         :param request: The JSON-RPC request string.
         """
-        return log_(request, request_log, fmt=fmt, trim=trim, **kwargs)
+        return log_(request, request_log, "debug", fmt=fmt, trim=trim, **kwargs)
 
     def log_response(
         self,
@@ -68,7 +68,7 @@ class Client(metaclass=ABCMeta):
 
         :param response: Response object.
         """
-        return log_(response.text, response_log, fmt=fmt, trim=trim, **kwargs)
+        return log_(response.text, response_log, "debug", fmt=fmt, trim=trim, **kwargs)
 
     @abstractmethod
     def send_message(self, request: str, **kwargs: Any) -> Response:

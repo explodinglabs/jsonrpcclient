@@ -11,8 +11,6 @@ def configure_logger(logger: logging.Logger, fmt: str) -> None:
 
     Used by the log function below.
     """
-    if logger.level == logging.NOTSET:
-        logger.setLevel(logging.INFO)
     if not logging.root.handlers and not logger.handlers:
         handler = colorlog.StreamHandler()
         handler.setFormatter(colorlog.ColoredFormatter(fmt=fmt))
