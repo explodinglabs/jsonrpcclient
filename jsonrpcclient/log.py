@@ -2,14 +2,15 @@
 import json
 import logging
 from typing import List, Dict, Optional, Union, Any, cast
+
 import colorlog  # type: ignore
 
 
 def configure_logger(logger: logging.Logger, fmt: str) -> None:
     """
-    Set up a logger, if no handler has been configured for it.
+    Add a StreamHandler to the logger if no handler has been configured for it.
 
-    Used by the log function below.
+    Used by the log_ function below.
     """
     if not logging.root.handlers and not logger.handlers:
         handler = colorlog.StreamHandler()
@@ -81,5 +82,7 @@ def log_(
         message = message.replace("\n", "").replace("  ", " ").replace("{ ", "{")
     if trim:
         message = trim_message(message)
+    # Add a handler if none configured
     configure_logger(logger, fmt)
+    # Log.
     getattr(logger, level)(message, extra=extra)
