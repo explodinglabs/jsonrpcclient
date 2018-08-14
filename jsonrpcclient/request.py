@@ -89,7 +89,7 @@ class Notification(dict, metaclass=_RequestClassType):  # type: ignore
         self.update(jsonrpc="2.0", method=method)
         # Build the 'params' part. Merge the positional and keyword arguments into one
         # list.
-        params_list = [] # type: List
+        params_list = []  # type: List
         if args:
             params_list.extend(args)
         if kwargs:
@@ -135,7 +135,10 @@ class Request(Notification):
         if "request_id" in kwargs:
             id_ = kwargs.pop("request_id", None)
         else:  # Get the next id from the generator
-            id_ = next(id_generator or self.id_generator)
+            id_generator = (
+                id_generator if id_generator is not None else self.id_generator
+            )
+            id_ = next(id_generator)
         # We call super last, after popping the request_id
         super().__init__(method, *args, **kwargs)
         self.update(id=id_)

@@ -33,7 +33,7 @@ class HTTPClient(Client):
         self.session.headers.update(self.DEFAULT_HEADERS)
 
     def log_response(
-        self, response: Response, fmt: str = None, trim: bool = False, **kwargs: Any
+        self, response: Response, fmt: str = None, **kwargs: Any
     ) -> None:
         super().log_response(
             response,
@@ -42,7 +42,6 @@ class HTTPClient(Client):
                 "http_reason": response.raw.reason,  # type: ignore
             },
             fmt="%(log_color)s\u27f5 %(message)s (%(http_code)s %(http_reason)s)",
-            trim=trim,
             **kwargs
         )
 

@@ -21,7 +21,11 @@ class AiohttpClient(AsyncClient):
         self.session = session
 
     def log_response(
-        self, response: Response, fmt: str = None, trim: bool = False, **kwargs: Any
+        self,
+        response: Response,
+        fmt: str = None,
+        trim_log_values: bool = False,
+        **kwargs: Any,
     ) -> None:
         super().log_response(
             response,
@@ -30,7 +34,7 @@ class AiohttpClient(AsyncClient):
                 "http_reason": response.raw.reason,  # type: ignore
             },
             fmt="<-- %(message)s (%(http_code)s %(http_reason)s)",
-            trim=trim,
+            trim_log_values=trim_log_values,
             **kwargs,
         )
 

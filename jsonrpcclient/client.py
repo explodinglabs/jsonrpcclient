@@ -1,9 +1,12 @@
 """Abstract base class for various clients."""
-import colorlog  # type: ignore
 import json
 from abc import ABCMeta, abstractmethod
 from typing import Any, Callable, Dict, Iterator, List, Optional, Union
 
+import colorlog  # type: ignore
+from apply_defaults import apply_self, apply_config
+
+from .config import config
 from .log import log_
 from .parse import parse
 from .request import Notification, Request
@@ -21,29 +24,29 @@ class Client(metaclass=ABCMeta):
     Subclasses should inherit and override `send_message`.
     """
 
+    @apply_config(config, converters={"id_generator": "getcallable"})
     def __init__(
         self,
         endpoint: str,
-        id_generator: Iterator[Any] = None,
         trim_log_values: bool = False,
         validate_against_schema: bool = True,
+        id_generator: Optional[Iterator] = None,
     ) -> None:
         """
         :param endpoint: Holds the server address.
-        :param id_generator: 
-        :param trim_log_values: Log abbreviated versions of requests and responses
-        :param validate_against_schema: Validate responses against the JSON-RPC schema.
+        :param config: Log abbreviated versions of requests and responses.
         """
         self.endpoint = endpoint
-        self.id_generator = id_generator
         self.trim_log_values = trim_log_values
         self.validate_against_schema = validate_against_schema
+        self.id_generator = id_generator
 
+    @apply_self
     def log_request(
         self,
         request: str,
         fmt: str = "%(log_color)s\u27f6 %(message)s",
-        trim: bool = False,
+        trim_log_values: bool = False,
         **kwargs: Any
     ) -> None:
         """
@@ -51,13 +54,16 @@ class Client(metaclass=ABCMeta):
 
         :param request: The JSON-RPC request string.
         """
-        return log_(request, request_log, "debug", fmt=fmt, trim=trim, **kwargs)
+        return log_(
+            request, request_log, "debug", fmt=fmt, trim=trim_log_values, **kwargs
+        )
 
+    @apply_self
     def log_response(
         self,
         response: Response,
         fmt: str = "%(asctime)s %(levelname)s \u27f5 %(message)s",
-        trim: bool = False,
+        trim_log_values: bool = False,
         **kwargs: Any
     ) -> None:
         """
@@ -68,7 +74,14 @@ class Client(metaclass=ABCMeta):
 
         :param response: Response object.
         """
-        return log_(response.text, response_log, "debug", fmt=fmt, trim=trim, **kwargs)
+        return log_(
+            response.text,
+            response_log,
+            "debug",
+            fmt=fmt,
+            trim=trim_log_values,
+            **kwargs
+        )
 
     @abstractmethod
     def send_message(self, request: str, **kwargs: Any) -> Response:
@@ -89,10 +102,12 @@ class Client(metaclass=ABCMeta):
         """
         pass
 
+    @apply_self
     def send(
         self,
         request: Union[str, Dict, List],
-        trim_log_values: Optional[bool] = None,
+        trim_log_values: bool = False,
+        validate_against_schema: bool = True,
         **kwargs: Any
     ) -> Response:
         """
@@ -114,27 +129,24 @@ class Client(metaclass=ABCMeta):
             <https://docs.python.org/library/json.html#json-to-py-table>`_, or NoneType
             in the case of a Notification.
         """
-        if trim_log_values is None:
-            trim_log_values = self.trim_log_values
         # Convert to string
-        if isinstance(request, str):
-            request_text = request
-        else:
-            request_text = json.dumps(request)
-        self.log_request(request_text, trim=trim_log_values)
+        request_text = request if isinstance(request, str) else json.dumps(request)
+        self.log_request(request_text, trim_log_values=trim_log_values)
         response = self.send_message(request_text, **kwargs)
-        self.log_response(response, trim=trim_log_values)
+        self.log_response(response, trim_log_values=trim_log_values)
         self.validate_response(response)
         response.data = parse(
-            response.text, validate_against_schema=self.validate_against_schema
+            response.text, validate_against_schema=validate_against_schema
         )
         return response
 
+    @apply_self
     def notify(
         self,
         method_name: str,
         *args: Any,
         trim_log_values: Optional[bool] = None,
+        validate_against_schema: Optional[bool] = None,
         **kwargs: Any
     ) -> Response:
         """
@@ -145,17 +157,20 @@ class Client(metaclass=ABCMeta):
         :param kwargs: Keyword arguments passed to the remote procedure.
         :return: The payload (i.e. the ``result`` part of the response).
         """
-        if trim_log_values is None:
-            trim_log_values = self.trim_log_values
         return self.send(
-            Notification(method_name, *args, **kwargs), trim_log_values=trim_log_values
+            Notification(method_name, *args, **kwargs),
+            trim_log_values=trim_log_values,
+            validate_against_schema=validate_against_schema,
         )
 
+    @apply_self
     def request(
         self,
         method_name: str,
         *args: Any,
-        trim_log_values: Optional[bool] = None,
+        trim_log_values: bool = False,
+        validate_against_schema: bool = True,
+        id_generator: Optional[Iterator] = None,
         **kwargs: Any
     ) -> Response:
         """
@@ -171,11 +186,10 @@ class Client(metaclass=ABCMeta):
         :param kwargs: Keyword arguments passed to the remote procedure.
         :return: The payload (i.e. the ``result`` part of the response).
         """
-        if trim_log_values is None:
-            trim_log_values = self.trim_log_values
         return self.send(
-            Request(method_name, *args, id_generator=self.id_generator, **kwargs),
+            Request(method_name, id_generator=id_generator, *args, **kwargs),
             trim_log_values=trim_log_values,
+            validate_against_schema=validate_against_schema,
         )
 
     def __getattr__(self, name: str) -> Callable:

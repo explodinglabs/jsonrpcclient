@@ -1,6 +1,5 @@
 """
-Tornado Client
-**************
+Tornado Client.
 
 Represents an endpoint to communicate with using Tornado asynchronous HTTP
 client.
@@ -29,7 +28,7 @@ class TornadoClient(AsyncClient):
         self.client = client or AsyncHTTPClient()
 
     def log_response(
-        self, response: Response, fmt: str = None, trim: bool = False, **kwargs: Any
+        self, response: Response, fmt: str = None, trim_log_values: bool = False, **kwargs: Any
     ) -> None:
         # Note: Tornado adds it's own log handlers, so the following log format isn't
         # used unless Tornado's handlers are disabled.
@@ -40,7 +39,7 @@ class TornadoClient(AsyncClient):
                 "http_reason": response.raw.reason,  # type: ignore
             },
             fmt="<-- %(message)s (%(http_code)s %(http_reason)s)",
-            trim=trim,
+            trim_log_values=trim_log_values,
             **kwargs,
         )
 
