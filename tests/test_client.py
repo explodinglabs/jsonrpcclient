@@ -25,7 +25,7 @@ class TestLogRequest:
         capture.check(
             (
                 "jsonrpcclient.client.request",
-                "INFO",
+                "DEBUG",
                 '{"jsonrpc": "2.0", "method": "go"}',
             )
         )
@@ -35,27 +35,27 @@ class TestLogRequest:
             "blah" * 100,
         )
         with LogCapture() as capture:
-            DummyClient("foo").log_request(req, trim=True)
+            DummyClient("foo").log_request(req, trim_log_values=True)
         capture.check(
             (
                 "jsonrpcclient.client.request",
-                "INFO",
+                "DEBUG",
                 StringComparison(r".*blahblahbl...ahblahblah.*"),
             )
         )
 
     def test_untrimmed(self):
         """Should not trim"""
-        req = '{"jsonrpc": "2.0", "method": "go", "params": {"blah": "%s"}}' % (
-            "blah" * 100,
+        req = '{"jsonrpc": "2.0", "method": "go", "params": {"foo": "%s"}}' % (
+            "foo" * 100,
         )
         with LogCapture() as capture:
             DummyClient("foo").log_request(req)
         capture.check(
             (
                 "jsonrpcclient.client.request",
-                "INFO",
-                StringComparison(r".*" + "blah" * 100 + ".*"),
+                "DEBUG",
+                StringComparison(r".*" + "foo" * 100 + ".*"),
             )
         )
 
@@ -69,7 +69,7 @@ class TestLogResponse:
         capture.check(
             (
                 "jsonrpcclient.client.response",
-                "INFO",
+                "DEBUG",
                 '{"jsonrpc": "2.0", "result": 5, "id": 1}',
             )
         )
@@ -77,11 +77,11 @@ class TestLogResponse:
     def test_trimmed(self):
         req = '{"jsonrpc": "2.0", "result": "%s", "id": 1}' % ("blah" * 100,)
         with LogCapture() as capture:
-            DummyClient("foo").log_response(Response(req), trim=True)
+            DummyClient("foo").log_response(Response(req), trim_log_values=True)
         capture.check(
             (
                 "jsonrpcclient.client.response",
-                "INFO",
+                "DEBUG",
                 StringComparison(r".*blahblahbl...ahblahblah.*"),
             )
         )
@@ -94,7 +94,7 @@ class TestLogResponse:
         capture.check(
             (
                 "jsonrpcclient.client.response",
-                "INFO",
+                "DEBUG",
                 StringComparison(r".*" + "blah" * 100 + ".*"),
             )
         )

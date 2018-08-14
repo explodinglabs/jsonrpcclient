@@ -116,7 +116,7 @@ class TestRequest:
         capture.check(
             (
                 "jsonrpcclient.client.request",
-                "INFO",
+                "DEBUG",
                 StringComparison(r".*blahblahbl...ahblahblah.*"),
             )
         )
@@ -137,7 +137,7 @@ class TestRequest:
         capture.check(
             (
                 "jsonrpcclient.client.request",
-                "INFO",
+                "DEBUG",
                 StringComparison(r'.*"id": "[a-z0-9]{8}".*'),
             )
         )
@@ -171,7 +171,7 @@ class TestNotify:
         capture.check(
             (
                 "jsonrpcclient.client.request",
-                "INFO",
+                "DEBUG",
                 StringComparison(r'.*"blahblahbl...ahblahblah".*'),
             )
         )
