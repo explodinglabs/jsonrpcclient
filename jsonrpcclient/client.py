@@ -176,8 +176,8 @@ class Client(metaclass=ABCMeta):
         """
         Send a request by passing the method and arguments.
 
-        >>> client.request('cat', name='Mittens')
-        --> {"jsonrpc": "2.0", "method": "cat", "params": {"name": "Mittens"}, "id": 1}
+        >>> client.request("cat", name="Yoko")
+        --> {"jsonrpc": "2.0", "method": "cat", "params": {"name": "Yoko"}, "id": 1}
         <-- {"jsonrpc": "2.0", "result": "meow", "id": 1}
         'meow'
 

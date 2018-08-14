@@ -36,7 +36,7 @@ call. Subsequent arguments are arguments to the method.
 Use `notify` instead of `request` to signify that no response is required:
 
 ```python
->>> http_client.notify('http://cats.com', 'speak')
+>>> http_client.notify("http://cats.com", "speak")
 --> {"jsonrpc": "2.0", "method": "speak"}
 <--
 >>>
@@ -46,7 +46,7 @@ Alternatively, instantiate `HTTPClient`, passing the server endpoint:
 
 ```python
 >>> from jsonrpcclient.clients.http_client import HTTPClient
->>> client = HTTPClient('http://pets.com')
+>>> client = HTTPClient("http://pets.com")
 ```
 
 Then we can send multiple requests with the `client` object.
@@ -68,8 +68,8 @@ Send a request by passing the method and arguments. This is the main public
 method.
 
 ```python
->>> client.request('cat', name='Mittens')
---> {"jsonrpc": "2.0", "method": "cat", "params": {"name": "Mittens"}, "id": 1}
+>>> client.request("cat", name="Yoko")
+--> {"jsonrpc": "2.0", "method": "cat", "params": {"name": "Yoko"}, "id": 1}
 <-- {"jsonrpc": "2.0", "result": "meow", "id": 1}
 'meow'
 ```
@@ -83,14 +83,14 @@ object](http://www.jsonrpc.org/specification#request_object):
 
 ```python
 >>> from jsonrpcclient.request import Request
->>> Request('cat', name='Mittens')
-{'jsonrpc': '2.0', 'method': 'cat', 'params': {'name': 'Mittens'}, 'id': 1}
+>>> Request("cat", name="Yoko")
+{'jsonrpc': '2.0', 'method': 'cat', 'params': {'name': 'Yoko'}, 'id': 1}
 ```
 
 Send a `Request` object:
 
 ```python
->>> client.send(Request('ping'))
+>>> client.send(Request("ping"))
 --> {"jsonrpc": "2.0", "method": "ping", "id": 1}
 <-- {"jsonrpc": "2.0", "result": "pong", "id": 1}
 'pong'
@@ -116,13 +116,13 @@ client.send(req)
 Send multiple `Request` objects:
 
 ```python
-client.send([Request('cat'), Request('dog')])
+client.send([Request("cat"), Request("dog")])
 ```
 
 Using list comprehension to get the cube of ten numbers:
 
 ```python
-client.send([Request('cube', i) for i in range(10)])
+client.send([Request("cube", i) for i in range(10)])
 ```
 
 Unlike single requests, batch requests return the whole JSON-RPC [batch
@@ -177,26 +177,26 @@ so you can configure it before sending any requests.
 For example, Basic Auth:
 
 ```python
-client.session.auth = ('user', 'pass')
+client.session.auth = ("user", "pass")
 ```
 
 SSL authentication:
 
 ```python
-client.session.verify = '/path/to/certificate'
+client.session.verify = "/path/to/certificate"
 ```
 
 Custom HTTP headers:
 
 ```python
-client.session.headers.update({'Content-Type': 'application/json-rpc'})
+client.session.headers.update({"Content-Type": "application/json-rpc"})
 ```
 
 You can also configure some Requests options when calling `send`:
 
 ```python
-client.send(req, verify=True, cert='/path/to/certificate',
-            headers={'Content-Type': 'application/json-rpc'})
+client.send(req, verify=True, cert="/path/to/certificate",
+            headers={"Content-Type": "application/json-rpc"})
 ```
 
 As in the Requests library, any dictionaries passed to `send` in named

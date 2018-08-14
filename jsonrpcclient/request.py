@@ -3,8 +3,8 @@ Classes to help create JSON-RPC Request objects.
 
 To create a request::
 
-    >>> Request('cat', name='Mittens')
-    {'jsonrpc': '2.0', 'method': 'cat', 'params': {'name': 'Mittens'}, 'id': 1}
+    >>> Request("cat", name="Yoko")
+    {'jsonrpc': '2.0', 'method': 'cat', 'params': {'name': 'Yoko'}, 'id': 1}
 """
 import json
 from collections import OrderedDict
@@ -44,7 +44,7 @@ class _RequestClassType(type):
             >>> Request.cat()
             {'jsonrpc': '2.0', 'method': 'cat', 'id': 1}
 
-        That's the same as saying ``Request('cat')``. Technique is
+        That's the same as saying ``Request("cat")``. Technique is
         explained here: http://code.activestate.com/recipes/307618/
         """
 
@@ -59,24 +59,24 @@ class Notification(dict, metaclass=_RequestClassType):  # type: ignore
     """
     A request which does not expect a response.
 
-        >>> Notification('cat')
+        >>> Notification("cat")
         {'jsonrpc': '2.0', 'method': 'cat'}
 
     The first argument is the *method*; everything else is *arguments* to the
     method::
 
-        >>> Notification('cat', 'Mittens', 5)
-        {'jsonrpc': '2.0', 'method': 'cat', params: ['Mittens', 5]}
+        >>> Notification("cat", 'Yoko', 5)
+        {'jsonrpc': '2.0', 'method': 'cat', params: ['Yoko', 5]}
 
     Keyword arguments are also acceptable::
 
-        >>> Notification('cat', name='Mittens', age=5)
-        {'jsonrpc': '2.0', 'method': 'cat', 'params': {'name': 'Mittens', 'age': 5}}
+        >>> Notification("cat", name="Yoko", age=5)
+        {'jsonrpc': '2.0', 'method': 'cat', 'params': {'name': 'Yoko', 'age': 5}}
 
     If you prefer, call the method as though it was a class attribute::
 
-        >>> Notification.cat(name='Mittens', age=5)
-        {'jsonrpc': '2.0', 'method': 'cat', 'params': {'name': 'Mittens', 'age': 5}}
+        >>> Notification.cat(name="Yoko", age=5)
+        {'jsonrpc': '2.0', 'method': 'cat', 'params': {'name': 'Yoko', 'age': 5}}
 
     :param method: The method name.
     :param args: Positional arguments.
@@ -116,8 +116,8 @@ class Request(Notification):
     Create a JSON-RPC `request object
     <http://www.jsonrpc.org/specification#request_object>`_.
 
-        >>> Request('cat', name='Mittens')
-        {'jsonrpc': '2.0', 'method': 'cat', 'params': {'name': 'Mittens'}, 'id': 1}
+        >>> Request("cat", name="Yoko")
+        {'jsonrpc': '2.0', 'method': 'cat', 'params': {'name': 'Yoko'}, 'id': 1}
 
     :param method: The ``method`` name.
     :param args: Positional arguments added to ``params``.
