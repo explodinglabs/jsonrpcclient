@@ -4,7 +4,7 @@ from abc import ABCMeta, abstractmethod
 from typing import Any, Callable, Dict, Iterator, List, Optional, Union
 
 import colorlog  # type: ignore
-from apply_defaults import apply_self, apply_config
+from apply_defaults import apply_self, apply_config  # type: ignore
 
 from .config import config
 from .log import log_

@@ -21,18 +21,18 @@ class DummyClient(Client):
 class TestLogRequest:
     def test(self, *_):
         with LogCapture() as capture:
-            DummyClient("foo").log_request('{"jsonrpc": "2.0", "method": "go"}')
+            DummyClient("foo").log_request('{"jsonrpc": "2.0", "method": "foo"}')
         capture.check(
             (
                 "jsonrpcclient.client.request",
                 "DEBUG",
-                '{"jsonrpc": "2.0", "method": "go"}',
+                StringComparison(r'.*"method": "foo".*'),
             )
         )
 
     def test_trimmed(self):
-        req = '{"jsonrpc": "2.0", "method": "go", "params": {"blah": "%s"}}' % (
-            "blah" * 100,
+        req = '{"jsonrpc": "2.0", "method": "go", "params": {"foo": "%s"}}' % (
+            "foo" * 100,
         )
         with LogCapture() as capture:
             DummyClient("foo").log_request(req, trim_log_values=True)
@@ -40,7 +40,7 @@ class TestLogRequest:
             (
                 "jsonrpcclient.client.request",
                 "DEBUG",
-                StringComparison(r".*blahblahbl...ahblahblah.*"),
+                StringComparison(r".*foofoofoof...ofoofoofoo.*"),
             )
         )
 
@@ -50,7 +50,7 @@ class TestLogRequest:
             "foo" * 100,
         )
         with LogCapture() as capture:
-            DummyClient("foo").log_request(req)
+            DummyClient("foo").log_request(req, trim_log_values=False)
         capture.check(
             (
                 "jsonrpcclient.client.request",
@@ -70,32 +70,32 @@ class TestLogResponse:
             (
                 "jsonrpcclient.client.response",
                 "DEBUG",
-                '{"jsonrpc": "2.0", "result": 5, "id": 1}',
+                StringComparison(r'.*"result": 5.*'),
             )
         )
 
     def test_trimmed(self):
-        req = '{"jsonrpc": "2.0", "result": "%s", "id": 1}' % ("blah" * 100,)
+        req = '{"jsonrpc": "2.0", "result": "%s", "id": 1}' % ("foo" * 100,)
         with LogCapture() as capture:
             DummyClient("foo").log_response(Response(req), trim_log_values=True)
         capture.check(
             (
                 "jsonrpcclient.client.response",
                 "DEBUG",
-                StringComparison(r".*blahblahbl...ahblahblah.*"),
+                StringComparison(r".*foofoofoof...ofoofoofoo.*"),
             )
         )
 
     def test_untrimmed(self):
         """Should not trim"""
-        res = '{"jsonrpc": "2.0", "result": {"blah": "%s"}}' % ("blah" * 100,)
+        res = '{"jsonrpc": "2.0", "result": {"foo": "%s"}}' % ("foo" * 100,)
         with LogCapture() as capture:
-            DummyClient("foo").log_response(Response(res))
+            DummyClient("foo").log_response(Response(res), trim_log_values=False)
         capture.check(
             (
                 "jsonrpcclient.client.response",
                 "DEBUG",
-                StringComparison(r".*" + "blah" * 100 + ".*"),
+                StringComparison(r".*" + "foo" * 100 + ".*"),
             )
         )
 

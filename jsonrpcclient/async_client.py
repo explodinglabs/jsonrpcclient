@@ -7,7 +7,7 @@ import json
 from abc import ABCMeta, abstractmethod
 from typing import Any, Dict, List, Optional, Union
 
-from apply_defaults import apply_self
+from apply_defaults import apply_self  # type: ignore
 
 from .client import Client
 from .request import Request, Notification
@@ -42,7 +42,7 @@ class AsyncClient(Client, metaclass=ABCMeta):
         return response
 
     @apply_self
-    async def notify(  # type: ignore
+    async def notify(
         self, method_name: str, *args: Any, trim_log_values: bool = False, **kwargs: Any
     ) -> Response:
         return await self.send(
@@ -50,7 +50,7 @@ class AsyncClient(Client, metaclass=ABCMeta):
         )
 
     @apply_self
-    async def request(  # type: ignore
+    async def request(
         self,
         method_name: str,
         *args: Any,

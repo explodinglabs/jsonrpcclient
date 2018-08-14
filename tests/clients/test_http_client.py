@@ -1,16 +1,16 @@
 import itertools
 import pytest
-from unittest.mock import patch
 from collections import namedtuple
 from testfixtures import LogCapture, StringComparison
+from unittest.mock import patch
 
 import requests
 import responses
 
 from jsonrpcclient import id_generators
+from jsonrpcclient.clients.http_client import HTTPClient
 from jsonrpcclient.exceptions import ReceivedNon2xxResponseError
 from jsonrpcclient.request import Request
-from jsonrpcclient.clients.http_client import HTTPClient, request, notify
 
 
 class TestInit:
@@ -39,10 +39,6 @@ class TestInit:
         assert client.session.headers["Accept"] == "application/json"
         # Header set by Requests default_headers
         assert "Connection" in client.session.headers
-
-    @staticmethod
-    def test_init_custom_auth():
-        HTTPClient("http://test/")
 
 
 class TestSendMessage:
@@ -78,8 +74,6 @@ Resp = namedtuple("Response", ("text", "reason", "headers", "status_code"))
 
 
 class TestRequest:
-    """Testing the "request" convenience function"""
-
     @patch("jsonrpcclient.client.request_log")
     @patch(
         "jsonrpcclient.clients.http_client.Session.send",
@@ -91,56 +85,8 @@ class TestRequest:
         ),
     )
     def test(self, *_):
-        response = request("http://foo", "foo")
+        response = HTTPClient("http://test/").request("http://foo", "foo")
         assert response.data.result == "bar"
-
-    @patch("jsonrpcclient.client.response_log")
-    @patch(
-        "jsonrpcclient.clients.http_client.Session.send",
-        return_value=Resp(
-            text='{"jsonrpc": "2.0", "result": "bar", "id": 1}',
-            reason="foo",
-            headers="foo",
-            status_code=200,
-        ),
-    )
-    def test_trim_log_values(self, *_):
-        with LogCapture() as capture:
-            request(
-                "http://foo",
-                "foo",
-                blah="blah" * 100,
-                request_id=1,
-                trim_log_values=True,
-            )
-        capture.check(
-            (
-                "jsonrpcclient.client.request",
-                "DEBUG",
-                StringComparison(r".*blahblahbl...ahblahblah.*"),
-            )
-        )
-
-    @patch("jsonrpcclient.client.response_log")
-    @patch(
-        "jsonrpcclient.clients.http_client.Session.send",
-        return_value=Resp(
-            text='{"jsonrpc": "2.0", "result": true, "id": 1}',
-            reason="foo",
-            headers="foo",
-            status_code=200,
-        ),
-    )
-    def test_id_generator(self, *_):
-        with LogCapture() as capture:
-            result = request("http://foo", "foo", id_generator=id_generators.random())
-        capture.check(
-            (
-                "jsonrpcclient.client.request",
-                "DEBUG",
-                StringComparison(r'.*"id": "[a-z0-9]{8}".*'),
-            )
-        )
 
 
 class TestNotify:
@@ -157,21 +103,5 @@ class TestNotify:
         ),
     )
     def test(self, *_):
-        response = notify("http://foo", "foo")
+        response = HTTPClient("http://test/").notify("http://foo", "foo")
         assert response.data.result == "bar"
-
-    @patch("jsonrpcclient.client.response_log")
-    @patch(
-        "jsonrpcclient.clients.http_client.Session.send",
-        return_value=Resp(text="", reason="foo", headers="foo", status_code=200),
-    )
-    def test_trim_log_values(self, *_):
-        with LogCapture() as capture:
-            notify("http://foo", "foo", blah="blah" * 100, trim_log_values=True)
-        capture.check(
-            (
-                "jsonrpcclient.client.request",
-                "DEBUG",
-                StringComparison(r'.*"blahblahbl...ahblahblah".*'),
-            )
-        )

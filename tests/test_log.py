@@ -14,7 +14,7 @@ class TestConfigureLogger:
 
 
 def test_trim_string():
-    message = _trim_string("blah" * 100)
+    message = _trim_string("foo" * 100)
     assert "..." in message
 
 
@@ -24,5 +24,5 @@ def test_trim_values():
 
 
 def test_trim_values_nested():
-    message = _trim_values({"obj": {"obj2": {"string2": "blah" * 100}}})
+    message = _trim_values({"obj": {"obj2": {"string2": "foo" * 100}}})
     assert "..." in message["obj"]["obj2"]["string2"]
