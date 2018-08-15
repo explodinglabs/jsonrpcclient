@@ -3,6 +3,7 @@ from unittest.mock import sentinel
 import pytest
 
 from jsonrpcclient.async_client import AsyncClient
+from jsonrpcclient.request import Request
 from jsonrpcclient.response import Response
 
 
@@ -15,25 +16,21 @@ class DummyClient(AsyncClient):
 class Test:
     @pytest.mark.asyncio
     async def test_json_encoded(self):
-        req = '{"jsonrpc": "2.0", "method": "foo", "id": 1}'
-        response = await DummyClient("foo").send(req)
+        request = '{"jsonrpc": "2.0", "method": "foo", "id": 1}'
+        response = await DummyClient("foo").send(request)
         assert response.data.result == 1
 
     @pytest.mark.asyncio
     async def test_json_decoded(self, *_):
-        req = {"jsonrpc": "2.0", "method": "foo", "id": 1}
-        response = await DummyClient("foo").send(req)
+        request = {"jsonrpc": "2.0", "method": "foo", "id": 1}
+        response = await DummyClient("foo").send(request)
         assert response.data.result == 1
 
     @pytest.mark.asyncio
-    async def test(self, *_):
-        response = await DummyClient("foo").request("multiply", 3, 5)
-        assert response.data.ok == True
-
-    @pytest.mark.asyncio
-    async def test(self, *_):
-        response = await DummyClient("foo").notify("multiply", 3, 5)
-        assert response.data.ok == True
+    async def test_batch(self, *_):
+        requests = [Request("foo"), Request("bar")]
+        response = await DummyClient("foo").send(requests)
+        assert response.data.result == 1
 
     @pytest.mark.asyncio
     async def test_alternate_usage(self, *_):

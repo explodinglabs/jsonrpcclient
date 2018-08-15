@@ -100,26 +100,33 @@ class TestLogResponse:
         )
 
 
-class TestSend:
+class TestSending:
     @patch("jsonrpcclient.client.request_log")
-    def test_json_encoded(self, *_):
-        response = DummyClient("foo").send(
-            '{"jsonrpc": "2.0", "method": "foo", "id": 1}'
-        )
+    def test_send_string(self, *_):
+        request = '{"jsonrpc": "2.0", "method": "foo", "id": 1}'
+        response = DummyClient("foo").send(request)
+        assert response.data.ok == True
         assert response.data.result == 1
 
     @patch("jsonrpcclient.client.request_log")
-    def test_json_decoded(self, *_):
-        response = DummyClient("foo").send({"jsonrpc": "2.0", "method": "foo", "id": 1})
-        assert response.data.result == 1
+    def test_send_dict(self, *_):
+        request = {"jsonrpc": "2.0", "method": "foo", "id": 1}
+        response = DummyClient("foo").send(request)
+        assert response.data.ok == True
 
     @patch("jsonrpcclient.client.request_log")
-    def test(self, *_):
+    def test_send_batch(self, *_):
+        requests = [Request("foo"), Request("bar")]
+        response = DummyClient("foo").send(requests)
+        assert response.data.ok == True
+
+    @patch("jsonrpcclient.client.request_log")
+    def test_request(self, *_):
         response = DummyClient("foo").request("multiply", 3, 5)
         assert response.data.ok == True
 
     @patch("jsonrpcclient.client.request_log")
-    def test(self, *_):
+    def test_notify(self, *_):
         response = DummyClient("foo").notify("multiply", 3, 5)
         assert response.data.ok == True
 
