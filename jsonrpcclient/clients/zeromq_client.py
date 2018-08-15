@@ -25,7 +25,7 @@ class ZeroMQClient(Client):
     def __init__(
         self, endpoint: str, *args: Any, socket_type: int = zmq.REQ, **kwargs: Any
     ) -> None:
-        super().__init__(endpoint, *args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.context = zmq.Context()
         self.socket = self.context.socket(socket_type)
         self.socket.connect(endpoint)

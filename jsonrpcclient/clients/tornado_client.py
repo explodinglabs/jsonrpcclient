@@ -21,9 +21,14 @@ class TornadoClient(AsyncClient):
     DEFAULT_HEADERS = {"Content-Type": "application/json", "Accept": "application/json"}
 
     def __init__(
-        self, *args: Any, client: Optional[AsyncHTTPClient] = None, **kwargs: Any
+        self,
+        endpoint: str,
+        *args: Any,
+        client: Optional[AsyncHTTPClient] = None,
+        **kwargs: Any
     ) -> None:
         super().__init__(*args, **kwargs)
+        self.endpoint = endpoint
         self.client = client or AsyncHTTPClient()
 
     def log_response(
@@ -43,7 +48,7 @@ class TornadoClient(AsyncClient):
             },
             fmt="<-- %(message)s (%(http_code)s %(http_reason)s)",
             trim_log_values=trim_log_values,
-            **kwargs,
+            **kwargs
         )
 
     async def send_message(  # type: ignore

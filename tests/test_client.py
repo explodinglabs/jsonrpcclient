@@ -21,7 +21,7 @@ class DummyClient(Client):
 class TestLogRequest:
     def test(self, *_):
         with LogCapture() as capture:
-            DummyClient("foo").log_request('{"jsonrpc": "2.0", "method": "foo"}')
+            DummyClient().log_request('{"jsonrpc": "2.0", "method": "foo"}')
         capture.check(
             (
                 "jsonrpcclient.client.request",
@@ -35,7 +35,7 @@ class TestLogRequest:
             "foo" * 100,
         )
         with LogCapture() as capture:
-            DummyClient("foo").log_request(req, trim_log_values=True)
+            DummyClient().log_request(req, trim_log_values=True)
         capture.check(
             (
                 "jsonrpcclient.client.request",
@@ -50,7 +50,7 @@ class TestLogRequest:
             "foo" * 100,
         )
         with LogCapture() as capture:
-            DummyClient("foo").log_request(req, trim_log_values=False)
+            DummyClient().log_request(req, trim_log_values=False)
         capture.check(
             (
                 "jsonrpcclient.client.request",
@@ -63,7 +63,7 @@ class TestLogRequest:
 class TestLogResponse:
     def test(self):
         with LogCapture() as capture:
-            DummyClient("foo").log_response(
+            DummyClient().log_response(
                 Response('{"jsonrpc": "2.0", "result": 5, "id": 1}')
             )
         capture.check(
@@ -77,7 +77,7 @@ class TestLogResponse:
     def test_trimmed(self):
         req = '{"jsonrpc": "2.0", "result": "%s", "id": 1}' % ("foo" * 100,)
         with LogCapture() as capture:
-            DummyClient("foo").log_response(Response(req), trim_log_values=True)
+            DummyClient().log_response(Response(req), trim_log_values=True)
         capture.check(
             (
                 "jsonrpcclient.client.response",
@@ -90,7 +90,7 @@ class TestLogResponse:
         """Should not trim"""
         res = '{"jsonrpc": "2.0", "result": {"foo": "%s"}}' % ("foo" * 100,)
         with LogCapture() as capture:
-            DummyClient("foo").log_response(Response(res), trim_log_values=False)
+            DummyClient().log_response(Response(res), trim_log_values=False)
         capture.check(
             (
                 "jsonrpcclient.client.response",
@@ -104,33 +104,33 @@ class TestSending:
     @patch("jsonrpcclient.client.request_log")
     def test_send_string(self, *_):
         request = '{"jsonrpc": "2.0", "method": "foo", "id": 1}'
-        response = DummyClient("foo").send(request)
+        response = DummyClient().send(request)
         assert response.data.ok == True
         assert response.data.result == 1
 
     @patch("jsonrpcclient.client.request_log")
     def test_send_dict(self, *_):
         request = {"jsonrpc": "2.0", "method": "foo", "id": 1}
-        response = DummyClient("foo").send(request)
+        response = DummyClient().send(request)
         assert response.data.ok == True
 
     @patch("jsonrpcclient.client.request_log")
     def test_send_batch(self, *_):
         requests = [Request("foo"), Request("bar")]
-        response = DummyClient("foo").send(requests)
+        response = DummyClient().send(requests)
         assert response.data.ok == True
 
     @patch("jsonrpcclient.client.request_log")
     def test_request(self, *_):
-        response = DummyClient("foo").request("multiply", 3, 5)
+        response = DummyClient().request("multiply", 3, 5)
         assert response.data.ok == True
 
     @patch("jsonrpcclient.client.request_log")
     def test_notify(self, *_):
-        response = DummyClient("foo").notify("multiply", 3, 5)
+        response = DummyClient().notify("multiply", 3, 5)
         assert response.data.ok == True
 
     @patch("jsonrpcclient.client.request_log")
     def test_alternate_usage(self, *_):
-        response = DummyClient("foo").multiply(3, 5)
+        response = DummyClient().multiply(3, 5)
         assert response.data.ok == True

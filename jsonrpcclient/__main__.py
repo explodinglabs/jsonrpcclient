@@ -27,7 +27,7 @@ version = pkg_resources.require("jsonrpcclient")[0].version
 @click.argument("method", required=True, metavar="METHOD [PARAMS]...")
 @click.pass_context
 def main(
-    context: click.core.Context, method: str, request_type: str, id: Any, send: bool
+    context: click.core.Context, method: str, request_type: str, id: Any, send: str
 ) -> None:
     """
     Create a JSON-RPC request.

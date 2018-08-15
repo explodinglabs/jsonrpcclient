@@ -16,8 +16,9 @@ from ..response import Response
 class AiohttpClient(AsyncClient):
     """TODO: rename AiohttpClient to AiohttpClient"""
 
-    def __init__(self, session: ClientSession, endpoint: str) -> None:
-        super().__init__(endpoint)
+    def __init__(self, session: ClientSession, endpoint: str, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
+        self.endpoint = endpoint
         self.session = session
 
     def log_response(
@@ -25,7 +26,7 @@ class AiohttpClient(AsyncClient):
         response: Response,
         fmt: str = None,
         trim_log_values: bool = False,
-        **kwargs: Any,
+        **kwargs: Any
     ) -> None:
         super().log_response(
             response,

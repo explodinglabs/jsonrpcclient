@@ -27,16 +27,13 @@ class Client(metaclass=ABCMeta):
     @apply_config(config, converters={"id_generator": "getcallable"})
     def __init__(
         self,
-        endpoint: str,
         trim_log_values: bool = False,
         validate_against_schema: bool = True,
         id_generator: Optional[Iterator] = None,
     ) -> None:
         """
-        :param endpoint: Holds the server address.
         :param config: Log abbreviated versions of requests and responses.
         """
-        self.endpoint = endpoint
         self.trim_log_values = trim_log_values
         self.validate_against_schema = validate_against_schema
         self.id_generator = id_generator
@@ -129,7 +126,7 @@ class Client(metaclass=ABCMeta):
             <https://docs.python.org/library/json.html#json-to-py-table>`_, or NoneType
             in the case of a Notification.
         """
-        # Convert to string
+        # Convert the request to a string if it's not already.
         request_text = request if isinstance(request, str) else json.dumps(request)
         self.log_request(request_text, trim_log_values=trim_log_values)
         response = self.send_message(request_text, **kwargs)

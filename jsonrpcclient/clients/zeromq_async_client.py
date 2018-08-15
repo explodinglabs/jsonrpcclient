@@ -21,11 +21,11 @@ class ZeroMQAsyncClient(AsyncClient):
         super().__init__(*args, **kwargs)
         self.context = zmq.asyncio.Context()
         self.socket = self.context.socket(socket_type)
-        self.socket.connect(endpoint)
+        self.socket.bind(endpoint)
 
     async def send_message(  # type: ignore
         self, request: str, **kwargs: Any
     ) -> Response:
         await self.socket.send_multipart((request.encode(),))
         response = await self.socket.recv_multipart()
-        return Response(response[0].decode(), raw=response)
+        return Response(response.decode())

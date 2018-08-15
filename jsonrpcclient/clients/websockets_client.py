@@ -16,8 +16,7 @@ class WebSocketsClient(AsyncClient):
         self, socket: WebSocketCommonProtocol, *args: Any, **kwargs: Any
     ) -> None:
         """
-        :param endpoint:
-        :param socket_type:
+        :param socket: Connected websocket (websockets.connect("ws://localhost:5000"))
         :param *args: Passed through to Client class.
         :param **kwargs: Passed through to Client class.
         """
