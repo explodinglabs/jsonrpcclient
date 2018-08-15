@@ -1,6 +1,6 @@
 from jsonrpcclient.clients.http_client import HTTPClient
 
-response = HTTPClient('http://localhost:5000/').request('ping')
+response = HTTPClient("http://localhost:5000/").request("ping")
 
 if response.result.ok:
     print(response.data.result)

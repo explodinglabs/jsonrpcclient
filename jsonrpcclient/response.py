@@ -60,7 +60,7 @@ def total_results(data, *, ok: bool = True) -> int:
     elif isinstance(data, JSONRPCResponse):
         return int(data.ok == ok)
     else:
-        return 0 # The data hasn't been parsed yet. The data attribute hasn't been set.
+        return 0  # The data hasn't been parsed yet. The data attribute hasn't been set.
 
 
 class Response:

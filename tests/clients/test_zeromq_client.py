@@ -9,7 +9,7 @@ from jsonrpcclient.clients.zeromq_client import ZeroMQClient
 from jsonrpcclient.request import Request
 
 
-class TestZeroMQClient():
+class TestZeroMQClient:
     def setup_method(self):
         # Patch Request.id_generator to ensure the request id is always 1
         Request.id_generator = itertools.count(1)

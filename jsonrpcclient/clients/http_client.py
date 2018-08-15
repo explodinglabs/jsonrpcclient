@@ -32,9 +32,7 @@ class HTTPClient(Client):
         self.session = Session()
         self.session.headers.update(self.DEFAULT_HEADERS)
 
-    def log_response(
-        self, response: Response, fmt: str = None, **kwargs: Any
-    ) -> None:
+    def log_response(self, response: Response, fmt: str = None, **kwargs: Any) -> None:
         super().log_response(
             response,
             extra={

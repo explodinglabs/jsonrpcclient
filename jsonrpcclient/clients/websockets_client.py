@@ -12,7 +12,9 @@ from ..response import Response
 
 
 class WebSocketsClient(AsyncClient):
-    def __init__(self, socket: WebSocketCommonProtocol, *args: Any, **kwargs: Any) -> None:
+    def __init__(
+        self, socket: WebSocketCommonProtocol, *args: Any, **kwargs: Any
+    ) -> None:
         """
         :param endpoint:
         :param socket_type:

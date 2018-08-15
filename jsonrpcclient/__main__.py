@@ -40,7 +40,7 @@ def main(
     if request_type == "notify":
         req = Notification(method, *positional, **named)
     else:
-        req = Request(method, *positional, request_id=id, **named) # type: ignore
+        req = Request(method, *positional, request_id=id, **named)  # type: ignore
     # Sending?
     if send:
         client = HTTPClient(send)

@@ -28,5 +28,7 @@ class TestResponse:
 
     def test_repr_with_results(self):
         response = Response("foo")
-        response.data = JSONRPCResponse({"jsonrpc": "2.0", "error": {"message": "foo"}, "id": 1})
+        response.data = JSONRPCResponse(
+            {"jsonrpc": "2.0", "error": {"message": "foo"}, "id": 1}
+        )
         assert repr(response) == "<Response[0 ok, 1 errors]>"
