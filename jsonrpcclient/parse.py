@@ -5,62 +5,9 @@ from typing import Dict, List, Optional, Union
 import jsonschema  # type: ignore
 
 from . import exceptions
+from .response import JSONRPCResponse
 
 response_schema = json.loads(resource_string(__name__, "response-schema.json").decode())
-
-
-class JSONRPCResponse:
-    """
-    Success response:
-        - Response.ok = True
-        - Response.id = 1
-        - Response.result = 5
-    Error response:
-        - Response.ok = False
-        - Response.id = 1
-        - Response.message = "There was an error"
-        - Response.data = None
-    """
-
-    def __init__(
-        self,
-        response: Optional[Dict],
-        validate_against_schema: bool = True,
-        log_extra: Optional[Dict] = None,
-        log_format: Optional[str] = None,
-        trim_log_values: bool = False,
-    ) -> None:
-        """
-        Provides attributes representing the response.
-
-        :param response: The JSON-RPC response to process.
-        :type response: dict.
-        """
-        if response:
-            # If the response was "error", raise to ensure it's handled
-            self.id = response["id"]
-            self.ok = "result" in response
-            if self.ok:
-                self.ok = True
-                self.result = response["result"]
-            else:
-                self.ok = False
-                self.code = response["error"].get("code")
-                self.message = response["error"].get("message")
-                self.data = response["error"].get("data")
-        else:
-            # Empty response - valid.
-            self.ok = True
-            self.id = None
-            self.result = None
-
-    def __repr__(self) -> str:
-        if self.ok:
-            return "<JSONRPCResponse(id={}, result={})>".format(self.id, self.result)
-        else:
-            return '<JSONRPCResponse(id={}, message="{}")>'.format(
-                self.id, self.message
-            )
 
 
 def parse(

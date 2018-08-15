@@ -113,22 +113,16 @@ class TestSend:
         response = DummyClient("foo").send({"jsonrpc": "2.0", "method": "foo", "id": 1})
         assert response.data.result == 1
 
-
-class TestRequest:
     @patch("jsonrpcclient.client.request_log")
     def test(self, *_):
         response = DummyClient("foo").request("multiply", 3, 5)
         assert response.data.ok == True
 
-
-class TestNotify:
     @patch("jsonrpcclient.client.request_log")
     def test(self, *_):
         response = DummyClient("foo").notify("multiply", 3, 5)
         assert response.data.ok == True
 
-
-class TestDirect:
     @patch("jsonrpcclient.client.request_log")
     def test_alternate_usage(self, *_):
         response = DummyClient("foo").multiply(3, 5)

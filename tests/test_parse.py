@@ -104,3 +104,11 @@ class TestParse:
             '{"jsonrpc": "2.0", "result": "foo", "id": 1}',
             validate_against_schema=False,
         )
+
+    def test_batch(self, *_):
+        data = parse('[{"jsonrpc": "2.0", "result": "foo", "id": 1}]')
+        assert data[0].result == "foo"
+
+    def test_none(self, *_):
+        data = parse(None)
+        assert data.result is None
