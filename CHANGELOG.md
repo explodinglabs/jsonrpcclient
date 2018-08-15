@@ -1,25 +1,32 @@
 # jsonrpcclient Change Log
 
 ## 3.0.0 (Coming soon, now in master branch)
-- The 3.x releases will support Python 3.5+ only.
-- Remove the need for requests library to be installed, if not using it. (#85)
-- Remove jsonrpcclient.request. Import jsonrpcclient.clients.http_client.request instead.
-- Remove jsonrpcclient.Request and Notification. Import
-  jsonrpcclient.request.Request and Notification instead.
-- Change code to python 3 style: remove future and past.builtins. Change super
-  calls to just super(). Change basestring to str. (#71)
+
+_The 3.x releases will support Python 3.5+ only._
+
+- Remove the config module. Add new params to configure the client. (#46)
+- Remove the `*_server.py` files, which were deprecated. (#79)
+- Rename aiohttpClient to AiohttpClient.
+- Include http status code and reason in aiohttp log entries.
+- Remove headers from http_client's log entries, they weren't used.
+- Update the Tornado client to subclass AsyncClient. (#44)
+- Remove HTTPClient.last_request and last_response, they weren't used. (#27)
+- Remove ReceivedErrorResponse.
+- HTTP clients raise an exception on non-2xx status code response. (#67)
+- Remove zmq_client module, use zeromq_client instead. (#84)
 - Move all client modules into a `clients` subpackage. Import from
   jsonrpcclient.clients. (#83)
-- Remove zmq_client module, use zeromq_client instead. (#84)
-- HTTP clients raise an exception on non-2xx status code response. (#67)
-- Rename ReceivedErrorResponse to RecievedErrorResponseError. (#82)
-- Remove HTTPClient.last_request and last_response, they weren't used. (#27)
-- Update the Tornado client to subclass AsyncClient. (#44)
-- Remove headers from http_client's log entries, they weren't used.
-- Include http status code and reason in aiohttp log entries.
-- Rename aiohttpClient to AiohttpClient.
-- Remove the `*_server.py` files, which were deprecated. (#79)
-- Remove the config module. Add new params to configure the client. (#46)
+- Change code to python 3 style: remove future and past.builtins. Change super
+  calls to just super(). Change basestring to str. (#71)
+- Remove jsonrpcclient.Request and Notification. Import
+  jsonrpcclient.request.Request and Notification instead.
+- Remove jsonrpcclient.request. Import jsonrpcclient.clients.http_client.request instead.
+- Remove the need for requests library to be installed, if not using it. (#85)
+- Add type hints (#92)
+- Log to the debug log level (not info).
+- Add support configuration files.
+- Remove the convenience functions (request and notify).
+- Remove zeromq-async client.
 
 ## 2.6.0 (Jun 13, 2018)
 - Add command-line interface, see `jsonrpc --help` (#62)

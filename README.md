@@ -14,8 +14,15 @@ pip install "jsonrpcclient[requests]"
 ```
 
 ```python
-from jsonrpcclient.clients import http_client
-http_client.request("http://cats.com", "speak")
+>>> from jsonrpcclient.clients.http_client import request
+>>> client = HTTPClient("http://localhost:5000")
+>>> response = client.request("ping")
+>>> response.text
+'{"jsonrpc": "2.0", "result": "pong", "id": 1}'
+>>> response.data.ok
+True
+>>> response.data.result
+'pong'
 ```
 
 Full documentation is at [jsonrpcclient.readthedocs.io](https://jsonrpcclient.readthedocs.io/).
@@ -25,6 +32,8 @@ Full documentation is at [jsonrpcclient.readthedocs.io](https://jsonrpcclient.re
 ```sh
 pip install "jsonrpcclient[unittest]"
 pytest
+pip install mypy
+mypy jsonrpcclient
 ```
 
 See also: [jsonrpcserver](https://github.com/bcb/jsonrpcserver)
