@@ -12,7 +12,6 @@ class ZeroMQAsyncClient(AsyncClient):
     """
     :param endpoint:
     :param socket_type:
-    :param *args: Passed through to Client class.
     :param **kwargs: Passed through to Client class.
     """
 
