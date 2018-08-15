@@ -1,11 +1,11 @@
 import itertools
-import pytest
 from collections import namedtuple
-from testfixtures import LogCapture, StringComparison
 from unittest.mock import patch
 
+import pytest
 import requests
 import responses
+from testfixtures import LogCapture, StringComparison
 
 from jsonrpcclient import id_generators
 from jsonrpcclient.clients.http_client import HTTPClient

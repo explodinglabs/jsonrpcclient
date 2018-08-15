@@ -1,5 +1,5 @@
-from jsonrpcclient.response import Response, JSONRPCResponse, total_results
 from jsonrpcclient.parse import parse
+from jsonrpcclient.response import JSONRPCResponse, Response, total_results
 
 
 class TestTotalResults:

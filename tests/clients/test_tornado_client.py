@@ -1,12 +1,12 @@
-import json
 import itertools
-from unittest.mock import patch, Mock
+import json
+from unittest.mock import Mock, patch
 
-from tornado import testing, web, httpclient
+from tornado import httpclient, testing, web
 
-from jsonrpcclient.request import Request
-from jsonrpcclient.exceptions import ReceivedNon2xxResponseError
 from jsonrpcclient.clients.tornado_client import TornadoClient
+from jsonrpcclient.exceptions import ReceivedNon2xxResponseError
+from jsonrpcclient.request import Request
 
 
 class EchoHandler(web.RequestHandler):

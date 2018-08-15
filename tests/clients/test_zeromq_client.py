@@ -1,12 +1,12 @@
 import itertools
 import json
+
 import pytest
-
 import zmq
-from mock import patch, Mock
+from mock import Mock, patch
 
-from jsonrpcclient.request import Request
 from jsonrpcclient.clients.zeromq_client import ZeroMQClient
+from jsonrpcclient.request import Request
 
 
 class TestZeroMQClient():

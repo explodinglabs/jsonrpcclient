@@ -1,5 +1,6 @@
-import pytest
 from unittest.mock import sentinel
+
+import pytest
 
 from jsonrpcclient.async_client import AsyncClient
 from jsonrpcclient.response import Response

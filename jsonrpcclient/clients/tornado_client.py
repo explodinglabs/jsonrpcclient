@@ -4,10 +4,9 @@ Tornado Client.
 Represents an endpoint to communicate with using Tornado asynchronous HTTP
 client.
 """
-from typing import Any
+from typing import Any, Optional
 
 from tornado.httpclient import AsyncHTTPClient  # type: ignore
-from typing import Optional
 
 from ..async_client import AsyncClient
 from ..response import Response

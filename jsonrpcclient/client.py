@@ -4,14 +4,14 @@ from abc import ABCMeta, abstractmethod
 from typing import Any, Callable, Dict, Iterator, List, Optional, Union
 
 import colorlog  # type: ignore
-from apply_defaults import apply_self, apply_config  # type: ignore
+
+from apply_defaults import apply_config, apply_self  # type: ignore
 
 from .config import config
 from .log import log_
 from .parse import parse
 from .request import Notification, Request
 from .response import Response
-
 
 request_log = colorlog.getLogger(__name__ + ".request")
 response_log = colorlog.getLogger(__name__ + ".response")

@@ -1,5 +1,6 @@
 """setup.py"""
 from codecs import open as codecs_open
+
 from setuptools import setup
 
 with codecs_open("README.md", "r", "utf-8") as f:
@@ -21,7 +22,9 @@ setup(
         "requests_security": ["requests[security]"],
         "tornado": ["tornado"],
         "unittest": [
+            "mock",
             "pytest",
+            "pytest-asyncio",
             "pyzmq",
             "requests",
             "responses",
@@ -32,7 +35,7 @@ setup(
         "zmq": ["pyzmq"],
     },
     include_package_data=True,
-    install_requires=["jsonschema>2,<3", "click>6,<7"],
+    install_requires=["jsonschema>2,<3", "apply_defaults>0,<1", "click>6,<7"],
     license="MIT",
     long_description=README,
     long_description_content_type="text/markdown",

@@ -6,9 +6,9 @@ request. See the :mod:`config` module.
 """
 import itertools
 from random import choice
-from string import digits, ascii_lowercase
-from uuid import uuid4
+from string import ascii_lowercase, digits
 from typing import Iterator
+from uuid import uuid4
 
 
 def decimal(start: int = 1) -> Iterator[int]:

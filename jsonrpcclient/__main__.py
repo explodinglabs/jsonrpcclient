@@ -1,14 +1,13 @@
 # /usr/bin/env python
 import sys
-import pkg_resources
 from typing import Any
 
 import click
+import pkg_resources
 
-from jsonrpcclient.request import Request, Notification
-from jsonrpcclient.exceptions import JsonRpcClientError
 from jsonrpcclient.clients.http_client import HTTPClient
-
+from jsonrpcclient.exceptions import JsonRpcClientError
+from jsonrpcclient.request import Notification, Request
 
 version = pkg_resources.require("jsonrpcclient")[0].version
 

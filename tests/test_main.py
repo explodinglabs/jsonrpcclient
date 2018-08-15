@@ -1,8 +1,7 @@
-import pytest
-from unittest.mock import Mock
+from unittest.mock import Mock, patch
 
+import pytest
 from click.testing import CliRunner
-from unittest.mock import patch
 
 from jsonrpcclient.__main__ import main
 from jsonrpcclient.exceptions import ParseResponseError

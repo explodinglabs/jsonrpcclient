@@ -1,14 +1,14 @@
 import itertools
 import json
-import pytest
 from unittest.mock import patch
 
+import pytest
 from testfixtures import LogCapture, StringComparison
 
 from jsonrpcclient import exceptions
+from jsonrpcclient.client import Client
 from jsonrpcclient.request import Request
 from jsonrpcclient.response import Response
-from jsonrpcclient.client import Client
 
 
 class DummyClient(Client):

@@ -1,8 +1,8 @@
 import json
-from pkg_resources import resource_string
 from typing import Dict, List, Optional, Union
 
 import jsonschema  # type: ignore
+from pkg_resources import resource_string
 
 from . import exceptions
 from .response import JSONRPCResponse

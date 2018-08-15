@@ -6,8 +6,9 @@ A ZeroMQ client to send requests::
 
     ZMQClient('tcp://hostname:5555').request('go')
 """
-import zmq  # type: ignore
 from typing import Any
+
+import zmq  # type: ignore
 
 from ..client import Client
 from ..response import Response

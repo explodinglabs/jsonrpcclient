@@ -1,5 +1,5 @@
-import os
 import importlib
+import os
 from configparser import ConfigParser
 
 from . import id_generators

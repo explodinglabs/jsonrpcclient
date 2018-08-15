@@ -1,7 +1,8 @@
 import json
 import logging
-from unittest.mock import patch, Mock
-from jsonrpcclient.log import configure_logger, _trim_string, _trim_values
+from unittest.mock import Mock, patch
+
+from jsonrpcclient.log import _trim_string, _trim_values, configure_logger
 
 
 class TestConfigureLogger:

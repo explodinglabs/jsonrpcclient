@@ -1,7 +1,7 @@
 """Logging"""
 import json
 import logging
-from typing import List, Dict, Optional, Union, Any, cast
+from typing import Any, Dict, List, Optional, Union, cast
 
 import colorlog  # type: ignore
 
