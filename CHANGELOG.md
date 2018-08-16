@@ -27,6 +27,7 @@ _The 3.x releases will support Python 3.5+ only._
 - Add support configuration files.
 - Remove the convenience functions (request and notify).
 - Remove zeromq-async client.
+- Configure logging pythonically.
 
 ## 2.6.0 (Jun 13, 2018)
 - Add command-line interface, see `jsonrpc --help` (#62)
