@@ -2,16 +2,7 @@ import json
 import logging
 from unittest.mock import Mock, patch
 
-from jsonrpcclient.log import _trim_string, _trim_values, configure_logger
-
-
-class TestConfigureLogger:
-    def test(self):
-        configure_logger(Mock(level=logging.NOTSET), "%s")
-
-    @patch("jsonrpcclient.log.logging.root.handlers", None)
-    def test_no_handlers(self, *_):
-        configure_logger(Mock(level=logging.NOTSET, handlers=None), "%s")
+from jsonrpcclient.log import _trim_string, _trim_values
 
 
 def test_trim_string():

@@ -19,6 +19,7 @@ class TornadoClient(AsyncClient):
     """
 
     DEFAULT_HEADERS = {"Content-Type": "application/json", "Accept": "application/json"}
+    DEFAULT_RESPONSE_LOG_FORMAT = "<-- %(message)s (%(http_code)s %(http_reason)s)"
 
     def __init__(
         self,
@@ -32,11 +33,7 @@ class TornadoClient(AsyncClient):
         self.client = client or AsyncHTTPClient()
 
     def log_response(
-        self,
-        response: Response,
-        fmt: str = None,
-        trim_log_values: bool = False,
-        **kwargs: Any
+        self, response: Response, trim_log_values: bool = False, **kwargs: Any
     ) -> None:
         # Note: Tornado adds it's own log handlers, so the following log format isn't
         # used unless Tornado's handlers are disabled.
@@ -46,7 +43,6 @@ class TornadoClient(AsyncClient):
                 "http_code": response.raw.code,  # type: ignore
                 "http_reason": response.raw.reason,  # type: ignore
             },
-            fmt="<-- %(message)s (%(http_code)s %(http_reason)s)",
             trim_log_values=trim_log_values,
             **kwargs
         )

@@ -11,6 +11,7 @@ class JSONRPCResponse:
         - Response.ok = False
         - Response.id = 1
         - Response.message = "There was an error"
+        - Response.code = -32000
         - Response.data = None
     """
 

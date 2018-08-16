@@ -3,20 +3,6 @@ import json
 import logging
 from typing import Any, Dict, List, Optional, Union, cast
 
-import colorlog  # type: ignore
-
-
-def configure_logger(logger: logging.Logger, fmt: str) -> None:
-    """
-    Add a StreamHandler to the logger if no handler has been configured for it.
-
-    Used by the log_ function below.
-    """
-    if not logging.root.handlers and not logger.handlers:
-        handler = colorlog.StreamHandler()
-        handler.setFormatter(colorlog.ColoredFormatter(fmt=fmt))
-        logger.addHandler(handler)
-
 
 def _trim_string(message: str) -> str:
     longest_string = 30
@@ -67,7 +53,6 @@ def log_(
     logger: logging.Logger,
     level: str = "info",
     extra: Optional[Dict] = None,
-    fmt: str = "%(message)s",
     trim: bool = False,
 ) -> None:
     """
@@ -82,7 +67,5 @@ def log_(
         message = message.replace("\n", "").replace("  ", " ").replace("{ ", "{")
     if trim:
         message = trim_message(message)
-    # Add a handler if none configured
-    configure_logger(logger, fmt)
     # Log.
     getattr(logger, level)(message, extra=extra)

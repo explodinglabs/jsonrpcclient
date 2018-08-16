@@ -25,7 +25,7 @@ class TestLogRequest:
         capture.check(
             (
                 "jsonrpcclient.client.request",
-                "DEBUG",
+                "INFO",
                 StringComparison(r'.*"method": "foo".*'),
             )
         )
@@ -39,7 +39,7 @@ class TestLogRequest:
         capture.check(
             (
                 "jsonrpcclient.client.request",
-                "DEBUG",
+                "INFO",
                 StringComparison(r".*foofoofoof...ofoofoofoo.*"),
             )
         )
@@ -54,7 +54,7 @@ class TestLogRequest:
         capture.check(
             (
                 "jsonrpcclient.client.request",
-                "DEBUG",
+                "INFO",
                 StringComparison(r".*" + "foo" * 100 + ".*"),
             )
         )
@@ -69,7 +69,7 @@ class TestLogResponse:
         capture.check(
             (
                 "jsonrpcclient.client.response",
-                "DEBUG",
+                "INFO",
                 StringComparison(r'.*"result": 5.*'),
             )
         )
@@ -81,7 +81,7 @@ class TestLogResponse:
         capture.check(
             (
                 "jsonrpcclient.client.response",
-                "DEBUG",
+                "INFO",
                 StringComparison(r".*foofoofoof...ofoofoofoo.*"),
             )
         )
@@ -94,7 +94,7 @@ class TestLogResponse:
         capture.check(
             (
                 "jsonrpcclient.client.response",
-                "DEBUG",
+                "INFO",
                 StringComparison(r".*" + "foo" * 100 + ".*"),
             )
         )

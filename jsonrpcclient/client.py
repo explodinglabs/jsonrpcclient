@@ -3,8 +3,7 @@ import json
 from abc import ABCMeta, abstractmethod
 from typing import Any, Callable, Dict, Iterator, List, Optional, Union
 
-import colorlog  # type: ignore
-
+import logging  # type: ignore
 from apply_defaults import apply_config, apply_self  # type: ignore
 
 from .config import config
@@ -13,8 +12,8 @@ from .parse import parse
 from .request import Notification, Request
 from .response import Response
 
-request_log = colorlog.getLogger(__name__ + ".request")
-response_log = colorlog.getLogger(__name__ + ".response")
+request_log = logging.getLogger(__name__ + ".request")
+response_log = logging.getLogger(__name__ + ".response")
 
 
 class Client(metaclass=ABCMeta):
@@ -24,12 +23,16 @@ class Client(metaclass=ABCMeta):
     Subclasses should inherit and override `send_message`.
     """
 
+    DEFAULT_REQUEST_LOG_FORMAT = "--> %(message)s"
+    DEFAULT_RESPONSE_LOG_FORMAT = "<-- %(message)s"
+
     @apply_config(config, converters={"id_generator": "getcallable"})
     def __init__(
         self,
         trim_log_values: bool = False,
         validate_against_schema: bool = True,
         id_generator: Optional[Iterator] = None,
+        basic_logging: bool = False
     ) -> None:
         """
         :param config: Log abbreviated versions of requests and responses.
@@ -37,31 +40,23 @@ class Client(metaclass=ABCMeta):
         self.trim_log_values = trim_log_values
         self.validate_against_schema = validate_against_schema
         self.id_generator = id_generator
+        if basic_logging:
+            self.basic_logging()
 
     @apply_self
     def log_request(
-        self,
-        request: str,
-        fmt: str = "%(log_color)s\u27f6 %(message)s",
-        trim_log_values: bool = False,
-        **kwargs: Any
+        self, request: str, trim_log_values: bool = False, **kwargs: Any
     ) -> None:
         """
         Log a request.
 
         :param request: The JSON-RPC request string.
         """
-        return log_(
-            request, request_log, "debug", fmt=fmt, trim=trim_log_values, **kwargs
-        )
+        return log_(request, request_log, "info", trim=trim_log_values, **kwargs)
 
     @apply_self
     def log_response(
-        self,
-        response: Response,
-        fmt: str = "%(asctime)s %(levelname)s \u27f5 %(message)s",
-        trim_log_values: bool = False,
-        **kwargs: Any
+        self, response: Response, trim_log_values: bool = False, **kwargs: Any
     ) -> None:
         """
         Log a response.
@@ -71,14 +66,19 @@ class Client(metaclass=ABCMeta):
 
         :param response: Response object.
         """
-        return log_(
-            response.text,
-            response_log,
-            "debug",
-            fmt=fmt,
-            trim=trim_log_values,
-            **kwargs
-        )
+        return log_(response.text, response_log, "info", trim=trim_log_values, **kwargs)
+
+    def basic_logging(self) -> None:
+        # Request handler
+        handler = logging.StreamHandler()
+        handler.setFormatter(logging.Formatter(fmt=self.DEFAULT_REQUEST_LOG_FORMAT))
+        request_log.addHandler(handler)
+        request_log.setLevel(logging.INFO)
+        # Response handler
+        handler = logging.StreamHandler()
+        handler.setFormatter(logging.Formatter(fmt=self.DEFAULT_RESPONSE_LOG_FORMAT))
+        response_log.addHandler(handler)
+        response_log.setLevel(logging.INFO)
 
     @abstractmethod
     def send_message(self, request: str, **kwargs: Any) -> Response:

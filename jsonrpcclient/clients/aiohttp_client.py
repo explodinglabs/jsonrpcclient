@@ -16,6 +16,8 @@ from ..response import Response
 class AiohttpClient(AsyncClient):
     """TODO: rename AiohttpClient to AiohttpClient"""
 
+    DEFAULT_RESPONSE_LOG_FORMAT = "<-- %(message)s (%(http_code)s %(http_reason)s)"
+
     def __init__(self, session: ClientSession, endpoint: str, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         self.endpoint = endpoint
@@ -24,7 +26,6 @@ class AiohttpClient(AsyncClient):
     def log_response(
         self,
         response: Response,
-        fmt: str = None,
         trim_log_values: bool = False,
         **kwargs: Any
     ) -> None:
@@ -34,7 +35,6 @@ class AiohttpClient(AsyncClient):
                 "http_code": response.raw.status,  # type: ignore
                 "http_reason": response.raw.reason,  # type: ignore
             },
-            fmt="<-- %(message)s (%(http_code)s %(http_reason)s)",
             trim_log_values=trim_log_values,
             **kwargs,
         )

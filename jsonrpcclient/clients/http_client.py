@@ -21,6 +21,7 @@ class HTTPClient(Client):
 
     # The default HTTP header
     DEFAULT_HEADERS = {"Content-Type": "application/json", "Accept": "application/json"}
+    DEFAULT_RESPONSE_LOG_FORMAT = "<-- %(message)s (%(http_code)s %(http_reason)s)"
 
     def __init__(self, endpoint: str, *args: Any, **kwargs: Any) -> None:
         """
@@ -33,14 +34,13 @@ class HTTPClient(Client):
         self.session = Session()
         self.session.headers.update(self.DEFAULT_HEADERS)
 
-    def log_response(self, response: Response, fmt: str = None, **kwargs: Any) -> None:
+    def log_response(self, response: Response, **kwargs: Any) -> None:
         super().log_response(
             response,
             extra={
                 "http_code": response.raw.status_code,  # type: ignore
                 "http_reason": response.raw.reason,  # type: ignore
             },
-            fmt="%(log_color)s\u27f5 %(message)s (%(http_code)s %(http_reason)s)",
             **kwargs
         )
 
