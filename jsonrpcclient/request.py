@@ -8,7 +8,7 @@ To create a request::
 """
 import json
 from collections import OrderedDict
-from typing import Any, Callable, Dict, Iterator, List
+from typing import Any, Callable, Dict, Iterator, List, Optional
 
 from . import id_generators
 
@@ -37,7 +37,7 @@ class _RequestClassType(type):
     Catches undefined attributes on the class.
     """
 
-    def __getattr__(cls, name: str) -> Callable:
+    def __getattr__(cls: Callable, name: str) -> Callable:
         """
         This gives us an alternate way to make a request::
 
@@ -129,7 +129,11 @@ class Request(Notification):
     id_generator = id_generators.decimal()
 
     def __init__(
-        self, method: str, *args: Any, id_generator: Iterator[Any] = None, **kwargs: Any
+        self,
+        method: str,
+        *args: Any,
+        id_generator: Optional[Iterator[Any]] = None,
+        **kwargs: Any
     ) -> None:
         # If 'request_id' is passed, use the specified id
         if "request_id" in kwargs:

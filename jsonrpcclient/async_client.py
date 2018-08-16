@@ -21,7 +21,7 @@ class AsyncClient(Client, metaclass=ABCMeta):
         """Override to transport the request"""
 
     @apply_self
-    async def send(  # type: ignore
+    async def send(
         self,
         request: Union[str, Dict, List],
         trim_log_values: bool = False,

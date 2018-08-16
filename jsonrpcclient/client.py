@@ -3,7 +3,7 @@ import json
 from abc import ABCMeta, abstractmethod
 from typing import Any, Callable, Dict, Iterator, List, Optional, Union
 
-import logging  # type: ignore
+import logging
 from apply_defaults import apply_config, apply_self  # type: ignore
 
 from .config import config

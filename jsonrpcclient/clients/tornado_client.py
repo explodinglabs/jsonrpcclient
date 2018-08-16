@@ -40,8 +40,8 @@ class TornadoClient(AsyncClient):
         super().log_response(
             response,
             extra={
-                "http_code": response.raw.code,  # type: ignore
-                "http_reason": response.raw.reason,  # type: ignore
+                "http_code": response.raw.code,
+                "http_reason": response.raw.reason,
             },
             trim_log_values=trim_log_values,
             **kwargs

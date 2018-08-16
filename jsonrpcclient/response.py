@@ -55,7 +55,9 @@ class JSONRPCResponse:
             )
 
 
-def total_results(data, *, ok: bool = True) -> int:
+def total_results(
+    data: Union[List[JSONRPCResponse], JSONRPCResponse, None], *, ok: bool = True
+) -> int:
     if isinstance(data, list):
         return sum([1 for d in data if d.ok == ok])
     elif isinstance(data, JSONRPCResponse):

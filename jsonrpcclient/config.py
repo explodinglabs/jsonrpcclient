@@ -1,11 +1,12 @@
 import importlib
 import os
 from configparser import ConfigParser
+from typing import Iterator
 
 from . import id_generators
 
 
-def parse_callable(path: str):
+def parse_callable(path: str) -> Iterator:
     module = path[: path.rindex(".")]
     callable_name = path[path.rindex(".") + 1 :]
     callable_ = getattr(importlib.import_module(module), callable_name)

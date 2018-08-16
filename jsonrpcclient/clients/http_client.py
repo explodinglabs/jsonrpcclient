@@ -38,15 +38,15 @@ class HTTPClient(Client):
         super().log_response(
             response,
             extra={
-                "http_code": response.raw.status_code,  # type: ignore
-                "http_reason": response.raw.reason,  # type: ignore
+                "http_code": response.raw.status_code,
+                "http_reason": response.raw.reason,
             },
             **kwargs
         )
 
     def validate_response(self, response: Response) -> None:
-        if not 200 <= response.raw.status_code <= 299:  # type: ignore
-            raise ReceivedNon2xxResponseError(response.raw.status_code)  # type: ignore
+        if not 200 <= response.raw.status_code <= 299:
+            raise ReceivedNon2xxResponseError(response.raw.status_code)
 
     def send_message(self, request: str, **kwargs: Any) -> Response:
         response = self.session.post(self.endpoint, data=request.encode(), **kwargs)
