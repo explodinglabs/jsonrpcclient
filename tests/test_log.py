@@ -2,7 +2,7 @@ import json
 import logging
 from unittest.mock import Mock, patch
 
-from jsonrpcclient.log import _trim_string, _trim_values
+from jsonrpcclient.log import _trim_string, _trim_values, _trim_message
 
 
 def test_trim_string():
@@ -26,5 +26,5 @@ def test_trim_values_batch():
 
 
 def test_trim_message():
-    message = _trim_values([{"list": [0] * 100}])
-    assert "..." in message[0]["list"]
+    message = _trim_message("foo" * 100)
+    assert "..." in message
