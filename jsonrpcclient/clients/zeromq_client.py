@@ -16,10 +16,11 @@ from ..response import Response
 
 class ZeroMQClient(Client):
     """
-    :param endpoint: The server address.
-    :param socket_type: The zeromq `socket type`_. Default is *zmq.REQ*.
-    :param *args: Passed through to Client class.
-    :param **kwargs: Passed through to Client class.
+    Args:
+        endpoint: The server address.
+        socket_type: The zeromq `socket type`_. Default is `zmq.REQ`.
+        *args: Passed through to Client class.
+        **kwargs: Passed through to Client class.
     """
 
     def __init__(

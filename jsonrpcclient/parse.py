@@ -16,9 +16,10 @@ def parse(
     """
     Parses response text, returning JSONRPCResponse objects.
 
-    :type response_text: JSON-RPC response string.
-    :raises ParseResponseError: The response was not valid JSON.
-    :raises ValidationError: The response was not a valid JSON-RPC response object.
+    Args:
+        response_text: JSON-RPC response string.
+        ParseResponseError: The response was not valid JSON.
+        ValidationError: The response was not a valid JSON-RPC response object.
     """
     if response_text:
         # If a string, ensure it's json-decodable

@@ -26,7 +26,8 @@ class JSONRPCResponse:
         """
         Provides attributes representing the response.
 
-        :param response: The JSON-RPC response to process. (can be None!)
+        Args:
+            response: The JSON-RPC response to process. (can be None!)
         """
         if response:
             # If the response was "error", raise to ensure it's handled
@@ -68,19 +69,21 @@ def total_results(
 
 class Response:
     """
-    Wraps a response from any client.
+    Wraps a client response.
 
     >>> Response(response.text, raw=response)
     """
 
     def __init__(self, text: str, raw: Any = None) -> None:
         """
-        :param text: The response string.
-        :param raw: The client's own response object. Gives the user access to the
-            client framework. (optional)
+        Args:
+            text: The response string, as it was returned from the server.
+            raw: The framework's own response object. Gives the user access to the
+                framework (e.g. Requests library's `Response` object). (optional)
         """
         self.text = text
         self.raw = raw
+        # Data is the parsed version of the response.
         self.data = (
             None
         )  # type: Optional[Union[JSONRPCResponse, List[JSONRPCResponse]]]

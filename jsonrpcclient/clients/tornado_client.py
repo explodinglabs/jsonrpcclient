@@ -39,10 +39,7 @@ class TornadoClient(AsyncClient):
         # used unless Tornado's handlers are disabled.
         super().log_response(
             response,
-            extra={
-                "http_code": response.raw.code,
-                "http_reason": response.raw.reason,
-            },
+            extra={"http_code": response.raw.code, "http_reason": response.raw.reason},
             trim_log_values=trim_log_values,
             **kwargs
         )

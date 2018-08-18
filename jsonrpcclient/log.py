@@ -58,7 +58,8 @@ def log_(
     """
     Log a request or response
 
-    :param message: JSON-RPC request or response string.
+    Args:
+        message: JSON-RPC request or response string.
     """
     if extra is None:
         extra = {}

@@ -1,7 +1,9 @@
 """
-Asynchronous client.
+Async client.
 
-Abstract base class for other asynchronous clients such as aiohttp, WebSockets & ZeroMQ.
+Abstract base class for the asynchronous clients.
+
+Has async versions of the Client class's public methods.
 """
 import json
 from abc import ABCMeta, abstractmethod

@@ -25,8 +25,10 @@ class HTTPClient(Client):
 
     def __init__(self, endpoint: str, *args: Any, **kwargs: Any) -> None:
         """
-        :param endpoint: The server address.
-        :param **kwargs: Pased through to the Client class.
+        Args:
+            endpoint: The server address.
+            *args: Passed through to the Client class.
+            **kwargs: Passed through to the Client class.
         """
         super().__init__(*args, **kwargs)
         self.endpoint = endpoint

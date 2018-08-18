@@ -1,4 +1,8 @@
-"""Abstract base class for various clients."""
+"""
+Client class.
+
+Base class for the clients.
+"""
 import json
 from abc import ABCMeta, abstractmethod
 from typing import Any, Callable, Dict, Iterator, List, Optional, Union
@@ -20,7 +24,7 @@ class Client(metaclass=ABCMeta):
     """
     Protocol-agnostic base class for clients.
 
-    Subclasses should inherit and override `send_message`.
+    Subclasses must override `send_message` to transport the message.
     """
 
     DEFAULT_REQUEST_LOG_FORMAT = "--> %(message)s"
@@ -32,10 +36,15 @@ class Client(metaclass=ABCMeta):
         trim_log_values: bool = False,
         validate_against_schema: bool = True,
         id_generator: Optional[Iterator] = None,
-        basic_logging: bool = False
+        basic_logging: bool = False,
     ) -> None:
         """
-        :param config: Log abbreviated versions of requests and responses.
+        Args:
+            trim_log_values: Abbreviate the log entries of requests and responses.
+            validate_against_schema: Validate response against the JSON-RPC schema.
+            id_generator: Iterable of values to use as the "id" part of the request.
+            basic_logging: Will create log handlers to output request & response
+                messages.
         """
         self.trim_log_values = trim_log_values
         self.validate_against_schema = validate_against_schema
@@ -50,7 +59,9 @@ class Client(metaclass=ABCMeta):
         """
         Log a request.
 
-        :param request: The JSON-RPC request string.
+        Args:
+            request: The JSON-RPC request string.
+            trim_log_values: Log an abbreviated version of the request.
         """
         return log_(request, request_log, "info", trim=trim_log_values, **kwargs)
 
@@ -64,11 +75,18 @@ class Client(metaclass=ABCMeta):
         Note this is different to log_request, in that it takes a Response object, not a
         string.
 
-        :param response: Response object.
+        Args:
+            response: The Response object to log. Note this is different to log_request
+                which takes a string.
+            trim_log_values: Log an abbreviated version of the response.
         """
         return log_(response.text, response_log, "info", trim=trim_log_values, **kwargs)
 
     def basic_logging(self) -> None:
+        """
+        Call this on the client object to create log handlers to output request and
+        response messages.
+        """
         # Request handler
         handler = logging.StreamHandler()
         handler.setFormatter(logging.Formatter(fmt=self.DEFAULT_REQUEST_LOG_FORMAT))
@@ -87,8 +105,8 @@ class Client(metaclass=ABCMeta):
 
         Override this method in the protocol-specific subclasses.
 
-        :param request: A JSON-RPC request.
-        :returns: Response object.
+        Args:
+            request: A JSON-RPC request.
         """
 
     def validate_response(self, response: Response) -> None:
@@ -113,17 +131,15 @@ class Client(metaclass=ABCMeta):
         After sending, logs, validates and parses.
 
         >>> client.send('{"jsonrpc": "2.0", "method": "ping", "id": 1}')
-        --> {"jsonrpc": "2.0", "method": "ping", "id": 1}
-        <-- {"jsonrpc": "2.0", "result": "pong", "id": 1}
+        <Response[1]>
 
-        :param request: The JSON-RPC request.
-        :type request: Either a JSON-encoded string or a Request/Notification object.
-        :param kwargs: Clients can use these to configure an single request (separate to
-            configuration of the whole session). For example, HTTPClient passes them on
-            to `requests.Session.send()`.
-        :returns: A Response object, (or ``None`` in the case of a Notification).
-        :rtype: A `JSON-decoded object
-            <https://docs.python.org/library/json.html#json-to-py-table>`_, or NoneType
+        Args:
+            request: The JSON-RPC request. Can be either a JSON-encoded string or a
+                Request/Notification object.
+            trim_log_values: Abbreviate the log entries of requests and responses.
+            validate_against_schema: Validate response against the JSON-RPC schema.
+            kwargs: Clients can use this to configure an single request. For example,
+                HTTPClient passes this through to `requests.Session.send()`.
             in the case of a Notification.
         """
         # Convert the request to a string if it's not already.
@@ -149,10 +165,12 @@ class Client(metaclass=ABCMeta):
         """
         Send a JSON-RPC request, without expecting a response.
 
-        :param method_name: The remote procedure's method name.
-        :param args: Positional arguments passed to the remote procedure.
-        :param kwargs: Keyword arguments passed to the remote procedure.
-        :return: The payload (i.e. the ``result`` part of the response).
+        Args:
+            method_name: The remote procedure's method name.
+            args: Positional arguments passed to the remote procedure.
+            kwargs: Keyword arguments passed to the remote procedure.
+            trim_log_values: Abbreviate the log entries of requests and responses.
+            validate_against_schema: Validate response against the JSON-RPC schema.
         """
         return self.send(
             Notification(method_name, *args, **kwargs),
@@ -174,14 +192,15 @@ class Client(metaclass=ABCMeta):
         Send a request by passing the method and arguments.
 
         >>> client.request("cat", name="Yoko")
-        --> {"jsonrpc": "2.0", "method": "cat", "params": {"name": "Yoko"}, "id": 1}
-        <-- {"jsonrpc": "2.0", "result": "meow", "id": 1}
-        'meow'
+        <Response[1]
 
-        :param method_name: The remote procedure's method name.
-        :param args: Positional arguments passed to the remote procedure.
-        :param kwargs: Keyword arguments passed to the remote procedure.
-        :return: The payload (i.e. the ``result`` part of the response).
+        Args:
+            method_name: The remote procedure's method name.
+            args: Positional arguments passed to the remote procedure.
+            kwargs: Keyword arguments passed to the remote procedure.
+            trim_log_values: Abbreviate the log entries of requests and responses.
+            validate_against_schema: Validate response against the JSON-RPC schema.
+            id_generator: Iterable of values to use as the "id" part of the request.
         """
         return self.send(
             Request(method_name, id_generator=id_generator, *args, **kwargs),
@@ -193,14 +212,13 @@ class Client(metaclass=ABCMeta):
         """
         This gives us an alternate way to make a request::
 
-            >>> client.cube(3)
-            27
+        >>> client.cube(3)
+        --> {"jsonrpc": "2.0", "method": "cube", "params": [3], "id": 1}
 
-        That's the same as saying ``client.request("cube", 3)``.
+        That's the same as saying `client.request("cube", 3)`.
         """
 
         def attr_handler(*args: Any, **kwargs: Any) -> Response:
-            """Call self.request from here"""
             return self.request(name, *args, **kwargs)
 
         return attr_handler
