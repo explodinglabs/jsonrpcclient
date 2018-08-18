@@ -53,9 +53,8 @@ class Client(metaclass=ABCMeta):
             self.basic_logging()
 
     @apply_self
-    @staticmethod
     def log_request(
-        request: str, trim_log_values: bool = False, **kwargs: Any
+        self, request: str, trim_log_values: bool = False, **kwargs: Any
     ) -> None:
         """
         Log a request.
@@ -67,9 +66,8 @@ class Client(metaclass=ABCMeta):
         return log_(request, request_log, "info", trim=trim_log_values, **kwargs)
 
     @apply_self
-    @staticmethod
     def log_response(
-        response: Response, trim_log_values: bool = False, **kwargs: Any
+        self, response: Response, trim_log_values: bool = False, **kwargs: Any
     ) -> None:
         """
         Log a response.
