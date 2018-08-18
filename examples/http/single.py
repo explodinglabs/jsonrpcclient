@@ -7,6 +7,6 @@ client = HTTPClient("http://localhost:5000")
 response = client.request("ping")
 
 if response.data.ok:
-    print("{}".format(response.data.result))
+    print(response.data.result)
 else:
     logging.error(data.message)
