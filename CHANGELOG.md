@@ -1,6 +1,6 @@
 # jsonrpcclient Change Log
 
-## 3.0.0 (Coming soon, now in master branch)
+## 3.0.0 (18 Aug, 2018)
 
 _The 3.x releases will support Python 3.5+ only._
 
