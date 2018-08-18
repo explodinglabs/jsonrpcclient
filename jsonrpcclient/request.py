@@ -39,7 +39,7 @@ class _RequestClassType(type):
 
     def __getattr__(cls: Callable, name: str) -> Callable:
         """
-        This gives us an alternate way to make a request::
+        This gives us an alternate way to make a request:
 
         >>> Request.cat()
         {'jsonrpc': '2.0', 'method': 'cat', 'id': 1}
@@ -61,17 +61,17 @@ class Notification(dict, metaclass=_RequestClassType):  # type: ignore
     {'jsonrpc': '2.0', 'method': 'cat'}
 
     The first argument is the *method*; everything else is *arguments* to the
-    method::
+    method:
 
     >>> Notification("cat", 'Yoko', 5)
     {'jsonrpc': '2.0', 'method': 'cat', params: ['Yoko', 5]}
 
-    Keyword arguments are also acceptable::
+    Keyword arguments are also acceptable:
 
     >>> Notification("cat", name="Yoko", age=5)
     {'jsonrpc': '2.0', 'method': 'cat', 'params': {'name': 'Yoko', 'age': 5}}
 
-    If you prefer, call the method as though it was a class attribute::
+    If you prefer, call the method as though it was a class attribute:
 
     >>> Notification.cat(name="Yoko", age=5)
     {'jsonrpc': '2.0', 'method': 'cat', 'params': {'name': 'Yoko', 'age': 5}}

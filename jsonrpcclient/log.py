@@ -36,16 +36,19 @@ def _trim_values(message_obj: Union[Dict, List]) -> Union[Dict, List]:
     # Batch?
     if isinstance(message_obj, list):
         return [_trim_dict(i) for i in message_obj]
-    # else
-    return _trim_dict(message_obj)
+    else:
+        return _trim_dict(message_obj)
 
 
 def _trim_message(message: str) -> str:
+    # Attempt to deserialize
     try:
         message_obj = json.loads(message)
-        return json.dumps(_trim_values(message_obj))
     except ValueError:
+        # Could not be deserialized, trim the string anyway.
         return _trim_string(str(message))
+    else:
+        return json.dumps(_trim_values(message_obj))
 
 
 def log_(

@@ -1,10 +1,7 @@
 """
-ZeroMQ Client
-*************
+ZeroMQ client.
 
-A ZeroMQ client to send requests::
-
-    ZMQClient('tcp://hostname:5555').request('go')
+ZMQClient('tcp://hostname:5555').request('go')
 """
 from typing import Any
 

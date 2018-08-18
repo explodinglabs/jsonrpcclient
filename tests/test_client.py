@@ -6,7 +6,7 @@ import pytest
 from testfixtures import LogCapture, StringComparison
 
 from jsonrpcclient import exceptions
-from jsonrpcclient.client import Client
+from jsonrpcclient.client import Client, request_log, response_log
 from jsonrpcclient.request import Request
 from jsonrpcclient.response import Response
 
@@ -100,37 +100,57 @@ class TestLogResponse:
         )
 
 
-class TestSending:
-    @patch("jsonrpcclient.client.request_log")
-    def test_send_string(self, *_):
-        request = '{"jsonrpc": "2.0", "method": "foo", "id": 1}'
-        response = DummyClient().send(request)
-        assert response.data.ok == True
-        assert response.data.result == 1
+def test_instantiate_with_basic_logging():
+    DummyClient(basic_logging=True)
+    assert len(request_log.handlers) == 1
+    assert len(response_log.handlers) == 1
+    request_log.handlers.pop()
+    response_log.handlers.pop()
 
-    @patch("jsonrpcclient.client.request_log")
-    def test_send_dict(self, *_):
-        request = {"jsonrpc": "2.0", "method": "foo", "id": 1}
-        response = DummyClient().send(request)
-        assert response.data.ok == True
 
-    @patch("jsonrpcclient.client.request_log")
-    def test_send_batch(self, *_):
-        requests = [Request("foo"), Request("bar")]
-        response = DummyClient().send(requests)
-        assert response.data.ok == True
+def test_basic_logging():
+    DummyClient().basic_logging()
+    assert len(request_log.handlers) == 1
+    assert len(response_log.handlers) == 1
+    request_log.handlers.pop()
+    response_log.handlers.pop()
 
-    @patch("jsonrpcclient.client.request_log")
-    def test_request(self, *_):
-        response = DummyClient().request("multiply", 3, 5)
-        assert response.data.ok == True
 
-    @patch("jsonrpcclient.client.request_log")
-    def test_notify(self, *_):
-        response = DummyClient().notify("multiply", 3, 5)
-        assert response.data.ok == True
+@patch("jsonrpcclient.client.request_log")
+def test_send_string(*_):
+    request = '{"jsonrpc": "2.0", "method": "foo", "id": 1}'
+    response = DummyClient().send(request)
+    assert response.data.ok == True
+    assert response.data.result == 1
 
-    @patch("jsonrpcclient.client.request_log")
-    def test_alternate_usage(self, *_):
-        response = DummyClient().multiply(3, 5)
-        assert response.data.ok == True
+
+@patch("jsonrpcclient.client.request_log")
+def test_send_dict(*_):
+    request = {"jsonrpc": "2.0", "method": "foo", "id": 1}
+    response = DummyClient().send(request)
+    assert response.data.ok == True
+
+
+@patch("jsonrpcclient.client.request_log")
+def test_send_batch(*_):
+    requests = [Request("foo"), Request("bar")]
+    response = DummyClient().send(requests)
+    assert response.data.ok == True
+
+
+@patch("jsonrpcclient.client.request_log")
+def test_request(*_):
+    response = DummyClient().request("multiply", 3, 5)
+    assert response.data.ok == True
+
+
+@patch("jsonrpcclient.client.request_log")
+def test_notify(*_):
+    response = DummyClient().notify("multiply", 3, 5)
+    assert response.data.ok == True
+
+
+@patch("jsonrpcclient.client.request_log")
+def test_alternate_usage(self, *_):
+    response = DummyClient().multiply(3, 5)
+    assert response.data.ok == True

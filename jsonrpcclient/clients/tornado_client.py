@@ -35,13 +35,13 @@ class TornadoClient(AsyncClient):
     def log_response(
         self, response: Response, trim_log_values: bool = False, **kwargs: Any
     ) -> None:
-        # Note: Tornado adds it's own log handlers, so the following log format isn't
-        # used unless Tornado's handlers are disabled.
+        extra = (
+            {"http_code": response.raw.code, "http_reason": response.raw.reason}
+            if response.raw is not None
+            else {}
+        )
         super().log_response(
-            response,
-            extra={"http_code": response.raw.code, "http_reason": response.raw.reason},
-            trim_log_values=trim_log_values,
-            **kwargs
+            response, extra=extra, trim_log_values=trim_log_values, **kwargs
         )
 
     async def send_message(  # type: ignore

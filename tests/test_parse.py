@@ -109,6 +109,15 @@ class TestParse:
         data = parse('[{"jsonrpc": "2.0", "result": "foo", "id": 1}]')
         assert data[0].result == "foo"
 
+    def test_batch_ignores_notifications(self, *_):
+        data = parse('[{"jsonrpc": "2.0", "result": "foo", "id": 1}]')
+        assert len(data) == 1
+
+    def test_empty_string(self, *_):
+        assert parse("") is None
+
     def test_none(self, *_):
-        data = parse(None)
-        assert data.result is None
+        assert parse(None) is None
+
+    def test_empty_string(self, *_):
+        assert parse("") is None

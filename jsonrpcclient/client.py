@@ -52,6 +52,22 @@ class Client(metaclass=ABCMeta):
         if basic_logging:
             self.basic_logging()
 
+    def basic_logging(self) -> None:
+        """
+        Call this on the client object to create log handlers to output request and
+        response messages.
+        """
+        # Request handler
+        handler = logging.StreamHandler()
+        handler.setFormatter(logging.Formatter(fmt=self.DEFAULT_REQUEST_LOG_FORMAT))
+        request_log.addHandler(handler)
+        request_log.setLevel(logging.INFO)
+        # Response handler
+        handler = logging.StreamHandler()
+        handler.setFormatter(logging.Formatter(fmt=self.DEFAULT_RESPONSE_LOG_FORMAT))
+        response_log.addHandler(handler)
+        response_log.setLevel(logging.INFO)
+
     @apply_self
     def log_request(
         self, request: str, trim_log_values: bool = False, **kwargs: Any
@@ -81,22 +97,6 @@ class Client(metaclass=ABCMeta):
             trim_log_values: Log an abbreviated version of the response.
         """
         return log_(response.text, response_log, "info", trim=trim_log_values, **kwargs)
-
-    def basic_logging(self) -> None:
-        """
-        Call this on the client object to create log handlers to output request and
-        response messages.
-        """
-        # Request handler
-        handler = logging.StreamHandler()
-        handler.setFormatter(logging.Formatter(fmt=self.DEFAULT_REQUEST_LOG_FORMAT))
-        request_log.addHandler(handler)
-        request_log.setLevel(logging.INFO)
-        # Response handler
-        handler = logging.StreamHandler()
-        handler.setFormatter(logging.Formatter(fmt=self.DEFAULT_RESPONSE_LOG_FORMAT))
-        response_log.addHandler(handler)
-        response_log.setLevel(logging.INFO)
 
     @abstractmethod
     def send_message(self, request: str, **kwargs: Any) -> Response:
@@ -210,7 +210,7 @@ class Client(metaclass=ABCMeta):
 
     def __getattr__(self, name: str) -> Callable:
         """
-        This gives us an alternate way to make a request::
+        This gives us an alternate way to make a request.
 
         >>> client.cube(3)
         --> {"jsonrpc": "2.0", "method": "cube", "params": [3], "id": 1}

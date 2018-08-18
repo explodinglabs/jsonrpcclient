@@ -1,7 +1,7 @@
 """
 An HTTP client.
 
-For example::
+For example:
 
     HTTPClient('http://example.com/api').request('go')
 
@@ -37,17 +37,15 @@ class HTTPClient(Client):
         self.session.headers.update(self.DEFAULT_HEADERS)
 
     def log_response(self, response: Response, **kwargs: Any) -> None:
-        super().log_response(
-            response,
-            extra={
-                "http_code": response.raw.status_code,
-                "http_reason": response.raw.reason,
-            },
-            **kwargs
+        extra = (
+            {"http_code": response.raw.status_code, "http_reason": response.raw.reason}
+            if response.raw is not None
+            else {}
         )
+        super().log_response(response, extra=extra, **kwargs)
 
     def validate_response(self, response: Response) -> None:
-        if not 200 <= response.raw.status_code <= 299:
+        if response.raw is not None and not 200 <= response.raw.status_code <= 299:
             raise ReceivedNon2xxResponseError(response.raw.status_code)
 
     def send_message(self, request: str, **kwargs: Any) -> Response:

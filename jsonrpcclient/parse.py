@@ -15,7 +15,7 @@ response_schema = json.loads(resource_string(__name__, "response-schema.json").d
 
 def parse(
     response_text: str, validate_against_schema: bool = True
-) -> Union[JSONRPCResponse, List[JSONRPCResponse]]:
+) -> Union[JSONRPCResponse, List[JSONRPCResponse], None]:
     """
     Parses response text, returning JSONRPCResponse objects.
 
@@ -38,8 +38,8 @@ def parse(
         # Return a Response object, or a list of Responses in the case of a batch
         # request.
         if isinstance(decoded, list):
-            return [JSONRPCResponse(r) for r in decoded]
+            return [JSONRPCResponse(r) for r in decoded if "id" in r]
         # else:
-        return JSONRPCResponse(decoded)
+        return JSONRPCResponse(decoded) if "id" in decoded else None
     # else:
-    return JSONRPCResponse(None)
+    return None

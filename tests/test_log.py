@@ -23,3 +23,8 @@ def test_trim_values_nested():
 def test_trim_values_batch():
     message = _trim_values([{"list": [0] * 100}])
     assert "..." in message[0]["list"]
+
+
+def test_trim_message():
+    message = _trim_values([{"list": [0] * 100}])
+    assert "..." in message[0]["list"]
