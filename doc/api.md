@@ -28,14 +28,14 @@ from jsonrpcclient.clients.http_client import HTTPClient
 client = HTTPClient("http://cats.com")
 ```
 
-Send a request, passing the whole JSON-RPC request object:
+Send a request:
 
 ```python
 response = client.send('{"jsonrpc": "2.0", "method": "ping", "id": 1}')
 ```
 
-This class makes it easy to create a JSON-RPC [request
-object](http://www.jsonrpc.org/specification#request_object):
+Instead of typing the whole JSON-RPC request string, a `Request` class makes
+it easy for you:
 
 ```python
 >>> from jsonrpcclient.request import Request
@@ -43,31 +43,31 @@ object](http://www.jsonrpc.org/specification#request_object):
 {'jsonrpc': '2.0', 'method': 'ping', 'id': 1}
 ```
 
-The first argument to `Request` is the endpoint, and the second argument is the
-method to call. Subsequent arguments are arguments to the method.
+The first argument to `Request` is the remote method to call, and subsequent
+ones are arguments to the method.
 
 ```python
 >>> Request("cat", name="Yoko")
 {'jsonrpc': '2.0', 'method': 'cat', 'params': {'name': 'Yoko'}, 'id': 1}
 ```
 
-Pass `request_id` to Specifies the "id" part of the JSON-RPC request.
+Pass a `request_id` to specify the "id" part of the JSON-RPC request.
 
 ```python
 >>> Request("ping", request_id="foo")
 --> {"jsonrpc": "2.0", "method": "ping", "id": "foo"}
 ```
 
-If request_id is not specified, one is generated for the request.
+If a request id is not specified, one is generated for the request.
 
-Sending a `Request`:
+Sending a `Request` object:
 
 ```python
 response = client.send(Request("ping"))
 ```
 
-If you're not interested in a response, use the `Notification` class instead
-of `Request`.
+If a response is not required, use the `Notification` class instead of
+`Request`.
 
 A `request()` method is provided which wraps `send(Request())`.
 
@@ -75,7 +75,7 @@ A `request()` method is provided which wraps `send(Request())`.
 response = client.request("ping")
 ```
 
-Use `notify` instead of `request` if no response is required.
+If a response is not required, use `notify` instead of `request`.
 
 ```python
 client.notify("speak")
@@ -99,13 +99,6 @@ Send multiple `Request` objects:
 responses = client.send([Request("cat"), Request("dog")])
 ```
 
-Using list comprehension to get the cube of ten numbers:
-
-```python
-requests = [Request("cube", i) for i in range(10)]
-responses = client.send(requests)
-```
-
 The server may not support batch requests.
 
 ## Response
@@ -121,31 +114,33 @@ The object has three attributes:
     - `ok`: True if it's a JSON-RPC success response, False if it's an error
         response.
     - `id`: The request ID.
-    If it's a _success response_ (if `ok` is True):
+    If it's a _success response_ (`ok` is True):
         - `result`: The result part of the JSON-RPC response message. This is
           the payload you've requested from the server.
-    If it's an _error response_ (if `ok` is False):
+    If it's an _error response_ (`ok` is False):
         - `message`, `code` and `data`: Parts of the error response.
 
-An example of using the response:
+Check `ok` before using the response.
 
 ```python
 response = client.request("ping")
 if response.data.ok:
     print(response.data.result)
 else:
-    logging.error(data.message)
+    logging.error(response.data.message)
 ```
 
 For batch requests, the data attribute is a list of responses.
 
+```python
+for data in response.data:
+    if data.ok:
+        print(data.result)
+    else:
+        logging.error(data.message)
+```
+
 ## Configuration
-
-Settings can be configured either in:
-
-1. a config file;
-2. passing arguments when instantiating the client;
-3. passing arguments when calling send/request/notify.
 
 Here's an example of the config file `.jsonrpcclientrc` - this should be
 placed in the current or home directory:
@@ -158,7 +153,16 @@ trim_log_values = no
 validate_against_schema = yes
 ```
 
-The configuration options are:
+Any of the following options can be configured in:
+
+1. the config file;
+2. passing when instantiating the client;
+3. passing when calling send/request/notify.
+
+**basic_logging**
+
+Logs incoming/outgoing messages to stderr, by adding log handlers. (this option
+can't be passed to send/request/notify, only in the config or the client.)
 
 **id_generator**
 
