@@ -30,11 +30,7 @@ setup(
         "zmq": ["pyzmq"],
     },
     include_package_data=True,
-    install_requires=[
-        "apply_defaults<1",
-        "click>6,<7",
-        "jsonschema>2,<3",
-    ],
+    install_requires=["apply_defaults<1", "click>6,<7", "jsonschema>2,<3"],
     license="MIT",
     long_description=README,
     long_description_content_type="text/markdown",

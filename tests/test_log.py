@@ -2,7 +2,7 @@ import json
 import logging
 from unittest.mock import Mock, patch
 
-from jsonrpcclient.log import _trim_string, _trim_values, _trim_message
+from jsonrpcclient.log import _trim_message, _trim_string, _trim_values
 
 
 def test_trim_string():

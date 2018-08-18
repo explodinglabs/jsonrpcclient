@@ -19,6 +19,7 @@ class AsyncClient(Client, metaclass=ABCMeta):
 
     Has async versions of the Client class's public methods.
     """
+
     @abstractmethod
     async def send_message(self, request: str, **kwargs) -> Response:  # type: ignore
         """Override to transport the request"""
