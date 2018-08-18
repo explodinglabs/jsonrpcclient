@@ -1,7 +1,7 @@
 """
 Classes to help create JSON-RPC Request objects.
 
-To create a request::
+To create a request:
 
     >>> Request("cat", name="Yoko")
     {'jsonrpc': '2.0', 'method': 'cat', 'params': {'name': 'Yoko'}, 'id': 1}
@@ -47,7 +47,7 @@ class _RequestClassType(type):
         That's the same as saying `Request("cat")`.
         """
 
-        def attr_handler(*args: Any, **kwargs: Any) -> Request:
+        def attr_handler(*args: Any, **kwargs: Any) -> "Request":
             return cls(name, *args, **kwargs)
 
         return attr_handler
@@ -86,8 +86,7 @@ class Notification(dict, metaclass=_RequestClassType):  # type: ignore
     """
 
     def __init__(self, method: str, *args: Any, **kwargs: Any) -> None:
-        # Start the basic request
-        self.update(jsonrpc="2.0", method=method)
+        super().__init__(jsonrpc="2.0", method=method)
         # Build the 'params' part. Merge the positional and keyword arguments into one
         # list.
         params_list = []  # type: List
@@ -100,9 +99,7 @@ class Notification(dict, metaclass=_RequestClassType):  # type: ignore
             # The 'params' can be either "by-position" (a list) or "by-name" (a dict).
             # If there's only one list or dict in the params list, take it out of the
             # enclosing list, ie. [] instead of [[]], {} instead of [{}].
-            if len(params_list) == 1 and (
-                isinstance(params_list[0], dict) or isinstance(params_list[0], list)
-            ):
+            if len(params_list) == 1 and (isinstance(params_list[0], (dict, list))):
                 self.update(params=params_list[0])
             else:
                 self.update(params=params_list)

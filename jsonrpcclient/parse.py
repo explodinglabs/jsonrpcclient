@@ -1,5 +1,8 @@
+"""
+Parse response text, returning JSONRPCResponse objects.
+"""
 import json
-from typing import Dict, List, Optional, Union
+from typing import List, Union
 
 import jsonschema  # type: ignore
 from pkg_resources import resource_string
@@ -36,7 +39,7 @@ def parse(
         # request.
         if isinstance(decoded, list):
             return [JSONRPCResponse(r) for r in decoded]
-        else:
-            return JSONRPCResponse(decoded)
-    else:
-        return JSONRPCResponse(None)
+        # else:
+        return JSONRPCResponse(decoded)
+    # else:
+    return JSONRPCResponse(None)

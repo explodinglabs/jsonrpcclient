@@ -36,11 +36,11 @@ def _trim_values(message_obj: Union[Dict, List]) -> Union[Dict, List]:
     # Batch?
     if isinstance(message_obj, list):
         return [_trim_dict(i) for i in message_obj]
-    else:
-        return _trim_dict(message_obj)
+    # else
+    return _trim_dict(message_obj)
 
 
-def trim_message(message: str) -> str:
+def _trim_message(message: str) -> str:
     try:
         message_obj = json.loads(message)
         return json.dumps(_trim_values(message_obj))
@@ -60,6 +60,9 @@ def log_(
 
     Args:
         message: JSON-RPC request or response string.
+        level: Log level.
+        extra: More details to include in the log entry.
+        trim: Abbreviate log messages.
     """
     if extra is None:
         extra = {}
@@ -67,6 +70,6 @@ def log_(
     if message:
         message = message.replace("\n", "").replace("  ", " ").replace("{ ", "{")
     if trim:
-        message = trim_message(message)
+        message = _trim_message(message)
     # Log.
     getattr(logger, level)(message, extra=extra)

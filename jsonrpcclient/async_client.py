@@ -1,9 +1,5 @@
 """
 Async client.
-
-Abstract base class for the asynchronous clients.
-
-Has async versions of the Client class's public methods.
 """
 import json
 from abc import ABCMeta, abstractmethod
@@ -18,6 +14,11 @@ from .response import Response
 
 
 class AsyncClient(Client, metaclass=ABCMeta):
+    """
+    Abstract base class for the asynchronous clients.
+
+    Has async versions of the Client class's public methods.
+    """
     @abstractmethod
     async def send_message(self, request: str, **kwargs) -> Response:  # type: ignore
         """Override to transport the request"""
@@ -30,6 +31,9 @@ class AsyncClient(Client, metaclass=ABCMeta):
         validate_against_schema: bool = True,
         **kwargs: Any
     ) -> Response:
+        """
+        Async version of Client.send.
+        """
         # Convert the request to a string if it's not already.
         request_text = request if isinstance(request, str) else json.dumps(request)
         self.log_request(request_text, trim_log_values=trim_log_values)
@@ -50,6 +54,9 @@ class AsyncClient(Client, metaclass=ABCMeta):
         validate_against_schema: Optional[bool] = None,
         **kwargs: Any
     ) -> Response:
+        """
+        Async version of Client.notify.
+        """
         return await self.send(
             Notification(method_name, *args, **kwargs),
             trim_log_values=trim_log_values,
@@ -66,6 +73,9 @@ class AsyncClient(Client, metaclass=ABCMeta):
         id_generator: Optional[Iterator] = None,
         **kwargs: Any
     ) -> Response:
+        """
+        Async version of Client.request.
+        """
         return await self.send(
             Request(method_name, id_generator=id_generator, *args, **kwargs),
             trim_log_values=trim_log_values,

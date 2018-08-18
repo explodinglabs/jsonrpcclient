@@ -1,8 +1,14 @@
+"""
+Response and JSONRPCResponse classes.
+"""
 from typing import Any, Dict, List, Optional, Union
 
 
 class JSONRPCResponse:
     """
+    A single parsed JSON-RPC response object (or list of them in the case of a batch
+    response).
+
     Success response:
         - Response.ok = True
         - Response.id = 1
@@ -15,14 +21,7 @@ class JSONRPCResponse:
         - Response.data = None
     """
 
-    def __init__(
-        self,
-        response: Optional[Dict],
-        validate_against_schema: bool = True,
-        log_extra: Optional[Dict] = None,
-        log_format: Optional[str] = None,
-        trim_log_values: bool = False,
-    ) -> None:
+    def __init__(self, response: Optional[Dict]) -> None:
         """
         Provides attributes representing the response.
 
@@ -50,15 +49,16 @@ class JSONRPCResponse:
     def __repr__(self) -> str:
         if self.ok:
             return "<JSONRPCResponse(id={}, result={})>".format(self.id, self.result)
-        else:
-            return '<JSONRPCResponse(id={}, message="{}")>'.format(
-                self.id, self.message
-            )
+        # else:
+        return '<JSONRPCResponse(id={}, message="{}")>'.format(self.id, self.message)
 
 
 def total_results(
     data: Union[List[JSONRPCResponse], JSONRPCResponse, None], *, ok: bool = True
 ) -> int:
+    """
+    Given the return value from parse(), returns the total parsed responses.
+    """
     if isinstance(data, list):
         return sum([1 for d in data if d.ok == ok])
     elif isinstance(data, JSONRPCResponse):
