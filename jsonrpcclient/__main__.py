@@ -1,4 +1,14 @@
 # /usr/bin/env python
+"""
+This is an attempt at using this library to create a "jsonrpc" command-line utility.
+Currently it's only useful for very basic requests.
+
+$ pip install jsonrpcclient
+$ jsonrpc ping
+{"jsonrpc": "2.0", "method": "ping", "id": 1}
+$ jsonrpc ping --send http://localhost:5000
+{"jsonrpc": "2.0", "result": "pong", "id": 1}
+"""
 import sys
 from typing import Any
 
