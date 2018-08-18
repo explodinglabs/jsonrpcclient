@@ -1,10 +1,14 @@
 """setup.py"""
-from codecs import open as codecs_open
+import sys
 
 from setuptools import setup
 
-with codecs_open("README.md", "r", "utf-8") as f:
-    README = f.read()
+with open("README.md") as readme_file:
+    README = readme_file.read()
+
+test_requirements = ["mock", "pytest", "responses", "testfixtures", "requests", "pyzmq"]
+# Async requirements
+test_requirements.extend(["pytest-asyncio", "aiohttp", "tornado", "websockets"])
 
 setup(
     author="Beau Barker",
@@ -21,23 +25,16 @@ setup(
         "requests": ["requests"],
         "requests_security": ["requests[security]"],
         "tornado": ["tornado"],
-        "unittest": [
-            "mock",
-            "pytest",
-            "pytest-asyncio",
-            "aiohttp",
-            "pyzmq",
-            "requests",
-            "responses",
-            "testfixtures",
-            "tornado",
-            "websockets",
-        ],
+        "unittest": test_requirements,
         "websockets": ["websockets"],
         "zmq": ["pyzmq"],
     },
     include_package_data=True,
-    install_requires=["jsonschema>2,<3", "apply_defaults>0,<1", "click>6,<7"],
+    install_requires=[
+        "apply_defaults>0,<1",
+        "click>6,<7",
+        "jsonschema>2,<3",
+    ],
     license="MIT",
     long_description=README,
     long_description_content_type="text/markdown",
@@ -45,5 +42,5 @@ setup(
     package_data={"jsonrpcclient": ["response-schema.json"]},
     packages=["jsonrpcclient", "jsonrpcclient.clients"],
     url="https://github.com/bcb/jsonrpcclient",
-    version="3.0.0rc3",
+    version="3.0.0",
 )
