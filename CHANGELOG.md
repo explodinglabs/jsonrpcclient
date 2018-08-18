@@ -24,7 +24,7 @@ _The 3.x releases will support Python 3.5+ only._
 - Remove the need for requests library to be installed, if not using it. (#85)
 - Add type hints (#92)
 - Log to the debug log level (not info).
-- Add support configuration files.
+- Add support for configuration files.
 - Remove the convenience functions (request and notify).
 - Remove zeromq-async client.
 - Configure logging pythonically.
