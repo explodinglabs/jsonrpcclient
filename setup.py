@@ -31,7 +31,7 @@ setup(
     },
     include_package_data=True,
     install_requires=[
-        "apply_defaults>0,<1",
+        "apply_defaults<1",
         "click>6,<7",
         "jsonschema>2,<3",
     ],
