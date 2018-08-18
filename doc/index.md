@@ -7,11 +7,15 @@ $ pip install "jsonrpcclient[requests]"
 ```
 
 ```python
->>> from jsonrpcclient.clients import http_client
->>> http_client.request("http://cats.com", "speak")
---> {"jsonrpc": "2.0", "method": "speak", "id": 1}
-<-- {"jsonrpc": "2.0", "result": "meow", "id": 1} (200 OK)
-'meow'
+>>> from jsonrpcclient.clients.http_client import HTTPClient
+>>> client = HTTPClient("http://localhost:5000")
+>>> response = client.request("ping")
+>>> response.text
+'{"jsonrpc": "2.0", "result": "pong", "id": 1}'
+>>> response.data.ok
+True
+>>> response.data.result
+'pong'
 ```
 
 This example uses the *requests* library for sending, but more options are

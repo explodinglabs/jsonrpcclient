@@ -19,7 +19,7 @@ Requests
 
     $ pip install "jsonrpcclient[requests]"
 
-.. literalinclude:: ../examples/http_client.py
+.. literalinclude:: ../examples/http/single.py
 
 ZeroMQ
 ------
@@ -28,7 +28,7 @@ ZeroMQ
 
     $ pip install 'jsonrpcclient[pyzmq]'
 
-.. literalinclude:: ../examples/zeromq_client.py
+.. literalinclude:: ../examples/zeromq/single.py
 
 See `blog post <https://bcb.github.io/jsonrpc/zeromq>`__.
 
@@ -44,7 +44,7 @@ aiohttp
 
     $ pip install 'jsonrpcclient[aiohttp]'
 
-.. literalinclude:: ../examples/aiohttp_client.py
+.. literalinclude:: ../examples/aiohttp/single.py
 
 See `blog post <https://bcb.github.io/jsonrpc/aiohttp>`__.
 
@@ -55,7 +55,7 @@ Tornado
 
     $ pip install 'jsonrpcclient[tornado]'
 
-.. literalinclude:: ../examples/tornado_client.py
+.. literalinclude:: ../examples/tornado/single.py
 
 Websockets
 ----------
@@ -64,17 +64,6 @@ Websockets
 
     $ pip install 'jsonrpcclient[websockets]'
 
-.. literalinclude:: ../examples/websockets_client.py
+.. literalinclude:: ../examples/websockets/single.py
 
 See `blog post <https://bcb.github.io/jsonrpc/websockets>`__.
-
-ZeroMQ (asynchronous)
----------------------
-
-.. code-block:: sh
-
-    $ pip install 'jsonrpcclient[pyzmq]'
-
-.. literalinclude:: ../examples/zeromq_async_client.py
-
-See `blog post <https://bcb.github.io/jsonrpc/zeromq>`__.
