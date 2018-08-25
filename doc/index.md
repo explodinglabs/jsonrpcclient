@@ -7,9 +7,14 @@ $ pip install "jsonrpcclient[requests]"
 ```
 
 ```python
->>> from jsonrpcclient.clients.http_client import HTTPClient
->>> client = HTTPClient("http://localhost:5000")
->>> client.request("ping").data.result
+from jsonrpcclient.clients.http_client import HTTPClient
+client = HTTPClient("http://localhost:5000")
+response = client.request("ping")
+>>> response.text
+'{"jsonrpc": "2.0", "result": "pong", "id": 1}'
+>>> response.data.ok
+True
+>>> response.data.result
 'pong'
 ```
 
