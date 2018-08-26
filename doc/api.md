@@ -250,8 +250,9 @@ log_config = {
         "response": {"formatter": "response", "class": "logging.StreamHandler"},
     },
     "loggers": {
-        "jsonrpcclient.client.request": {"level": "INFO", "handlers": ["request"]},
-        "jsonrpcclient.client.response": {"level": "INFO", "handlers": ["response"]},
+        "jsonrpcclient": {"level": "INFO"},
+        "jsonrpcclient.client.request": {"handlers": ["request"]},
+        "jsonrpcclient.client.response": {"handlers": ["response"]},
     },
 }
 dictConfig(log_config)
