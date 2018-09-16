@@ -21,7 +21,7 @@ setup(
     description="Send JSON-RPC requests",
     entry_points={"console_scripts": ["jsonrpc = jsonrpcclient.__main__:main"]},
     extras_require={
-        "aiohttp": ["aiohttp"],
+        "aiohttp": ["aiohttp>=3"],
         "requests": ["requests"],
         "requests_security": ["requests[security]"],
         "tornado": ["tornado"],
