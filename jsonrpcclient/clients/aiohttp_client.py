@@ -5,8 +5,8 @@ Requires aiohttp >= 3.0.
 
 http://aiohttp.readthedocs.io/
 """
-from typing import Any, Optional
 from ssl import SSLContext
+from typing import Any, Optional
 
 import async_timeout  # type: ignore
 from aiohttp import ClientSession  # type: ignore
