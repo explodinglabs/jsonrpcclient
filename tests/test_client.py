@@ -1,11 +1,7 @@
-import itertools
-import json
 from unittest.mock import patch
 
-import pytest
 from testfixtures import LogCapture, StringComparison
 
-from jsonrpcclient import exceptions
 from jsonrpcclient.client import Client, request_log, response_log
 from jsonrpcclient.request import Request
 from jsonrpcclient.response import Response

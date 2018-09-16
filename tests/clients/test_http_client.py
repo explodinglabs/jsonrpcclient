@@ -3,11 +3,8 @@ from collections import namedtuple
 from unittest.mock import patch
 
 import pytest
-import requests
 import responses
-from testfixtures import LogCapture, StringComparison
 
-from jsonrpcclient import id_generators
 from jsonrpcclient.clients.http_client import HTTPClient
 from jsonrpcclient.exceptions import ReceivedNon2xxResponseError
 from jsonrpcclient.request import Request

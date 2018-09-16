@@ -1,11 +1,10 @@
 import itertools
 import json
-from unittest.mock import Mock, patch
+from unittest.mock import patch
 
-from tornado import httpclient, testing, web
+from tornado import testing, web
 
 from jsonrpcclient.clients.tornado_client import TornadoClient
-from jsonrpcclient.exceptions import ReceivedNon2xxResponseError
 from jsonrpcclient.request import Request
 
 

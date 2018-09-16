@@ -7,7 +7,7 @@ For example:
 
 Uses the `Requests <http://docs.python-requests.org/en/master/>`_ library.
 """
-from typing import Any, Iterable
+from typing import Any
 
 from requests import Session
 

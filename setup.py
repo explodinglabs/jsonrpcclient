@@ -1,6 +1,4 @@
 """setup.py"""
-import sys
-
 from setuptools import setup
 
 with open("README.md") as readme_file:

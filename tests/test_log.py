@@ -1,7 +1,3 @@
-import json
-import logging
-from unittest.mock import Mock, patch
-
 from jsonrpcclient.log import _trim_message, _trim_string, _trim_values
 
 

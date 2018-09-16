@@ -1,4 +1,3 @@
-from jsonrpcclient.parse import parse
 from jsonrpcclient.response import JSONRPCResponse, Response, total_results
 
 

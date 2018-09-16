@@ -1,5 +1,4 @@
 import logging
-import sys
 
 from jsonrpcclient.clients.zeromq_client import ZeroMQClient
 
