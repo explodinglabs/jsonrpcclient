@@ -1,5 +1,10 @@
 # jsonrpcclient Change Log
 
+## 3.0.1 (16 Sep, 2018)
+
+- Optionally pass an SSLContext to AiohttpClient. This client now requires
+  aiohttp 3+.
+
 ## 3.0.0 (18 Aug, 2018)
 
 _The 3.x releases will support Python 3.5+ only._
