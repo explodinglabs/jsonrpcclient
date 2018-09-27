@@ -1,4 +1,5 @@
 ![PyPI](https://img.shields.io/pypi/v/jsonrpcclient.svg)
+![Downloads](https://pepy.tech/badge/jsonrpcclient)
 ![Coverage Status](https://coveralls.io/repos/github/bcb/jsonrpcclient/badge.svg?branch=master)
 
 # jsonrpcclient
