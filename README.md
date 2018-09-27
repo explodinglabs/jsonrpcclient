@@ -31,9 +31,8 @@ Full documentation is at [jsonrpcclient.readthedocs.io](https://jsonrpcclient.re
 ## Testing
 
 ```sh
-pip install "jsonrpcclient[unittest]"
+pip install "jsonrpcclient[unittest]" mypy
 pytest
-pip install mypy
 mypy jsonrpcclient
 ```
 
