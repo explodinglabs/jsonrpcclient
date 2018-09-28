@@ -6,7 +6,7 @@
 
 *Version 3 is out. See the
 [changelog](https://github.com/bcb/jsonrpcclient/blob/master/CHANGELOG.md),
-[example usage](https://github.com/bcb/jsonrpcclient/tree/master/examples),
+[example usage](https://jsonrpcclient.readthedocs.io/en/latest/examples.html),
 and read the [updated documentation](https://jsonrpcclient.readthedocs.io/).*
 
 Send [JSON-RPC](http://www.jsonrpc.org/) requests in Python.
