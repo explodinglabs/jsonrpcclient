@@ -158,5 +158,9 @@ def test_alternate_usage(self, *_):
 def test_send_single_request_error(*_):
     with pytest.raises(ReceivedErrorResponseError):
         client = DummyClient()
-        client.send_message = Mock(return_value=Response('{"jsonrpc": "2.0", "error": {"code": 1, "message": "foo"}, "id": 1}'))
+        client.send_message = Mock(
+            return_value=Response(
+                '{"jsonrpc": "2.0", "error": {"code": 1, "message": "foo"}, "id": 1}'
+            )
+        )
         client.request("ping")

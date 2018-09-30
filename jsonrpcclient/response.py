@@ -86,9 +86,7 @@ class Response:
         self.text = text
         self.raw = raw
         # Data is the parsed version of the response.
-        self.data = (
-            None
-        )  # type: Union[JSONRPCResponse, List[JSONRPCResponse], None]
+        self.data = None  # type: Union[JSONRPCResponse, List[JSONRPCResponse], None]
 
     def __repr__(self) -> str:
         total_ok = total_results(self.data, ok=True)
