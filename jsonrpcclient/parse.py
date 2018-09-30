@@ -54,4 +54,4 @@ def parse(
     if isinstance(deserialized, list):
         return [JSONRPCResponse(r) for r in deserialized if "id" in r]
     # Single request
-    return JSONRPCResponse(deserialized) if "id" in deserialized else None
+    return JSONRPCResponse(deserialized if "id" in deserialized else None)
