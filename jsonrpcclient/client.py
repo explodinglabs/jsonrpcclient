@@ -160,7 +160,6 @@ class Client(metaclass=ABCMeta):
         response.data = parse(
             response.text, batch=batch, validate_against_schema=validate_against_schema
         )
-        print(batch, response.text, response.data.ok)
         if not batch and not response.data.ok:
             raise ReceivedErrorResponseError(response)
         return response

@@ -46,6 +46,8 @@ class AsyncClient(Client, metaclass=ABCMeta):
             batch=is_batch_request(request_text),
             validate_against_schema=validate_against_schema,
         )
+        if not batch and not response.data.ok:
+            raise ReceivedErrorResponseError(response)
         return response
 
     @apply_self
