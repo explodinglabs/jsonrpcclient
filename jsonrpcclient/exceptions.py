@@ -1,8 +1,7 @@
 """
 Exceptions.
 
-These exceptions are raised when processing responses from the server. For example, if
-the response was garbage and could not be parsed, `ParseResponseError` is raised.
+These exceptions are raised when processing responses from the server.
 
 To handle them, use a try-block when calling send/request/notify:
 
@@ -11,6 +10,7 @@ To handle them, use a try-block when calling send/request/notify:
     except JsonRpcClientError as e:
         ...
 """
+from jsonrpcclient.response import JSONRPCResponse
 
 
 class JsonRpcClientError(Exception):
@@ -19,16 +19,17 @@ class JsonRpcClientError(Exception):
     pass
 
 
-class ParseResponseError(JsonRpcClientError):
-    """The response was not valid JSON."""
-
-    def __init__(self) -> None:
-        super().__init__("The response was not valid JSON")
-
-
 class ReceivedNon2xxResponseError(JsonRpcClientError):
     """The response was not valid JSON."""
 
     def __init__(self, status_code: int) -> None:
         super().__init__("Received {} status code".format(status_code))
         self.code = status_code
+
+
+class ReceivedErrorResponseError(JsonRpcClientError):
+    """The response was an error response."""
+
+    def __init__(self, response: JSONRPCResponse) -> None:
+        super().__init__("Received error response: {response.message}")
+        self.response = response
