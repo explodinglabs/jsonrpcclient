@@ -45,7 +45,7 @@ class AsyncClient(Client, metaclass=ABCMeta):
         response.data = parse(
             response.text, batch=batch, validate_against_schema=validate_against_schema
         )
-        if not batch and not response.data.ok:
+        if not isinstance(response.data, list) and not response.data.ok:
             raise ReceivedErrorResponseError(response)
         return response
 

@@ -10,7 +10,7 @@ To handle them, use a try-block when calling send/request/notify:
     except JsonRpcClientError as e:
         ...
 """
-from jsonrpcclient.response import JSONRPCResponse
+from jsonrpcclient.response import Response
 
 
 class JsonRpcClientError(Exception):
@@ -30,6 +30,6 @@ class ReceivedNon2xxResponseError(JsonRpcClientError):
 class ReceivedErrorResponseError(JsonRpcClientError):
     """The response was an error response."""
 
-    def __init__(self, response: JSONRPCResponse) -> None:
+    def __init__(self, response: Response) -> None:
         super().__init__(response.data.message)
         self.response = response

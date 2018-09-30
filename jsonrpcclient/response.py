@@ -1,5 +1,18 @@
 """
 Response and JSONRPCResponse classes.
+
+Success response:
+    - Response.ok = True
+    - Response.id = 1
+    - Response.result = 5
+Error response:
+    - Response.ok = False
+    - Response.id = 1
+    - Response.message = "There was an error"
+    - Response.code = -32000
+    - Response.data = None
+
+This module needs a major overhaul.
 """
 from typing import Any, Dict, List, Optional, Union
 
@@ -8,17 +21,6 @@ class JSONRPCResponse:
     """
     A single parsed JSON-RPC response object (or list of them in the case of a batch
     response).
-
-    Success response:
-        - Response.ok = True
-        - Response.id = 1
-        - Response.result = 5
-    Error response:
-        - Response.ok = False
-        - Response.id = 1
-        - Response.message = "There was an error"
-        - Response.code = -32000
-        - Response.data = None
     """
 
     def __init__(self, response: Optional[Dict]) -> None:
@@ -86,7 +88,7 @@ class Response:
         # Data is the parsed version of the response.
         self.data = (
             None
-        )  # type: Optional[Union[JSONRPCResponse, List[JSONRPCResponse]]]
+        )  # type: Union[JSONRPCResponse, List[JSONRPCResponse], None]
 
     def __repr__(self) -> str:
         total_ok = total_results(self.data, ok=True)
