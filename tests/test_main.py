@@ -1,9 +1,9 @@
 from unittest.mock import patch
+from json import JSONDecodeError
 
 from click.testing import CliRunner
 
 from jsonrpcclient.__main__ import main
-from jsonrpcclient.exceptions import ParseResponseError
 
 
 def test():
@@ -22,7 +22,7 @@ def test_send(*_):
     assert result.exit_code == 0
 
 
-@patch("jsonrpcclient.__main__.HTTPClient.send", side_effect=ParseResponseError)
+@patch("jsonrpcclient.__main__.HTTPClient.send", side_effect=JSONDecodeError)
 def test_send_error(*_):
     result = CliRunner().invoke(main, ["foo", "--send=http://foo"])
-    assert result.exit_code > 0
+    assert result.exit_code == -1

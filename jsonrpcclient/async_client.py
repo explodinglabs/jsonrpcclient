@@ -7,7 +7,7 @@ from typing import Any, Dict, Iterator, List, Optional, Union
 
 from apply_defaults import apply_self  # type: ignore
 
-from .client import Client
+from .client import Client, is_batch_request
 from .parse import parse
 from .request import Notification, Request
 from .response import Response
@@ -42,7 +42,9 @@ class AsyncClient(Client, metaclass=ABCMeta):
         self.log_response(response, trim_log_values=trim_log_values)
         self.validate_response(response)
         response.data = parse(
-            response.text, validate_against_schema=validate_against_schema
+            response.text,
+            batch=is_batch_request(request_text),
+            validate_against_schema=validate_against_schema,
         )
         return response
 

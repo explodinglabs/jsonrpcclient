@@ -3,9 +3,9 @@ Client class.
 
 Base class for the clients.
 """
-import json
 import logging
 from abc import ABCMeta, abstractmethod
+from json import dumps as serialize
 from typing import Any, Callable, Dict, Iterator, List, Optional, Union
 
 from apply_defaults import apply_config, apply_self  # type: ignore
@@ -18,6 +18,13 @@ from .response import Response
 
 request_log = logging.getLogger(__name__ + ".request")
 response_log = logging.getLogger(__name__ + ".response")
+
+
+def is_batch_request(request_text):
+    try:
+        return request_text.strip()[0] == '['
+    except IndexError:
+        return False
 
 
 class Client(metaclass=ABCMeta):
@@ -143,13 +150,15 @@ class Client(metaclass=ABCMeta):
             in the case of a Notification.
         """
         # Convert the request to a string if it's not already.
-        request_text = request if isinstance(request, str) else json.dumps(request)
+        request_text = request if isinstance(request, str) else serialize(request)
         self.log_request(request_text, trim_log_values=trim_log_values)
         response = self.send_message(request_text, **kwargs)
         self.log_response(response, trim_log_values=trim_log_values)
         self.validate_response(response)
         response.data = parse(
-            response.text, validate_against_schema=validate_against_schema
+            response.text,
+            batch=is_batch_request(request_text),
+            validate_against_schema=validate_against_schema,
         )
         return response
 
