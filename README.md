@@ -21,8 +21,6 @@ client = HTTPClient("http://localhost:5000")
 response = client.request("ping")
 >>> response.text
 '{"jsonrpc": "2.0", "result": "pong", "id": 1}'
->>> response.data.ok
-True
 >>> response.data.result
 'pong'
 ```

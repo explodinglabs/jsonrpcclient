@@ -9,10 +9,7 @@ client = TornadoClient("http://localhost:5000/")
 
 async def main():
     response = await client.request("ping")
-    if response.data.ok:
-        print(response.data.result)
-    else:
-        logging.error(response.data.message)
+    print(response.data.result)
 
 
 IOLoop.current().run_sync(main)

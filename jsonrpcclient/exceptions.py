@@ -31,5 +31,5 @@ class ReceivedErrorResponseError(JsonRpcClientError):
     """The response was an error response."""
 
     def __init__(self, response: JSONRPCResponse) -> None:
-        super().__init__(response.message)
+        super().__init__(response.data.message)
         self.response = response

@@ -1,8 +1,10 @@
-from unittest.mock import patch
+import pytest
+from unittest.mock import patch, Mock
 
 from testfixtures import LogCapture, StringComparison
 
 from jsonrpcclient.client import Client, request_log, response_log
+from jsonrpcclient.exceptions import ReceivedErrorResponseError
 from jsonrpcclient.request import Request
 from jsonrpcclient.response import Response
 
@@ -150,3 +152,11 @@ def test_notify(*_):
 def test_alternate_usage(self, *_):
     response = DummyClient().multiply(3, 5)
     assert response.data.ok == True
+
+
+@patch("jsonrpcclient.client.request_log")
+def test_send_single_request_error(*_):
+    with pytest.raises(ReceivedErrorResponseError):
+        client = DummyClient()
+        client.send_message = Mock(return_value=Response('{"jsonrpc": "2.0", "error": {"code": 1, "message": "foo"}, "id": 1}'))
+        client.request("ping")

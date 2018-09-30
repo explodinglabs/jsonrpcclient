@@ -110,35 +110,28 @@ The object has three attributes:
 - `text`: This is the response text received from the server.
 - `raw`: The framework's own response object, e.g. for the HTTP client this
     is the _requests_ library's Response object.
-- `data`: The parsed response. The attributes of this are:
-    - `ok`: True if it's a JSON-RPC success response, False if it's an error
-        response.
-    - `id`: The request ID.
-    If it's a _success response_ (`ok` is True):
-        - `result`: The result part of the JSON-RPC response message. This is
-          the payload you've requested from the server.
-    If it's an _error response_ (`ok` is False):
-        - `message`, `code` and `data`: Parts of the error response.
+- `data`: The parsed response. (see below)
 
-Check `ok` before using the response.
+For single requests, `data` contains the following attributes:
 
-```python
-response = client.request("ping")
-if response.data.ok:
-    print(response.data.result)
-else:
-    logging.error(response.data.message)
-```
+- `id`: The request ID.
+- `result`: The result part of the JSON-RPC response message. This is
+  the payload you've requested from the server.
 
-For batch requests, the data attribute is a list of responses.
+For batch requests, `data` is a list of responses. When iterating over the
+responses, check the `ok` attribute.
 
 ```python
-for data in response.data:
-    if data.ok:
-        print(data.result)
+for responses in response.data:
+    if response.ok:
+        print(response.result)
     else:
-        logging.error(data.message)
+        logging.error(response.message)
 ```
+
+If `ok` is False, the other attributes are `message`, `code` and `data`.
+
+If the request wasn't successful, an exception will be raised.
 
 ## Configuration
 

@@ -11,6 +11,7 @@ from typing import Any, Callable, Dict, Iterator, List, Optional, Union
 from apply_defaults import apply_config, apply_self  # type: ignore
 
 from .config import config
+from .exceptions import ReceivedErrorResponseError
 from .log import log_
 from .parse import parse
 from .request import Notification, Request
@@ -22,7 +23,7 @@ response_log = logging.getLogger(__name__ + ".response")
 
 def is_batch_request(request_text):
     try:
-        return request_text.strip()[0] == '['
+        return request_text.strip()[0] == "["
     except IndexError:
         return False
 
@@ -151,15 +152,17 @@ class Client(metaclass=ABCMeta):
         """
         # Convert the request to a string if it's not already.
         request_text = request if isinstance(request, str) else serialize(request)
+        batch = is_batch_request(request_text)
         self.log_request(request_text, trim_log_values=trim_log_values)
         response = self.send_message(request_text, **kwargs)
         self.log_response(response, trim_log_values=trim_log_values)
         self.validate_response(response)
         response.data = parse(
-            response.text,
-            batch=is_batch_request(request_text),
-            validate_against_schema=validate_against_schema,
+            response.text, batch=batch, validate_against_schema=validate_against_schema
         )
+        print(batch, response.text, response.data.ok)
+        if not batch and not response.data.ok:
+            raise ReceivedErrorResponseError(response)
         return response
 
     @apply_self

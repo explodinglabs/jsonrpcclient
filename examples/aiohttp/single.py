@@ -10,10 +10,7 @@ async def main(loop):
     async with aiohttp.ClientSession(loop=loop) as session:
         client = AiohttpClient(session, "http://localhost:5000")
         response = await client.request("ping")
-    if response.data.ok:
-        print(response.data.result)
-    else:
-        logging.error(response.data.message)
+    print(response.data.result)
 
 
 loop = asyncio.get_event_loop()
