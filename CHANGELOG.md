@@ -1,5 +1,14 @@
 # jsonrpcclient Change Log
 
+## 3.0.2 (16 Sep, 2018)
+
+- response.data will _never_ be None. For single requests it's _always_ a
+  JSONRPCResponse, for batch requests it's _always_ a list.
+- Raise ReceivedErrorResponse exception on receving a JSON-RPC error
+  response. This won't affect too many who are using HTTP, since an
+  exception is already raised when a non-2xx error response is returned.
+- Removed ParseResponseError, the json.JSONDecodeError is clear enough.
+
 ## 3.0.1 (16 Sep, 2018)
 
 - Optionally pass an SSLContext to AiohttpClient. This client now requires
