@@ -5,7 +5,8 @@ For example:
 
     HTTPClient('http://example.com/api').request('go')
 
-Uses the `Requests <http://docs.python-requests.org/en/master/>`_ library.
+Uses the Requests library.
+http://docs.python-requests.org/en/master/
 """
 from typing import Any
 
@@ -27,8 +28,6 @@ class HTTPClient(Client):
         """
         Args:
             endpoint: The server address.
-            *args: Passed through to the Client class.
-            **kwargs: Passed through to the Client class.
         """
         super().__init__(*args, **kwargs)
         self.endpoint = endpoint

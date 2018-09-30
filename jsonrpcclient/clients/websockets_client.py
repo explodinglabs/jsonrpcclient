@@ -16,9 +16,8 @@ class WebSocketsClient(AsyncClient):
         self, socket: WebSocketCommonProtocol, *args: Any, **kwargs: Any
     ) -> None:
         """
+        Args:
             socket: Connected websocket (websockets.connect("ws://localhost:5000"))
-            *args: Passed through to Client class.
-            **kwargs: Passed through to Client class.
         """
         super().__init__(*args, **kwargs)
         self.socket = socket

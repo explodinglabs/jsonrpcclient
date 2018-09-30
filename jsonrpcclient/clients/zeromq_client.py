@@ -12,17 +12,15 @@ from ..response import Response
 
 
 class ZeroMQClient(Client):
-    """
-    Args:
-        endpoint: The server address.
-        socket_type: The zeromq `socket type`_. Default is `zmq.REQ`.
-        *args: Passed through to Client class.
-        **kwargs: Passed through to Client class.
-    """
 
     def __init__(
         self, endpoint: str, *args: Any, socket_type: int = zmq.REQ, **kwargs: Any
     ) -> None:
+        """
+        Args:
+            endpoint: The server address.
+            socket_type: The zeromq socket type.
+        """
         super().__init__(*args, **kwargs)
         self.context = zmq.Context()
         self.socket = self.context.socket(socket_type)
@@ -32,8 +30,11 @@ class ZeroMQClient(Client):
         """
         Transport the message to the server and return the response.
 
-        :param request: The JSON-RPC request string.
-        :return: The response (a string for requests, None for notifications).
+        Args:
+            request: The JSON-RPC request string.
+
+        Returns:
+            A Response.
         """
         self.socket.send_string(request)
         return Response(self.socket.recv().decode())

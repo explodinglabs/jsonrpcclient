@@ -1,8 +1,7 @@
 """
 Tornado Client.
 
-Represents an endpoint to communicate with using Tornado asynchronous HTTP
-client.
+Represents an endpoint to communicate with using Tornado asynchronous HTTP client.
 """
 from typing import Any, Optional
 

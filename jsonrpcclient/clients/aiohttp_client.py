@@ -2,7 +2,6 @@
 aiohttp client.
 
 Requires aiohttp >= 3.0.
-
 http://aiohttp.readthedocs.io/
 """
 from ssl import SSLContext
@@ -17,7 +16,6 @@ from ..response import Response
 
 
 class AiohttpClient(AsyncClient):
-    """TODO: rename AiohttpClient to AiohttpClient"""
 
     DEFAULT_RESPONSE_LOG_FORMAT = "<-- %(message)s (%(http_code)s %(http_reason)s)"
 
