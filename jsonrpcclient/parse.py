@@ -2,12 +2,11 @@
 Parse response text, returning JSONRPCResponse objects.
 """
 from typing import List, Union
-from json import loads as deserialize, JSONDecodeError
+from json import loads as deserialize
 
 import jsonschema  # type: ignore
 from pkg_resources import resource_string
 
-from . import exceptions
 from .response import JSONRPCResponse
 
 schema = deserialize(resource_string(__name__, "response-schema.json").decode())
