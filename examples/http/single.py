@@ -1,5 +1,3 @@
-import logging
-
 from jsonrpcclient.clients.http_client import HTTPClient
 
 client = HTTPClient("http://localhost:5000")
