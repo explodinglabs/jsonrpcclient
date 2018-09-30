@@ -1,8 +1,8 @@
 """
 Parse response text, returning JSONRPCResponse objects.
 """
-from typing import List, Union
 from json import loads as deserialize
+from typing import List, Union
 
 import jsonschema  # type: ignore
 from pkg_resources import resource_string
