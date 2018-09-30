@@ -37,14 +37,13 @@ class AsyncClient(Client, metaclass=ABCMeta):
         """
         # Convert the request to a string if it's not already.
         request_text = request if isinstance(request, str) else json.dumps(request)
+        batch = is_batch_request(request_text)
         self.log_request(request_text, trim_log_values=trim_log_values)
         response = await self.send_message(request_text, **kwargs)
         self.log_response(response, trim_log_values=trim_log_values)
         self.validate_response(response)
         response.data = parse(
-            response.text,
-            batch=is_batch_request(request_text),
-            validate_against_schema=validate_against_schema,
+            response.text, batch=batch, validate_against_schema=validate_against_schema
         )
         if not batch and not response.data.ok:
             raise ReceivedErrorResponseError(response)
