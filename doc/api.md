@@ -135,27 +135,16 @@ If the request wasn't successful, an exception will be raised.
 
 ## Configuration
 
-Here's an example of the config file `.jsonrpcclientrc` - this should be
-placed in the current or home directory:
-
-```ini
-[general]
-basic_logging = no
-id_generator = jsonrpcclient.id_generators.decimal
-trim_log_values = no
-validate_against_schema = yes
-```
-
 Any of the following options can be configured in:
 
-1. the config file;
-2. passing when instantiating the client;
-3. passing when calling send/request/notify.
+- arguments to send/request/notify.
+- arguments to the client;
+- the config file (see below);
 
 **basic_logging**
 
-Logs incoming/outgoing messages to stderr, by adding log handlers. (this option
-can't be passed to send/request/notify, only in the config or the client.)
+Adds log handlers, to log incoming/outgoing messages to stderr. (this option
+can't be passed to send/request/notify, only to the client or config file.)
 
 **id_generator**
 
@@ -179,11 +168,24 @@ Show abbreviated requests and responses in logs. Default is *False*.
 
 Validate responses against the JSON-RPC schema. Default is *True*.
 
+### Config file
+
+Here's an example of the config file `.jsonrpcclientrc` - this should be
+placed in the current or home directory:
+
+```ini
+[general]
+basic_logging = no
+id_generator = jsonrpcclient.id_generators.decimal
+trim_log_values = no
+validate_against_schema = yes
+```
+
 ### Configuring the Requests library
 
-HTTPClient makes use of Kenneth Reitz's Requests library. The [Session]
-(http://docs.python-requests.org/en/master/api/#requests.Session) is available
-so you can configure it before sending any requests.
+HTTPClient makes use of Kenneth Reitz's Requests library. The
+[Session](http://docs.python-requests.org/en/master/api/#requests.Session)
+is available so you can configure it before sending any requests.
 
 For example, Basic Auth:
 
