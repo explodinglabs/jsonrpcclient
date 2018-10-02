@@ -12,15 +12,25 @@ class SocketClient(Client):
     """
     Args:
         socket: Connected socket.
+        encoding: The charset to encode and decode the data with.
+        delimiter: String marking the end of a request or response.
         *args: Passed through to Client class.
         **kwargs: Passed through to Client class.
     """
 
     def __init__(
-        self, socket: socket.socket, *args: Any, **kwargs: Any
+        self,
+        socket: socket.socket,
+        *args: Any,
+        encoding: str = 'utf-8',
+        delimiter: str = '\n',
+        **kwargs: Any
     ) -> None:
         super().__init__(*args, **kwargs)
         self.socket = socket
+        self.delimiter = delimiter
+        self.encoding = encoding
+        self.delimiter_length = len(delimiter)
 
     def send_message(self, request: str, **kwargs: Any) -> Response:
         """
@@ -29,6 +39,24 @@ class SocketClient(Client):
         :param request: The JSON-RPC request string.
         :return: The response (a string for requests, None for notifications).
         """
-        payload = str(request) + '\n'
-        self.socket.send(payload.encode())
-        return Response(self.socket.recv().decode())
+        payload = str(request) + self.delimiter
+        self.socket.send(payload.encode(self.encoding))
+
+        response = bytes()
+        decoded = None
+
+        # Receive the response until we find the delimiter.
+        # TODO Do not wait for a response if the message sent is a notification.
+        while True:
+            response += self.socket.recv(1024)
+
+            decoded = response.decode(self.encoding)
+            if len(decoded) < self.delimiter_length:
+                continue
+
+            # TODO Check that're not in the middle of the response.
+            elif decoded[-self.delimiter_length:] == self.delimiter:
+                break
+
+        assert decoded is not None
+        return Response(decoded[:-self.delimiter_length])
