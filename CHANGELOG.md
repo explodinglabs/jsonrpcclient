@@ -1,6 +1,11 @@
 # jsonrpcclient Change Log
 
-## 3.0.2 (16 Sep, 2018)
+## 3.1.0 (6 Oct, 2018)
+
+- Add a socket client.
+- Fixed missing import in async_client.py.
+
+## 3.0.2 (30 Sep, 2018)
 
 - response.data will _never_ be None. For single requests it's _always_ a
   JSONRPCResponse, for batch requests it's _always_ a list.
