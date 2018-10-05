@@ -12,7 +12,6 @@ from ..response import Response
 
 
 class ZeroMQClient(Client):
-
     def __init__(
         self, endpoint: str, *args: Any, socket_type: int = zmq.REQ, **kwargs: Any
     ) -> None:

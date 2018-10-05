@@ -8,10 +8,10 @@ from typing import Any, Dict, Iterator, List, Optional, Union
 from apply_defaults import apply_self  # type: ignore
 
 from .client import Client, is_batch_request
+from .exceptions import ReceivedErrorResponseError
 from .parse import parse
 from .request import Notification, Request
 from .response import Response
-from .exceptions import ReceivedErrorResponseError
 
 
 class AsyncClient(Client, metaclass=ABCMeta):

@@ -22,8 +22,8 @@ class SocketClient(Client):
         self,
         socket: socket.socket,
         *args: Any,
-        encoding: str = 'utf-8',
-        delimiter: str = '\n',
+        encoding: str = "utf-8",
+        delimiter: str = "\n",
         **kwargs: Any
     ) -> None:
         super().__init__(*args, **kwargs)
@@ -55,8 +55,8 @@ class SocketClient(Client):
                 continue
 
             # TODO Check that're not in the middle of the response.
-            elif decoded[-self.delimiter_length:] == self.delimiter:
+            elif decoded[-self.delimiter_length :] == self.delimiter:
                 break
 
         assert decoded is not None
-        return Response(decoded[:-self.delimiter_length])
+        return Response(decoded[: -self.delimiter_length])
