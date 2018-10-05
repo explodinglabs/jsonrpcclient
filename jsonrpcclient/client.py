@@ -21,7 +21,7 @@ request_log = logging.getLogger(__name__ + ".request")
 response_log = logging.getLogger(__name__ + ".response")
 
 
-def is_batch_request(request_text):
+def is_batch_request(request_text: str) -> bool:
     try:
         return request_text.strip()[0] == "["
     except IndexError:
