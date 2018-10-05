@@ -1,8 +1,9 @@
-import pytest
-from jsonschema import ValidationError
 from json import JSONDecodeError
 
+import pytest
+
 from jsonrpcclient.parse import JSONRPCResponse, parse
+from jsonschema import ValidationError
 
 
 class TestJSONRPCResponse:

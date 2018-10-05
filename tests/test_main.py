@@ -1,5 +1,5 @@
-from unittest.mock import patch
 from json import JSONDecodeError
+from unittest.mock import patch
 
 from click.testing import CliRunner
 

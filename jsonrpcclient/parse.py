@@ -4,8 +4,9 @@ Parse response text, returning JSONRPCResponse objects.
 from json import loads as deserialize
 from typing import List, Union
 
-import jsonschema  # type: ignore
 from pkg_resources import resource_string
+
+import jsonschema  # type: ignore
 
 from .response import JSONRPCResponse
 
