@@ -11,6 +11,7 @@ from .client import Client, is_batch_request
 from .parse import parse
 from .request import Notification, Request
 from .response import Response
+from .exceptions import ReceivedErrorResponseError
 
 
 class AsyncClient(Client, metaclass=ABCMeta):
