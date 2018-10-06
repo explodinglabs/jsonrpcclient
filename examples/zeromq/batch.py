@@ -1,7 +1,7 @@
 import logging
 
 from jsonrpcclient.clients.zeromq_client import ZeroMQClient
-from jsonrpcclient.request import Request
+from jsonrpcclient.requests import Request
 
 requests = [Request("ping"), Request("ping"), Request("ping")]
 response = ZeroMQClient("tcp://localhost:5000").send(requests)

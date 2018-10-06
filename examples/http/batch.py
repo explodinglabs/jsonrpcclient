@@ -1,7 +1,7 @@
 import logging
 
 from jsonrpcclient.clients.http_client import HTTPClient
-from jsonrpcclient.request import Request
+from jsonrpcclient.requests import Request
 
 client = HTTPClient("http://localhost:5000")
 response = client.send([Request("ping"), Request("ping"), Request("ping")])

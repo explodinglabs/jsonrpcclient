@@ -4,7 +4,7 @@ import logging
 import websockets
 
 from jsonrpcclient.clients.websockets_client import WebSocketsClient
-from jsonrpcclient.request import Request
+from jsonrpcclient.requests import Request
 
 
 async def main():

@@ -3,7 +3,7 @@ import logging
 from tornado.ioloop import IOLoop
 
 from jsonrpcclient.clients.tornado_client import TornadoClient
-from jsonrpcclient.request import Request
+from jsonrpcclient.requests import Request
 
 client = TornadoClient("http://localhost:5000/")
 

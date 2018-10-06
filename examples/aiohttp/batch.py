@@ -4,7 +4,7 @@ import logging
 import aiohttp
 
 from jsonrpcclient.clients.aiohttp_client import AiohttpClient
-from jsonrpcclient.request import Request
+from jsonrpcclient.requests import Request
 
 
 async def main(loop):
