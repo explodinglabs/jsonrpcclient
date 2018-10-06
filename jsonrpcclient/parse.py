@@ -1,16 +1,34 @@
-"""
-Parse response text, returning JSONRPCResponse objects.
-"""
+"""Parse response text, returning JSONRPCResponse objects."""
 from json import loads as deserialize
-from typing import List, Union
+from typing import Any, Dict, List, Union
 
 from pkg_resources import resource_string
 
 import jsonschema  # type: ignore
 
-from .response import JSONRPCResponse
+from .response import (
+    JSONRPCResponse,
+    SuccessResponse,
+    NotificationResponse,
+    ErrorResponse,
+)
 
 schema = deserialize(resource_string(__name__, "response-schema.json").decode())
+
+
+def get_response(response: Dict[str, Any]) -> JSONRPCResponse:
+    """
+    Converts a deserialized response into a JSONRPCResponse object.
+
+    The dictionary be either an error or success response, never a notification.
+
+    Args:
+        response: Deserialized response dictionary. We can assume the response is valid
+            JSON-RPC here, since it passed the jsonschema validation.
+    """
+    if "error" in response:
+        return ErrorResponse(**response)
+    return SuccessResponse(**response)
 
 
 def parse(
@@ -33,8 +51,8 @@ def parse(
         jsonschema.ValidationError: The response was not a valid JSON-RPC response
             object.
     """
-    # If the response is empty, we can't deserialize it. The return value depends on if
-    # it's responding to a batch request or not.
+    # If the response is empty, we can't deserialize it; an empty string is valid
+    # JSON-RPC, but not valid JSON.
     if not response_text:
         if batch:
             # An empty string is a valid response to a batch request, when there were
@@ -42,16 +60,18 @@ def parse(
             return []
         else:
             # An empty string is valid response to a Notification request.
-            return JSONRPCResponse(None)
+            return NotificationResponse()
 
     # If a string, ensure it's json-deserializable
     deserialized = deserialize(response_text)
+
     # Validate the response against the Response schema (raises
     # jsonschema.ValidationError if invalid)
     if validate_against_schema:
         jsonschema.validate(deserialized, schema)
-    # Batch
+
+    # Batch response
     if isinstance(deserialized, list):
-        return [JSONRPCResponse(r) for r in deserialized if "id" in r]
-    # Single request
-    return JSONRPCResponse(deserialized)
+        return [get_response(r) for r in deserialized if "id" in r]
+    # Single response
+    return get_response(deserialized)

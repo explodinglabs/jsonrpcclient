@@ -1,72 +1,132 @@
 """
 Response and JSONRPCResponse classes.
 
-Success response:
-    - Response.ok = True
-    - Response.id = 1
-    - Response.result = 5
-Error response:
-    - Response.ok = False
-    - Response.id = 1
-    - Response.message = "There was an error"
-    - Response.code = -32000
-    - Response.data = None
-
 This module needs a major overhaul.
 """
+from collections import OrderedDict
+from json import dumps as serialize
 from typing import Any, Dict, List, Optional, Union
+
+NOID = object()
+
+
+def sort_response(response):
+    """
+    Sort the keys in a JSON-RPC response object.
+
+    This has no effect other than making it nicer to read. Useful in Python 3.5 only,
+    dictionaries are already sorted in newer Python versions.
+
+    Example::
+
+        >>> json.dumps(sort_response({'id': 2, 'result': 5, 'jsonrpc': '2.0'}))
+        {"jsonrpc": "2.0", "result": 5, "id": 1}
+
+    Args:
+        response: Deserialized JSON-RPC response.
+
+    Returns:
+        The same response, sorted in an OrderedDict.
+    """
+    root_order = ["jsonrpc", "result", "error", "id"]
+    error_order = ["code", "message", "data"]
+    req = OrderedDict(sorted(response.items(), key=lambda k: root_order.index(k[0])))
+    if "error" in response:
+        req["error"] = OrderedDict(
+            sorted(response["error"].items(), key=lambda k: error_order.index(k[0]))
+        )
+    return req
 
 
 class JSONRPCResponse:
     """
-    A single parsed JSON-RPC response object (or list of them in the case of a batch
-    response).
+    A parsed JSON-RPC response object.
+
+    Base class for the responses. There should be no need to validate the input data to
+    these responses, since the data hass passed the jsonschema validation.
     """
 
-    def __init__(self, response: Optional[Dict]) -> None:
-        """
-        Provides attributes representing the response.
+    def __init__(self, jsonrpc: str, id: Any) -> None:
+        self.jsonrpc = jsonrpc
+        self.id = id
 
-        Args:
-            response: The JSON-RPC response to process. (can be None!)
-        """
-        if response:
-            # If the response was "error", raise to ensure it's handled
-            self.id = response["id"] if "id" in response.keys() else None
-            self.ok = "result" in response
-            if self.ok:
-                self.ok = True
-                self.result = response["result"]
-            else:
-                self.ok = False
-                self.code = response["error"].get("code")
-                self.message = response["error"].get("message")
-                self.data = response["error"].get("data")
-        else:
-            # Empty response - valid.
-            self.ok = True
-            self.id = None
-            self.result = None
+
+class SuccessResponse(JSONRPCResponse):
+    """
+    Represents a JSON-RPC success response object.
+    """
+
+    ok = True
+
+    def __init__(self, result: Any, **kwargs: dict) -> None:
+        super().__init__(**kwargs)
+        self.result = result
 
     def __repr__(self) -> str:
-        if self.ok:
-            return "<JSONRPCResponse(id={}, result={})>".format(self.id, self.result)
-        # else:
-        return '<JSONRPCResponse(id={}, message="{}")>'.format(self.id, self.message)
+        return "<SuccessResponse(id={}, result={})>".format(self.id, self.result)
+
+    def __str__(self) -> str:
+        return serialize(
+            sort_response(dict(jsonrpc=self.jsonrpc, result=self.result, id=self.id))
+        )
+
+
+class NotificationResponse(SuccessResponse):
+    """
+    Represents a JSON-RPC notification response object.
+    """
+
+    ok = True
+
+    def __init__(self) -> None:
+        super().__init__(jsonrpc="2.0", result=None, id=NOID)
+
+    def __repr__(self) -> str:
+        return "<NotificationResponse()>"
+
+    def __str__(self) -> str:
+        return ""
+
+
+class ErrorResponse(JSONRPCResponse):
+    """
+    Represents a JSON-RPC error response object.
+    """
+
+    ok = False
+
+    def __init__(self, error: Dict[str, Any], **kwargs: dict) -> None:
+        super().__init__(id=kwargs.pop("id", NOID), **kwargs)
+        self.message = error.get("message")
+        self.code = error.get("code")
+        self.data = error.get("data")
+
+    def __repr__(self) -> str:
+        if self.id is NOID:
+            return '<ErrorResponse(message="{}")>'.format(self.message)
+        return '<ErrorResponse(id={}, message="{}")>'.format(self.id, self.message)
+
+    def __str__(self) -> str:
+        error = dict(code=self.code, message=self.message)
+        if self.data:
+            error["data"] = self.data
+        deserialized = dict(jsonrpc=self.jsonrpc, error=error)
+        if self.id is not NOID:
+            deserialized["id"] = self.id
+        return serialize(sort_response(deserialized))
 
 
 def total_results(
     data: Union[List[JSONRPCResponse], JSONRPCResponse, None], *, ok: bool = True
 ) -> int:
     """
-    Given the return value from parse(), returns the total parsed responses.
+    Returns the total parsed responses, given the return value from parse().
     """
     if isinstance(data, list):
         return sum([1 for d in data if d.ok == ok])
     elif isinstance(data, JSONRPCResponse):
         return int(data.ok == ok)
-    else:
-        return 0  # The data hasn't been parsed yet. The data attribute hasn't been set.
+    return 0  # The data hasn't been parsed yet. The data attribute hasn't been set.
 
 
 class Response:
@@ -93,5 +153,4 @@ class Response:
         total_errors = total_results(self.data, ok=False)
         if total_errors:
             return "<Response[{} ok, {} errors]>".format(total_ok, total_errors)
-        else:
-            return "<Response[{}]>".format(total_ok)
+        return "<Response[{}]>".format(total_ok)
