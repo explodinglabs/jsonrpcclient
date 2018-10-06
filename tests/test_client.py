@@ -1,12 +1,12 @@
 from unittest.mock import Mock, patch
 
 import pytest
-from testfixtures import LogCapture, StringComparison
 
 from jsonrpcclient.client import Client, request_log, response_log
 from jsonrpcclient.exceptions import ReceivedErrorResponseError
 from jsonrpcclient.requests import Request
 from jsonrpcclient.response import Response
+from testfixtures import LogCapture, StringComparison
 
 
 class DummyClient(Client):

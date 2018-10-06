@@ -48,7 +48,9 @@ class AiohttpClient(AsyncClient):
         if response.raw is not None and not 200 <= response.raw.status <= 299:
             raise ReceivedNon2xxResponseError(response.raw.status)
 
-    async def send_message(self, request: str, response_expected: bool) -> Response:  # type: ignore
+    async def send_message(
+        self, request: str, response_expected: bool
+    ) -> Response:  # type: ignore
         """
         Transport the message to the server and return the response.
 

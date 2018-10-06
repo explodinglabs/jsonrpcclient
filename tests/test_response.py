@@ -1,5 +1,11 @@
-from jsonrpcclient.response import (NOID, ErrorResponse, NotificationResponse,
-                                    Response, SuccessResponse, total_results)
+from jsonrpcclient.response import (
+    NOID,
+    ErrorResponse,
+    NotificationResponse,
+    Response,
+    SuccessResponse,
+    total_results,
+)
 
 
 def test_success_response():
@@ -16,7 +22,7 @@ def test_success_response_null_id():
     response = SuccessResponse(**{"jsonrpc": "2.0", "result": "foo", "id": None})
     assert response.ok == True
     assert response.id == None
-    assert repr(response) == '<SuccessResponse(id=None, result=foo)>'
+    assert repr(response) == "<SuccessResponse(id=None, result=foo)>"
     assert str(response) == '{"jsonrpc": "2.0", "result": "foo", "id": null}'
 
 
@@ -42,14 +48,20 @@ def test_error_response():
     assert response.message == "Not Found"
     assert response.data == "foo"
     assert repr(response) == '<ErrorResponse(id=1, message="Not Found")>'
-    assert str(response) == '{"jsonrpc": "2.0", "error": {"code": -32000, "message": "Not Found", "data": "foo"}, "id": 1}'
+    assert (
+        str(response)
+        == '{"jsonrpc": "2.0", "error": {"code": -32000, "message": "Not Found", "data": "foo"}, "id": 1}'
+    )
 
 
 def test_error_response_no_id():
     deserialized = {"jsonrpc": "2.0", "error": {"code": -32000, "message": "Not Found"}}
     response = ErrorResponse(**deserialized)
     assert repr(response) == '<ErrorResponse(message="Not Found")>'
-    assert str(response) == '{"jsonrpc": "2.0", "error": {"code": -32000, "message": "Not Found"}}'
+    assert (
+        str(response)
+        == '{"jsonrpc": "2.0", "error": {"code": -32000, "message": "Not Found"}}'
+    )
 
 
 def test_error_with_data():

@@ -22,7 +22,9 @@ class WebSocketsClient(AsyncClient):
         super().__init__(*args, **kwargs)
         self.socket = socket
 
-    async def send_message(self, request: str, response_expected: bool, **kwargs: Any):  # type: ignore
+    async def send_message(
+        self, request: str, response_expected: bool, **kwargs: Any
+    ):  # type: ignore
         """
         Transport the message to the server and return the response.
 

@@ -47,7 +47,9 @@ class HTTPClient(Client):
         if response.raw is not None and not 200 <= response.raw.status_code <= 299:
             raise ReceivedNon2xxResponseError(response.raw.status_code)
 
-    def send_message(self, request: str, response_expected: bool, **kwargs: Any) -> Response:
+    def send_message(
+        self, request: str, response_expected: bool, **kwargs: Any
+    ) -> Response:
         """
         Transport the message to the server and return the response.
 

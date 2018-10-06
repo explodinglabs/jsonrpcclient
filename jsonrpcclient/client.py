@@ -5,7 +5,8 @@ Base class for the clients.
 """
 import logging
 from abc import ABCMeta, abstractmethod
-from json import dumps as serialize, loads as deserialize
+from json import dumps as serialize
+from json import loads as deserialize
 from typing import Any, Callable, Dict, Iterator, List, Optional, Union
 
 from apply_defaults import apply_config, apply_self  # type: ignore
