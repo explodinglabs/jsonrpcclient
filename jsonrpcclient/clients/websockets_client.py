@@ -24,7 +24,7 @@ class WebSocketsClient(AsyncClient):
 
     async def send_message(
         self, request: str, response_expected: bool, **kwargs: Any
-    ):  # type: ignore
+    ) -> Response:
         """
         Transport the message to the server and return the response.
 

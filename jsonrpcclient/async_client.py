@@ -24,8 +24,8 @@ class AsyncClient(Client, metaclass=ABCMeta):
 
     @abstractmethod
     async def send_message(
-        self, request: str, response_expected: bool, **kwargs
-    ) -> Response:  # type: ignore
+        self, request: str, response_expected: bool, **kwargs: Any
+    ) -> Response:
         """Override to transport the request"""
 
     @apply_self

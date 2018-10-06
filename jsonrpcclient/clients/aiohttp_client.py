@@ -49,8 +49,8 @@ class AiohttpClient(AsyncClient):
             raise ReceivedNon2xxResponseError(response.raw.status)
 
     async def send_message(
-        self, request: str, response_expected: bool
-    ) -> Response:  # type: ignore
+        self, request: str, response_expected: bool, **kwargs: Any
+    ) -> Response:
         """
         Transport the message to the server and return the response.
 

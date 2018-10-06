@@ -8,7 +8,7 @@ from jsonrpcclient.response import Response
 
 
 class DummyClient(AsyncClient):
-    async def send_message(self, request, **kwargs):
+    async def send_message(self, request, response_expected, **kwargs):
         res = '{"jsonrpc": "2.0", "result": 1, "id": 1}'
         return Response(res, raw=sentinel)
 
