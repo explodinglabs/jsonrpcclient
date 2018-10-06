@@ -10,7 +10,7 @@ from apply_defaults import apply_self  # type: ignore
 from .client import Client, is_batch_request
 from .exceptions import ReceivedErrorResponseError
 from .parse import parse
-from .request import Notification, Request
+from .requests import Notification, Request
 from .response import Response
 
 

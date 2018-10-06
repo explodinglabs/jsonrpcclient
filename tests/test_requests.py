@@ -1,7 +1,7 @@
 import json
 
 from jsonrpcclient import id_generators
-from jsonrpcclient.request import Notification, Request, sort_request
+from jsonrpcclient.requests import Notification, Request, sort_request
 
 
 class TestSortRequest:

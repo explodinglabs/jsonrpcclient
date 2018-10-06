@@ -4,7 +4,7 @@ import pytest
 
 from jsonrpcclient.client import Client, request_log, response_log
 from jsonrpcclient.exceptions import ReceivedErrorResponseError
-from jsonrpcclient.request import Request
+from jsonrpcclient.requests import Request
 from jsonrpcclient.response import Response
 from testfixtures import LogCapture, StringComparison
 

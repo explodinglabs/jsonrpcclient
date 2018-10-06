@@ -3,7 +3,7 @@ from unittest.mock import sentinel
 import pytest
 
 from jsonrpcclient.async_client import AsyncClient
-from jsonrpcclient.request import Request
+from jsonrpcclient.requests import Request
 from jsonrpcclient.response import Response
 
 

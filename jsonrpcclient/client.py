@@ -14,7 +14,7 @@ from .config import config
 from .exceptions import ReceivedErrorResponseError
 from .log import log_
 from .parse import parse
-from .request import Notification, Request
+from .requests import Notification, Request
 from .response import Response
 
 request_log = logging.getLogger(__name__ + ".request")

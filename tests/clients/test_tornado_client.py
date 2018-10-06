@@ -5,7 +5,7 @@ from unittest.mock import patch
 from tornado import testing, web
 
 from jsonrpcclient.clients.tornado_client import TornadoClient
-from jsonrpcclient.request import Request
+from jsonrpcclient.requests import Request
 
 
 class EchoHandler(web.RequestHandler):

@@ -1,6 +1,8 @@
 """
 Classes to help create JSON-RPC Request objects.
 
+Named plural to distinguish it from the request convenience function.
+
 To create a request:
 
     >>> Request("cat", name="Yoko")

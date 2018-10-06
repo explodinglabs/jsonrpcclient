@@ -38,7 +38,7 @@ Instead of typing the whole JSON-RPC request string, a `Request` class makes
 it easy for you:
 
 ```python
->>> from jsonrpcclient.request import Request
+>>> from jsonrpcclient.requests import Request
 >>> Request("ping")
 {'jsonrpc': '2.0', 'method': 'ping', 'id': 1}
 ```

@@ -7,7 +7,7 @@ import responses
 
 from jsonrpcclient.clients.http_client import HTTPClient
 from jsonrpcclient.exceptions import ReceivedNon2xxResponseError
-from jsonrpcclient.request import Request
+from jsonrpcclient.requests import Request
 
 
 class TestInit:
