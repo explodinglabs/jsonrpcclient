@@ -1,6 +1,12 @@
 # jsonrpcclient Change Log
 
-## 3.1.0 (6 Oct, 2018)
+## 3.2.1 (6 Oct, 2018)
+
+- Pass response_expected to send_message. Lets clients know if a response is
+  expected from the request. Certain socket clients can use this to not listen
+  for a response.
+
+## 3.2.0 (6 Oct, 2018)
 
 - Returned the convenience functions, request, notify and send.
 - Clean up response.py.
