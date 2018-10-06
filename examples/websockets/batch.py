@@ -19,5 +19,4 @@ async def main():
         else:
             logging.error("%d: %s", data.id, data.message)
 
-
 asyncio.get_event_loop().run_until_complete(main())

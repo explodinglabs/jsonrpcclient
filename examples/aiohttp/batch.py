@@ -4,14 +4,14 @@ import logging
 import aiohttp
 
 from jsonrpcclient.clients.aiohttp_client import AiohttpClient
-from jsonrpcclient.requests import Request
+from jsonrpcclient.requests import Request, Notification
 
 
 async def main(loop):
 
     async with aiohttp.ClientSession(loop=loop) as session:
         client = AiohttpClient(session, "http://localhost:5000")
-        requests = [Request("ping"), Request("ping"), Request("ping")]
+        requests = [Request("ping"), Notification("ping"), Request("ping")]
         response = await client.send(requests)
 
     for data in response.data:
