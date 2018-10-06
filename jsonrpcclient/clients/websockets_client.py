@@ -22,7 +22,19 @@ class WebSocketsClient(AsyncClient):
         super().__init__(*args, **kwargs)
         self.socket = socket
 
-    async def send_message(self, request: str, **kwargs: Any):  # type: ignore
+    async def send_message(self, request: str, response_expected: bool, **kwargs: Any):  # type: ignore
+        """
+        Transport the message to the server and return the response.
+
+        Args:
+            request: The JSON-RPC request string.
+            response_expected: Whether the request expects a response.
+
+        Returns:
+            A Response object.
+        """
         await self.socket.send(request)
-        response_text = await self.socket.recv()
-        return Response(response_text)
+        if response_expected:
+            response_text = await self.socket.recv()
+            return Response(response_text)
+        return Response("")

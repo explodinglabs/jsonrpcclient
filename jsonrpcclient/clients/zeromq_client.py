@@ -25,15 +25,16 @@ class ZeroMQClient(Client):
         self.socket = self.context.socket(socket_type)
         self.socket.connect(endpoint)
 
-    def send_message(self, request: str, **kwargs: Any) -> Response:
+    def send_message(self, request: str, response_expected: bool, **kwargs: Any) -> Response:
         """
         Transport the message to the server and return the response.
 
         Args:
             request: The JSON-RPC request string.
+            response_expected: Whether the request expects a response.
 
         Returns:
-            A Response.
+            A Response object.
         """
         self.socket.send_string(request)
         return Response(self.socket.recv().decode())

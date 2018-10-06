@@ -51,7 +51,7 @@ class TestSendMessage:
             status=200,
             body='{"jsonrpc": "2.0", "result": 5, "id": 1}',
         )
-        HTTPClient("http://foo").send_message(str(Request("foo")))
+        HTTPClient("http://foo").send_message(str(Request("foo")), response_expected=True)
 
     @responses.activate
     def test_non_2xx_response_error(self):
@@ -64,7 +64,7 @@ class TestSendMessage:
         client.session.cert = "/path/to/cert"
         client.session.verify = "ca-cert"
         with pytest.raises(OSError):  # Invalid certificate
-            client.send_message(str(Request("foo")))
+            client.send_message(str(Request("foo")), response_expected=True)
 
 
 Resp = namedtuple("Response", ("text", "reason", "headers", "status_code"))

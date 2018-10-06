@@ -47,6 +47,16 @@ class HTTPClient(Client):
         if response.raw is not None and not 200 <= response.raw.status_code <= 299:
             raise ReceivedNon2xxResponseError(response.raw.status_code)
 
-    def send_message(self, request: str, **kwargs: Any) -> Response:
+    def send_message(self, request: str, response_expected: bool, **kwargs: Any) -> Response:
+        """
+        Transport the message to the server and return the response.
+
+        Args:
+            request: The JSON-RPC request string.
+            response_expected: Whether the request expects a response.
+
+        Returns:
+            A Response object.
+        """
         response = self.session.post(self.endpoint, data=request.encode(), **kwargs)
         return Response(response.text, raw=response)

@@ -48,7 +48,17 @@ class AiohttpClient(AsyncClient):
         if response.raw is not None and not 200 <= response.raw.status <= 299:
             raise ReceivedNon2xxResponseError(response.raw.status)
 
-    async def send_message(self, request: str) -> Response:  # type: ignore
+    async def send_message(self, request: str, response_expected: bool) -> Response:  # type: ignore
+        """
+        Transport the message to the server and return the response.
+
+        Args:
+            request: The JSON-RPC request string.
+            response_expected: Whether the request expects a response.
+
+        Returns:
+            A Response object.
+        """
         with async_timeout.timeout(10):
             async with self.session.post(
                 self.endpoint, data=request, ssl=self.ssl

@@ -29,7 +29,7 @@ class TestZeroMQClient:
     @patch("jsonrpcclient.client.response_log")
     def test_send_message(self, *_):
         client = ZeroMQClient("tcp://localhost:5555")
-        client.send_message(str(Request("go")))
+        client.send_message(str(Request("go")), response_expected=True)
 
     def test_send_message_conn_error(self):
         client = ZeroMQClient("tcp://localhost:5555")
@@ -38,4 +38,4 @@ class TestZeroMQClient:
         client.socket.setsockopt(zmq.SNDTIMEO, 5)
         client.socket.setsockopt(zmq.LINGER, 5)
         with pytest.raises(zmq.error.ZMQError):
-            client.send_message(str(Request("go")))
+            client.send_message(str(Request("go")), response_expected=True)

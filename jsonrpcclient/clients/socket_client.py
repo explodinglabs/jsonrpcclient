@@ -32,12 +32,16 @@ class SocketClient(Client):
         self.encoding = encoding
         self.delimiter_length = len(delimiter)
 
-    def send_message(self, request: str, **kwargs: Any) -> Response:
+    def send_message(self, request: str, response_expected: bool, **kwargs: Any) -> Response:
         """
         Transport the message to the server and return the response.
 
-        :param request: The JSON-RPC request string.
-        :return: The response (a string for requests, None for notifications).
+        Args:
+            request: The JSON-RPC request string.
+            response_expected: Whether the request expects a response.
+
+        Returns:
+            A Response object.
         """
         payload = str(request) + self.delimiter
         self.socket.send(payload.encode(self.encoding))

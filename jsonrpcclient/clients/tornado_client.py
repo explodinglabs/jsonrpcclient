@@ -44,8 +44,18 @@ class TornadoClient(AsyncClient):
         )
 
     async def send_message(  # type: ignore
-        self, request: str, **kwargs: Any
+        self, request: str, response_expected: bool, **kwargs: Any
     ) -> Response:
+        """
+        Transport the message to the server and return the response.
+
+        Args:
+            request: The JSON-RPC request string.
+            response_expected: Whether the request expects a response.
+
+        Returns:
+            A Response object.
+        """
         headers = dict(self.DEFAULT_HEADERS)
         headers.update(kwargs.pop("headers", {}))
 

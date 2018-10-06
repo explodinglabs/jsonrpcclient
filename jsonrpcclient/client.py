@@ -5,7 +5,7 @@ Base class for the clients.
 """
 import logging
 from abc import ABCMeta, abstractmethod
-from json import dumps as serialize
+from json import dumps as serialize, loads as deserialize
 from typing import Any, Callable, Dict, Iterator, List, Optional, Union
 
 from apply_defaults import apply_config, apply_self  # type: ignore
@@ -19,13 +19,6 @@ from .response import ErrorResponse, Response
 
 request_log = logging.getLogger(__name__ + ".request")
 response_log = logging.getLogger(__name__ + ".response")
-
-
-def is_batch_request(request_text: str) -> bool:
-    try:
-        return request_text.strip()[0] == "["
-    except IndexError:
-        return False
 
 
 class Client(metaclass=ABCMeta):
@@ -107,14 +100,18 @@ class Client(metaclass=ABCMeta):
         return log_(response.text, response_log, "info", trim=trim_log_values, **kwargs)
 
     @abstractmethod
-    def send_message(self, request: str, **kwargs: Any) -> Response:
+    def send_message(
+        self, request: str, response_expected: bool, **kwargs: Any
+    ) -> Response:
         """
-        Transport the request to the server.
-
-        Override this method in the protocol-specific subclasses.
+        Transport the message to the server and return the response.
 
         Args:
-            request: A JSON-RPC request.
+            request: The JSON-RPC request string.
+            response_expected: Whether the request expects a response.
+
+        Returns:
+            A Response object.
         """
 
     def validate_response(self, response: Response) -> None:
@@ -150,11 +147,19 @@ class Client(metaclass=ABCMeta):
                 HTTPClient passes this through to `requests.Session.send()`.
             in the case of a Notification.
         """
-        # Convert the request to a string if it's not already.
-        request_text = request if isinstance(request, str) else serialize(request)
-        batch = is_batch_request(request_text)
+        # We need both the serialized and deserialized version of the request
+        if isinstance(request, str):
+            request_text = request
+            request_deserialized = deserialize(request)
+        else:
+            request_text = serialize(request)
+            request_deserialized = request
+        batch = isinstance(request_deserialized, list)
+        response_expected = "id" in request_deserialized
         self.log_request(request_text, trim_log_values=trim_log_values)
-        response = self.send_message(request_text, **kwargs)
+        response = self.send_message(
+            request_text, response_expected=response_expected, **kwargs
+        )
         self.log_response(response, trim_log_values=trim_log_values)
         self.validate_response(response)
         response.data = parse(

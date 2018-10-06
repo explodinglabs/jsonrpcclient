@@ -12,7 +12,7 @@ from jsonrpcclient.response import Response
 class DummyClient(Client):
     """A dummy client for testing the abstract Client class"""
 
-    def send_message(self, request):
+    def send_message(self, request, response_expected):
         return Response('{"jsonrpc": "2.0", "result": 1, "id": 1}')
 
 

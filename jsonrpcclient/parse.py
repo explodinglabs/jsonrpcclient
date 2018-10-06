@@ -34,8 +34,7 @@ def parse(
 
     Args:
         response_text: JSON-RPC response string.
-        is_batch_request: If the response_text is an empty string, this determines how
-            to parse.
+        batch: If the response_text is an empty string, this determines how to parse.
         validate_against_schema: Validate against the json-rpc schema.
 
     Returns:
