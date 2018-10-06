@@ -36,5 +36,5 @@ setup(
     package_data={"jsonrpcclient": ["response-schema.json"]},
     packages=["jsonrpcclient", "jsonrpcclient.clients"],
     url="https://github.com/bcb/jsonrpcclient",
-    version="3.1.0",
+    version="3.2.0",
 )

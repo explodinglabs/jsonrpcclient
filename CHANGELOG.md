@@ -2,6 +2,11 @@
 
 ## 3.1.0 (6 Oct, 2018)
 
+- Returned the convenience functions, request, notify and send.
+- Clean up response.py.
+
+## 3.1.0 (6 Oct, 2018)
+
 - Add a socket client.
 - Fixed missing import in async_client.py.
 
