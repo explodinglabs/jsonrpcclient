@@ -19,7 +19,7 @@ Requests
 
     $ pip install "jsonrpcclient[requests]"
 
-.. literalinclude:: ../examples/http/single.py
+.. literalinclude:: ../examples/http/request.py
 
 ZeroMQ
 ------
@@ -28,7 +28,7 @@ ZeroMQ
 
     $ pip install 'jsonrpcclient[pyzmq]'
 
-.. literalinclude:: ../examples/zeromq/single.py
+.. literalinclude:: ../examples/zeromq/request.py
 
 See `blog post <https://bcb.github.io/jsonrpc/zeromq>`__.
 
@@ -44,7 +44,7 @@ aiohttp
 
     $ pip install 'jsonrpcclient[aiohttp]'
 
-.. literalinclude:: ../examples/aiohttp/single.py
+.. literalinclude:: ../examples/aiohttp/request.py
 
 See `blog post <https://bcb.github.io/jsonrpc/aiohttp>`__.
 
@@ -55,7 +55,7 @@ Tornado
 
     $ pip install 'jsonrpcclient[tornado]'
 
-.. literalinclude:: ../examples/tornado/single.py
+.. literalinclude:: ../examples/tornado/request.py
 
 Websockets
 ----------
@@ -64,6 +64,6 @@ Websockets
 
     $ pip install 'jsonrpcclient[websockets]'
 
-.. literalinclude:: ../examples/websockets/single.py
+.. literalinclude:: ../examples/websockets/request.py
 
 See `blog post <https://bcb.github.io/jsonrpc/websockets>`__.
