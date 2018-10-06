@@ -1,9 +1,9 @@
 from json import JSONDecodeError
 
 import pytest
+from jsonschema import ValidationError
 
 from jsonrpcclient.parse import parse
-from jsonschema import ValidationError
 
 
 def test_parse():

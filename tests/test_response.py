@@ -1,11 +1,5 @@
-from jsonrpcclient.response import (
-    SuccessResponse,
-    ErrorResponse,
-    NotificationResponse,
-    Response,
-    total_results,
-    NOID,
-)
+from jsonrpcclient.response import (NOID, ErrorResponse, NotificationResponse,
+                                    Response, SuccessResponse, total_results)
 
 
 def test_success_response():

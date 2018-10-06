@@ -2,16 +2,11 @@
 from json import loads as deserialize
 from typing import Any, Dict, List, Union
 
+import jsonschema  # type: ignore
 from pkg_resources import resource_string
 
-import jsonschema  # type: ignore
-
-from .response import (
-    JSONRPCResponse,
-    SuccessResponse,
-    NotificationResponse,
-    ErrorResponse,
-)
+from .response import (ErrorResponse, JSONRPCResponse, NotificationResponse,
+                       SuccessResponse)
 
 schema = deserialize(resource_string(__name__, "response-schema.json").decode())
 

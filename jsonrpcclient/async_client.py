@@ -11,7 +11,7 @@ from .client import Client, is_batch_request
 from .exceptions import ReceivedErrorResponseError
 from .parse import parse
 from .requests import Notification, Request
-from .response import Response
+from .response import ErrorResponse, Response
 
 
 class AsyncClient(Client, metaclass=ABCMeta):
@@ -46,8 +46,9 @@ class AsyncClient(Client, metaclass=ABCMeta):
         response.data = parse(
             response.text, batch=batch, validate_against_schema=validate_against_schema
         )
-        if not isinstance(response.data, list) and not response.data.ok:
-            raise ReceivedErrorResponseError(response)
+        # If received a single error response, raise
+        if isinstance(response.data, ErrorResponse):
+            raise ReceivedErrorResponseError(response.data)
         return response
 
     @apply_self

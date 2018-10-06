@@ -5,12 +5,12 @@ This module needs a major overhaul.
 """
 from collections import OrderedDict
 from json import dumps as serialize
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, List, Union
 
 NOID = object()
 
 
-def sort_response(response):
+def sort_response(response: Dict[str, Any]) -> OrderedDict:
     """
     Sort the keys in a JSON-RPC response object.
 
@@ -46,6 +46,8 @@ class JSONRPCResponse:
     these responses, since the data hass passed the jsonschema validation.
     """
 
+    ok = False
+
     def __init__(self, jsonrpc: str, id: Any) -> None:
         self.jsonrpc = jsonrpc
         self.id = id
@@ -58,7 +60,7 @@ class SuccessResponse(JSONRPCResponse):
 
     ok = True
 
-    def __init__(self, result: Any, **kwargs: dict) -> None:
+    def __init__(self, result: Any, **kwargs: Any) -> None:
         super().__init__(**kwargs)
         self.result = result
 
@@ -95,7 +97,7 @@ class ErrorResponse(JSONRPCResponse):
 
     ok = False
 
-    def __init__(self, error: Dict[str, Any], **kwargs: dict) -> None:
+    def __init__(self, error: Dict[str, Any], **kwargs: Any) -> None:
         super().__init__(id=kwargs.pop("id", NOID), **kwargs)
         self.message = error.get("message")
         self.code = error.get("code")
