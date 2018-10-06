@@ -23,6 +23,28 @@ $ pip install "jsonrpcclient[requests]>2,<3"
 
 ## Usage
 
+The simplest way to send a standard http request is to use the convenience
+function `request`.
+
+```python
+from jsonrpcclient import request
+response = request("http://cats.com", "speak", name="Yoko")
+```
+
+The arguments to `request` are: the http server's endpoint url, the RPC method
+to call, followed by any arguments to the method.
+
+The `response.data.result` contains the payload back from the server.
+
+```python
+>>> print(response.data.result)
+'meow'
+```
+
+For more advanced usage, read on.
+
+Create a client object to work with:
+
 ```python
 from jsonrpcclient.clients.http_client import HTTPClient
 client = HTTPClient("http://cats.com")

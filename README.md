@@ -16,9 +16,8 @@ pip install "jsonrpcclient[requests]"
 ```
 
 ```python
-from jsonrpcclient.clients.http_client import HTTPClient
-client = HTTPClient("http://localhost:5000")
-response = client.request("ping")
+import jsonrpcclient
+response = jsonrpcclient.request("http://localhost:5000", "ping")
 >>> response.text
 '{"jsonrpc": "2.0", "result": "pong", "id": 1}'
 >>> response.data.result
