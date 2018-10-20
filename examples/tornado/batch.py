@@ -8,12 +8,16 @@ from jsonrpcclient.requests import Request, Notification
 
 client = TornadoClient("http://localhost:5000/")
 
+
 async def main():
-    response = await client.send([Request("ping"), Notification("ping"), Request("ping")])
+    response = await client.send(
+        [Request("ping"), Notification("ping"), Request("ping")]
+    )
     for data in response.data:
         if data.ok:
             print("{}: {}".format(data.id, data.result))
         else:
             logging.error("%d: %s", data.id, data.message)
+
 
 IOLoop.current().run_sync(main)
