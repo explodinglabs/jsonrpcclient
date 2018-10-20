@@ -1,5 +1,9 @@
 # jsonrpcclient Change Log
 
+## 3.2.2 (20 Oct, 2018)
+
+- Fix basic_logging option which was adding too many log handlers.
+
 ## 3.2.1 (6 Oct, 2018)
 
 - Pass response_expected to send_message. Lets clients know if a response is
