@@ -60,15 +60,17 @@ class Client(metaclass=ABCMeta):
         response messages.
         """
         # Request handler
-        handler = logging.StreamHandler()
-        handler.setFormatter(logging.Formatter(fmt=self.DEFAULT_REQUEST_LOG_FORMAT))
-        request_log.addHandler(handler)
-        request_log.setLevel(logging.INFO)
+        if len(request_log.handlers) == 0:
+            request_handler = logging.StreamHandler()
+            request_handler.setFormatter(logging.Formatter(fmt=self.DEFAULT_REQUEST_LOG_FORMAT))
+            request_log.addHandler(request_handler)
+            request_log.setLevel(logging.INFO)
         # Response handler
-        handler = logging.StreamHandler()
-        handler.setFormatter(logging.Formatter(fmt=self.DEFAULT_RESPONSE_LOG_FORMAT))
-        response_log.addHandler(handler)
-        response_log.setLevel(logging.INFO)
+        if len(response_log.handlers) == 0:
+            response_handler = logging.StreamHandler()
+            response_handler.setFormatter(logging.Formatter(fmt=self.DEFAULT_RESPONSE_LOG_FORMAT))
+            response_log.addHandler(response_handler)
+            response_log.setLevel(logging.INFO)
 
     @apply_self
     def log_request(

@@ -98,20 +98,23 @@ class TestLogResponse:
         )
 
 
-def test_instantiate_with_basic_logging():
-    DummyClient(basic_logging=True)
-    assert len(request_log.handlers) == 1
-    assert len(response_log.handlers) == 1
-    request_log.handlers.pop()
-    response_log.handlers.pop()
-
-
 def test_basic_logging():
-    DummyClient().basic_logging()
+    c = DummyClient(basic_logging=True)
     assert len(request_log.handlers) == 1
     assert len(response_log.handlers) == 1
-    request_log.handlers.pop()
-    response_log.handlers.pop()
+
+
+def test_basic_logging_call():
+    c = DummyClient().basic_logging()
+    assert len(request_log.handlers) == 1
+    assert len(response_log.handlers) == 1
+
+
+def test_basic_logging_twice():
+    c = DummyClient(basic_logging=True)
+    c.basic_logging()
+    assert len(request_log.handlers) == 1
+    assert len(response_log.handlers) == 1
 
 
 @patch("jsonrpcclient.client.request_log")
