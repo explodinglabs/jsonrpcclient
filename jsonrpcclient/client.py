@@ -62,13 +62,17 @@ class Client(metaclass=ABCMeta):
         # Request handler
         if len(request_log.handlers) == 0:
             request_handler = logging.StreamHandler()
-            request_handler.setFormatter(logging.Formatter(fmt=self.DEFAULT_REQUEST_LOG_FORMAT))
+            request_handler.setFormatter(
+                logging.Formatter(fmt=self.DEFAULT_REQUEST_LOG_FORMAT)
+            )
             request_log.addHandler(request_handler)
             request_log.setLevel(logging.INFO)
         # Response handler
         if len(response_log.handlers) == 0:
             response_handler = logging.StreamHandler()
-            response_handler.setFormatter(logging.Formatter(fmt=self.DEFAULT_RESPONSE_LOG_FORMAT))
+            response_handler.setFormatter(
+                logging.Formatter(fmt=self.DEFAULT_RESPONSE_LOG_FORMAT)
+            )
             response_log.addHandler(response_handler)
             response_log.setLevel(logging.INFO)
 

@@ -2,9 +2,8 @@
 from json import loads as deserialize
 from typing import Any, Dict, List, Union
 
-from pkg_resources import resource_string
-
 import jsonschema  # type: ignore
+from pkg_resources import resource_string
 
 from .response import (
     ErrorResponse,
