@@ -18,7 +18,7 @@ For Python versions older than 3.5, install a 2.x version, and jump over to
 [the 2.x docs](https://jsonrpcclient.readthedocs.io/en/2.6.0/).
 
 ```sh
-$ pip install "jsonrpcclient[requests]>2,<3"
+$ pip install "jsonrpcclient[requests]>=2,<3"
 ```
 
 ## Usage
