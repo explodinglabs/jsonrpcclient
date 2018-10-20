@@ -1,10 +1,10 @@
+# jsonrpcclient
+
 ![PyPI](https://img.shields.io/pypi/v/jsonrpcclient.svg)
 ![Downloads](https://pepy.tech/badge/jsonrpcclient)
 ![Coverage Status](https://coveralls.io/repos/github/bcb/jsonrpcclient/badge.svg?branch=master)
 
-# jsonrpcclient
-
-*Version 3 is out. See the
+*Version 3 is out. It's Python 3.5+ only. See the
 [changelog](https://github.com/bcb/jsonrpcclient/blob/master/CHANGELOG.md),
 [example usage](https://jsonrpcclient.readthedocs.io/en/latest/examples.html),
 and read the [updated documentation](https://jsonrpcclient.readthedocs.io/).*
