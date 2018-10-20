@@ -7,12 +7,12 @@ $ pip install "jsonrpcclient[requests]"
 ```
 
 ```python
-import jsonrpcclient
-response = jsonrpcclient.request("http://localhost:5000", "ping")
+>>> from jsonrpcclient import request
+>>> response = request("http://fruits.com", "get", color="yellow")
 >>> response.text
-'{"jsonrpc": "2.0", "result": "pong", "id": 1}'
+'{"jsonrpc": "2.0", "result": ["banana", "lemon", "mango"], "id": 1}'
 >>> response.data.result
-'pong'
+['banana', 'lemon', 'mango']
 ```
 
 This example uses the *requests* library for sending, but more options are

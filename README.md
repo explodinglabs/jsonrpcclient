@@ -16,12 +16,12 @@ pip install "jsonrpcclient[requests]"
 ```
 
 ```python
-import jsonrpcclient
-response = jsonrpcclient.request("http://localhost:5000", "ping")
->>> response.text
-'{"jsonrpc": "2.0", "result": "pong", "id": 1}'
+>>> from jsonrpcclient import request
+>>> response = request("http://fruits.com", "get", color="yellow")
+>>> responst.text
+'{"jsonrpc": "2.0", "result": ["banana", "lemon", "mango"], "id": 1}'
 >>> response.data.result
-'pong'
+['banana', 'lemon', 'mango']
 ```
 
 Full documentation is at [jsonrpcclient.readthedocs.io](https://jsonrpcclient.readthedocs.io/).
