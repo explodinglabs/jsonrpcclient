@@ -18,7 +18,7 @@ pip install "jsonrpcclient[requests]"
 ```python
 >>> from jsonrpcclient import request
 >>> response = request("http://fruits.com", "get", color="yellow")
->>> responst.text
+>>> response.text
 '{"jsonrpc": "2.0", "result": ["banana", "lemon", "mango"], "id": 1}'
 >>> response.data.result
 ['banana', 'lemon', 'mango']
