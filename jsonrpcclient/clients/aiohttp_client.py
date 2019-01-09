@@ -25,12 +25,14 @@ class AiohttpClient(AsyncClient):
         endpoint: str,
         *args: Any,
         ssl: Optional[SSLContext] = None,
+        timeout: int = 10,
         **kwargs: Any
     ) -> None:
         super().__init__(*args, **kwargs)
         self.endpoint = endpoint
         self.session = session
         self.ssl = ssl
+        self.timeout = timeout
 
     def log_response(
         self, response: Response, trim_log_values: bool = False, **kwargs: Any
@@ -61,7 +63,7 @@ class AiohttpClient(AsyncClient):
         Returns:
             A Response object.
         """
-        with async_timeout.timeout(10):
+        with async_timeout.timeout(self.timeout):
             async with self.session.post(
                 self.endpoint, data=request, ssl=self.ssl
             ) as response:
