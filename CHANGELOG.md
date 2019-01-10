@@ -1,5 +1,9 @@
 # jsonrpcclient Change Log
 
+## 3.3.0 (10 Jan, 2019)
+
+- Add timeout parameter in AiohttpClient
+
 ## 3.2.2 (20 Oct, 2018)
 
 - Fix basic_logging option which was adding too many log handlers.
