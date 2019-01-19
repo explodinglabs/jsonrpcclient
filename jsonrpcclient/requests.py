@@ -10,7 +10,7 @@ To create a request:
 """
 import json
 from collections import OrderedDict
-from typing import Any, Callable, Dict, Iterator, List, Optional
+from typing import Any, Callable, Dict, Iterator, Optional
 
 from . import id_generators
 
@@ -92,9 +92,9 @@ class Notification(dict, metaclass=_RequestClassType):  # type: ignore
         # Add the params to self.
         if args and kwargs:
             # The 'params' can be *EITHER* "by-position" (a list) or "by-name" (a dict).
-            # Therefore, in this case it violates the JSON-RPC 2.0 specification.  However,
-            # it provides the same behavior as the previous version of jsonrpcclient to
-            # keep compatibility.
+            # Therefore, in this case it violates the JSON-RPC 2.0 specification.
+            # However, it provides the same behavior as the previous version of
+            # jsonrpcclient to keep compatibility.
             # TODO: consider to raise a warning.
             params_list = list(args)
             params_list.append(kwargs)
