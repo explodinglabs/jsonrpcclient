@@ -32,6 +32,16 @@ class TestNotification:
             "method": "sqrt",
             "params": [1],
         }
+        assert Notification("sqrt", [1, 2, 3]) == {
+            "jsonrpc": "2.0",
+            "method": "sqrt",
+            "params": [[1, 2, 3]],
+        }
+        assert Notification("sqrt", {"name": "Foo"}) == {
+            "jsonrpc": "2.0",
+            "method": "sqrt",
+            "params": [{"name": "Foo"}],
+        }
 
     def test_keyword(self):
         assert Notification("find", name="Foo") == {
@@ -68,6 +78,18 @@ class TestRequest:
             "method": "sqrt",
             "params": [1],
             "id": 1,
+        }
+        assert Request("sqrt", [1, 2, 3]) == {
+            "jsonrpc": "2.0",
+            "method": "sqrt",
+            "params": [[1, 2, 3]],
+            "id": 2,
+        }
+        assert Request("sqrt", {"name": "Foo"}) == {
+            "jsonrpc": "2.0",
+            "method": "sqrt",
+            "params": [{"name": "Foo"}],
+            "id": 3,
         }
 
     def test_keyword(self):

@@ -89,22 +89,20 @@ class Notification(dict, metaclass=_RequestClassType):  # type: ignore
 
     def __init__(self, method: str, *args: Any, **kwargs: Any) -> None:
         super().__init__(jsonrpc="2.0", method=method)
-        # Build the 'params' part. Merge the positional and keyword arguments into one
-        # list.
-        params_list = []  # type: List
-        if args:
-            params_list.extend(args)
-        if kwargs:
-            params_list.append(kwargs)
         # Add the params to self.
-        if params_list:
-            # The 'params' can be either "by-position" (a list) or "by-name" (a dict).
-            # If there's only one list or dict in the params list, take it out of the
-            # enclosing list, ie. [] instead of [[]], {} instead of [{}].
-            if len(params_list) == 1 and (isinstance(params_list[0], (dict, list))):
-                self.update(params=params_list[0])
-            else:
-                self.update(params=params_list)
+        if args and kwargs:
+            # The 'params' can be *EITHER* "by-position" (a list) or "by-name" (a dict).
+            # Therefore, in this case it violates the JSON-RPC 2.0 specification.  However,
+            # it provides the same behavior as the previous version of jsonrpcclient to
+            # keep compatibility.
+            # TODO: consider to raise a warning.
+            params_list = list(args)
+            params_list.append(kwargs)
+            self.update(params=params_list)
+        elif args:
+            self.update(params=list(args))
+        elif kwargs:
+            self.update(params=kwargs)
 
     def __str__(self) -> str:
         """Wrapper around request, returning a string instead of a dict"""
