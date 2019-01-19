@@ -1,5 +1,9 @@
 # jsonrpcclient Change Log
 
+## 3.3.1 (19 Jan, 2019)
+
+- Fix sending lists or dictionaries as positional arguments. (#118)
+
 ## 3.3.0 (10 Jan, 2019)
 
 - Add timeout parameter in AiohttpClient
