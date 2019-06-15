@@ -1,5 +1,10 @@
 # jsonrpcclient Change Log
 
+## 3.3.2 (15 Jun, 2019)
+
+- Update jsonschema dependency to allow 3.x.
+- Support Python 3.8
+
 ## 3.3.1 (19 Jan, 2019)
 
 - Fix sending lists or dictionaries as positional arguments. (#118)
