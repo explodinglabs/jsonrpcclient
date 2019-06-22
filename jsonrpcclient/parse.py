@@ -2,7 +2,7 @@
 from json import loads as deserialize
 from typing import Any, Dict, List, Union
 
-import jsonschema  # type: ignore
+from jsonschema.validators import validator_for  # type: ignore
 from pkg_resources import resource_string
 
 from .response import (
@@ -13,6 +13,9 @@ from .response import (
 )
 
 schema = deserialize(resource_string(__name__, "response-schema.json").decode())
+klass = validator_for(schema)
+klass.check_schema(schema)
+validator = klass(schema)
 
 
 def get_response(response: Dict[str, Any]) -> JSONRPCResponse:
@@ -66,7 +69,7 @@ def parse(
     # Validate the response against the Response schema (raises
     # jsonschema.ValidationError if invalid)
     if validate_against_schema:
-        jsonschema.validate(deserialized, schema)
+        validator.validate(deserialized)
 
     # Batch response
     if isinstance(deserialized, list):
