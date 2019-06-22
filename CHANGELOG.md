@@ -1,5 +1,9 @@
 # jsonrpcclient Change Log
 
+## 3.3.3 (22 Jun, 2019)
+
+- Use faster method of jsonschema validation.
+
 ## 3.3.2 (15 Jun, 2019)
 
 - Update jsonschema dependency to allow 3.x.
