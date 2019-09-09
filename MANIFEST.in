@@ -1,1 +1,1 @@
-include README.md CHANGELOG.md jsonrpcclient/response-schema.json
+include README.md CHANGELOG.md jsonrpcclient/response-schema.json LICENSE
