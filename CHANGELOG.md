@@ -1,5 +1,10 @@
 # jsonrpcclient Change Log
 
+## 3.3.4 (10 Sep, 2019)
+
+- Package with license.
+- Support Python 3.8.
+
 ## 3.3.3 (22 Jun, 2019)
 
 - Use faster method of jsonschema validation.
