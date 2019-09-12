@@ -1,4 +1,4 @@
-# Jsonrpcclient
+# jsonrpcclient
 
 Send [JSON-RPC](http://www.jsonrpc.org/) requests in Python.
 
