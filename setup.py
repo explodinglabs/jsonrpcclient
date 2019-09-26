@@ -18,7 +18,6 @@ setup(
         "Programming Language :: Python :: 3.8",
     ],
     description="Send JSON-RPC requests",
-    entry_points={"console_scripts": ["jsonrpc = jsonrpcclient.__main__:main"]},
     extras_require={
         "aiohttp": ["aiohttp>=3"],
         "requests": ["requests"],
@@ -29,7 +28,7 @@ setup(
         "zmq": ["pyzmq"],
     },
     include_package_data=True,
-    install_requires=["apply_defaults<1", "click<7", "jsonschema<4"],
+    install_requires=["apply_defaults<1", "jsonschema<4"],
     license="MIT",
     long_description=README,
     long_description_content_type="text/markdown",
