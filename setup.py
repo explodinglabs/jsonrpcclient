@@ -34,7 +34,7 @@ setup(
     long_description=README,
     long_description_content_type="text/markdown",
     name="jsonrpcclient",
-    package_data={"jsonrpcclient": ["response-schema.json"]},
+    package_data={"jsonrpcclient": ["response-schema.json", "py.typed"]},
     packages=["jsonrpcclient", "jsonrpcclient.clients"],
     url="https://github.com/bcb/jsonrpcclient",
     version="3.3.4",
