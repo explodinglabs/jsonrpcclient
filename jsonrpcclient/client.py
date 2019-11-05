@@ -175,6 +175,16 @@ class Client(metaclass=ABCMeta):
         # If received a single error response, raise
         if isinstance(response.data, ErrorResponse):
             raise ReceivedErrorResponseError(response.data)
+
+        # Applying same order as in request
+        if isinstance(response.data, list):
+            response.data = [
+                response_item
+                for request_item in request_deserialized
+                for response_item in response.data
+                if response_item.id == request_item['id']
+            ]
+        
         return response
 
     @apply_self
