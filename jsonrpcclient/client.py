@@ -135,6 +135,7 @@ class Client(metaclass=ABCMeta):
         request: Union[str, Dict, List],
         trim_log_values: bool = False,
         validate_against_schema: bool = True,
+        sort_response: bool = False,
         **kwargs: Any
     ) -> Response:
         """
@@ -150,6 +151,7 @@ class Client(metaclass=ABCMeta):
                 Request/Notification object.
             trim_log_values: Abbreviate the log entries of requests and responses.
             validate_against_schema: Validate response against the JSON-RPC schema.
+            sort_response: Sort batch response.
             kwargs: Clients can use this to configure an single request. For example,
                 HTTPClient passes this through to `requests.Session.send()`.
             in the case of a Notification.
@@ -177,14 +179,14 @@ class Client(metaclass=ABCMeta):
             raise ReceivedErrorResponseError(response.data)
 
         # Applying same order as in request
-        if isinstance(response.data, list):
+        if sort_response and isinstance(response.data, list):
             response.data = [
                 response_item
                 for request_item in request_deserialized
                 for response_item in response.data
                 if response_item.id == request_item['id']
             ]
-        
+
         return response
 
     @apply_self
