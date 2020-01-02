@@ -34,7 +34,10 @@ setup(
     long_description=README,
     long_description_content_type="text/markdown",
     name="jsonrpcclient",
+    # Be PEP 561 compliant
+    # https://mypy.readthedocs.io/en/stable/installed_packages.html#making-pep-561-compatible-packages
     package_data={"jsonrpcclient": ["response-schema.json", "py.typed"]},
+    zip_safe=False,
     packages=["jsonrpcclient", "jsonrpcclient.clients"],
     url="https://github.com/bcb/jsonrpcclient",
     version="3.3.4",
