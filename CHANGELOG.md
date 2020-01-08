@@ -1,5 +1,9 @@
 # jsonrpcclient Change Log
 
+## 3.3.5 (8 Jan, 2020)
+
+- Fix file permissions.
+
 ## 3.3.4 (10 Sep, 2019)
 
 - Package with license.
