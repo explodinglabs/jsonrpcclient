@@ -65,7 +65,7 @@ class AiohttpClient(AsyncClient):
         """
         with async_timeout.timeout(self.timeout):
             async with self.session.post(
-                self.endpoint, data=request, ssl=self.ssl
+                self.endpoint, data=request, ssl=self.ssl, **kwargs
             ) as response:
                 response_text = await response.text()
                 return Response(response_text, raw=response)
