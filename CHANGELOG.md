@@ -2,6 +2,12 @@
 
 ## 3.3.5 (8 Jan, 2020)
 
+- Add py.typed for PEP-561 compliance (#143)
+- Pass `**kwargs` to AiohttpClient from client.send() call (#145)
+- Change click dependency to allow version 7 (#147)
+
+## 3.3.5 (8 Jan, 2020)
+
 - Fix file permissions.
 
 ## 3.3.4 (10 Sep, 2019)
