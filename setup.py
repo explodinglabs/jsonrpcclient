@@ -40,5 +40,5 @@ setup(
     zip_safe=False,
     packages=["jsonrpcclient", "jsonrpcclient.clients"],
     url="https://github.com/bcb/jsonrpcclient",
-    version="3.3.5",
+    version="3.3.6",
 )
