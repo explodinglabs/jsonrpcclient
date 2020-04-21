@@ -1,6 +1,6 @@
 # jsonrpcclient Change Log
 
-## 3.3.5 (8 Jan, 2020)
+## 3.3.6 (21 Apr, 2020)
 
 - Add py.typed for PEP-561 compliance (#143)
 - Pass `**kwargs` to AiohttpClient from client.send() call (#145)
