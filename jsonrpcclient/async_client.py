@@ -1,3 +1,4 @@
+# type: ignore
 """
 Async client.
 """
