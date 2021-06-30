@@ -3,7 +3,7 @@ from json import loads as deserialize
 from typing import Any, Dict, List, Union
 
 from jsonschema.validators import validator_for  # type: ignore
-from pkg_resources import resource_string
+from pkg_resources import resource_string  # type: ignore
 
 from .response import (
     ErrorResponse,

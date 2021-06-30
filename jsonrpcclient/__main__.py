@@ -1,4 +1,5 @@
 # /usr/bin/env python
+# type: ignore
 # pylint: disable=no-value-for-parameter
 """
 This is an attempt at using this library to create a "jsonrpc" command-line utility.
