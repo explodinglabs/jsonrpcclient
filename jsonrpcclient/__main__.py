@@ -21,7 +21,13 @@ from jsonrpcclient.clients.http_client import HTTPClient
 from jsonrpcclient.exceptions import JsonRpcClientError
 from jsonrpcclient.requests import Notification, Request
 
-version = pkg_resources.require("jsonrpcclient")[0].version
+try:
+    version = pkg_resources.require("jsonrpcclient")[0].version
+except pkg_resources.DistributionNotFound:
+    # pkg_resources (and importlib) can struggle to find module resource
+    # information when the package isn't installed in typical locations (such as
+    # testing during a package build).
+    version = 'unknown'
 
 
 @click.command(
