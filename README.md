@@ -19,6 +19,6 @@ pip install "jsonrpcclient[requests]"
 ['banana', 'lemon', 'mango']
 ```
 
-Full documentation is at [jsonrpcclient.readthedocs.io](https://jsonrpcclient.readthedocs.io/).
+Full documentation is at [jsonrpcclient.com](https://jsonrpcclient.com/).
 
 See also: [jsonrpcserver](https://github.com/bcb/jsonrpcserver)
