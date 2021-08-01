@@ -1,6 +1,6 @@
 # jsonrpcclient
 
-> If you're interested, read: [The future of this library](https://github.com/bcb/jsonrpcclient/discussions/171)
+> If you're interested, read: [The future of this library](https://github.com/bcb/jsonrpcclient/discussions/171).
 
 Send [JSON-RPC](http://www.jsonrpc.org/) requests in Python.
 
