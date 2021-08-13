@@ -1,4 +1,4 @@
-> If you're interested, read: [The future of this library](https://github.com/bcb/jsonrpcclient/discussions/171).
+> If you're interested, read: [The future of this library](https://github.com/explodinglabs/jsonrpcclient/discussions/171).
 
 # jsonrpcclient
 
