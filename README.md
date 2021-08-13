@@ -4,7 +4,7 @@ Send [JSON-RPC](http://www.jsonrpc.org/) requests in Python.
 
 ![PyPI](https://img.shields.io/pypi/v/jsonrpcclient.svg)
 ![Downloads](https://pepy.tech/badge/jsonrpcclient)
-![Coverage Status](https://coveralls.io/repos/github/bcb/jsonrpcclient/badge.svg?branch=master)
+![Coverage Status](https://coveralls.io/repos/github/explodinglabs/jsonrpcclient/badge.svg?branch=master)
 
 ```sh
 pip install "jsonrpcclient[requests]"
@@ -21,4 +21,4 @@ pip install "jsonrpcclient[requests]"
 
 Full documentation is at [jsonrpcclient.readthedocs.io](https://jsonrpcclient.readthedocs.io/).
 
-See also: [jsonrpcserver](https://github.com/bcb/jsonrpcserver)
+See also: [jsonrpcserver](https://github.com/explodinglabs/jsonrpcserver)

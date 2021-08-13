@@ -30,7 +30,7 @@ ZeroMQ
 
 .. literalinclude:: ../examples/zeromq/request.py
 
-See `blog post <https://bcb.github.io/jsonrpc/zeromq>`__.
+See `blog post <https://blog.explodinglabs.com/jsonrpc/zeromq>`__.
 
 Asynchronous
 ============
@@ -46,7 +46,7 @@ aiohttp
 
 .. literalinclude:: ../examples/aiohttp/request.py
 
-See `blog post <https://bcb.github.io/jsonrpc/aiohttp>`__.
+See `blog post <https://blog.explodinglabs.com/jsonrpc/aiohttp>`__.
 
 Tornado
 -------
@@ -66,4 +66,4 @@ Websockets
 
 .. literalinclude:: ../examples/websockets/request.py
 
-See `blog post <https://bcb.github.io/jsonrpc/websockets>`__.
+See `blog post <https://blog.explodinglabs.com/jsonrpc/websockets>`__.

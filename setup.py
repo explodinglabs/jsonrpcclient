@@ -1,5 +1,5 @@
 """setup.py"""
-from setuptools import setup
+from setuptools import setup  # type: ignore
 
 with open("README.md") as readme_file:
     README = readme_file.read()
@@ -39,6 +39,6 @@ setup(
     package_data={"jsonrpcclient": ["response-schema.json", "py.typed"]},
     zip_safe=False,
     packages=["jsonrpcclient", "jsonrpcclient.clients"],
-    url="https://github.com/bcb/jsonrpcclient",
+    url="https://github.com/explodinglabs/jsonrpcclient",
     version="3.3.6",
 )
