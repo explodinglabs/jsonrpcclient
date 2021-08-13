@@ -1,3 +1,5 @@
+> If you're interested, read: [The future of this library](https://github.com/bcb/jsonrpcclient/discussions/171).
+
 # jsonrpcclient
 
 Send [JSON-RPC](http://www.jsonrpc.org/) requests in Python.
@@ -19,6 +21,6 @@ pip install "jsonrpcclient[requests]"
 ['banana', 'lemon', 'mango']
 ```
 
-Full documentation is at [jsonrpcclient.readthedocs.io](https://jsonrpcclient.readthedocs.io/).
+Full documentation is at [jsonrpcclient.com](https://www.jsonrpcclient.com/).
 
 See also: [jsonrpcserver](https://github.com/explodinglabs/jsonrpcserver)
