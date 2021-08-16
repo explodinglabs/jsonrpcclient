@@ -1,19 +1,5 @@
-import json
-
 from jsonrpcclient import id_generators
-from jsonrpcclient.requests import Notification, Request, sort_request
-
-
-class TestSortRequest:
-    def test(self):
-        assert (
-            json.dumps(
-                sort_request(
-                    {"id": 2, "params": [2, 3], "method": "add", "jsonrpc": "2.0"}
-                )
-            )
-            == '{"jsonrpc": "2.0", "method": "add", "params": [2, 3], "id": 2}'
-        )
+from jsonrpcclient.requests import Notification, Request
 
 
 class TestNotification:

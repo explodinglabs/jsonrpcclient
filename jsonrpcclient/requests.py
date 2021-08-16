@@ -1,35 +1,7 @@
-"""
-Classes to help create JSON-RPC Request objects.
-
-Named plural to distinguish it from the request convenience function.
-
-To create a request:
-
-    >>> Request("cat", name="Yoko")
-    {'jsonrpc': '2.0', 'method': 'cat', 'params': {'name': 'Yoko'}, 'id': 1}
-"""
 import json
-from collections import OrderedDict
-from typing import Any, Callable, Dict, Iterator, Optional
+from typing import Any, Callable, Iterator, Optional
 
 from . import id_generators
-
-
-def sort_request(request: Dict[str, Any]) -> OrderedDict:
-    """
-    Sort a JSON-RPC request dict.
-
-    This has no effect other than making the request nicer to read.
-
-        >>> json.dumps(sort_request(
-        ...     {'id': 2, 'params': [2, 3], 'method': 'add', 'jsonrpc': '2.0'}))
-        '{"jsonrpc": "2.0", "method": "add", "params": [2, 3], "id": 2}'
-
-    Args:
-        request: JSON-RPC request in dict format.
-    """
-    sort_order = ["jsonrpc", "method", "params", "id"]
-    return OrderedDict(sorted(request.items(), key=lambda k: sort_order.index(k[0])))
 
 
 class _RequestClassType(type):
@@ -106,7 +78,7 @@ class Notification(dict, metaclass=_RequestClassType):  # type: ignore
 
     def __str__(self) -> str:
         """Wrapper around request, returning a string instead of a dict"""
-        return json.dumps(sort_request(self))
+        return json.dumps(self)
 
 
 class Request(Notification):
