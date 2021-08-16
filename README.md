@@ -2,7 +2,9 @@
 > currently in development (read: [The future of this
 > library](https://github.com/explodinglabs/jsonrpcclient/discussions/171)).
 > For the latest stable release, see the [3.x
-> branch](https://github.com/explodinglabs/jsonrpcclient/tree/3.x).
+> branch](https://github.com/explodinglabs/jsonrpcclient/tree/3.x). Also,
+> please pin your dependency to "jsonrpcclient<4" until you're ready to upgrade
+> to v4.
 
 # jsonrpcclient
 
