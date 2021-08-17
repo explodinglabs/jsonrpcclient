@@ -1,4 +1,4 @@
-> :warning: August 2021: This master branch is for the upcoming version 4,
+> :warning: This master branch is for the upcoming version 4,
 > currently in development (read: [The future of this
 > library](https://github.com/explodinglabs/jsonrpcclient/discussions/171)).
 > For the latest stable release, see the [3.x
