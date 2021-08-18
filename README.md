@@ -8,7 +8,7 @@
 
 # jsonrpcclient
 
-Send [JSON-RPC](http://www.jsonrpc.org/) requests in Python.
+Generate JSON-RPC requests and parse responses.
 
 ![PyPI](https://img.shields.io/pypi/v/jsonrpcclient.svg)
 ![Downloads](https://pepy.tech/badge/jsonrpcclient/week)
