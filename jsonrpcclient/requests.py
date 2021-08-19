@@ -24,9 +24,6 @@ def notification_dict(method: str, *args: Any, **kwargs: Any) -> Dict[str, Any]:
     return notification_dict_pure(method, *args, **kwargs)
 
 
-notification = compose(json.dumps, notification_dict)
-
-
 def get_id(id: Any, id_: Any, id_generator: Iterator[Any]) -> Any:
     if id is not NOID:
         return id
@@ -71,8 +68,15 @@ def request_impure(
     )
 
 
-request_natural_dict = partial(request_impure, id_generators.decimal())
-request_natural = compose(json.dumps, request_natural_dict)
+notification = compose(json.dumps, notification_dict)
 
-request_dict = request_natural_dict
-request = request_natural
+request_dict_natural = partial(request_impure, id_generators.decimal())
+request_dict_hexadecimal = partial(request_impure, id_generators.hexadecimal())
+request_dict_random = partial(request_impure, id_generators.random())
+request_dict_uuid = partial(request_impure, id_generators.uuid())
+
+request_dict = request_dict_natural
+request = compose(json.dumps, request_dict_natural)
+request_hex = compose(json.dumps, request_dict_hexadecimal)
+request_random = compose(json.dumps, request_dict_random)
+request_uuid = compose(json.dumps, request_dict_uuid)

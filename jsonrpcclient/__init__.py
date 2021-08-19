@@ -1,6 +1,12 @@
 from jsonrpcclient.requests import (
-    request,
-    request_dict,
     notification,
     notification_dict,
+    request,
+    request_dict,
+    request_dict_hexadecimal,
+    request_dict_random,
+    request_dict_uuid,
+    request_hex,
+    request_random,
+    request_uuid,
 )
