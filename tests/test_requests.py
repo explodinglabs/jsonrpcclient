@@ -6,36 +6,28 @@ def test_notification_dict():
 
 
 def test_notification_dict_positional():
-    assert notification_dict("sqrt", 1) == {
+    assert notification_dict("sqrt", params=[1]) == {
         "jsonrpc": "2.0",
         "method": "sqrt",
         "params": [1],
     }
-    assert notification_dict("sqrt", [1, 2, 3]) == {
+    assert notification_dict("sqrt", params=[1, 2, 3]) == {
         "jsonrpc": "2.0",
         "method": "sqrt",
-        "params": [[1, 2, 3]],
+        "params": [1, 2, 3],
     }
-    assert notification_dict("sqrt", {"name": "Foo"}) == {
+    assert notification_dict("sqrt", params={"name": "Foo"}) == {
         "jsonrpc": "2.0",
         "method": "sqrt",
-        "params": [{"name": "Foo"}],
-    }
-
-
-def test_notification_keyword():
-    assert notification_dict("find", name="Foo") == {
-        "jsonrpc": "2.0",
-        "method": "find",
         "params": {"name": "Foo"},
     }
 
 
-def test_notification_both():
-    assert notification_dict("find", "Foo", age=42) == {
+def test_notification_keyword():
+    assert notification_dict("find", params={"name": "Foo"}) == {
         "jsonrpc": "2.0",
         "method": "find",
-        "params": ["Foo"],  # Ignores kwargs
+        "params": {"name": "Foo"},
     }
 
 
@@ -48,28 +40,28 @@ def test_request_dict():
 
 
 def test_request_dict_positional():
-    assert request_dict("sqrt", 1, id=1) == {
+    assert request_dict("sqrt", params=[1], id=1) == {
         "jsonrpc": "2.0",
         "method": "sqrt",
         "params": [1],
         "id": 1,
     }
-    assert request_dict("sqrt", [1, 2, 3], id=2) == {
+    assert request_dict("sqrt", params=[1, 2, 3], id=2) == {
         "jsonrpc": "2.0",
         "method": "sqrt",
-        "params": [[1, 2, 3]],
+        "params": [1, 2, 3],
         "id": 2,
     }
-    assert request_dict("sqrt", {"name": "Foo"}, id=3) == {
+    assert request_dict("sqrt", params={"name": "Foo"}, id=3) == {
         "jsonrpc": "2.0",
         "method": "sqrt",
-        "params": [{"name": "Foo"}],
+        "params": {"name": "Foo"},
         "id": 3,
     }
 
 
 def test_request_dict_keyword():
-    assert request_dict("foo", name="bar", id=1) == {
+    assert request_dict("foo", {"name": "bar"}, id=1) == {
         "jsonrpc": "2.0",
         "method": "foo",
         "params": {"name": "bar"},

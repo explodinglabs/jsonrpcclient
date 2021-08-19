@@ -1,7 +1,6 @@
 import json
-import logging
 from functools import partial
-from typing import Any, Dict, Iterator
+from typing import Any, Dict, Iterator, List, Union
 
 from . import id_generators
 from .sentinels import NOID
@@ -12,63 +11,49 @@ def get_params(args: Any, kwargs: Any) -> Dict[str, Any]:
     return {"params": list(args) or kwargs} if (args or kwargs) else {}
 
 
-def notification_dict_pure(method: str, *args: Any, **kwargs: Any) -> Dict[str, Any]:
-    return {"jsonrpc": "2.0", "method": method, **get_params(args, kwargs)}
+def notification_dict_pure(
+    method: str, params: Union[Dict[str, Any], List[Any]]
+) -> Dict[str, Any]:
+    return {
+        "jsonrpc": "2.0",
+        "method": method,
+        **({"params": params} if params else {}),
+    }
 
 
-def notification_dict(method: str, *args: Any, **kwargs: Any) -> Dict[str, Any]:
-    if args and kwargs:
-        logging.warning(
-            "Use positional or named arguements, but not both. This is a limitation of JSON-RPC"
-        )
-    return notification_dict_pure(method, *args, **kwargs)
+def notification_dict(
+    method: str, params: Union[Dict[str, Any], List[Any], None] = None
+) -> Dict[str, Any]:
+    return notification_dict_pure(method, params if params else [])
 
 
-def get_id(id: Any, id_: Any, id_generator: Iterator[Any]) -> Any:
-    if id is not NOID:
-        return id
-    elif id_ is not NOID:
-        return id_
-    else:
-        return next(id_generator)
+notification = compose(json.dumps, notification_dict)
 
 
 def request_pure(
-    id: Any,
-    id_: Any,
     id_generator: Iterator[Any],
     method: str,
-    *args: Any,
-    **kwargs: Any,
+    params: Union[Dict[str, Any], List[Any]],
+    id: Any,
 ) -> Dict[str, Any]:
     return {
-        **{
-            "jsonrpc": "2.0",
-            "method": method,
-            **get_params(args, kwargs),
-        },
-        "id": get_id(id, id_, id_generator),
+        "jsonrpc": "2.0",
+        "method": method,
+        **({"params": params} if params else {}),
+        "id": id if id is not NOID else next(id_generator),
     }
 
 
 def request_impure(
     id_generator: Iterator[Any],
     method: str,
-    *args: Any,
+    params: Union[Dict[str, Any], List[Any], None] = None,
     id: Any = NOID,
-    id_: Any = NOID,
-    **kwargs: Any,
 ) -> Dict[str, Any]:
-    if args and kwargs:
-        logging.warning(
-            "Named arguments ignored. Use positional or named arguments, but not both. This is a limitation of JSON-RPC"
-        )
     return request_pure(
-        id, id_, id_generator or id_generators.decimal(), method, *args, **kwargs
+        id_generator or id_generators.decimal(), method, params or [], id
     )
 
-
-notification = compose(json.dumps, notification_dict)
 
 request_dict_natural = partial(request_impure, id_generators.decimal())
 request_dict_hexadecimal = partial(request_impure, id_generators.hexadecimal())
