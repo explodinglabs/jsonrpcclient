@@ -5,10 +5,17 @@ from typing import Any, Dict, Iterator
 
 from . import id_generators
 from .sentinels import NOID
+from .utils import compose
 
 
 def get_params(args: Any, kwargs: Any) -> Dict[str, Any]:
     return {"params": list(args) or kwargs} if (args or kwargs) else {}
+
+
+def notification_dict_pure(
+    method: str, *args: Any, params: Dict[str, Any], **kwargs: Any
+) -> Dict[str, Any]:
+    return {"jsonrpc": "2.0", "method": method, **get_params(args, kwargs)}
 
 
 def notification_dict(method: str, *args: Any, **kwargs: Any) -> Dict[str, Any]:
@@ -16,11 +23,10 @@ def notification_dict(method: str, *args: Any, **kwargs: Any) -> Dict[str, Any]:
         logging.warning(
             "Use positional or named arguements, but not both. This is a limitation of JSON-RPC"
         )
-    return {"jsonrpc": "2.0", "method": method, **get_params(args, kwargs)}
+    return notification_dict_pure(method, *args, **kwargs)
 
 
-def notification(*args: Any, **kwargs: Any) -> str:
-    return json.dumps(notification_dict(*args, **kwargs))
+notification = compose(json.dumps, notification_dict)
 
 
 def get_id(id: Any, id_: Any, id_generator: Iterator[Any]) -> Any:
@@ -32,7 +38,25 @@ def get_id(id: Any, id_: Any, id_generator: Iterator[Any]) -> Any:
         return next(id_generator)
 
 
-def request_gen(
+def request_pure(
+    id: Any,
+    id_: Any,
+    id_generator: Iterator[Any],
+    method: str,
+    *args: Any,
+    **kwargs: Any,
+) -> Dict[str, Any]:
+    return {
+        **{
+            "jsonrpc": "2.0",
+            "method": method,
+            **get_params(args, kwargs),
+        },
+        "id": get_id(id, id_, id_generator),
+    }
+
+
+def request_impure(
     id_generator: Iterator[Any],
     method: str,
     *args: Any,
@@ -42,22 +66,15 @@ def request_gen(
 ) -> Dict[str, Any]:
     if args and kwargs:
         logging.warning(
-            "Use positional or named arguements, but not both. This is a limitation of JSON-RPC"
+            "Named arguments ignored. Use positional or named arguments, but not both. This is a limitation of JSON-RPC"
         )
-    request = {
-        "jsonrpc": "2.0",
-        "method": method,
-        **get_params(args, kwargs),
-    }
-    return {**request, "id": get_id(id, id_, id_generator)}
+    return request_pure(
+        id, id_, id_generator or id_generators.decimal(), method, *args, **kwargs
+    )
 
 
-request_natural_dict = partial(request_gen, id_generators.decimal())
-
-
-def request_natural(*args: Any, **kwargs: Any) -> str:
-    return json.dumps(request_natural_dict(*args, **kwargs))
-
+request_natural_dict = partial(request_impure, id_generators.decimal())
+request_natural = compose(json.dumps, request_natural_dict)
 
 request_dict = request_natural_dict
 request = request_natural
