@@ -1,5 +1,5 @@
 > :warning: This master branch is for the upcoming version 4,
-> currently in development (read: [The future of this
+> currently [in development](https://github.com/explodinglabs/jsonrpcclient/discussions/176) (read: [The future of this
 > library](https://github.com/explodinglabs/jsonrpcclient/discussions/171)).
 > For the latest stable release, see the [3.x
 > branch](https://github.com/explodinglabs/jsonrpcclient/tree/3.x). Also,
