@@ -7,10 +7,6 @@ from .sentinels import NOID
 from .utils import compose
 
 
-def get_params(args: Any, kwargs: Any) -> Dict[str, Any]:
-    return {"params": list(args) or kwargs} if (args or kwargs) else {}
-
-
 def notification_dict_pure(
     method: str, params: Union[Dict[str, Any], List[Any]]
 ) -> Dict[str, Any]:
