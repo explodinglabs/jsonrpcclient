@@ -27,5 +27,5 @@ setup(
     zip_safe=False,
     packages=["jsonrpcclient"],
     url="https://github.com/explodinglabs/jsonrpcclient",
-    version="4.0.0-dev4",
+    version="4.0.0-a1",
 )
