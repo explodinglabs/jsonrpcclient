@@ -7,12 +7,16 @@ to another version.
 
 Generate JSON-RPC requests and parse responses.
 
+```sh
+pip install "jsonrpcclient<5"
+```
+
 ```{toctree}
 ---
-maxdepth: 3
+maxdepth: 2
 caption: Contents
 ---
-installation
 requests
 responses
+examples
 ```
