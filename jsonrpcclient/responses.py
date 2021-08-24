@@ -8,7 +8,7 @@ class Ok(NamedTuple):
     id: Any
 
     def __repr__(self) -> str:
-        return f"Ok({self.result}, {self.id})"
+        return f"Ok(result={self.result!r}, id={self.id!r})"
 
 
 class Error(NamedTuple):
@@ -18,7 +18,7 @@ class Error(NamedTuple):
     id: Any
 
     def __repr__(self) -> str:
-        return f"Error({self.code}, {self.message}, {self.data}, {self.id})"
+        return f"Error(code={self.code!r}, message={self.message!r}, data={self.data!r}, id={self.id!r})"
 
 
 Response = Union[Ok, Error]
