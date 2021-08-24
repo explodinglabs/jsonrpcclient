@@ -77,3 +77,11 @@ Use the `notification` function instead of `request`:
 >>> notification("ping")
 '{"jsonrpc": "2.0", "method": "ping"}'
 ```
+
+As with `request`, `notification_dict` will give you the unserialized notification.
+
+```python
+>>> from jsonrpcclient import notification_dict
+>>> notification_dict("ping")
+{"jsonrpc": "2.0", "method": "ping"}
+```
