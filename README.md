@@ -20,9 +20,11 @@ pip install --pre jsonrpcclient
 ```
 
 ```python
->>> from jsonrpcclient import request
->>> request("get")
-'{"jsonrpc": "2.0", "method": "get", "id": 1}'
+>>> from jsonrpcclient import parse, request
+>>> import requests
+>>> response = requests.post("http://localhost:5000/", json=request_dict("ping"))
+>>> parse(response.json())
+Ok(result='pong', id=1)
 ```
 
 Full documentation is at [jsonrpcclient.com](https://www.jsonrpcclient.com/en/latest/).
