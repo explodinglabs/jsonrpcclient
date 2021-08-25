@@ -1,9 +1,9 @@
-from jsonrpcclient import request_dict, parse, Ok
+from jsonrpcclient import request, parse, Ok
 import logging
 import requests
 
 response = requests.post(
-    "http://localhost:5000/", json=[request_dict("ping") for _ in range(5)]
+    "http://localhost:5000/", json=[request("ping") for _ in range(5)]
 )
 
 parsed = parse(response.json())

@@ -10,9 +10,9 @@ Ok(result='pong', id=1)
 Error(code=1, message='There was an error', data=None, id=1)
 ```
 
-If you have a string, apply `json.loads` to it before `parse`.
+If you have a string, use `parse_json`.
 ```python
->>> parse(json.loads('{"jsonrpc": "2.0", "result": "pong", "id": 1}'))
+>>> parse_json('{"jsonrpc": "2.0", "result": "pong", "id": 1}')
 Ok(result='pong', id=1)
 ```
 
@@ -28,7 +28,7 @@ else:
 
 In Python 3.10+, use pattern matching:
 ```python
-match parse(response.json()):
+match parse(response):
     case Ok(result, id):
         print(result)
     case Error(code, message, data, id):
