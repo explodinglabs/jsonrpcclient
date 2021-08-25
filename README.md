@@ -3,9 +3,7 @@
 > about the [changes in version
 > 4](https://composed.blog/jsonrpcclient-4-changes), or read the [full
 > documentation](https://www.jsonrpcclient.com/en/latest/).
->
-> Version 4 is for
-> Python 3.8+ only. For earlier versions, jump to the [3.x
+> Version 4 is for Python 3.8+ only. For earlier versions, jump to the [3.x
 > branch](https://github.com/explodinglabs/jsonrpcclient/tree/3.x) and read the
 > [full documentation for version 3](https://www.jsonrpcserver.com/en/3.5.6/).
 >
