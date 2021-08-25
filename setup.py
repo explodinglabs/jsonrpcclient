@@ -16,7 +16,7 @@ setup(
     ],
     description="Send JSON-RPC requests",
     include_package_data=True,
-    install_requires=["jsonschema<4"],
+    install_requires=[],
     license="MIT",
     long_description=README,
     long_description_content_type="text/markdown",
