@@ -1,8 +1,7 @@
 > :warning: This master branch is for the upcoming version 4, currently [in
 > beta](https://github.com/explodinglabs/jsonrpcclient/discussions/176) (read:
-> [The future of this
-> library](https://github.com/explodinglabs/jsonrpcclient/discussions/171)).
-> For the latest stable release, see the [3.x
+> [Changes in version 4](https://composed.blog/jsonrpcclient-4-changes) For the
+> latest stable release, see the [3.x
 > branch](https://github.com/explodinglabs/jsonrpcclient/tree/3.x). Also,
 > please pin your dependency to "jsonrpcclient<4" until you're ready to upgrade
 > to v4.
