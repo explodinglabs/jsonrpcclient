@@ -7,7 +7,11 @@
 > please pin your dependency to "jsonrpcclient<4" until you're ready to upgrade
 > to v4.
 
-# jsonrpcclient
+<img
+    alt="jsonrpcclient"
+    style="margin: 0 auto;"
+    src="https://github.com/explodinglabs/jsonrpcclient/blob/master/docs/logo.png?raw=true"
+/>
 
 Generate JSON-RPC requests and parse responses.
 
@@ -30,4 +34,4 @@ Ok(result='pong', id=1)
 
 Full documentation is at [jsonrpcclient.com](https://www.jsonrpcclient.com/en/latest/).
 
-See also: [jsonrpcserver](https://www.jsonrpcserver.com/)
+See also: [jsonrpcserver](https://github.com/jsonrpcserver)
