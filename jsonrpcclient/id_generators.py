@@ -1,9 +1,4 @@
-"""
-Generators which yield an id to include in a JSON-RPC request.
-
-By default the request `id` is a decimal number which increments with each request. See
-the `config` module.
-"""
+"""Generators which yield an id to include in a JSON-RPC request."""
 import itertools
 from random import choice
 from string import ascii_lowercase, digits
@@ -42,7 +37,10 @@ def random(length: int = 8, chars: str = digits + ascii_lowercase) -> Iterator[s
     A random string.
 
     Not unique, but has around 1 in a million chance of collision (with the default 8
-    character length). e.g. 'fubui5e6'
+    character length).
+
+    Example:
+        'fubui5e6'
 
     Args:
         length: Length of the random string.
@@ -56,7 +54,8 @@ def uuid() -> Iterator[str]:
     """
     Unique uuid ids.
 
-    For example, '9bfe2c93-717e-4a45-b91b-55422c5af4ff'
+    Example:
+        '9bfe2c93-717e-4a45-b91b-55422c5af4ff'
     """
     while True:
         yield str(uuid4())
