@@ -7,7 +7,7 @@ from .sentinels import NOID
 from .utils import compose
 
 
-def notification_dict_pure(
+def notification_pure(
     method: str, params: Union[Dict[str, Any], Tuple[Any, ...]]
 ) -> Dict[str, Any]:
     return {
@@ -17,13 +17,13 @@ def notification_dict_pure(
     }
 
 
-def notification_dict(
+def notification(
     method: str, params: Union[Dict[str, Any], Tuple[Any, ...], None] = None
 ) -> Dict[str, Any]:
-    return notification_dict_pure(method, params if params else ())
+    return notification_pure(method, params if params else ())
 
 
-notification = compose(json.dumps, notification_dict)
+notification_json = compose(json.dumps, notification)
 
 
 def request_pure(
@@ -51,13 +51,13 @@ def request_impure(
     )
 
 
-request_dict_natural = partial(request_impure, id_generators.decimal())
-request_dict_hex = partial(request_impure, id_generators.hexadecimal())
-request_dict_random = partial(request_impure, id_generators.random())
-request_dict_uuid = partial(request_impure, id_generators.uuid())
+request_natural = partial(request_impure, id_generators.decimal())
+request_hex = partial(request_impure, id_generators.hexadecimal())
+request_random = partial(request_impure, id_generators.random())
+request_uuid = partial(request_impure, id_generators.uuid())
 
-request_dict = request_dict_natural
-request = compose(json.dumps, request_dict_natural)
-request_hex = compose(json.dumps, request_dict_hex)
-request_random = compose(json.dumps, request_dict_random)
-request_uuid = compose(json.dumps, request_dict_uuid)
+request = request_natural
+request_json = compose(json.dumps, request_natural)
+request_json_hex = compose(json.dumps, request_hex)
+request_json_random = compose(json.dumps, request_random)
+request_json_uuid = compose(json.dumps, request_uuid)

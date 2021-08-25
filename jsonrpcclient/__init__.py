@@ -1,13 +1,13 @@
 from jsonrpcclient.requests import (
     notification,
-    notification_dict,
+    notification_json,
     request,
-    request_dict,
-    request_dict_hex,
-    request_dict_random,
-    request_dict_uuid,
     request_hex,
+    request_json,
+    request_json_hex,
+    request_json_random,
+    request_json_uuid,
     request_random,
     request_uuid,
 )
-from jsonrpcclient.responses import Ok, Error, parse
+from jsonrpcclient.responses import Ok, Error, parse, parse_json

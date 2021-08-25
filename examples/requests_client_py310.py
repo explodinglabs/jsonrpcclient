@@ -1,8 +1,8 @@
-from jsonrpcclient import request_dict, parse, Ok, Error
+from jsonrpcclient import request, parse, Ok, Error
 import logging
 import requests
 
-response = requests.post("http://localhost:5000/", json=request_dict("ping"))
+response = requests.post("http://localhost:5000/", json=request("ping"))
 
 # Python 3.10 syntax
 match parse(response.json()):

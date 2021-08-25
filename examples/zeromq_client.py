@@ -1,13 +1,12 @@
-from jsonrpcclient import request, parse, Ok
-import json
+from jsonrpcclient import request_json, parse_json, Ok
 import logging
 import zmq
 
 socket = zmq.Context().socket(zmq.REQ)
 socket.connect("tcp://localhost:5000")
-socket.send_string(request("ping"))
+socket.send_string(request_json("ping"))
 
-response = parse(json.loads(socket.recv().decode()))
+response = parse_json(socket.recv().decode())
 if isinstance(response, Ok):
     print(response.result)
 else:

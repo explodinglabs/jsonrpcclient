@@ -1,4 +1,7 @@
 from typing import Any, Dict, Iterable, List, Union, NamedTuple
+import json
+
+from .utils import compose
 
 Deserialized = Union[Dict[str, Any], List[Dict[str, Any]]]
 
@@ -41,3 +44,6 @@ def parse(response: Deserialized) -> Union[Response, Iterable[Response]]:
     return (
         map(to_result, response) if isinstance(response, list) else to_result(response)
     )
+
+
+parse_json = compose(parse, json.loads)

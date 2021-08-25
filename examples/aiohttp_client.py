@@ -8,7 +8,7 @@ from jsonrpcclient import Ok, request, parse
 async def main():
     async with ClientSession() as session:
         async with session.post(
-            "http://localhost:5000", data=request("ping")
+            "http://localhost:5000", json=request("ping")
         ) as response:
             parsed = parse(await response.json())
             if isinstance(parsed, Ok):
