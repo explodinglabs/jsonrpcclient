@@ -6,7 +6,6 @@
 > Version 4 is for Python 3.8+ only. For earlier versions, jump to the [3.x
 > branch](https://github.com/explodinglabs/jsonrpcclient/tree/3.x) and read the
 > [full documentation for version 3](https://www.jsonrpcserver.com/en/3.5.6/).
->
 > Also, please pin your dependency to "jsonrpcclient<4" until you're ready to
 > upgrade to v4.
 
