@@ -1,5 +1,4 @@
-> :warning: This master branch is for the upcoming version 4, currently [in
-> release
+> This master branch is for the upcoming version 4, [currently in release
 > candidate](https://github.com/explodinglabs/jsonrpcclient/discussions/176).
 > Read about the [changes in version
 > 4](https://composed.blog/jsonrpcclient-4-changes), or read the [full
