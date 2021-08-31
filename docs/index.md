@@ -3,9 +3,9 @@ You're reading the docs for the upcoming version 4. Use the sidebar to switch
 to another version.
 ```
 
-# Welcome to jsonrpcserver's documentation!
+# Welcome to jsonrpcclient's documentation!
 
-![jsonrpcserver](/logo.png)
+![jsonrpcclient](/logo.png)
 
 Generate JSON-RPC requests and parse responses.
 
