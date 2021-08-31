@@ -7,3 +7,4 @@
 dist
 .pytest_cache
 .mypy_cache
+design
