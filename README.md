@@ -36,4 +36,4 @@ Ok(result='pong', id=1)
 
 Full documentation is at [jsonrpcclient.com](https://www.jsonrpcclient.com/en/latest/).
 
-See also: [jsonrpcserver](https://github.com/jsonrpcserver)
+See also: [jsonrpcserver](https://github.com/explodinglabs/jsonrpcserver)
