@@ -1,5 +1,11 @@
 # jsonrpcclient Change Log
 
+## 4.0.0 (1 Sep, 2021)
+
+Complete rewrite and the usage has completely changed. Read about the changes
+at https://composed.blog/jsonrpcclient-4-changes or read the full documentation
+at https://www.jsonrpcclient.com/en/stable/
+
 ## 3.3.6 (21 Apr, 2020)
 
 - Add py.typed for PEP-561 compliance (#143)
