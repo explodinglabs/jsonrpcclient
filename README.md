@@ -15,7 +15,7 @@
     src="https://github.com/explodinglabs/jsonrpcclient/blob/master/docs/logo.png?raw=true"
 />
 
-Generate JSON-RPC requests and parse responses.
+Generate JSON-RPC requests and parse responses in Python.
 
 ![PyPI](https://img.shields.io/pypi/v/jsonrpcclient.svg)
 ![Downloads](https://pepy.tech/badge/jsonrpcclient/week)
