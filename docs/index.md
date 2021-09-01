@@ -5,7 +5,7 @@ to another version.
 
 # Welcome to jsonrpcclient's documentation!
 
-![jsonrpcclient](https://github.com/explodinglabs/jsonrpcclient/blob/master/docs/logo.png?raw=true)
+![jsonrpcclient](/logo.png)
 
 Generate JSON-RPC requests and parse responses.
 
