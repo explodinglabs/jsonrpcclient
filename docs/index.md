@@ -1,16 +1,16 @@
 ```{warning}
-You're reading the docs for the upcoming version 4. Use the sidebar to switch
-to another version.
+This is the documentation for version 4, released September 1, 2021. [Read
+about the changes in version 4.](https://composed.blog/jsonrpcclient-4-changes)
 ```
 
 # Welcome to jsonrpcclient's documentation!
 
 ![jsonrpcclient](/logo.png)
 
-Generate JSON-RPC requests and parse responses.
+Generate JSON-RPC requests and parse responses in Python.
 
 ```sh
-pip install "jsonrpcclient<5"
+pip install jsonrpcclient
 ```
 
 ```{toctree}
