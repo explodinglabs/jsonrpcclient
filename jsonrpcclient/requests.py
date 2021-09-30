@@ -59,8 +59,8 @@ request_natural = partial(request_impure, id_generators.decimal())
 request_hex = partial(request_impure, id_generators.hexadecimal())
 request_random = partial(request_impure, id_generators.random())
 request_uuid = partial(request_impure, id_generators.uuid())
-
 request = request_natural
+
 request_json = compose(json.dumps, request_natural)
 request_json_hex = compose(json.dumps, request_hex)
 request_json_random = compose(json.dumps, request_random)

@@ -21,4 +21,5 @@ caption: Contents
 requests
 responses
 examples
+faq
 ```
