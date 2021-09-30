@@ -1,5 +1,9 @@
 # jsonrpcclient Change Log
 
+## 4.0.1 (30 Sep, 2021)
+
+- Add FAQ page to documentation.
+
 ## 4.0.0 (1 Sep, 2021)
 
 Complete rewrite and the usage has completely changed. Read about the changes
