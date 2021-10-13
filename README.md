@@ -2,7 +2,7 @@
 > version 4](https://composed.blog/jsonrpcclient-4-changes), or read the [full
 > documentation](https://www.jsonrpcclient.com/).
 > For earlier versions jump to the [3.x
-> branch](https://github.com/explodinglabs/jsonrpcclient/tree/3.x) or read the
+> branch](https://github.com/explodinglabs/jsonrpcclient/tree/3.x) or the
 > [documentation for version 3](https://www.jsonrpcclient.com/en/3.3.6/).
 
 <img
