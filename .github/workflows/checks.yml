@@ -10,9 +10,8 @@ jobs:
     - uses: actions/setup-python@v2
       with:
         python-version: 3.x
-    - run: |
-        pip install --upgrade pip
-        pip install black==21.6b0 pylint==v3.0.0a3 mypy==v0.902 types-requests==2.25.0
+    - run: pip install --upgrade pip
+    - run: pip install black==21.6b0 pylint==v3.0.0a3 mypy==v0.902 types-requests==2.25.0
     - run: black --diff --check jsonrpcclient
     - run: pylint --disable=all --enable=unused-import jsonrpcclient
     - run: mypy --disallow-untyped-defs --disallow-untyped-calls --check-untyped-defs jsonrpcclient
