@@ -8,7 +8,7 @@
 <img
     alt="jsonrpcclient"
     style="margin: 0 auto;"
-    src="https://github.com/explodinglabs/jsonrpcclient/blob/master/docs/logo.png?raw=true"
+    src="https://github.com/explodinglabs/jsonrpcclient/blob/main/docs/logo.png?raw=true"
 />
 
 Generate JSON-RPC requests and parse responses in Python.
@@ -16,7 +16,7 @@ Generate JSON-RPC requests and parse responses in Python.
 ![PyPI](https://img.shields.io/pypi/v/jsonrpcclient.svg)
 ![Downloads](https://pepy.tech/badge/jsonrpcclient/week)
 ![Checks](https://github.com/explodinglabs/jsonrpcclient/actions/workflows/checks.yml/badge.svg)
-![Coverage Status](https://coveralls.io/repos/github/explodinglabs/jsonrpcclient/badge.svg?branch=master)
+![Coverage Status](https://coveralls.io/repos/github/explodinglabs/jsonrpcclient/badge.svg?branch=main)
 
 ```sh
 pip install jsonrpcclient
