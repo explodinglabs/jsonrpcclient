@@ -1,4 +1,4 @@
-from jsonrpcclient.requests import (
+from .requests import (
     notification,
     notification_json,
     request,
@@ -10,4 +10,4 @@ from jsonrpcclient.requests import (
     request_random,
     request_uuid,
 )
-from jsonrpcclient.responses import Ok, Error, parse, parse_json
+from .responses import Ok, Error, parse, parse_json
