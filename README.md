@@ -14,9 +14,9 @@
 Generate JSON-RPC requests and parse responses in Python.
 
 ![PyPI](https://img.shields.io/pypi/v/jsonrpcclient.svg)
-![Downloads](https://img.shields.io/pypi/dm/jsonrpcclient.svg)
 ![Code Quality](https://github.com/explodinglabs/jsonrpcclient/actions/workflows/code-quality.yml/badge.svg)
 ![Coverage Status](https://coveralls.io/repos/github/explodinglabs/jsonrpcclient/badge.svg?branch=main)
+![Downloads](https://img.shields.io/pypi/dm/jsonrpcclient.svg)
 
 ```sh
 pip install jsonrpcclient
