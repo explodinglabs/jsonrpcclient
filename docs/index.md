@@ -3,7 +3,7 @@ This is the documentation for version 4, released September 1, 2021. [Read
 about the changes in version 4.](https://composed.blog/jsonrpcclient-4-changes)
 ```
 
-# Welcome to jsonrpcclient's documentation!
+# Generate JSON-RPC requests in Python | jsonrpcclient Documentation
 
 ![jsonrpcclient](/logo.png)
 
