@@ -23,7 +23,6 @@ setup(
     name="jsonrpcclient",
     # Be PEP 561 compliant
     # https://mypy.readthedocs.io/en/stable/installed_packages.html#making-pep-561-compatible-packages
-    package_data={"jsonrpcclient": ["response-schema.json", "py.typed"]},
     zip_safe=False,
     packages=["jsonrpcclient"],
     url="https://github.com/explodinglabs/jsonrpcclient",
