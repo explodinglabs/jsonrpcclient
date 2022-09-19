@@ -12,7 +12,7 @@
 Generate JSON-RPC requests and parse responses in Python.
 
 ```sh
-pip install jsonrpcserver
+pip install jsonrpcclient
 ```
 
 ```python
