@@ -15,10 +15,17 @@ Generate JSON-RPC requests and parse responses in Python.
 pip install jsonrpcclient
 ```
 
+Generate a request:
+
 ```python
 from jsonrpcclient import request, parse
 request = request("ping")
 # => {'jsonrpc': '2.0', 'method': 'ping', 'id': 1}
+```
+
+Parse a response:
+
+```python
 parsed = parse({"jsonrpc": "2.0", "result": "pong", "id": 1})
 # => Ok(result='pong', id=1)
 ```
