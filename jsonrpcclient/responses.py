@@ -41,6 +41,8 @@ def to_result(response: Dict[str, Any]) -> Response:
 
 
 def parse(response: Deserialized) -> Union[Response, Iterable[Response]]:
+    if isinstance(response, str):
+        raise TypeError("Use parse_json on strings")
     return (
         map(to_result, response) if isinstance(response, list) else to_result(response)
     )

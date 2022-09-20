@@ -1,3 +1,5 @@
+import pytest
+
 from jsonrpcclient.requests import (
     notification,
     notification_json,
@@ -6,72 +8,72 @@ from jsonrpcclient.requests import (
 )
 
 
-def test_notification():
-    assert notification("get") == {"jsonrpc": "2.0", "method": "get"}
-
-
-def test_notification_positional():
-    assert notification("sqrt", params=[1]) == {
-        "jsonrpc": "2.0",
-        "method": "sqrt",
-        "params": [1],
-    }
-    assert notification("sqrt", params=[1, 2, 3]) == {
-        "jsonrpc": "2.0",
-        "method": "sqrt",
-        "params": [1, 2, 3],
-    }
-    assert notification("sqrt", params={"name": "Foo"}) == {
-        "jsonrpc": "2.0",
-        "method": "sqrt",
-        "params": {"name": "Foo"},
-    }
-
-
-def test_notification_keyword():
-    assert notification("find", params={"name": "Foo"}) == {
-        "jsonrpc": "2.0",
-        "method": "find",
-        "params": {"name": "Foo"},
-    }
+@pytest.mark.parametrize(
+    "argument,expected",
+    [
+        (
+            notification("get"),
+            {"jsonrpc": "2.0", "method": "get"},
+        ),
+        (
+            notification("sqrt", params=[1]),
+            {"jsonrpc": "2.0", "method": "sqrt", "params": [1]},
+        ),
+        (
+            notification("sqrt", params=[1, 2, 3]),
+            {"jsonrpc": "2.0", "method": "sqrt", "params": [1, 2, 3]},
+        ),
+        (
+            notification("sqrt", params={"name": "Foo"}),
+            {"jsonrpc": "2.0", "method": "sqrt", "params": {"name": "Foo"}},
+        ),
+    ],
+)
+def test_notification(argument, expected):
+    assert argument == expected
 
 
 def test_notification_json():
     assert notification_json("foo") == '{"jsonrpc": "2.0", "method": "foo"}'
 
 
-def test_request():
-    assert request("foo", id=1) == {"jsonrpc": "2.0", "method": "foo", "id": 1}
-
-
-def test_request_positional():
-    assert request("sqrt", params=[1], id=1) == {
-        "jsonrpc": "2.0",
-        "method": "sqrt",
-        "params": [1],
-        "id": 1,
-    }
-    assert request("sqrt", params=[1, 2, 3], id=2) == {
-        "jsonrpc": "2.0",
-        "method": "sqrt",
-        "params": [1, 2, 3],
-        "id": 2,
-    }
-    assert request("sqrt", params={"name": "Foo"}, id=3) == {
-        "jsonrpc": "2.0",
-        "method": "sqrt",
-        "params": {"name": "Foo"},
-        "id": 3,
-    }
-
-
-def test_request_keyword():
-    assert request("foo", {"name": "bar"}, id=1) == {
-        "jsonrpc": "2.0",
-        "method": "foo",
-        "params": {"name": "bar"},
-        "id": 1,
-    }
+@pytest.mark.parametrize(
+    "argument,expected",
+    [
+        (
+            request("foo", id=1),
+            {"jsonrpc": "2.0", "method": "foo", "id": 1},
+        ),
+        (
+            request("sqrt", params=[1], id=1),
+            {"jsonrpc": "2.0", "method": "sqrt", "params": [1], "id": 1},
+        ),
+        (
+            request("sqrt", params=[1, 2, 3], id=2),
+            {
+                "jsonrpc": "2.0",
+                "method": "sqrt",
+                "params": [1, 2, 3],
+                "id": 2,
+            },
+        ),
+        (
+            request("sqrt", params={"name": "Foo"}, id=3),
+            {
+                "jsonrpc": "2.0",
+                "method": "sqrt",
+                "params": {"name": "Foo"},
+                "id": 3,
+            },
+        ),
+        (
+            request("foo", {"name": "bar"}, id=1),
+            {"jsonrpc": "2.0", "method": "foo", "params": {"name": "bar"}, "id": 1},
+        ),
+    ],
+)
+def test_request(argument, expected):
+    assert argument == expected
 
 
 def test_request_auto_iterating_id():
