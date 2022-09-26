@@ -2,10 +2,10 @@ import asyncio
 import logging
 
 from aiohttp import ClientSession
-from jsonrpcclient import Ok, request, parse
+from jsonrpcclient import Ok, Error, request, parse
 
 
-async def main():
+async def main() -> None:
     async with ClientSession() as session:
         async with session.post(
             "http://localhost:5000", json=request("ping")
@@ -13,7 +13,7 @@ async def main():
             parsed = parse(await response.json())
             if isinstance(parsed, Ok):
                 print(parsed.result)
-            else:
+            elif isinstance(parse, Error):
                 logging.error(parsed.message)
 
 

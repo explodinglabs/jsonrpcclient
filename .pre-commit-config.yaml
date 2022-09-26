@@ -1,10 +1,10 @@
 fail_fast: true
+exclude: (^docs|^examples/requests_client_py310.py)
 repos:
   - repo: https://github.com/ambv/black
     rev: 22.8.0
     hooks:
       - id: black
-        exclude: (^examples/requests_client_py310.py)
         args: [--diff, --check]
 
   - repo: https://github.com/pre-commit/mirrors-pylint
@@ -17,6 +17,12 @@ repos:
     rev: v0.971
     hooks:
       - id: mypy
-        exclude: (^tests|^examples|^docs)
         args: [--strict]
-        additional_dependencies: ['types-setuptools']
+        additional_dependencies:
+          - aiohttp<4
+          - pytest
+          - pyzmq
+          - requests<3
+          - types-requests<3
+          - types-setuptools
+          - websockets

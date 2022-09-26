@@ -22,7 +22,7 @@ from jsonrpcclient import Error, Ok
 parsed = parse(response)
 if isinstance(parsed, Ok):
     print(parsed.result)
-else:
+elif isinstance(parse, Error):
     logging.error(parsed.message)
 ```
 

@@ -1,3 +1,5 @@
+from typing import Any, Dict
+
 import pytest
 
 from jsonrpcclient.requests import (
@@ -16,12 +18,12 @@ from jsonrpcclient.requests import (
             {"jsonrpc": "2.0", "method": "get"},
         ),
         (
-            notification("sqrt", params=[1]),
+            notification("sqrt", params=(1,)),
             {"jsonrpc": "2.0", "method": "sqrt", "params": [1]},
         ),
         (
-            notification("sqrt", params=[1, 2, 3]),
-            {"jsonrpc": "2.0", "method": "sqrt", "params": [1, 2, 3]},
+            notification("sqrt", params=(1, 2, 3)),
+            {"jsonrpc": "2.0", "method": "sqrt", "params": (1, 2, 3)},
         ),
         (
             notification("sqrt", params={"name": "Foo"}),
@@ -29,11 +31,11 @@ from jsonrpcclient.requests import (
         ),
     ],
 )
-def test_notification(argument, expected):
+def test_notification(argument: Dict[str, Any], expected: Dict[str, Any]) -> None:
     assert argument == expected
 
 
-def test_notification_json():
+def test_notification_json() -> None:
     assert notification_json("foo") == '{"jsonrpc": "2.0", "method": "foo"}'
 
 
@@ -72,14 +74,14 @@ def test_notification_json():
         ),
     ],
 )
-def test_request(argument, expected):
+def test_request(argument: Dict[str, Any], expected: Dict[str, Any]) -> None:
     assert argument == expected
 
 
-def test_request_auto_iterating_id():
+def test_request_auto_iterating_id() -> None:
     assert request("foo") == {"jsonrpc": "2.0", "method": "foo", "id": 1}
     assert request("foo") == {"jsonrpc": "2.0", "method": "foo", "id": 2}
 
 
-def test_request_json():
+def test_request_json() -> None:
     assert request_json("foo", id=1) == '{"jsonrpc": "2.0", "method": "foo", "id": 1}'
