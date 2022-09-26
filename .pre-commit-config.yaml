@@ -1,5 +1,5 @@
 fail_fast: true
-exclude: (^docs|^examples/requests_client_py310.py)
+exclude: (^docs)
 repos:
   - repo: https://github.com/ambv/black
     rev: 22.8.0
