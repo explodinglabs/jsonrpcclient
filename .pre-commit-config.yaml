@@ -7,13 +7,12 @@ repos:
       - id: black
         args: [--diff, --check]
 
-  - repo: https://github.com/pre-commit/mirrors-pylint
-    rev: v3.0.0a5
+  - repo: https://github.com/PyCQA/pylint
+    rev: v2.15.3
     hooks:
       - id: pylint
-        args: [--disable=all, --enable=unused-import]
 
-  - repo: https://github.com/pre-commit/mirrors-mypy
+  - repo: https://github.com/python/mypy
     rev: v0.971
     hooks:
       - id: mypy

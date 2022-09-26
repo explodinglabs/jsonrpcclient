@@ -1,3 +1,5 @@
+"""Test requests.py"""
+# pylint: disable=missing-function-docstring
 from typing import Any, Dict
 
 import pytest
@@ -19,7 +21,7 @@ from jsonrpcclient.requests import (
         ),
         (
             notification("sqrt", params=(1,)),
-            {"jsonrpc": "2.0", "method": "sqrt", "params": [1]},
+            {"jsonrpc": "2.0", "method": "sqrt", "params": (1,)},
         ),
         (
             notification("sqrt", params=(1, 2, 3)),

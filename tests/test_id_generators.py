@@ -1,3 +1,5 @@
+"""Test id_generators.py"""
+# pylint: disable=missing-function-docstring
 import re
 from uuid import UUID
 
