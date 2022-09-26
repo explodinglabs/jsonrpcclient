@@ -13,4 +13,4 @@ jobs:
     - run: pip install black==22.8.0 pylint==v3.0.0a3 mypy==v0.902 types-requests==2.25.0 types-setuptools
     - run: black --diff --check $(git ls-files -- '*.py' ':!:docs/*')
     - run: pylint --disable=all --enable=unused-import $(git ls-files -- '*.py' ':!:docs/*')
-    - run: mypy --strict $(git ls-files -- '*.py' ':!:docs/*' ':!:examples/requests_client_py310.py' ')
+    - run: mypy --strict $(git ls-files -- '*.py' ':!:docs/*' ':!:examples/requests_client_py310.py')

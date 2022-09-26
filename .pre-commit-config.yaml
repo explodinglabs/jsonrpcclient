@@ -18,6 +18,7 @@ repos:
     hooks:
       - id: mypy
         args: [--strict]
+        exclude: (^examples/requests_client_py310.py)
         additional_dependencies:
           - aiohttp<4
           - pytest
