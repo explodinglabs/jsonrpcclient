@@ -5,11 +5,11 @@ import pytest
 from jsonrpcclient.responses import Error, Ok, Response, parse, parse_json, to_result
 
 
-def test_Ok():
+def test_Ok() -> None:
     assert repr(Ok("foo", 1)) == "Ok(result='foo', id=1)"
 
 
-def test_Error():
+def test_Error() -> None:
     assert (
         repr(Error(1, "foo", "bar", 2))
         == "Error(code=1, message='foo', data='bar', id=2)"
@@ -33,15 +33,15 @@ def test_to_result(argument: Dict[str, str], expected: Response) -> None:
     assert to_result(argument) == expected
 
 
-def test_parse():
+def test_parse() -> None:
     assert parse({"jsonrpc": "2.0", "result": "pong", "id": 1}) == Ok("pong", 1)
 
 
-def test_parse_string():
+def test_parse_string() -> None:
     with pytest.raises(TypeError) as exc:
-        parse('{"jsonrpc": "2.0", "result": "pong", "id": 1}')
+        parse('{"jsonrpc": "2.0", "result": "pong", "id": 1}')  # type: ignore
     assert str(exc.value) == "Use parse_json on strings"
 
 
-def test_parse_json():
+def test_parse_json() -> None:
     assert parse_json('{"jsonrpc": "2.0", "result": "pong", "id": 1}') == Ok("pong", 1)
