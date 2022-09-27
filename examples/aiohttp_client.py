@@ -1,3 +1,4 @@
+"""Aiohttp example"""
 import asyncio
 import logging
 
@@ -6,6 +7,7 @@ from jsonrpcclient import Ok, Error, request, parse
 
 
 async def main() -> None:
+    """Handle async request"""
     async with ClientSession() as session:
         async with session.post(
             "http://localhost:5000", json=request("ping")

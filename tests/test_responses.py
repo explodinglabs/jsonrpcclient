@@ -4,14 +4,14 @@ from typing import Dict
 
 import pytest
 
-from jsonrpcclient.responses import Error, Ok, Response, parse, parse_json, to_result
+from jsonrpcclient.responses import Error, Ok, Response, parse, parse_json, to_response
 
 
-def test_Ok() -> None:
+def test_ok() -> None:
     assert repr(Ok("foo", 1)) == "Ok(result='foo', id=1)"
 
 
-def test_Error() -> None:
+def test_error() -> None:
     assert (
         repr(Error(1, "foo", "bar", 2))
         == "Error(code=1, message='foo', data='bar', id=2)"
@@ -31,8 +31,8 @@ def test_Error() -> None:
         ),
     ],
 )
-def test_to_result(argument: Dict[str, str], expected: Response) -> None:
-    assert to_result(argument) == expected
+def test_to_response(argument: Dict[str, str], expected: Response) -> None:
+    assert to_response(argument) == expected
 
 
 def test_parse() -> None:
