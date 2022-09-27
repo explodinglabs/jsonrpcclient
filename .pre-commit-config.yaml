@@ -1,5 +1,7 @@
+default_language_version:
+  python: python3.8
+exclude: (^docs|^examples/requests_client_py310.py)
 fail_fast: true
-exclude: (^docs)
 repos:
   - repo: https://github.com/ambv/black
     rev: 22.8.0
@@ -11,7 +13,6 @@ repos:
     rev: v2.15.3
     hooks:
       - id: pylint
-        exclude: (^examples/requests_client_py310.py)
         additional_dependencies:
           - aiohttp<4
           - pytest
@@ -24,7 +25,6 @@ repos:
     hooks:
       - id: mypy
         args: [--strict]
-        exclude: (^examples/requests_client_py310.py)
         additional_dependencies:
           - aiohttp<4
           - pytest
