@@ -1,4 +1,4 @@
-"""Requests example"""
+"""Requests client"""
 import logging
 import requests
 

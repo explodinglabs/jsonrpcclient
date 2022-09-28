@@ -1,4 +1,4 @@
-"""Aiohttp example"""
+"""Aiohttp client"""
 import asyncio
 import logging
 

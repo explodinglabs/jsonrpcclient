@@ -1,4 +1,4 @@
-"""Requests example - batching"""
+"""Requests client - batching"""
 import logging
 
 import requests

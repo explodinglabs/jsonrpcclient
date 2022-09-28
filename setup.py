@@ -16,7 +16,7 @@ setup(
     ],
     description="Send JSON-RPC requests",
     extras_require={
-        "test": [
+        "qa": [
             "pytest",
             "pytest-cov",
             "tox",

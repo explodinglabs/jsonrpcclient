@@ -1,5 +1,5 @@
 default_language_version:
-  python: python3.8
+  python: python3.7
 exclude: (^docs|^examples/requests_client_py310.py)
 fail_fast: true
 repos:

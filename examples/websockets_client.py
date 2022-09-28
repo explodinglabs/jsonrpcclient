@@ -1,4 +1,4 @@
-"""Websockets example"""
+"""Websockets client"""
 import asyncio
 import logging
 

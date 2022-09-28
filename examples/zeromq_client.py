@@ -1,4 +1,4 @@
-"""Zero MQ example"""
+"""Zero MQ client"""
 import logging
 
 import zmq
