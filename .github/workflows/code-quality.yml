@@ -10,7 +10,7 @@ jobs:
       with:
         python-version: 3.7
     - run: pip install --upgrade pip
-    - run: pip install "black<23" "pylint<3" "mypy<1" "aiohttp<4" pytest pyzmq "requests<3" "types-requests<3" types-setuptools websockets
+    - run: pip install types-setuptools "black<23" "pylint<3" "mypy<1" pytest "aiohttp<4" pyzmq "requests<3" "types-requests<3" websockets
     - run: black --diff --check $(git ls-files -- '*.py' ':!:docs/*' ':!:examples/requests_client_py310.py')
     - run: pylint $(git ls-files -- '*.py' ':!:docs/*' ':!:examples/requests_client_py310.py')
     - run: mypy --strict $(git ls-files -- '*.py' ':!:docs/*' ':!:examples/requests_client_py310.py')
