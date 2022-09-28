@@ -28,7 +28,7 @@ def hexadecimal(start: int = 1) -> Iterator[str]:
         start: The first value to start with.
     """
     while True:
-        yield "%x" % start
+        yield f"{start:x}"
         start += 1
 
 

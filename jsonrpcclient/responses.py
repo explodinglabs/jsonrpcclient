@@ -1,3 +1,4 @@
+"""Responses"""
 from typing import Any, Dict, Iterable, List, Union, NamedTuple
 import json
 
@@ -7,6 +8,8 @@ Deserialized = Union[Dict[str, Any], List[Dict[str, Any]]]
 
 
 class Ok(NamedTuple):
+    """Ok response"""
+
     result: Any
     id: Any
 
@@ -15,19 +18,25 @@ class Ok(NamedTuple):
 
 
 class Error(NamedTuple):
+    """Error response"""
+
     code: int
     message: str
     data: Any
     id: Any
 
     def __repr__(self) -> str:
-        return f"Error(code={self.code!r}, message={self.message!r}, data={self.data!r}, id={self.id!r})"
+        return (
+            f"Error(code={self.code!r}, message={self.message!r}, "
+            f"data={self.data!r}, id={self.id!r})"
+        )
 
 
 Response = Union[Ok, Error]
 
 
-def to_result(response: Dict[str, Any]) -> Response:
+def to_response(response: Dict[str, Any]) -> Response:
+    """Create a Response namedtuple from a dict"""
     return (
         Ok(response["result"], response["id"])
         if "result" in response
@@ -40,11 +49,14 @@ def to_result(response: Dict[str, Any]) -> Response:
     )
 
 
-def parse(response: Deserialized) -> Union[Response, Iterable[Response]]:
-    if isinstance(response, str):
+def parse(deserialized: Deserialized) -> Union[Response, Iterable[Response]]:
+    """Create a Response or list of Responses from a dict or list of dicts"""
+    if isinstance(deserialized, str):
         raise TypeError("Use parse_json on strings")
     return (
-        map(to_result, response) if isinstance(response, list) else to_result(response)
+        map(to_response, deserialized)
+        if isinstance(deserialized, list)
+        else to_response(deserialized)
     )
 
 

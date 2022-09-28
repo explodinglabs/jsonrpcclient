@@ -1,7 +1,7 @@
 """setup.py"""
 from setuptools import setup
 
-with open("README.md") as f:
+with open("README.md", encoding="utf-8") as f:
     README = f.read()
 
 setup(
@@ -16,7 +16,7 @@ setup(
     ],
     description="Send JSON-RPC requests",
     extras_require={
-        "test": [
+        "qa": [
             "pytest",
             "pytest-cov",
             "tox",

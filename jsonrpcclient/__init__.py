@@ -1,3 +1,4 @@
+"""Jsonrpcclient"""
 from .requests import (
     notification,
     notification_json,

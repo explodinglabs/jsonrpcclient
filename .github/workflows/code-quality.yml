@@ -8,9 +8,9 @@ jobs:
     - uses: actions/checkout@v2
     - uses: actions/setup-python@v2
       with:
-        python-version: 3.x
+        python-version: 3.7
     - run: pip install --upgrade pip
-    - run: pip install "black<23" pylint==v3.0.0a3 mypy==v0.902 "aiohttp<4" pytest pyzmq "requests<3" "types-requests<3" types-setuptools websockets
-    - run: black --diff --check $(git ls-files -- '*.py' ':!:docs/*')
-    - run: pylint --disable=all --enable=unused-import $(git ls-files -- '*.py' ':!:docs/*')
+    - run: pip install types-setuptools "black<23" "pylint<3" "mypy<1" pytest "aiohttp<4" pyzmq "requests<3" "types-requests<3" websockets
+    - run: black --diff --check $(git ls-files -- '*.py' ':!:docs/*' ':!:examples/requests_client_py310.py')
+    - run: pylint $(git ls-files -- '*.py' ':!:docs/*' ':!:examples/requests_client_py310.py')
     - run: mypy --strict $(git ls-files -- '*.py' ':!:docs/*' ':!:examples/requests_client_py310.py')

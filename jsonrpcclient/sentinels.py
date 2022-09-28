@@ -1,7 +1,17 @@
+"""Sentinels - used to indicate no data is present.
+
+We don't use "None" because that may be a valid piece of data.
+"""
 import sys
 
 
 class Sentinel:
+    """Use this class to create a unique object.
+
+    Has a nicer repr than `object()`.
+    """
+
+    # pylint: disable=too-few-public-methods
     def __init__(self, name: str):
         self.name = name
 
