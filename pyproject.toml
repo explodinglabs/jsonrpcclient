@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+authors = [
+    {name = "Beau Barker", email = "beau@explodinglabs.com"}
+]
+classifiers = [
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10"
+]
+description = "Send JSON-RPC requests"
+license = {file = "LICENSE"}
+name = "jsonrpcclient"
+readme = {file = "README.md", content-type = "text/markdown"}
+requires-python = ">=3.6"
+version = "4.0.2"
+
+[project.urls]
+homepage = "https://www.jsonrpcclient.com"
+repository = "https://github.com/explodinglabs/jsonrpcclient"
+
+[project.optional-dependencies]
+qa = [
+    "pytest",
+    "pytest-cov",
+    "tox"
+]
+
+[tool.setuptools]
+include-package-data = true
+packages = [
+    "jsonrpcclient"
+]
+zip-safe = false
