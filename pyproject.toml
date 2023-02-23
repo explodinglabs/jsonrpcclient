@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=61"]
+requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -18,7 +18,7 @@ license = {file = "LICENSE"}
 name = "jsonrpcclient"
 readme = {file = "README.md", content-type = "text/markdown"}
 requires-python = ">=3.6"
-version = "4.0.2"
+version = "4.0.3"
 
 [project.urls]
 homepage = "https://www.jsonrpcclient.com"
