@@ -1,5 +1,9 @@
 # jsonrpcclient Change Log
 
+## 4.0.3 (23 Feb, 2023)
+
+- Change build system interface to pyproject.toml.
+
 ## 4.0.2 (27 Nov, 2021)
 
 - Documentation.
