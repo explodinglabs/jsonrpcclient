@@ -1,6 +1,5 @@
 default_language_version:
   python: python3.7
-exclude: (^docs)
 fail_fast: true
 repos:
   - repo: https://github.com/astral-sh/ruff-pre-commit
@@ -13,7 +12,9 @@ repos:
     rev: v0.971
     hooks:
       - id: mypy
+        types: [python]
         args: [--strict]
+        exclude: ^(docs|examples/requests_client_py310.py)
         additional_dependencies:
           - aiohttp<3.8
           - pytest
@@ -27,6 +28,8 @@ repos:
     rev: 22.8.0
     hooks:
       - id: black
+        types: [python]
+        exclude: ^docs
         args: [--check]
 
   - repo: local
@@ -35,5 +38,5 @@ repos:
         name: isort
         entry: isort
         language: system
-        args: [--check,--profile,black]
+        args: [--check,--profile=black]
         types: [python]
