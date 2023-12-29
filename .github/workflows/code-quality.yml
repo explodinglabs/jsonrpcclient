@@ -8,7 +8,7 @@ jobs:
     - uses: actions/checkout@v2
     - uses: actions/setup-python@v2
       with:
-        python-version: 3.10
+        python-version: "3.10"
     - run: pip install --upgrade pip
     - run: pip install types-setuptools "ruff<1" "mypy<2" "black<23" "isort<6" pytest "aiohttp<4" pyzmq "requests<3" "types-requests<3" websockets
     - run: ruff $(git ls-files -- '*.py' ':!:docs/*')
