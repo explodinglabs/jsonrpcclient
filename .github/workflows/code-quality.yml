@@ -15,4 +15,4 @@ jobs:
     - run: mypy --strict $(git ls-files -- '*.py' ':!:docs/*')
     - run: black --check $(git ls-files -- '*.py' ':!:docs/*')
     - run: isort --check --profile black $(git ls-files -- '*.py' ':!:docs/*')
-    - run: pytest $(git ls-files)
+    - run: pytest tests
