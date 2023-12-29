@@ -1,5 +1,5 @@
 default_language_version:
-  python: python3.10
+  python: python3.7
 exclude: (^docs)
 fail_fast: true
 repos:
@@ -15,7 +15,7 @@ repos:
       - id: mypy
         args: [--strict]
         additional_dependencies:
-          - aiohttp<4
+          - aiohttp<3.8
           - pytest
           - pyzmq
           - requests<3
