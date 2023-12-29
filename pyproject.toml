@@ -38,3 +38,8 @@ packages = [
     "jsonrpcclient"
 ]
 zip-safe = false
+
+[tool.ruff]
+# Same as Black.
+line-length = 88
+indent-width = 4

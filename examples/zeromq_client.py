@@ -3,10 +3,9 @@ import logging
 
 import zmq
 
-from jsonrpcclient import request_json, parse_json, Ok
+from jsonrpcclient import Ok, parse_json, request_json
 
-
-socket = zmq.Context().socket(zmq.REQ)  # pylint: disable=abstract-class-instantiated
+socket = zmq.Context().socket(zmq.REQ)
 socket.connect("tcp://localhost:5000")
 socket.send_string(request_json("ping"))
 response = parse_json(socket.recv().decode())

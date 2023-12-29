@@ -3,7 +3,8 @@ import asyncio
 import logging
 
 from aiohttp import ClientSession
-from jsonrpcclient import Ok, Error, request, parse
+
+from jsonrpcclient import Error, Ok, parse, request
 
 
 async def main() -> None:

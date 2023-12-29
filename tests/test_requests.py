@@ -1,5 +1,4 @@
 """Test requests.py"""
-# pylint: disable=missing-function-docstring
 from typing import Any, Dict
 
 import pytest
