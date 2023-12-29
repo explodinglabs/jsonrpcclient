@@ -34,7 +34,7 @@ def request_pure(
     id_generator: Iterator[Any],
     method: str,
     params: Union[Dict[str, Any], Tuple[Any, ...]],
-    id: Any,  # pylint: disable=redefined-builtin, invalid-name
+    id: Any,
 ) -> Dict[str, Any]:
     """Create a request"""
     return {
@@ -53,7 +53,7 @@ def request_impure(
     id_generator: Iterator[Any],
     method: str,
     params: Union[Dict[str, Any], Tuple[Any, ...], None] = None,
-    id: Any = NOID,  # pylint: disable=redefined-builtin, invalid-name
+    id: Any = NOID,
 ) -> Dict[str, Any]:
     """Create a request, optionally passing params and id"""
     return request_pure(

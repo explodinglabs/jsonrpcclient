@@ -1,6 +1,6 @@
 """Responses"""
-from typing import Any, Dict, Iterable, List, Union, NamedTuple
 import json
+from typing import Any, Dict, Iterable, List, NamedTuple, Union
 
 from .utils import compose
 

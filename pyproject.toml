@@ -38,3 +38,14 @@ packages = [
     "jsonrpcclient"
 ]
 zip-safe = false
+
+[tool.ruff]
+# Same as Black.
+line-length = 88
+indent-width = 4
+
+[tool.mypy]
+python_version = "3.7"
+exclude = [
+    '^examples\/requests_client_py310\.py$',
+]

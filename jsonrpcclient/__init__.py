@@ -11,7 +11,7 @@ from .requests import (
     request_random,
     request_uuid,
 )
-from .responses import Ok, Error, parse, parse_json
+from .responses import Error, Ok, parse, parse_json
 
 __all__ = [
     "notification",

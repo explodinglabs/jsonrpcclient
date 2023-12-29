@@ -11,7 +11,6 @@ class Sentinel:
     Has a nicer repr than `object()`.
     """
 
-    # pylint: disable=too-few-public-methods
     def __init__(self, name: str):
         self.name = name
 

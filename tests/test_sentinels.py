@@ -1,5 +1,4 @@
 """Test sentinels.py"""
-# pylint: disable=missing-function-docstring
 from jsonrpcclient.sentinels import Sentinel
 
 

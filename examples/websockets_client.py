@@ -3,7 +3,8 @@ import asyncio
 import logging
 
 from websockets.client import connect
-from jsonrpcclient import Ok, Error, parse_json, request_json
+
+from jsonrpcclient import Error, Ok, parse_json, request_json
 
 
 async def main() -> None:
