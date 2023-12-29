@@ -9,7 +9,7 @@
 ![Coverage Status](https://coveralls.io/repos/github/explodinglabs/jsonrpcclient/badge.svg?branch=main)
 ![Downloads](https://img.shields.io/pypi/dw/jsonrpcclient)
 
-Generate JSON-RPC requests and parse responses in Python.
+Create JSON-RPC requests and parse responses in Python.
 
 ```sh
 pip install jsonrpcclient
