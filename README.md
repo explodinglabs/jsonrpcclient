@@ -8,7 +8,7 @@
 ![Code Quality](https://github.com/explodinglabs/jsonrpcclient/actions/workflows/code-quality.yml/badge.svg)
 ![Coverage Status](https://coveralls.io/repos/github/explodinglabs/jsonrpcclient/badge.svg?branch=main)
 ![Downloads](https://img.shields.io/pypi/dw/jsonrpcclient)
-![License](https://img.shields.io/pypi/l/jsonrpcclient.svg)
+![License](https://img.shields.io/pypi/l/jsonrpcclient)
 
 Create JSON-RPC requests and parse responses in Python.
 
