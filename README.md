@@ -43,7 +43,7 @@ Full documentation is at [jsonrpcclient.com](https://www.jsonrpcclient.com/).
 
 ## 🎥 Video
 
-https://github.com/user-attachments/assets/a59d8547-40b4-4e2f-9d99-d879cff6dc4e
+https://github.com/user-attachments/assets/080861a5-0819-43ec-a9e2-f8ea7eb694f5
 
 ## 📖 See Also
 
