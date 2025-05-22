@@ -14,6 +14,8 @@
   <i>Create JSON-RPC requests and parse responses in Python</i>
 </p>
 
+https://github.com/user-attachments/assets/080861a5-0819-43ec-a9e2-f8ea7eb694f5
+
 ## Installation
 
 ```sh
@@ -40,10 +42,6 @@ parsed = parse({"jsonrpc": "2.0", "result": "pong", "id": 1})
 For strings, use `request_json` and `parse_json`.
 
 Full documentation is at [jsonrpcclient.com](https://www.jsonrpcclient.com/).
-
-## 🎥 Video
-
-https://github.com/user-attachments/assets/080861a5-0819-43ec-a9e2-f8ea7eb694f5
 
 ## 📖 See Also
 
