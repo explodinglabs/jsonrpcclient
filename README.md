@@ -16,13 +16,13 @@
 
 https://github.com/user-attachments/assets/080861a5-0819-43ec-a9e2-f8ea7eb694f5
 
-## Installation
+## 🚀 Installation
 
 ```sh
 pip install jsonrpcclient
 ```
 
-## Usage
+## ⚒️ Usage
 
 Generate a request:
 
@@ -41,7 +41,7 @@ parsed = parse({"jsonrpc": "2.0", "result": "pong", "id": 1})
 
 For strings, use `request_json` and `parse_json`.
 
-Full documentation is at [explodinglabs.com/jsonrpcclient](https://www.explodinglabs.com/jsonrpcclient/).
+👉 Full documentation is at [explodinglabs.com/jsonrpcclient](https://www.explodinglabs.com/jsonrpcclient/).
 
 ## 📖 See Also
 
