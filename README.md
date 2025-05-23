@@ -41,7 +41,7 @@ parsed = parse({"jsonrpc": "2.0", "result": "pong", "id": 1})
 
 For strings, use `request_json` and `parse_json`.
 
-Full documentation is at [explodinglabs.com/jsonrpcclient/](https://www.explodinglabs.com/jsonrpcclient/).
+Full documentation is at [explodinglabs.com/jsonrpcclient](https://www.explodinglabs.com/jsonrpcclient/).
 
 ## 📖 See Also
 
