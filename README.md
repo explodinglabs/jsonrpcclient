@@ -3,15 +3,15 @@
 </p>
 
 <p align="center">
+  <i>Create JSON-RPC requests and parse responses in Python</i>
+</p>
+
+<p align="center">
   <img src="https://img.shields.io/pypi/v/jsonrpcclient.svg" alt="PyPI" />
   <img src="https://github.com/explodinglabs/jsonrpcclient/actions/workflows/code-quality.yml/badge.svg" alt="Code Quality" />
   <img src="https://coveralls.io/repos/github/explodinglabs/jsonrpcclient/badge.svg?branch=main" alt="Coverage Status" />
   <img src="https://img.shields.io/pypi/dw/jsonrpcclient" alt="Downloads" />
   <img src="https://img.shields.io/github/license/explodinglabs/jsonrpcclient" alt="License" />
-</p>
-
-<p align="center">
-  <i>Create JSON-RPC requests and parse responses in Python</i>
 </p>
 
 https://github.com/user-attachments/assets/080861a5-0819-43ec-a9e2-f8ea7eb694f5
