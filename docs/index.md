@@ -1,25 +1,25 @@
-```{warning}
-This is the documentation for version 4, released September 1, 2021. [Read
-about the changes in version 4.](https://explodinglabs.github.io/jsonrpcclient-4-changes)
-```
+---
+hide:
+  - toc
+---
 
-# Generate JSON-RPC requests in Python | jsonrpcclient Documentation
+<style>
+.md-content__inner h1:first-of-type {
+  display: none;
+}
+</style>
 
-![jsonrpcclient](/logo.png)
+![jsonrpcclient](images/logo.png)
 
-Generate JSON-RPC requests and parse responses in Python.
+_Generate JSON-RPC requests and parse responses in Python._
 
 ```sh
 pip install jsonrpcclient
 ```
 
-```{toctree}
----
-maxdepth: 2
-caption: Contents
----
-requests
-responses
-examples
-faq
-```
+## Table of Contents
+
+- [Requests](requests.md)
+- [Responses](responses.md)
+- [Faq](faq.md)
+- [Examples](examples.md)
