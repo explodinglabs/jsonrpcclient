@@ -1,5 +1,5 @@
 <p align="center">
-  <img alt="Logo" src="https://github.com/explodinglabs/jsonrpcclient/blob/main/docs/logo.png?raw=true" />
+  <img alt="Logo" src="https://github.com/explodinglabs/jsonrpcclient/blob/main/logo.png?raw=true" />
 </p>
 
 <p align="center">
@@ -41,7 +41,7 @@ parsed = parse({"jsonrpc": "2.0", "result": "pong", "id": 1})
 
 For strings, use `request_json` and `parse_json`.
 
-Full documentation is at [jsonrpcclient.com](https://www.jsonrpcclient.com/).
+Full documentation is at [explodinglabs.com/jsonrpcclient/](https://www.explodinglabs.com/jsonrpcclient/).
 
 ## 📖 See Also
 
