@@ -17,7 +17,7 @@ _Generate JSON-RPC requests and parse responses in Python._
 pip install jsonrpcclient
 ```
 
-## Table of Contents
+## Documentation
 
 - [Requests](requests.md)
 - [Responses](responses.md)
