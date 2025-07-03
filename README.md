@@ -1,4 +1,12 @@
 <p align="center">
+  <img src="https://img.shields.io/pypi/v/jsonrpcclient.svg" alt="PyPI" />
+  <img src="https://github.com/explodinglabs/jsonrpcclient/actions/workflows/code-quality.yml/badge.svg" alt="Code Quality" />
+  <img src="https://coveralls.io/repos/github/explodinglabs/jsonrpcclient/badge.svg?branch=main" alt="Coverage Status" />
+  <img src="https://img.shields.io/pypi/dw/jsonrpcclient" alt="Downloads" />
+  <img src="https://img.shields.io/github/license/explodinglabs/jsonrpcclient" alt="License" />
+</p>
+
+<p align="center">
   <img alt="Jsonrpcclient Logo" src="https://github.com/explodinglabs/jsonrpcclient/blob/main/logo.png?raw=true" />
 </p>
 
@@ -7,11 +15,8 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/pypi/v/jsonrpcclient.svg" alt="PyPI" />
-  <img src="https://github.com/explodinglabs/jsonrpcclient/actions/workflows/code-quality.yml/badge.svg" alt="Code Quality" />
-  <img src="https://coveralls.io/repos/github/explodinglabs/jsonrpcclient/badge.svg?branch=main" alt="Coverage Status" />
-  <img src="https://img.shields.io/pypi/dw/jsonrpcclient" alt="Downloads" />
-  <img src="https://img.shields.io/github/license/explodinglabs/jsonrpcclient" alt="License" />
+  <a href="https://www.explodinglabs.com/jsonrpcclient/">Documentation</a> |
+  <a href="https://github.com/explodinglabs/jsonrpcclient/wiki">Examples</a>
 </p>
 
 https://github.com/user-attachments/assets/080861a5-0819-43ec-a9e2-f8ea7eb694f5
