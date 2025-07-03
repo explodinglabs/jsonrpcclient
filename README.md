@@ -48,6 +48,9 @@ For strings, use `request_json` and `parse_json`.
 
 👉 Full documentation is at [explodinglabs.com/jsonrpcclient](https://www.explodinglabs.com/jsonrpcclient/).
 
+👉 See the [Wiki](https://github.com/explodinglabs/jsonrpcclient/wiki) for community-editable usage examples in various frameworks, libraries, and transport protocols.
+
+
 ## 📖 See Also
 
 - [jsonrpcserver](https://github.com/explodinglabs/jsonrpcserver) – Process incoming JSON-RPC requests in Python
