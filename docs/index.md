@@ -1,8 +1,3 @@
----
-hide:
-  - toc
----
-
 <style>
 .md-content__inner h1:first-of-type {
   display: none;
