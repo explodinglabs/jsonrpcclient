@@ -11,12 +11,14 @@ Error(code=1, message='There was an error', data=None, id=1)
 ```
 
 If you have a string, use `parse_json`.
+
 ```python
 >>> parse_json('{"jsonrpc": "2.0", "result": "pong", "id": 1}')
 Ok(result='pong', id=1)
 ```
 
 To use the result, in Python versions prior to 3.10:
+
 ```python
 from jsonrpcclient import Error, Ok
 parsed = parse(response)
@@ -27,6 +29,7 @@ elif isinstance(parse, Error):
 ```
 
 In Python 3.10+, use pattern matching:
+
 ```python
 match parse(response):
     case Ok(result, id):

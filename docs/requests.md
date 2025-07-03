@@ -10,7 +10,7 @@ Generate a request with the `request` function:
 {'jsonrpc': '2.0', 'method': 'ping', 'id': 1}
 ```
 
-`request_json` gives you a string:
+`request_json` gives a string:
 
 ```py
 >>> request_json("ping")
