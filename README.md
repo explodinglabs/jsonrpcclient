@@ -16,7 +16,7 @@
 
 <p align="center">
   <a href="https://www.explodinglabs.com/jsonrpcclient/">Documentation</a> |
-  <a href="https://github.com/explodinglabs/jsonrpcclient/wiki">Examples</a>
+  <a href="https://github.com/explodinglabs/jsonrpcclient/wiki">Community Wiki</a>
 </p>
 
 https://github.com/user-attachments/assets/080861a5-0819-43ec-a9e2-f8ea7eb694f5
@@ -49,7 +49,6 @@ For strings, use `request_json` and `parse_json`.
 👉 Full documentation is at [explodinglabs.com/jsonrpcclient](https://www.explodinglabs.com/jsonrpcclient/).
 
 👉 See the [Wiki](https://github.com/explodinglabs/jsonrpcclient/wiki) for community-editable usage examples in various frameworks, libraries, and transport protocols.
-
 
 ## 📖 See Also
 

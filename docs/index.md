@@ -10,7 +10,7 @@ _Generate JSON-RPC requests and parse responses in Python._
 
 Jump to:
 [GitHub](https://github.com/explodinglabs/jsonrpcclient) |
-[Examples Wiki](https://github.com/explodinglabs/jsonrpcclient/wiki)
+[Community Wiki](https://github.com/explodinglabs/jsonrpcclient/wiki)
 
 ```sh
 pip install jsonrpcclient
