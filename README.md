@@ -15,7 +15,7 @@
 </p>
 
 <p align="center">
-  <a href="https://www.explodinglabs.com/jsonrpcclient/">Documentation</a> |
+  <a href="https://explodinglabs.com/jsonrpcclient/">Documentation</a> |
   <a href="https://github.com/explodinglabs/jsonrpcclient/wiki">Community Wiki</a>
 </p>
 
@@ -46,7 +46,7 @@ parsed = parse({"jsonrpc": "2.0", "result": "pong", "id": 1})
 
 For strings, use `request_json` and `parse_json`.
 
-👉 Full documentation is at [explodinglabs.com/jsonrpcclient](https://www.explodinglabs.com/jsonrpcclient/).
+👉 Full documentation is at [explodinglabs.com/jsonrpcclient](https://explodinglabs.com/jsonrpcclient/).
 
 👉 See the [Wiki](https://github.com/explodinglabs/jsonrpcclient/wiki) for community-editable usage examples in various frameworks, libraries, and transport protocols.
 
