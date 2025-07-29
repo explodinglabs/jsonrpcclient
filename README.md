@@ -16,7 +16,7 @@
 
 <p align="center">
   <a href="https://explodinglabs.com/jsonrpcclient/">Documentation</a> |
-  <a href="https://github.com/explodinglabs/jsonrpcclient/wiki">Community Wiki</a>
+  <a href="https://github.com/explodinglabs/jsonrpcclient/wiki">Developer Wiki</a>
 </p>
 
 https://github.com/user-attachments/assets/080861a5-0819-43ec-a9e2-f8ea7eb694f5
