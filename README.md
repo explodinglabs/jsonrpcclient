@@ -44,7 +44,8 @@ parsed = parse({"jsonrpc": "2.0", "result": "pong", "id": 1})
 # => Ok(result='pong', id=1)
 ```
 
-For strings, use `request_json` and `parse_json`.
+> [!TIP]
+> For strings, use `request_json` and `parse_json`.
 
 👉 Full documentation is at [explodinglabs.com/jsonrpcclient](https://explodinglabs.com/jsonrpcclient/).
 
