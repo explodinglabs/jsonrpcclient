@@ -49,7 +49,7 @@ parsed = parse({"jsonrpc": "2.0", "result": "pong", "id": 1})
 
 ## 📚 Documentation
 
-👉 Full documentation is at [explodinglabs.com/jsonrpcclient](https://explodinglabs.com/jsonrpcclient/).
+👉 Full documentation is at [explodinglabs.com/jsonrpcclient/](https://explodinglabs.com/jsonrpcclient/).
 
 👉 See the [Wiki](https://github.com/explodinglabs/jsonrpcclient/wiki) for community-editable usage examples in various frameworks, libraries, and transport protocols.
 
